@@ -1,0 +1,8 @@
+.classpath
+.project
+eclipse
+.settings
+logs
+tmp
+test-result
+server.pid

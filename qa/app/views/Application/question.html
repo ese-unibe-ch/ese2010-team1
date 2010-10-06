@@ -1,0 +1,53 @@
+#{extends 'main.html' /}
+
+
+#{if question}
+#{set title:'ajopi - Question by ' + question.owner().name /}
+	<ul>
+		<li>
+			<h2>${question.owner().name()}:</h2>
+			<p>
+				${question.content()}
+			</p>
+			#{date question /}
+			#{if user && question.owner() != user}
+				#{vote question /}
+			#{/if}
+		</li>
+	</ul>
+	
+	#{if answers.size() > 0}
+		<h1>Answers</h1>
+		<ul>
+			#{list items:answers, as:'answer'}
+			<li>
+				<h2>${answer.owner().name()}:</h2>
+				<p>
+					${answer.content()}
+				</p>
+				#{date answer /}
+				#{if user && answer.owner() != user}
+					#{vote answer /}
+				#{/if}
+			</li>
+			#{/list}
+		</ul>
+	#{/if}
+	
+	
+	#{if user}
+		<h1>Add Answer</h1>
+		#{form @Secured.newAnswer(question.id())}
+			#{field 'content'}
+	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+			#{/field}
+			<input type="submit" value="Post" />
+		#{/form}
+	#{/if}
+
+
+#{/if}#{else}
+	#{set title:'Error' /}
+	<h1>Question does not exist.</h1>
+#{/else}
+
