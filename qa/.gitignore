@@ -1,7 +1,10 @@
+# don't commit eclipse stuff
 .classpath
 .project
 eclipse
 .settings
+
+# don't commit temporary stuff
 logs
 tmp
 test-result
