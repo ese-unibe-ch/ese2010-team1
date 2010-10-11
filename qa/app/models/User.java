@@ -15,12 +15,15 @@ import java.util.Iterator;
  */
 public class User {
 
+	private static long idCounter = 0;
+	private long id;
 	private String name;
 	private String password;
 	private String email;
 	private ArrayList<Item> items;
 
 	private static HashMap<String, User> user = new HashMap();
+	private static HashMap<Long, User> userById = new HashMap();
 
 	/**
 	 * Creates a <code>User</code> with a given name.
@@ -29,9 +32,12 @@ public class User {
 	 *            the name of the <code>User</code>
 	 */
 	public User(String name, String email, String password) {
+		this.id = this.idCounter;
+		this.idCounter++;
 		this.name = name;
 		this.items = new ArrayList<Item>();
 		user.put(name, this);
+		userById.put(id, this);
 	}
 
 	/**
@@ -43,14 +49,23 @@ public class User {
 		return this.name;
 	}
 
+	public Long ID() {
+		return this.id;
+	}
+
 	public static User connect(String username, String password) {
 
 		User loginUser = get(username);
 
-		if (loginUser.password == password)
+		if (loginUser != null && loginUser.password == password)
 			return loginUser;
 		else
 			return null;
+	}
+
+	public static boolean exists(String username) {
+
+		return get(username) != null;
 	}
 
 	/**
@@ -108,6 +123,10 @@ public class User {
 		if (user.containsKey(name))
 			return user.get(name);
 		return null;
+	}
+
+	public static User getById(Long id) {
+		return userById.get(id);
 	}
 
 }

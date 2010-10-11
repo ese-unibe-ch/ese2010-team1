@@ -15,6 +15,9 @@ GET		/question/{id}/down						Secured.voteQuestionDown
 GET		/answer/{question}/{id}/up				Secured.voteAnswerUp
 GET		/answer/{question}/{id}/down			Secured.voteAnswerDown
 
+GET 	/register								Application.createUser
+POST	/register								Application.addUser
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

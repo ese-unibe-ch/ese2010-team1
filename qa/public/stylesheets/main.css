@@ -126,9 +126,18 @@ article {
 			color: 				#aecbfb;
 		}
 		
+		input {
+			display: block;
+			background: #222;
+			color: #aecbfb;
+			border: 	1px #000 solid;
+		}
+		
 		input[type="submit"] {
 			display: 			block;
 		}
+		
+
 		
 footer {
 	text-align: 		right;

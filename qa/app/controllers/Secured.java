@@ -68,9 +68,4 @@ public class Secured extends Controller {
 		}
 	}
 
-	public static void editProfile(int id) {
-
-		render();
-	}
-
 }

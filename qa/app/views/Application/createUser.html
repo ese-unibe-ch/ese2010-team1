@@ -1,1 +1,17 @@
 #{extends 'main.html' /}
+
+#{form @Application.addUser()}
+
+#{ifErrors}
+<div class="error"> Please fill out all required fields. </div>
+#{/ifErrors}
+
+<div>Username: </div>
+<input type="text" id="username" name="username" value="${username}" />
+<div>Email: </div>
+<input type="text" id="email" name="email" value="${email}" />
+<div>Password:  </div>
+<input type="password" id="password" name="password" value="${password}" />
+<input type="submit" value="Register" style="margin-top: 5px;" />
+
+#{/form}
