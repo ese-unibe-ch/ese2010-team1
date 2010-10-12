@@ -1,1 +1,9 @@
 #{extends 'main.html' /}
+
+
+
+<h1>${puser.name()}'s Profile
+#{if puser==user}
+<span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.ID())}">edit</a></span>
+#{/if}
+</h1>

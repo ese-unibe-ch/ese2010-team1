@@ -18,6 +18,9 @@ GET		/answer/{question}/{id}/down			Secured.voteAnswerDown
 GET 	/register								Application.createUser
 POST	/register								Application.addUser
 
+GET		/showProfile/{id}						UserFuncs.showProfile
+GET		/editProfile/{id}						UserFuncs.editProfile
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
