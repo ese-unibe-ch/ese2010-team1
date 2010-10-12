@@ -1,20 +1,20 @@
-import static org.junit.Assert.*;
-import org.junit.Test;
-import models.*;
-import play.test.*;
+import models.User;
 
+import org.junit.Test;
+
+import play.test.UnitTest;
 
 public class UserTest extends UnitTest {
 
 	@Test
 	public void shouldCreateUser() {
-		User user = new User("Jack");
+		User user = new User("Jack", "test@mail.com", "password");
 		assertTrue(user != null);
 	}
-	
+
 	@Test
 	public void shouldBeCalledJack() {
-		User user = new User("Jack");
+		User user = new User("Jack", "test@mail.com", "password");
 		assertEquals(user.name(), "Jack");
 	}
 
