@@ -23,3 +23,7 @@ test-result/
 
 # and netbeans
 nbproject
+
+# don't know where it comes from
+*.launch
+
