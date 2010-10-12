@@ -1,5 +1,32 @@
 # don't commit eclipse stuff
-/.metadata
+.metadata
+.settings
+
+# ignoring possible locations of bin folders
+bin/
+
+#ignore temporary files
+tmp/
+
+#ignore the playframework test-results 
+test-result/
+
+# ignoring .class files
+*.class
+*.o
+
+# ignoring some files we don't want on our repo
+# e.g. nasty editor backup files and OS X FS information
+*~
+.DS_Store
+
+
+# and netbeans
+nbproject
+
+# don't know where it comes from
+*.launch
+
 
 # cobertura server file
 cobertura.ser
