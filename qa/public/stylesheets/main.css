@@ -106,7 +106,7 @@ article {
 
 	
 
-	form {
+	form, .pageContent {
 		background: 		#333;
 		margin: 			10px 0;
 		padding: 			7px;
@@ -152,4 +152,9 @@ footer {
 
 header, nav, article, footer {
 	display: 			block;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
 }
