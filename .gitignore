@@ -1,2 +1,5 @@
 # don't commit eclipse stuff
 /.metadata
+
+# cobertura server file
+cobertura.ser
