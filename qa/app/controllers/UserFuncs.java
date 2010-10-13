@@ -11,20 +11,20 @@ public class UserFuncs extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			User user = User.get(Security.connected());
+			User user = User.find("byName", Security.connected()).first();
 			renderArgs.put("user", user);
 		}
 	}
 
 	public static void showProfile(long id) {
 
-		User puser = User.getById(id);
+		User puser = User.findById(id);
 		render(puser);
 	}
 
 	public static void editProfile(long id) {
 
-		User puser = User.getById(id);
+		User puser = User.findById(id);
 
 		render(puser);
 	}
@@ -32,7 +32,7 @@ public class UserFuncs extends Controller {
 	public static void saveProfile(long id, String biography,
 			String lifePhilosophy, String editorOfChoice) {
 
-		User user = User.getById(id);
+		User user = User.findById(id);
 
 		user.biography = biography;
 		user.lifePhilosophy = lifePhilosophy;

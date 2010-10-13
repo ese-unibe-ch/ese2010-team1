@@ -15,7 +15,7 @@ public class Application extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			User user = User.get(Security.connected());
+			User user = User.find("byName", Security.connected()).first();
 			renderArgs.put("user", user);
 		}
 	}
@@ -25,8 +25,8 @@ public class Application extends Controller {
 		render(questions);
 	}
 
-	public static void question(int id) {
-		Question question = Question.get(id);
+	public static void question(long id) {
+		Question question = Question.find("byID", id).first();
 		if (question == null) {
 			render();
 		} else {

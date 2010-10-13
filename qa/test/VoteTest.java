@@ -16,7 +16,7 @@ public class VoteTest extends UnitTest {
 	@Before
 	public void setUp() {
 		this.question = new Question(new User("Jack", "test@mail.com",
-				"password"), "Why did the chicken cross the road?");
+				"password"), "title", "Why did the chicken cross the road?");
 		this.answer = question.answer(new User("James", "test@mail.com",
 				"password"), "To get to the other side.");
 		this.bill = new User("Bill", "test@mail.com", "password");
