@@ -46,7 +46,7 @@ public class Application extends Controller {
 		}
 		if (!User.exists(username)) {
 
-			new User(username, email, password);
+			new User(username, email, password).save();
 		}
 		Application.index();
 	}

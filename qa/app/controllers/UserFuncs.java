@@ -38,6 +38,8 @@ public class UserFuncs extends Controller {
 		user.lifePhilosophy = lifePhilosophy;
 		user.editorOfChoice = editorOfChoice;
 
+		user.save();
+
 		showProfile(id);
 
 	}

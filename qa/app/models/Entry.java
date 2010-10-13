@@ -19,6 +19,7 @@ import play.db.jpa.Model;
  * @author Simon Marti
  * @author Mirco Kocher
  */
+
 @Entity
 public abstract class Entry extends Model {
 
@@ -55,7 +56,7 @@ public abstract class Entry extends Model {
 	}
 
 	public User owner() {
-		return owner();
+		return this.owner;
 	}
 
 	/**

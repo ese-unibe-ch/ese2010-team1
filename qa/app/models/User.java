@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
@@ -14,18 +15,17 @@ public class User extends Model {
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Question> questions;
+	private List<Entry> entrys;
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Answer> answers;
+	private List<Vote> votes;
 
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Vote> votes;
-
+	@Required
 	private String name;
+	@Required
 	private String password;
+	@Required
 	private String email;
 
 	// TODO if possible make admin panel to define profile entries
@@ -45,9 +45,9 @@ public class User extends Model {
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.questions = new ArrayList<Question>();
+		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
-		this.answers = new ArrayList<Answer>();
+
 	}
 
 	/**
@@ -85,21 +85,19 @@ public class User extends Model {
 
 	public User addQuestion(String title, String content) {
 		Question newQuestion = new Question(this, title, content).save();
-		this.questions.add(newQuestion);
+		this.entrys.add(newQuestion);
 		this.save();
 		return this;
 
 	}
 
 	public User addAnswer(Answer answer) {
-
-		this.answers.add(answer);
+		this.entrys.add(answer);
 		this.save();
 		return this;
 	}
 
 	public User addVote(Vote vote) {
-
 		this.votes.add(vote);
 		this.save();
 		return this;

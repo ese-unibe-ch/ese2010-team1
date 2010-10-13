@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 
-#{form @UserFuncs.saveProfile(user.id) }
-<h1>Edit ${user.name()}'s Profile</h1>
+#{form @UserFuncs.saveProfile(puser.id) }
+<h1>Edit ${puser.name()}'s Profile</h1>
 
 <div class="leftBox">Biography:</div> <div class="rightBox"><textarea id="biography" name="biography" >${puser.biography}</textarea></div>
 <div class="leftBox">Life philosophy:</div><div class="rightBox"><input type="text" id="lifePhilosophy" name="lifePhilosophy" value="${puser.lifePhilosophy}" /></div>
