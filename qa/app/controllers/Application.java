@@ -21,8 +21,10 @@ public class Application extends Controller {
 	}
 
 	public static void index() {
+
+		long userCount = User.count();
 		List<Question> questions = Question.questions();
-		render(questions);
+		render(questions, userCount);
 	}
 
 	public static void question(long id) {

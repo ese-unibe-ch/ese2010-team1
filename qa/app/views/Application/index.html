@@ -3,8 +3,8 @@
 
 <ul>
 #{list items:questions, as:'question'}
-	<li onclick="goto('@@{Application.question(question.id())}')">
-		<a href="@{Application.question(question.id())}">
+	<li onclick="goto('@@{Application.question(question.id)}')">
+		<a href="@{Application.question(question.id)}">
 			<h2>${question.owner().name()}:</h2>
 		</a>
 		<p>
@@ -25,9 +25,12 @@
 	<h1>Ask Question</h1>
 	#{form @Secured.newQuestion()}
 		#{field 'content'}
+			<input type="text" name="title" id="title" />
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		<input type="submit" value="Post" />
 	#{/form}
 
 #{/if}
+
+<span style="color: white;">Anzahl User: ${userCount}</span>

@@ -13,7 +13,7 @@ public class Secured extends Controller {
 			@Required String content) {
 		if (!validation.hasErrors()) {
 			User user = User.find("byName", Security.connected()).first();
-			Question question = new Question(user, title, content);
+			Question question = user.addQuestion(title, content);
 			Application.question(question.id);
 		} else {
 			Application.index();

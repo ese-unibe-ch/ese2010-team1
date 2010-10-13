@@ -83,11 +83,11 @@ public class User extends Model {
 		return User.find("byName", username).first() != null;
 	}
 
-	public User addQuestion(String title, String content) {
+	public Question addQuestion(String title, String content) {
 		Question newQuestion = new Question(this, title, content).save();
 		this.entrys.add(newQuestion);
 		this.save();
-		return this;
+		return newQuestion;
 
 	}
 
