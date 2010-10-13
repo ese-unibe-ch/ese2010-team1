@@ -18,4 +18,11 @@ public class UserTest extends UnitTest {
 		assertEquals(user.name(), "Jack");
 	}
 
+	@Test
+	public void shouldHaveAPassword() {
+		User user = new User("Jack", "test@mail.com", "password");
+		assertEquals("password", user.password());
+
+	}
+
 }

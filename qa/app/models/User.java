@@ -42,6 +42,7 @@ public class User {
 		this.id = this.idCounter;
 		this.idCounter++;
 		this.name = name;
+		this.password = password;
 		this.items = new ArrayList<Item>();
 		user.put(name, this);
 		userById.put(id, this);
@@ -60,14 +61,19 @@ public class User {
 		return this.id;
 	}
 
+	public String password() {
+		return this.password;
+	}
+
 	public static User connect(String username, String password) {
 
-		User loginUser = get(username);
+		User loginUser = User.get(username);
 
-		if (loginUser != null && loginUser.password == password)
+		if (loginUser != null && loginUser.password().equals(password))
 			return loginUser;
 		else
 			return null;
+
 	}
 
 	public static boolean exists(String username) {

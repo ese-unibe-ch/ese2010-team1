@@ -3,6 +3,9 @@
 #{form @UserFuncs.saveProfile(user.id) }
 <h1>Edit ${user.name()}'s Profile</h1>
 
-
+<div class="leftBox">Biography:</div> <div class="rightBox"><textarea id="biography" name="biography" >${puser.biography}</textarea></div>
+<div class="leftBox">Life philosophy:</div><div class="rightBox"><input type="text" id="lifePhilosophy" name="lifePhilosophy" value="${puser.lifePhilosophy}" /></div>
+<div class="leftBox">Editor of choice</div><div class="rightBox"><input type="text" id="editorOfChoice" name="editorOfChoice" value="${puser.editorOfChoice}" /></div>
+<div class="clear"></div>
 <input type="submit" value="Save" />
 #{/form}

@@ -29,7 +29,16 @@ public class UserFuncs extends Controller {
 		render(puser);
 	}
 
-	public static void saveProfile(long id) {
+	public static void saveProfile(long id, String biography,
+			String lifePhilosophy, String editorOfChoice) {
+
+		User user = User.getById(id);
+
+		user.biography = biography;
+		user.lifePhilosophy = lifePhilosophy;
+		user.editorOfChoice = editorOfChoice;
+
+		showProfile(id);
 
 	}
 }
