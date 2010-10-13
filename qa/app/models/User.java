@@ -12,15 +12,15 @@ import play.db.jpa.Model;
 @Entity
 public class User extends Model {
 
-	@OneToMany(mappedBy = "author", cascade = { CascadeType.MERGE,
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Question> questions;
 
-	@OneToMany(mappedBy = "author", cascade = { CascadeType.MERGE,
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Answer> answers;
 
-	@OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE,
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 

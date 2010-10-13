@@ -1,8 +1,9 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,9 +27,9 @@ public abstract class Entry extends Model {
 	@ManyToOne
 	private User owner;
 
-	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private HashMap<String, Vote> votes;
+	private List<Vote> votes;
 
 	private Date timestamp;
 
@@ -44,7 +45,7 @@ public abstract class Entry extends Model {
 		this.owner = owner;
 		this.content = content;
 		this.timestamp = new Date();
-		this.votes = new HashMap();
+		this.votes = new ArrayList<Vote>();
 	}
 
 	public abstract String type();
@@ -95,7 +96,7 @@ public abstract class Entry extends Model {
 
 	private int countVotes(boolean up) {
 		int counter = 0;
-		Iterator<Vote> it = this.votes.values().iterator();
+		Iterator<Vote> it = this.votes.iterator();
 		while (it.hasNext()) {
 			if (it.next().up() == up)
 				counter++;
@@ -125,15 +126,16 @@ public abstract class Entry extends Model {
 		return this.vote(user, false);
 	}
 
-	// TODO not sure if this method is right
 	private Vote vote(User user, boolean up) {
-		if (user == this.owner)
-			return null;
-		if (this.votes.containsKey(user.name()))
-			this.votes.get(user.name()).delete();
-		Vote vote = new Vote(user, this, up);
-		this.votes.put(user.name(), vote);
-		return vote;
+		return null;
 	}
+
+	// TODO not sure if this method is right
+	/*
+	 * private Vote vote(User user, boolean up) { if (user == this.owner) return
+	 * null; if (this.votes.containsKey(user.name()))
+	 * this.votes.get(user.name()).delete(); Vote vote = new Vote(user, this,
+	 * up); this.votes.put(user.name(), vote); return vote; }
+	 */
 
 }
