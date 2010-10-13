@@ -153,8 +153,28 @@ footer {
 header, nav, article, footer {
 	display: 			block;
 }
+/* classes by tschmid */
 
 .error {
 	color: red;
 	font-weight: bold;
+}
+
+.leftBox {
+	width: 33%;
+	background-color: #333;
+	float: left;	
+}
+
+.rightBox {
+	width: 67%;
+	background-color: #333;
+	float: left;
+}
+
+.clear {
+	clear: both;
+	width: 0px;
+	height: 0px;
+	line-height: 0px;
 }

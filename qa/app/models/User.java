@@ -25,6 +25,13 @@ public class User {
 	private static HashMap<String, User> user = new HashMap();
 	private static HashMap<Long, User> userById = new HashMap();
 
+	// TODO if possible make admin panel to define profile entries
+	// TODO if needed make private variables
+
+	public String biography;
+	public String lifePhilosophy;
+	public String editorOfChoice;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
