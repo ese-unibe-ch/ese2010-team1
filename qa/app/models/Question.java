@@ -24,7 +24,7 @@ public class Question extends Entry {
 
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Answer> answers;
+	private List<Answer> answers;
 
 	/**
 	 * Create a Question.

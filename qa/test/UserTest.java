@@ -28,6 +28,7 @@ public class UserTest extends UnitTest {
 		List<User> user = User.find("byName", "Jack").fetch();
 		assertEquals(1, user.size());
 		assertEquals(user.get(0).name(), "Jack");
+		assertEquals(user.get(0).email(), "test@mail.com");
 	}
 
 	@Test
@@ -46,14 +47,20 @@ public class UserTest extends UnitTest {
 		assertEquals(null, User.connect("something", "noone"));
 	}
 
-	/*
-	 * @Test public void testInitialData() {
-	 * 
-	 * Fixtures.load("data.yml");
-	 * 
-	 * User user = User.find("byName", "Bob").first(); assertNotNull(user);
-	 * 
-	 * }
-	 */
+	@Test
+	public void testExistsMethod() {
+		new User("Jack", "test@mail.com", "password").save();
+		assertTrue(User.exists("Jack"));
+		assertFalse(User.exists("john"));
+
+	}
+
+	@Test
+	public void deleteUser() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		assertEquals(1, User.count());
+		user.delete();
+		assertEquals(0, User.count());
+	}
 
 }

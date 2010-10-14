@@ -6,8 +6,6 @@ import javax.persistence.ManyToOne;
 /**
  * A {@link Entry} containing an answer to a {@link Question}
  * 
- * @author Simon Marti
- * @author Mirco Kocher
  * 
  */
 @Entity
