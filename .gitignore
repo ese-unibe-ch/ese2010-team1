@@ -1,5 +1,5 @@
 # don't commit eclipse stuff
-/.metadata
+.metadata
 .settings
 
 # ignoring possible locations of bin folders
@@ -26,4 +26,7 @@ nbproject
 
 # don't know where it comes from
 *.launch
+
+# cobertura server file
+cobertura.ser
 

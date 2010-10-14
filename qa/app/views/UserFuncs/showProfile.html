@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+
+<div class="pageContent">
+
+<h1>${puser.name()}'s Profile
+#{if puser==user}
+<span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
+#{/if}
+</h1>
+
+<div class="leftBox">Biography: </div> <div class="rightBox"> ${puser.biography} </div>
+<div class="leftBox">Life philosophy: </div> <div class="rightBox">${puser.lifePhilosophy}</div>
+<div class="leftBox">Editor of choice: </div> <div class="rightBox"> ${puser.editorOfChoice} </div>
+<div class="clear"></div>
+
+</div>

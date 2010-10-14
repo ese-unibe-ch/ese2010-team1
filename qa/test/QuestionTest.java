@@ -1,51 +1,50 @@
-import static org.junit.Assert.*;
+import java.util.List;
 
-import java.util.*;
+import models.Question;
+import models.User;
+
 import org.junit.Before;
 import org.junit.Test;
-import models.*;
-import play.test.*;
 
+import play.test.Fixtures;
+import play.test.UnitTest;
 
 public class QuestionTest extends UnitTest {
-	private User user;
-	private Question question;
 
 	@Before
 	public void setUp() {
-		this.user = new User("Jack");
-		this.question = new Question(user, "Why did the chicken cross the road?");
-	}
-	
-	@Test
-	public void shouldCreateQuestion() {
-		assertTrue(question != null);
-	}
-	
-	@Test
-	public void shouldHaveOwner() {
-		assertEquals(question.owner(), user);
-	}
-	
-	@Test
-	public void shouldHaveCorrectContent() {
-		assertEquals(question.content(), "Why did the chicken cross the road?");
+		Fixtures.deleteAll();
 	}
 
 	@Test
-	public void shouldRegisterItself() {
-		assertTrue(user.hasItem(question));
+	public void shouldCreateQuestion() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		user.addQuestion("A title", "My first question");
+		assertEquals(1, Question.count());
+		user.addQuestion("Second title", "My second question");
+		assertEquals(2, Question.count());
+
+		List<Question> questions = Question.find("byOwner", user).fetch();
+		assertEquals(2, questions.size());
 	}
-	
+
 	@Test
-	public void shouldBeInPublicList() {
-		List q = Question.questions();
-		assertFalse(q == null);
-		assertTrue(q.contains(this.question));
-		int size = Question.questions().size();
-		new Question(this.user, "What is the answer to life the universe and everything?");
-		assertEquals(size+1, Question.questions().size());
-		this.question.unregister();
-		assertEquals(size, Question.questions().size());
+	public void deleteQuestion() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		user.addQuestion("A title", "My first question");
+		user.addQuestion("Second title", "My second question");
+
+		List<Question> questions = Question.find("byOwner", user).fetch();
+
+		Question question = questions.get(0);
+		question.delete();
+
+		questions = Question.find("byOwner", user).fetch();
+
+		assertEquals(1, questions.size());
+
 	}
+
 }

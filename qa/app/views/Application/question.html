@@ -37,7 +37,7 @@
 	
 	#{if user}
 		<h1>Add Answer</h1>
-		#{form @Secured.newAnswer(question.id())}
+		#{form @Secured.newAnswer(question.id)}
 			#{field 'content'}
 	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 			#{/field}

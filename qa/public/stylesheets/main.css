@@ -106,12 +106,11 @@ article {
 
 	
 
-	form {
+	form, .pageContent {
 		background: 		#333;
 		margin: 			10px 0;
 		padding: 			7px;
 		position: 			relative;
-		width: 				307px;
 	}
 	
 		h3 {
@@ -126,9 +125,18 @@ article {
 			color: 				#aecbfb;
 		}
 		
+		input {
+			display: block;
+			background: #222;
+			color: #aecbfb;
+			border: 	1px #000 solid;
+		}
+		
 		input[type="submit"] {
 			display: 			block;
 		}
+		
+
 		
 footer {
 	text-align: 		right;
@@ -144,4 +152,29 @@ footer {
 
 header, nav, article, footer {
 	display: 			block;
+}
+/* classes by tschmid */
+
+.error {
+	color: red;
+	font-weight: bold;
+}
+
+.leftBox {
+	width: 33%;
+	background-color: #333;
+	float: left;	
+}
+
+.rightBox {
+	width: 67%;
+	background-color: #333;
+	float: left;
+}
+
+.clear {
+	clear: both;
+	width: 0px;
+	height: 0px;
+	line-height: 0px;
 }

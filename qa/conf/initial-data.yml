@@ -1,0 +1,4 @@
+User(bob):
+    name: Bob
+    email: bob@gmail.com
+    password: secret   
