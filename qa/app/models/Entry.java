@@ -127,6 +127,7 @@ public abstract class Entry extends Model {
 		if (user == this.owner)
 			return null;
 		Vote vote = new Vote(user, this, up).save();
+		this.votes.add(vote);
 		return vote;
 	}
 
