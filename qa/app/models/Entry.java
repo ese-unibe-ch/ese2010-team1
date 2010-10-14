@@ -75,6 +75,12 @@ public abstract class Entry extends Model {
 		return this.countVotes(true);
 	}
 
+	// TODO not really happy with this, because of direct reference to votes
+	public int numberOfVotes() {
+
+		return votes.size();
+	}
+
 	/**
 	 * Count all negative {@link Vote}s on an <code>Entry</code>
 	 * 
