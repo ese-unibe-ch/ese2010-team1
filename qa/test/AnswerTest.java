@@ -76,10 +76,40 @@ public class AnswerTest extends UnitTest {
 	@Test
 	public void deleteQuestion() {
 
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+
+		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "another answer");
+
+		assertEquals(2, Answer.count());
+
+		question.delete();
+
+		assertEquals(0, Answer.count());
+		assertEquals(0, Question.count());
+
 	}
 
 	@Test
 	public void deleteUser() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		user.addQuestion("Second title", "Second question");
+
+		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "another answer");
+
+		assertEquals(1, User.count());
+		assertEquals(2, Question.count());
+		assertEquals(2, Answer.count());
+
+		user.delete();
+
+		assertEquals(0, User.count());
+		assertEquals(0, Question.count());
+		assertEquals(0, Answer.count());
 
 	}
 
