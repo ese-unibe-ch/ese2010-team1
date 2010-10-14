@@ -24,6 +24,7 @@ public class AnswerTest extends UnitTest {
 
 		Answer answer = question.answer(user2, "an answer");
 		assertEquals(1, Answer.count());
+		assertTrue(question.hasAnswer(answer));
 		question.answer(user, "another answer");
 
 		assertEquals(answer.content(), "an answer");
@@ -59,15 +60,56 @@ public class AnswerTest extends UnitTest {
 	@Test
 	public void deleteAnswer() {
 
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+
+		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "another answer");
+
+		assertEquals(2, Answer.count());
+		answer.delete();
+		assertEquals(1, Answer.count());
+		assertEquals(1, question.answers().size());
+
 	}
 
 	@Test
 	public void deleteQuestion() {
 
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+
+		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "another answer");
+
+		assertEquals(2, Answer.count());
+
+		question.delete();
+
+		assertEquals(0, Answer.count());
+		assertEquals(0, Question.count());
+
 	}
 
 	@Test
 	public void deleteUser() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		user.addQuestion("Second title", "Second question");
+
+		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "another answer");
+
+		assertEquals(1, User.count());
+		assertEquals(2, Question.count());
+		assertEquals(2, Answer.count());
+
+		user.delete();
+
+		assertEquals(0, User.count());
+		assertEquals(0, Question.count());
+		assertEquals(0, Answer.count());
 
 	}
 

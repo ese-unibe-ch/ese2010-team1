@@ -2,7 +2,6 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -72,7 +71,12 @@ public abstract class Entry extends Model {
 	 * @return number of positive {@link Vote}s
 	 */
 	public int upVotes() {
-		return this.countVotes(true);
+		return Vote.find("byEntryAndUp", this, true).fetch().size();
+	}
+
+	public int numberOfVotes() {
+
+		return Vote.find("byEntry", this).fetch().size();
 	}
 
 	/**
@@ -81,7 +85,8 @@ public abstract class Entry extends Model {
 	 * @return number of negative {@link Vote}s
 	 */
 	public int downVotes() {
-		return this.countVotes(false);
+
+		return Vote.find("byEntryAndUp", this, false).fetch().size();
 	}
 
 	/**
@@ -91,18 +96,6 @@ public abstract class Entry extends Model {
 	 */
 	public int rating() {
 		return this.upVotes() - this.downVotes();
-	}
-
-	// TODO if possible refactore that
-
-	private int countVotes(boolean up) {
-		int counter = 0;
-		Iterator<Vote> it = this.votes.iterator();
-		while (it.hasNext()) {
-			if (it.next().up() == up)
-				counter++;
-		}
-		return counter;
 	}
 
 	/**
@@ -133,7 +126,7 @@ public abstract class Entry extends Model {
 	private Vote vote(User user, boolean up) {
 		if (user == this.owner)
 			return null;
-		Vote vote = new Vote(user, this, up);
+		Vote vote = new Vote(user, this, up).save();
 		return vote;
 	}
 

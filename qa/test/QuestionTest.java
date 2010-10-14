@@ -20,13 +20,27 @@ public class QuestionTest extends UnitTest {
 	public void shouldCreateQuestion() {
 
 		User user = new User("Jack", "test@mail.com", "password").save();
-		user.addQuestion("A title", "My first question");
+		Question question = user.addQuestion("A title", "My first question");
+
+		// check question attributes
+		assertEquals("A title", question.title());
+		assertEquals("My first question", question.content());
+		assertNotNull(question.timestamp());
+
+		// check number of questions
 		assertEquals(1, Question.count());
 		user.addQuestion("Second title", "My second question");
 		assertEquals(2, Question.count());
 
+		// check search by owner
 		List<Question> questions = Question.find("byOwner", user).fetch();
 		assertEquals(2, questions.size());
+		assertNotNull(Question.questions());
+		assertEquals(2, Question.questions().size());
+
+		// check answers
+		assertNotNull(question.answers());
+		assertEquals(0, question.answers().size());
 	}
 
 	@Test
@@ -45,6 +59,21 @@ public class QuestionTest extends UnitTest {
 
 		assertEquals(1, questions.size());
 
+	}
+
+	@Test
+	public void deleteUser() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		user.addQuestion("A title", "My first question");
+		user.addQuestion("Second title", "My second question");
+
+		assertEquals(1, User.count());
+		assertEquals(2, Question.count());
+		user.delete();
+
+		assertEquals(0, Question.count());
+		assertEquals(0, Question.count());
 	}
 
 }
