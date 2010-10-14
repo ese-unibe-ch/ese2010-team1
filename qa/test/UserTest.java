@@ -46,14 +46,14 @@ public class UserTest extends UnitTest {
 		assertEquals(null, User.connect("something", "noone"));
 	}
 
-	@Test
-	public void testInitialData() {
-
-		Fixtures.load("data.yml");
-
-		User user = User.find("byName", "Bob").first();
-		assertNotNull(user);
-
-	}
+	/*
+	 * @Test public void testInitialData() {
+	 * 
+	 * Fixtures.load("data.yml");
+	 * 
+	 * User user = User.find("byName", "Bob").first(); assertNotNull(user);
+	 * 
+	 * }
+	 */
 
 }

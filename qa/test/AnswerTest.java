@@ -1,5 +1,3 @@
-import java.util.Date;
-
 import models.Answer;
 import models.Question;
 import models.User;
@@ -7,53 +5,70 @@ import models.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import play.test.Fixtures;
 import play.test.UnitTest;
 
 public class AnswerTest extends UnitTest {
 
-	private User james;
-	private Question question;
-	private Answer answer;
-
 	@Before
 	public void setUp() {
-		this.james = new User("James", "test@mail.com", "password");
-		this.question = new Question(new User("Jack", "test@mail.com",
-				"password"), "title", "Why did the chicken cross the road?");
-		this.answer = this.question.answer(james, "To get to the other side.");
+		Fixtures.deleteAll();
 	}
 
 	@Test
-	public void shouldCreateAnswer() {
-		assertTrue(answer != null);
+	public void createAnswer() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("John", "john@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		assertEquals(1, Question.count());
+
+		Answer answer = question.answer(user2, "an answer");
+		assertEquals(1, Answer.count());
+		question.answer(user, "another answer");
+
+		assertEquals(answer.content(), "an answer");
+		assertEquals(answer.question(), question);
 	}
 
 	@Test
-	public void shouldHaveCorrectContent() {
-		assertEquals(answer.content(), "To get to the other side.");
+	public void twoQuestionsWithAnswers() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("John", "john@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		Question question2 = user2.addQuestion("Another title",
+				"Why i don't like to write tests?");
+		assertEquals(2, Question.count());
+
+		Answer answer = question.answer(user2, "an answer");
+		assertEquals(1, Answer.count());
+		Answer answer2 = question.answer(user, "another answer");
+
+		assertEquals(answer.content(), "an answer");
+
+		Answer answer3 = question2
+				.answer(user2, "I also not really likt it...");
+
+		assertEquals(3, Answer.count());
+		Answer userAnswer = Answer.find("byOwner", user).first();
+
+		assertEquals(userAnswer, answer2);
+
 	}
 
 	@Test
-	public void shouldHaveOwner() {
-		assertEquals(this.answer.owner(), this.james);
+	public void deleteAnswer() {
+
 	}
 
 	@Test
-	public void shouldHaveQuestion() {
-		assertEquals(this.answer.question(), this.question);
+	public void deleteQuestion() {
+
 	}
 
 	@Test
-	public void shouldHaveTimestamp() {
-		assertTrue(answer.timestamp() != null);
-		assertTrue(answer.timestamp().compareTo(new Date()) <= 0);
-	}
+	public void deleteUser() {
 
-	/*
-	 * 
-	 * @Test public void shouldRegisterItself() {
-	 * assertTrue(this.james.hasItem(this.answer));
-	 * assertTrue(this.question.hasAnswer(this.answer)); }
-	 */
+	}
 
 }

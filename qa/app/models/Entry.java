@@ -16,8 +16,6 @@ import play.db.jpa.Model;
 /**
  * An {@link Item} which has a content and can be voted up and down.
  * 
- * @author Simon Marti
- * @author Mirco Kocher
  */
 
 @Entity
@@ -95,6 +93,8 @@ public abstract class Entry extends Model {
 		return this.upVotes() - this.downVotes();
 	}
 
+	// TODO if possible refactore that
+
 	private int countVotes(boolean up) {
 		int counter = 0;
 		Iterator<Vote> it = this.votes.iterator();
@@ -127,16 +127,14 @@ public abstract class Entry extends Model {
 		return this.vote(user, false);
 	}
 
-	private Vote vote(User user, boolean up) {
-		return null;
-	}
+	// TODO user can change his mind -> old vote will be deleted
+	// new vote will be created
 
-	// TODO not sure if this method is right
-	/*
-	 * private Vote vote(User user, boolean up) { if (user == this.owner) return
-	 * null; if (this.votes.containsKey(user.name()))
-	 * this.votes.get(user.name()).delete(); Vote vote = new Vote(user, this,
-	 * up); this.votes.put(user.name(), vote); return vote; }
-	 */
+	private Vote vote(User user, boolean up) {
+		if (user == this.owner)
+			return null;
+		Vote vote = new Vote(user, this, up);
+		return vote;
+	}
 
 }
