@@ -93,10 +93,8 @@ public class Question extends Entry {
 	 * @return {@link Collection} of {@link Answers}
 	 */
 	public List<Answer> answers() {
-		List<Answer> list = new ArrayList();
-		list.addAll(answers);
+		List<Answer> list = Answer.find("byQuestion", this).fetch();
 		Collections.sort(list, new EntryComperator());
 		return list;
 	}
-
 }
