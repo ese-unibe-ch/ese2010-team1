@@ -120,14 +120,18 @@ public abstract class Entry extends Model {
 		return this.vote(user, false);
 	}
 
-	// TODO user can change his mind -> old vote will be deleted
-	// new vote will be created
-
 	private Vote vote(User user, boolean up) {
+
+		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
+
 		if (user == this.owner)
 			return null;
+		if (alreadyVoted != null) {
+			alreadyVoted.delete();
+		}
+
 		Vote vote = new Vote(user, this, up).save();
+		this.votes.add(vote);
 		return vote;
 	}
-
 }
