@@ -29,6 +29,11 @@ public class VoteTest extends UnitTest {
 		assertEquals(1, question.rating());
 		assertEquals(1, question.numberOfVotes());
 
+		question.voteDown(user);
+		assertEquals(1, Vote.count());
+		assertEquals(1, question.rating());
+		assertEquals(1, question.numberOfVotes());
+
 	}
 
 	@Test
