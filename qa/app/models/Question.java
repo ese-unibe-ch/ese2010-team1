@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 public class Question extends Entry {
 
 	private String title;
+	public boolean isBestAnswerSet;
 
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
@@ -36,6 +37,7 @@ public class Question extends Entry {
 	 */
 	public Question(User owner, String title, String content) {
 		super(owner, content);
+		isBestAnswerSet = false;
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
 
@@ -97,6 +99,14 @@ public class Question extends Entry {
 		list.addAll(answers);
 		Collections.sort(list, new EntryComperator());
 		return list;
+	}
+
+	public boolean isBestAnswerSet() {
+		return isBestAnswerSet;
+	}
+
+	public void isBestAnswerSet(boolean s) {
+		isBestAnswerSet = s;
 	}
 
 }

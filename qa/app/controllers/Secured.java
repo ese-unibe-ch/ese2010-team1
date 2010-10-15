@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Answer;
 import models.Question;
 import models.User;
 import play.data.validation.Required;
@@ -45,6 +46,18 @@ public class Secured extends Controller {
 			User user = User.find("byName", Security.connected()).first();
 			Question.<Question> findById(id).voteDown(user);
 			Application.question(id);
+		} else {
+			Application.index();
+		}
+	}
+
+	public static void setBestAnswer(long id) {
+		if (Answer.<Answer> findById(id) != null) {
+			User user = User.find("byName", Security.connected()).first();
+			Answer answer = Answer.<Answer> findById(id);
+			user.setBestAnswer(answer);
+			Application.question(answer.question().id);
+
 		} else {
 			Application.index();
 		}

@@ -16,6 +16,8 @@ public class Answer extends Entry {
 	@ManyToOne
 	private Question question;
 
+	private boolean isBestAnswer = false;
+
 	/**
 	 * Create an <code>Answer</code> to a {@link Question}.
 	 * 
@@ -44,6 +46,14 @@ public class Answer extends Entry {
 	 */
 	public Question question() {
 		return this.question;
+	}
+
+	public boolean isBestAnswer() {
+		return isBestAnswer;
+	}
+
+	public void isBestAnswer(boolean b) {
+		isBestAnswer = b;
 	}
 
 }

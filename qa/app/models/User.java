@@ -103,4 +103,12 @@ public class User extends Model {
 		return this;
 	}
 
+	public void setBestAnswer(Answer answer) {
+		if (answer.question().owner() == this
+				&& !answer.question().isBestAnswerSet()) {
+			answer.isBestAnswer(true);
+			answer.question().isBestAnswerSet(true);
+		}
+	}
+
 }
