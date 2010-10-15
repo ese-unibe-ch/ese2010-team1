@@ -82,6 +82,7 @@ public class AnswerTest extends UnitTest {
 		Answer answer = question.answer(user, "an answer");
 		question.answer(user, "another answer");
 
+		assertEquals(1, Question.count());
 		assertEquals(2, Answer.count());
 
 		question.delete();
