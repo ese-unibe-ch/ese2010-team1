@@ -12,7 +12,7 @@
 
 	<a href="
 		#{if _arg.type() == "Answer"}
-			@{Secured.voteAnswerUp(_arg.question().id(), _arg.id())}
+			@{Secured.voteAnswerUp(_arg.question().id, _arg.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionUp(_arg.id)}
 		#{/else}

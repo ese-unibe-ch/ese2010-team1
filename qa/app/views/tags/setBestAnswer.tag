@@ -6,5 +6,7 @@
 			@{Secured.setBestAnswer(_arg.id)}
 		#{/if}
 	">best Answer</a>
+
 	
+
 </span>
