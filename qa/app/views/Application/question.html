@@ -29,23 +29,10 @@
 				#{if user && answer.owner() != user}
 					#{vote answer /}
 				#{/if}
-		
-				#{if !question.isBestAnswerSet()}
-					#{if user && answer.question().owner() == user}
-						#{if answer.owner() != user}
-							#{setBestAnswer answer /}
-						#{/if}
-					#{/if}
-				#{/if}
+											
+				#{setBestAnswer answer:answer, user:user /}
+											
 				
-				#{if answer.isBestAnswer()}
-				<h1>*</h1>		
-					#{if answer.bestAnswerSetter().canBeUndone()}
-					<a href="
-					@{Secured.undoBestAnswer(answer.id)}
-					">undo</a>
-					#{/if}
-				#{/if}
 															
 			</li>
 			#{/list}

@@ -6,7 +6,7 @@ public class BestAnswerSetter extends Model {
 
 	private long answerID;
 	private boolean canBeUndone = true;
-	private final int delay = 10;
+	private int delay = 10;
 
 	public BestAnswerSetter(long answerID) {
 
@@ -42,6 +42,10 @@ public class BestAnswerSetter extends Model {
 
 	public void canBeUndone(boolean b) {
 		canBeUndone = b;
+	}
+
+	public void delay(int sec) {
+		delay = sec;
 	}
 
 }
