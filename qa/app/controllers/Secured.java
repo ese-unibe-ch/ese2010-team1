@@ -52,19 +52,25 @@ public class Secured extends Controller {
 
 	// TODO would be easy with JPA so do it when the model works fine!
 
-	/*
-	 * public static void voteAnswerUp(long qid, long id) { if
-	 * (Question.<Question> findById(qid) != null && Question.<Question>
-	 * findById(qid).getAnswer(id) != null) { Question.<Question>
-	 * findById(qid).getAnswer(id).voteUp( User.get(Security.connected()));
-	 * Application.question(qid); } else { Application.index(); } }
-	 * 
-	 * public static void voteAnswerDown(long qid, long id) { User user =
-	 * User.find("byName", Security.connected()).first(); if
-	 * (Question.<Question> findById(qid) != null && Question.<Question>
-	 * findById(qid).getAnswer(id) != null) { Question.<Question>
-	 * findById(qid).getAnswer(id).voteDown(user); Application.question(qid); }
-	 * else { Application.index(); } }
-	 */
+	public static void voteAnswerUp(long qid, long id) {
+		/*
+		 * if (Question.<Question> findById(qid) != null && Question.<Question>
+		 * findById(qid).getAnswer(id) != null) { Question.<Question>
+		 * findById(qid).getAnswer(id).voteUp( User.get(Security.connected()));
+		 * Application.question(qid); } else { Application.index(); }
+		 */
+	}
+
+	public static void voteAnswerDown(long qid, long id) {
+		User user = User.find("byName", Security.connected()).first();
+		/*
+		 * 
+		 * 
+		 * if (Question.<Question> findById(qid) != null && Question.<Question>
+		 * findById(qid).getAnswer(id) != null) { Question.<Question>
+		 * findById(qid).getAnswer(id).voteDown(user);
+		 * Application.question(qid); } else { Application.index(); }
+		 */
+	}
 
 }
