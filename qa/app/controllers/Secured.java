@@ -51,8 +51,6 @@ public class Secured extends Controller {
 		}
 	}
 
-	// TODO would be easy with JPA so do it when the model works fine!
-
 	public static void voteAnswerUp(long qid, long aid) {
 		User user = User.find("byName", Security.connected()).first();
 		Answer answer = Answer.findById(aid);

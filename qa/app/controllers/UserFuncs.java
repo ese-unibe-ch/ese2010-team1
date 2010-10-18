@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.List;
+
+import models.ProfileItem;
 import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -18,8 +21,10 @@ public class UserFuncs extends Controller {
 
 	public static void showProfile(long id) {
 
+		List<ProfileItem> titles = ProfileItem.findAll();
+
 		User puser = User.findById(id);
-		render(puser);
+		render(puser, titles);
 	}
 
 	public static void editProfile(long id) {
