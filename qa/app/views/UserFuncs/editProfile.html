@@ -4,17 +4,19 @@
 <h1>Edit ${puser.name()}'s Profile</h1>
 
 
-<table class="profile">
-<tr>
-	<td>Biography: </td> <td><textarea id="biography" name="biography" >${puser.biography}</textarea></td>
+<table>
+#{list items:titles, as:'title'}<tr>
+<td><b style="color: white;">${title.title()}:</b></td>
+<td>
+<input type="text" name="entrys" 
+#{if title.hasUserEntry(puser)}
+value="${title.findUserEntry(puser).entry}"
+#{/if} />
+</td>
 </tr>
-<tr>
-	<td>Life philosophy: </td> 	<td><input type="text" id="lifePhilosophy" name="lifePhilosophy" value="${puser.lifePhilosophy}" /></td
-</tr>
-<tr>
-	<td>Editor of choice: </td> 	<td><input type="text" id="editorOfChoice" name="editorOfChoice" value="${puser.editorOfChoice}" /> </td>
-</tr>
+#{/list}
 </table>
+
 
 <input type="submit" value="Save" />
 #{/form}

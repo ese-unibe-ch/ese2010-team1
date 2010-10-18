@@ -1,7 +1,9 @@
 package controllers;
 
+import java.util.Iterator;
 import java.util.List;
 
+import models.ProfileEntry;
 import models.ProfileItem;
 import models.User;
 import play.mvc.Before;
@@ -29,21 +31,30 @@ public class UserFuncs extends Controller {
 
 	public static void editProfile(long id) {
 
+		List<ProfileItem> titles = ProfileItem.findAll();
+
 		User puser = User.findById(id);
 
-		render(puser);
+		render(puser, titles);
 	}
 
-	public static void saveProfile(long id, String biography,
-			String lifePhilosophy, String editorOfChoice) {
+	// TODO something works not like it should...
+
+	public static void saveProfile(long id, String[] entrys) {
 
 		User user = User.findById(id);
+		List<ProfileItem> titles = ProfileItem.findAll();
 
-		user.biography = biography;
-		user.lifePhilosophy = lifePhilosophy;
-		user.editorOfChoice = editorOfChoice;
+		Iterator<ProfileItem> it = titles.iterator();
 
-		user.save();
+		for (String entry : entrys) {
+
+			ProfileItem pentry = it.next();
+			pentry.editUserEntry(user, entry);
+
+		}
+
+		System.out.print(ProfileEntry.count());
 
 		showProfile(id);
 

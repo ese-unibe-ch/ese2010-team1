@@ -10,12 +10,12 @@ import play.db.jpa.Model;
 public class ProfileEntry extends Model {
 
 	@Lob
-	private String entry;
+	public String entry;
 
 	@ManyToOne
-	private ProfileItem item;
+	public ProfileItem item;
 
-	private User user;
+	public User user;
 
 	public ProfileEntry(ProfileItem item, String entry, User user) {
 

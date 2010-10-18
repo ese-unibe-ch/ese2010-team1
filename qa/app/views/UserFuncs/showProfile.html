@@ -1,5 +1,7 @@
 #{extends 'main.html' /}
 
+#{set title:puser.name() + '\'s User Profile' /}
+
 <div class="pageContent">
 
 <h1>${puser.name()}'s Profile
@@ -8,19 +10,16 @@
 #{/if}
 </h1>
 <table>
-<tr>
-	<td>Biography: </td> <td>${puser.biography}</td>
+#{list items:titles, as:'title'}<tr>
+<td><b style="color: white;">${title.title()}:</b></td>
+<td> 
+#{if title.hasUserEntry(puser)}
+${title.findUserEntry(puser).entry}
+#{/if}
+</td>
 </tr>
-<tr>
-	<td>Life philosophy: </td> 	<td>${puser.lifePhilosophy}</td
-</tr>
-<tr>
-	<td>Editor of choice: </td> 	<td>${puser.editorOfChoice} </td>
-</tr>
-
+#{/list}
 </table>
 
-#{list items:titles, as:'title'}
-${title.title()}
-#{/list}
+
 </div>

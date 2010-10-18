@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -11,19 +12,19 @@ import play.db.jpa.Model;
 @Entity
 public class ProfileItem extends Model {
 
-	private String title;
+	public String title;
 
-	@OneToMany
+	@OneToMany(mappedBy = "item", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<ProfileEntry> entrys;
 
 	public ProfileItem(String title) {
-
-		this.entrys = new ArrayList<ProfileEntry>();
 		this.title = title;
+		this.entrys = new ArrayList<ProfileEntry>();
 
 	}
 
-	public ProfileItem addEntry(ProfileEntry entry) {
+	private ProfileItem addEntry(ProfileEntry entry) {
 		entrys.add(entry);
 		this.save();
 		return this;
@@ -33,4 +34,29 @@ public class ProfileItem extends Model {
 		return this.title;
 	}
 
+	public ProfileEntry findUserEntry(User user) {
+
+		return ProfileEntry.find("byItemAndUser", this, user).first();
+
+	}
+
+	public boolean hasUserEntry(User user) {
+		return findUserEntry(user) != null;
+	}
+
+	// TODO something is wrong here (or in the controller)
+	public ProfileItem editUserEntry(User user, String entry) {
+
+		if (!hasUserEntry(user)) {
+			ProfileEntry pentry = new ProfileEntry(this, entry, user).save();
+			this.addEntry(pentry);
+		} else {
+			ProfileEntry userEntry = findUserEntry(user);
+			userEntry.entry = entry;
+			userEntry.save();
+		}
+
+		this.save();
+		return this;
+	}
 }
