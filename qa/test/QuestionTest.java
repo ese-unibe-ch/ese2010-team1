@@ -72,8 +72,9 @@ public class QuestionTest extends UnitTest {
 		assertEquals(2, Question.count());
 		user.delete();
 
+		assertEquals(0, User.count());
 		assertEquals(0, Question.count());
-		assertEquals(0, Question.count());
+
 	}
 
 }
