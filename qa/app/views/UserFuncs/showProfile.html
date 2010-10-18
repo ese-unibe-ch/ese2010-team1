@@ -7,10 +7,20 @@
 <span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
 #{/if}
 </h1>
+<table>
+<tr>
+	<td>Biography: </td> <td>${puser.biography}</td>
+</tr>
+<tr>
+	<td>Life philosophy: </td> 	<td>${puser.lifePhilosophy}</td
+</tr>
+<tr>
+	<td>Editor of choice: </td> 	<td>${puser.editorOfChoice} </td>
+</tr>
 
-<div class="leftBox">Biography: </div> <div class="rightBox"> ${puser.biography} </div>
-<div class="leftBox">Life philosophy: </div> <div class="rightBox">${puser.lifePhilosophy}</div>
-<div class="leftBox">Editor of choice: </div> <div class="rightBox"> ${puser.editorOfChoice} </div>
-<div class="clear"></div>
+</table>
 
+#{list items:titles, as:'title'}
+${title.title()}
+#{/list}
 </div>
