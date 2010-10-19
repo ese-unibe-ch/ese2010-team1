@@ -1,7 +1,6 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -59,12 +58,25 @@ public class User extends Model {
 		return this.name;
 	}
 
+	// TODO encrypt password
 	public String password() {
 		return this.password;
 	}
 
 	public String email() {
 		return this.email;
+	}
+	
+	// TODO cache reputation for faster access
+	public int reputation() {
+		int reputation = 0;
+		
+		Iterator<Entry> it = this.entrys.iterator();
+		while(it.hasNext()) {
+			reputation += it.next().rating();
+		}
+		
+		return reputation;
 	}
 
 	public static User connect(String username, String password) {

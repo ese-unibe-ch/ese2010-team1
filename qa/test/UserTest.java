@@ -1,6 +1,6 @@
 import java.util.List;
 
-import models.User;
+import models.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +61,18 @@ public class UserTest extends UnitTest {
 		assertEquals(1, User.count());
 		user.delete();
 		assertEquals(0, User.count());
+	}
+	
+	@Test
+	public void reputation() {
+		User jack = new User("Jack", "test@mail.com", "password").save();
+		assertEquals(0, jack.reputation());
+		User bill = new User("Bill", "test@mail.com", "password").save();
+		Question question = jack.addQuestion("A title", "My first question");
+		question.voteUp(bill);
+		assertEquals(1, jack.reputation());
+		question.voteDown(bill);
+		assertEquals(-1, jack.reputation());
 	}
 
 }

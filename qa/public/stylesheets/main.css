@@ -111,6 +111,7 @@ article {
 		margin: 			10px 0;
 		padding: 			7px;
 		position: 			relative;
+		overflow: 		hidden;
 	}
 	
 		h3 {
@@ -160,16 +161,16 @@ header, nav, article, footer {
 	font-weight: bold;
 }
 
-.leftBox {
-	width: 33%;
+dt {
+	width: 200px;
 	background-color: #333;
 	float: left;	
 }
 
-.rightBox {
-	width: 67%;
+dd {
 	background-color: #333;
-	float: left;
+	margin-left: 205px;
+	display: block;
 }
 
 .clear {
