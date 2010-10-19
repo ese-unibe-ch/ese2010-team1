@@ -11,9 +11,7 @@
 			${question.content()}
 		</p>
 		#{date question /}
-		#{if user && question.owner() != user}
-			#{vote question /}
-		#{/if}
+		#{vote entry:question, user:user /}
 	</li>
 #{/list}
 </ul>

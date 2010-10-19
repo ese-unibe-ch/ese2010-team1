@@ -10,6 +10,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import controllers.Security;
+
 import play.db.jpa.Model;
 
 /**

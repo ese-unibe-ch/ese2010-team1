@@ -10,9 +10,7 @@
 				${question.content()}
 			</p>
 			#{date question /}
-			#{if user && question.owner() != user}
-				#{vote question /}
-			#{/if}
+			#{vote entry:question, user:user /}
 		</li>
 	</ul>
 	
@@ -26,9 +24,7 @@
 					${answer.content()}
 				</p>
 				#{date answer /}
-				#{if user && answer.owner() != user}
-					#{vote answer /}
-				#{/if}
+				#{vote entry:answer, user:user /}
 			</li>
 			#{/list}
 		</ul>
