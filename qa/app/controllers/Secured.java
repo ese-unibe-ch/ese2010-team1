@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Answer;
 import models.Question;
 import models.User;
 import play.data.validation.Required;
@@ -50,21 +51,30 @@ public class Secured extends Controller {
 		}
 	}
 
-	// TODO would be easy with JPA so do it when the model works fine!
+	public static void voteAnswerUp(long qid, long aid) {
+		User user = User.find("byName", Security.connected()).first();
+		Answer answer = Answer.findById(aid);
+		Question question = Question.findById(qid);
+		if (question != null && question.hasAnswer(answer)) {
 
-	/*
-	 * public static void voteAnswerUp(long qid, long id) { if
-	 * (Question.<Question> findById(qid) != null && Question.<Question>
-	 * findById(qid).getAnswer(id) != null) { Question.<Question>
-	 * findById(qid).getAnswer(id).voteUp( User.get(Security.connected()));
-	 * Application.question(qid); } else { Application.index(); } }
-	 * 
-	 * public static void voteAnswerDown(long qid, long id) { User user =
-	 * User.find("byName", Security.connected()).first(); if
-	 * (Question.<Question> findById(qid) != null && Question.<Question>
-	 * findById(qid).getAnswer(id) != null) { Question.<Question>
-	 * findById(qid).getAnswer(id).voteDown(user); Application.question(qid); }
-	 * else { Application.index(); } }
-	 */
+			answer.voteUp(user);
+			Application.question(qid);
+
+		} else {
+			Application.index();
+		}
+	}
+
+	public static void voteAnswerDown(long qid, long aid) {
+		User user = User.find("byName", Security.connected()).first();
+		Answer answer = Answer.findById(aid);
+		Question question = Question.findById(qid);
+		if (question != null && question.hasAnswer(answer)) {
+			answer.voteDown(user);
+			Application.question(qid);
+		} else {
+			Application.index();
+		}
+	}
 
 }

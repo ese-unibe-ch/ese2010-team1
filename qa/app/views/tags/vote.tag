@@ -1,10 +1,11 @@
 <span class="vote">
 	#{if _user && _user != _entry.owner()}
 	<a href="
-		#{if _entry.type() == "Answer"}
-			@{Secured.voteAnswerDown(_entry.question().id, _entry.id())}
+
+		#{if _arg.type() == "Answer"}
+			@{Secured.voteAnswerDown(_arg.question().id, _arg.id)}
 		#{/if}#{else}
-			@{Secured.voteQuestionDown(_entry.id)}
+			@{Secured.voteQuestionDown(_arg.id)}
 		#{/else}
 	">-</a>
 	#{/if}
@@ -13,10 +14,10 @@
 
 	#{if _user && _user != _entry.owner()}
 	<a href="
-		#{if _entry.type() == "Answer"}
-			@{Secured.voteAnswerUp(_entry.question().id, _entry.id())}
+		#{if _arg.type() == "Answer"}
+			@{Secured.voteAnswerUp(_arg.question().id, _arg.id)}
 		#{/if}#{else}
-			@{Secured.voteQuestionUp(_entry.id)}
+			@{Secured.voteQuestionUp(_arg.id)}
 		#{/else}
 	">+</a>
 	#{/if}

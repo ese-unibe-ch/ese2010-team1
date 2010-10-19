@@ -1,0 +1,6 @@
+ProfileItem(bio):
+    title: Biography
+ProfileItem(philosophy):
+    title: Life Philosophy
+ProfileItem(editor):
+    title: Editor of choice

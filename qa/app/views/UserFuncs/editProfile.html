@@ -3,9 +3,20 @@
 #{form @UserFuncs.saveProfile(puser.id) }
 <h1>Edit ${puser.name()}'s Profile</h1>
 
-<div class="leftBox">Biography:</div> <div class="rightBox"><textarea id="biography" name="biography" >${puser.biography}</textarea></div>
-<div class="leftBox">Life philosophy:</div><div class="rightBox"><input type="text" id="lifePhilosophy" name="lifePhilosophy" value="${puser.lifePhilosophy}" /></div>
-<div class="leftBox">Editor of choice</div><div class="rightBox"><input type="text" id="editorOfChoice" name="editorOfChoice" value="${puser.editorOfChoice}" /></div>
-<div class="clear"></div>
+
+<table>
+#{list items:titles, as:'title'}<tr>
+<td><b style="color: white;">${title.title()}:</b></td>
+<td>
+<input type="text" name="entrys" 
+#{if title.hasUserEntry(puser)}
+value="${title.findUserEntry(puser).entry}"
+#{/if} />
+</td>
+</tr>
+#{/list}
+</table>
+
+
 <input type="submit" value="Save" />
 #{/form}
