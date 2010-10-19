@@ -9,9 +9,9 @@
 <span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
 #{/if}
 </h1>
-<table>
+<table class="profile">
 #{list items:titles, as:'title'}<tr>
-<td><b style="color: white;">${title.title()}:</b></td>
+<td style="width: 150px;"><b style="color: white;">${title.title()}:</b></td>
 <td> 
 #{if title.hasUserEntry(puser)}
 ${title.findUserEntry(puser).entry}
