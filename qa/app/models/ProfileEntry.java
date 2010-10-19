@@ -21,6 +21,7 @@ public class ProfileEntry extends Model {
 
 		this.item = item;
 		this.entry = entry;
+		this.user = user;
 
 	}
 
