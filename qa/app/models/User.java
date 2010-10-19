@@ -28,13 +28,6 @@ public class User extends Model {
 	@Required
 	private String email;
 
-	// TODO if possible make admin panel to define profile entries
-	// TODO if needed make private variables
-
-	public String biography;
-	public String lifePhilosophy;
-	public String editorOfChoice;
-
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
@@ -67,6 +60,15 @@ public class User extends Model {
 		return this.email;
 	}
 
+	/**
+	 * Connect is used to login with a user.
+	 * 
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
+	 * @return the userclass
+	 */
 	public static User connect(String username, String password) {
 
 		User loginUser = User.find("byName", username).first();
@@ -78,11 +80,27 @@ public class User extends Model {
 
 	}
 
+	/**
+	 * Returns whether a searched user exists.
+	 * 
+	 * @param username
+	 *            the username
+	 * @return true, if the searched user exists
+	 */
 	public static boolean exists(String username) {
 
 		return User.find("byName", username).first() != null;
 	}
 
+	/**
+	 * Adds the question.
+	 * 
+	 * @param title
+	 *            the title
+	 * @param content
+	 *            the content
+	 * @return the question
+	 */
 	public Question addQuestion(String title, String content) {
 		Question newQuestion = new Question(this, title, content).save();
 		this.entrys.add(newQuestion);
@@ -91,12 +109,26 @@ public class User extends Model {
 
 	}
 
+	/**
+	 * Adds the answer to the database.
+	 * 
+	 * @param answer
+	 *            the answer
+	 * @return the user
+	 */
 	public User addAnswer(Answer answer) {
 		this.entrys.add(answer);
 		this.save();
 		return this;
 	}
 
+	/**
+	 * Adds the vote to the database.
+	 * 
+	 * @param vote
+	 *            the vote
+	 * @return the user
+	 */
 	public User addVote(Vote vote) {
 		this.votes.add(vote);
 		this.save();

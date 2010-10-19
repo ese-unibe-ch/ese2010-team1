@@ -9,6 +9,10 @@ import javax.persistence.OneToMany;
 
 import play.db.jpa.Model;
 
+/**
+ * The Class ProfileItem is responsible for all the items you can add on a user
+ * profile.
+ */
 @Entity
 public class ProfileItem extends Model {
 
@@ -18,12 +22,25 @@ public class ProfileItem extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<ProfileEntry> entrys;
 
+	/**
+	 * Instantiates a new profile item.
+	 * 
+	 * @param title
+	 *            the title
+	 */
 	public ProfileItem(String title) {
 		this.title = title;
 		this.entrys = new ArrayList<ProfileEntry>();
 
 	}
 
+	/**
+	 * Adds a new entry to the item.
+	 * 
+	 * @param entry
+	 *            the entry
+	 * @return the profile item
+	 */
 	private ProfileItem addEntry(ProfileEntry entry) {
 		entrys.add(entry);
 		this.save();
@@ -34,6 +51,13 @@ public class ProfileItem extends Model {
 		return this.title;
 	}
 
+	/**
+	 * Find user entry which belongs to the called item.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return the profile entry
+	 */
 	public ProfileEntry findUserEntry(User user) {
 
 		return ProfileEntry.find("byItemAndUser", this, user).first();
@@ -44,7 +68,15 @@ public class ProfileItem extends Model {
 		return findUserEntry(user) != null;
 	}
 
-	// TODO something is wrong here (or in the controller)
+	/**
+	 * Edits the user entry which belongs to item.
+	 * 
+	 * @param user
+	 *            the user the entry belongs to
+	 * @param entry
+	 *            the new entry
+	 * @return the profile item
+	 */
 	public ProfileItem editUserEntry(User user, String entry) {
 
 		if (!hasUserEntry(user)) {

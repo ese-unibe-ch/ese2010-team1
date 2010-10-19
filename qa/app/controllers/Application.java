@@ -20,6 +20,9 @@ public class Application extends Controller {
 		}
 	}
 
+	/**
+	 * Renders the home screen.
+	 */
 	public static void index() {
 
 		long userCount = User.count();
@@ -27,6 +30,12 @@ public class Application extends Controller {
 		render(questions, userCount);
 	}
 
+	/**
+	 * Shows the question with the given id.
+	 * 
+	 * @param id
+	 *            the question id
+	 */
 	public static void question(long id) {
 		Question question = Question.find("byID", id).first();
 		if (question == null) {
@@ -37,10 +46,23 @@ public class Application extends Controller {
 		}
 	}
 
+	/**
+	 * Shows the user creation page.
+	 */
 	public static void createUser() {
 		render();
 	}
 
+	/**
+	 * Save the new user in the database.
+	 * 
+	 * @param username
+	 *            the username
+	 * @param email
+	 *            the email
+	 * @param password
+	 *            the password
+	 */
 	public static void addUser(@Required String username,
 			@Required @Email String email, @Required String password) {
 		if (validation.hasErrors()) {
