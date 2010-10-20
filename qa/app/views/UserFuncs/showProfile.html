@@ -4,23 +4,26 @@
 
 <div class="pageContent">
 
-<h1>${puser.name()}'s Profile
-#{if puser==user}
-<span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
-#{/if}
-</h1>
-<table class="profile">
-#{list items:titles, as:'title'}<tr>
-<td style="width: 150px;"><b style="color: white;">${title.title()}:</b></td>
-<td> 
-#{if title.hasUserEntry(puser)}
-${title.findUserEntry(puser).entry}
-#{/if}
-</td>
-</tr>
-#{/list}
-</table>
-
-
+	<h1>
+		${puser.name()}'s Profile
+		#{if puser==user}
+		<span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
+		#{/if}
+	</h1>
+	
+	<dl>
+		#{list items:titles, as:'title'}<tr>
+			<dt>${title.title()}:<dd>
+			<dd>
+				#{if title.hasUserEntry(puser)}
+					${title.findUserEntry(puser).entry}
+				#{/if}#{else}
+					&nbsp;
+				#{/else}
+			</dd>
+		#{/list}
+		<dt>Reputation:<dd>
+		<dd>${puser.reputation()}</dd>
+	</dl>
 
 </div>

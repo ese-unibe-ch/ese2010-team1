@@ -3,9 +3,7 @@ package controllers;
 import java.util.Iterator;
 import java.util.List;
 
-import models.ProfileEntry;
-import models.ProfileItem;
-import models.User;
+import models.*;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;

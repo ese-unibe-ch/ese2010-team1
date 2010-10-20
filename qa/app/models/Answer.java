@@ -34,10 +34,6 @@ public class Answer extends Entry {
 
 	}
 
-	public String type() {
-		return "Answer";
-	}
-
 	/**
 	 * Get the {@link Question} belonging to the <code>Answer</code>.
 	 * 

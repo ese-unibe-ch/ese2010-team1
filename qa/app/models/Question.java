@@ -50,14 +50,6 @@ public class Question extends Entry {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see models.Entry#type()
-	 */
-	public String type() {
-		return "Question";
-	}
 
 	/**
 	 * Title.

@@ -66,7 +66,10 @@ public class User extends Model {
 		
 		Iterator<Entry> it = this.entrys.iterator();
 		while(it.hasNext()) {
-			reputation += it.next().rating();
+			Entry entry = it.next();
+			reputation += entry.rating();
+			if(entry instanceof models.Answer && ((Answer)entry).isBestAnswer())
+				reputation += 50;
 		}
 		
 		return reputation;
