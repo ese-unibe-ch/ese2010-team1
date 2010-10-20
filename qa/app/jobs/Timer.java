@@ -1,5 +1,6 @@
-package models;
+package jobs;
 
+import models.Answer;
 import play.jobs.Job;
 
 public class Timer extends Job {

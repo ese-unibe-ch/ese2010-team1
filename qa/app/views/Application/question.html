@@ -26,10 +26,6 @@
 				#{date answer /}
 
 				#{vote entry:answer, user:user /}
-
-				#{if user && answer.owner() != user}
-					#{vote answer /}
-				#{/if}
 											
 				#{setBestAnswer answer:answer, user:user /}
 											

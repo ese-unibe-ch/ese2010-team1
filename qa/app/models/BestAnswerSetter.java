@@ -1,5 +1,6 @@
 package models;
 
+import jobs.Timer;
 import play.db.jpa.Model;
 
 public class BestAnswerSetter extends Model {
