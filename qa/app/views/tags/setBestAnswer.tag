@@ -3,11 +3,7 @@
 #{if !_answer.question().isBestAnswerSet()}
 	#{if _user && _answer.question().owner() == _user}
 		#{if _user != _answer.owner()}
-			<a href="
-				#{if _answer.type() == "Answer"}
-					@{Secured.setBestAnswer(_answer.id)}
-				#{/if}
-			">best Answer</a>
+			<a href="@{Secured.setBestAnswer(_answer.id)}">best Answer</a>
 		#{/if}
 	#{/if}
 #{/if}
