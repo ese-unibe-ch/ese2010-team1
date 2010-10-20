@@ -31,7 +31,7 @@ public class BestAnswerSetter extends Model {
 	}
 
 	public void undo() {
-		assert (canBeUndone = true);
+		assert (canBeUndone == true);
 		Answer answer = Answer.<Answer> findById(answerID);
 		answer.bestAnswerSetter(null);
 		answer.isBestAnswer(false);
