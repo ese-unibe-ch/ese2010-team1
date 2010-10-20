@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Answer;
+import models.BestAnswerSetter;
 import models.Question;
 import models.User;
 import play.data.validation.Required;
@@ -77,4 +78,30 @@ public class Secured extends Controller {
 		}
 	}
 
+	public static void setBestAnswer(long id) {
+		if (Answer.<Answer> findById(id) != null) {
+			Answer answer = Answer.<Answer> findById(id);
+			User user = User.find("byName", Security.connected()).first();
+			assert (user == answer.question().owner());
+			BestAnswerSetter bestAnswerSetter = new BestAnswerSetter(id);
+			Application.question(answer.question().id);
+
+		} else {
+			Application.index();
+		}
+	}
+
+	public static void undoBestAnswer(long id) {
+		if (Answer.<Answer> findById(id) != null) {
+			Answer answer = Answer.<Answer> findById(id);
+			User user = User.find("byName", Security.connected()).first();
+			assert (user == answer.question().owner());
+			answer.bestAnswerSetter().undo();
+			answer.save();
+			answer.question().save();
+			Application.question(answer.question().id);
+		} else {
+			Application.index();
+		}
+	}
 }

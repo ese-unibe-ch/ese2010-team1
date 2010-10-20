@@ -9,19 +9,25 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+// TODO: Auto-generated Javadoc
 /**
- * A {@link Entry} containing a question as <code>content</code> and
+ * A {@link Entry} containing a question as <code>content</code> and.
+ * 
  * {@link Answer}s.
  * 
  * @author Simon Marti
  * @author Mirco Kocher
- * 
  */
 @Entity
 public class Question extends Entry {
 
+	/** The title. */
 	private String title;
 
+	/** The is best answer set. */
+	public boolean isBestAnswerSet;
+
+	/** The answers. */
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<Answer> answers;
@@ -31,26 +37,39 @@ public class Question extends Entry {
 	 * 
 	 * @param owner
 	 *            the {@link User} who posted the <code>Question</code>
+	 * @param title
+	 *            the title
 	 * @param content
 	 *            the question
 	 */
 	public Question(User owner, String title, String content) {
 		super(owner, content);
+		isBestAnswerSet = false;
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see models.Entry#type()
+	 */
 	public String type() {
 		return "Question";
 	}
 
+	/**
+	 * Title.
+	 * 
+	 * @return the string
+	 */
 	public String title() {
 		return this.title;
 	}
 
 	/**
-	 * Post a {@link Answer} to a <code>Question</code>
+	 * Post a {@link Answer} to a <code>Question</code>.
 	 * 
 	 * @param user
 	 *            the {@link User} posting the {@link Answer}
@@ -65,7 +84,7 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Checks if a {@link Answer} belongs to a <code>Question</code>
+	 * Checks if a {@link Answer} belongs to a <code>Question</code>.
 	 * 
 	 * @param answer
 	 *            the {@link Answer} to check
@@ -88,7 +107,7 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Get all {@link Answer}s to a <code>Question</code>
+	 * Get all {@link Answer}s to a <code>Question</code>.
 	 * 
 	 * @return {@link Collection} of {@link Answers}
 	 */
@@ -97,4 +116,24 @@ public class Question extends Entry {
 		Collections.sort(list, new EntryComperator());
 		return list;
 	}
+
+	/**
+	 * Checks if is a best answer set.
+	 * 
+	 * @return true, if is best answer is set
+	 */
+	public boolean isBestAnswerSet() {
+		return isBestAnswerSet;
+	}
+
+	/**
+	 * Sets the best answer.
+	 * 
+	 * @param s
+	 *            the new best answer
+	 */
+	public void setBestAnswerFlag(boolean s) {
+		this.isBestAnswerSet = s;
+	}
+
 }

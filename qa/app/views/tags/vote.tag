@@ -6,6 +6,7 @@
 			@{Secured.voteAnswerDown(_entry.question().id, _entry.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionDown(_entry.id)}
+
 		#{/else}
 	">-</a>
 	#{/if}
@@ -18,6 +19,7 @@
 			@{Secured.voteAnswerUp(_entry.question().id, _entry.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionUp(_entry.id)}
+
 		#{/else}
 	">+</a>
 	#{/if}
