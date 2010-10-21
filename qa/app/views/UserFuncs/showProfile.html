@@ -24,7 +24,7 @@
 	
 		<dl>
 			#{list items:titles, as:'title'}
-				<dt>${title.title()}:<dd>
+				<dt>${title.title()}:</dt>
 				<dd>
 					#{if title.hasUserEntry(puser)}
 						${title.findUserEntry(puser).entry}
@@ -33,7 +33,7 @@
 					#{/else}
 				</dd>
 			#{/list}
-			<dt>Reputation:<dd>
+			<dt>Reputation:</dt>
 			<dd>${puser.reputation()}</dd>
 		</dl>	
 	     
@@ -57,7 +57,13 @@
 	    	#{/else}
 	  	</div>
 	  	<div id="statistics">
-	    	<p>Ut enim ad minim veniam</p>
+	  	
+	  	<dl>
+	  		<dt>Number of questions:</dt><dd>${puser.getNumberOfQuestions()}</dd>
+	  		<dt>Number of answers:</dt><dd>${puser.getNumberOfAnswers()}</dd>
+	  		<dt>Number of votes:</dt><dd>${puser.getNumberOfVotes()}</dd>
+	  	</dl>
+	    	
 	  	</div>
 	</div>          
 
