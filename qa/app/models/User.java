@@ -135,4 +135,9 @@ public class User extends Model {
 		return this;
 	}
 
+	public List<Entry> getActivities(int numberOfActivitys) {
+
+		return Entry.find("order by timestamp desc").fetch(numberOfActivitys);
+	}
+
 }

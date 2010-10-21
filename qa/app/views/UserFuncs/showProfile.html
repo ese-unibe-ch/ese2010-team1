@@ -39,7 +39,22 @@
 	     
 	  	</div>
 	  	<div id="activities">
-	    	<p>Sed do eiusmod tempor incididunt.</p>
+	    	<b>Latest 10 activities:</b> <br />
+	    	#{if puser.getActivities(1).size()!=1}
+	    		There were no activities.
+	    	#{/if}
+	    	#{else}
+	    		#{list items:puser.getActivities(10), as:'activity'}
+	    		
+	    			#{if activity instanceof models.Answer}
+	    				${activity.timestamp().format('dd.MM.yyyy, hh:mm')} - answer created <br />
+	    			#{/if}
+	    			#{else}
+	    				${activity.timestamp().format('dd.MM.yyyy, hh:mm')} - question created<br />
+	    			#{/else}
+	    	
+	    		#{/list}
+	    	#{/else}
 	  	</div>
 	  	<div id="statistics">
 	    	<p>Ut enim ad minim veniam</p>
