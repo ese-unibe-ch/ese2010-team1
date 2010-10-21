@@ -4,11 +4,14 @@
         <title>#{get 'title' /}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
+        
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
         <script src="@{'/public/javascripts/qa.js'}" type="text/javascript" charset="utf-8"></script>
         #{get 'moreScripts' /}
+       
+	             
     </head>
     <body>
     	<div>
@@ -18,7 +21,7 @@
     				<a href="@{Application.index}">Questions</a>
     				<span>
     					#{if user}
-							Hi <a href="@{UserFuncs.showProfile(user.id)}">${user.name()}!</a>
+							Hi <a href="@{UserFuncs.showProfile(user.id)}">${user.name}!</a>
 							<a href="@{Secure.logout}">Logout</a>
 						#{/if}
 						#{else}

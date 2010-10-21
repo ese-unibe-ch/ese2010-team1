@@ -5,7 +5,7 @@
 #{list items:questions, as:'question'}
 	<li onclick="goto('@@{Application.question(question.id)}')">
 		<a href="@{Application.question(question.id)}">
-			<h2>${question.owner().name()}:</h2>
+			<h2>${question.owner().name}:</h2>
 		</a>
 		<p>
 			${question.content()}

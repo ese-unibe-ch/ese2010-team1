@@ -1,29 +1,49 @@
 #{extends 'main.html' /}
 
-#{set title:puser.name() + '\'s User Profile' /}
+#{set title:puser.name + '\'s User Profile' /}
 
 <div class="pageContent">
 
 	<h1>
-		${puser.name()}'s Profile
+		${puser.name}'s Profile
 		#{if puser==user}
 		<span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
 		#{/if}
 	</h1>
 	
-	<dl>
-		#{list items:titles, as:'title'}
-			<dt>${title.title()}:<dd>
-			<dd>
-				#{if title.hasUserEntry(puser)}
-					${title.findUserEntry(puser).entry}
-				#{/if}#{else}
-					&nbsp;
-				#{/else}
-			</dd>
-		#{/list}
-		<dt>Reputation:<dd>
-		<dd>${puser.reputation()}</dd>
-	</dl>
+	<div class="tabs">
+  	<!-- tabs -->
+  		<ul class="tabNavigation">
+    		<li><a href="#profile">Profile</a></li>
+    		<li><a href="#activities">Activities</a></li>
+    		<li><a href="#statistics">Statistics</a></li>
+  		</ul>
+
+  		<!-- tab containers -->
+  		<div id="profile">
+	
+		<dl>
+			#{list items:titles, as:'title'}
+				<dt>${title.title()}:<dd>
+				<dd>
+					#{if title.hasUserEntry(puser)}
+						${title.findUserEntry(puser).entry}
+					#{/if}#{else}
+						&nbsp;
+					#{/else}
+				</dd>
+			#{/list}
+			<dt>Reputation:<dd>
+			<dd>${puser.reputation()}</dd>
+		</dl>	
+	     
+	  	</div>
+	  	<div id="activities">
+	    	<p>Sed do eiusmod tempor incididunt.</p>
+	  	</div>
+	  	<div id="statistics">
+	    	<p>Ut enim ad minim veniam</p>
+	  	</div>
+	</div>          
 
 </div>
