@@ -1,5 +1,6 @@
 import java.util.List;
 
+import models.Answer;
 import models.Question;
 import models.User;
 
@@ -65,15 +66,28 @@ public class UserTest extends UnitTest {
 	}
 
 	@Test
-	public void reputation() {
-		User jack = new User("Jack", "test@mail.com", "password").save();
-		assertEquals(0, jack.reputation());
-		User bill = new User("Bill", "test@mail.com", "password").save();
-		Question question = jack.addQuestion("A title", "My first question");
-		question.voteUp(bill);
-		assertEquals(1, jack.reputation());
-		question.voteDown(bill);
-		assertEquals(-1, jack.reputation());
+	public void getNumberOfQuestions() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		Question question2 = user.addQuestion("A title2", "My first question2");
+		assertEquals(user.getNumberOfQuestions(), 2);
+		assertFalse(user.getNumberOfQuestions() == 3);
 	}
 
+	@Test
+	public void getNumberOfVotes() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("John", "tes2t@mail.com", "password2").save();
+		Question question = user2.addQuestion("A title", "My first question");
+		question.voteUp(user);
+		assertEquals(1, user.getNumberOfVotes());
+	}
+
+	@Test
+	public void getNumberOfAnswers() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		Answer answer = question.answer(user, "an answer");
+		assertEquals(1, user.getNumberOfAnswers());
+	}
 }

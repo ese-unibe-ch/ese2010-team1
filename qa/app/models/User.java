@@ -135,6 +135,18 @@ public class User extends Model {
 		return this;
 	}
 
+	public long getNumberOfVotes() {
+		return Vote.count("owner = ?", this);
+	}
+
+	public long getNumberOfQuestions() {
+		return Question.count("owner = ?", this);
+	}
+
+	public long getNumberOfAnswers() {
+		return Answer.count("owner = ?", this);
+	}
+
 	public List<Entry> getActivities(int numberOfActivitys) {
 
 		return Entry.find("order by timestamp desc").fetch(numberOfActivitys);
