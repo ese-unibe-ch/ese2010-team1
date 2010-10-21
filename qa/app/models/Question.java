@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -17,6 +20,11 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Question extends Entry {
+
+	// NEW by OLLI
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	public Set<Tag> tags;
 
 	/** The title. */
 	public String title;
@@ -44,6 +52,7 @@ public class Question extends Entry {
 		isBestAnswerSet = false;
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
+		this.tags = new TreeSet<Tag>();
 
 	}
 
@@ -122,6 +131,18 @@ public class Question extends Entry {
 	 */
 	public void setBestAnswerFlag(boolean s) {
 		this.isBestAnswerSet = s;
+	}
+
+	public Question tagItWith(String name) {
+		tags.add(Tag.findOrCreateByName(name));
+		return this;
+	}
+
+	public static List<Question> findTaggedWith(String tag) {
+		return Question
+				.find(
+						"select distinct q from Question q join q.tags as t where t.name = ?",
+						tag).fetch();
 	}
 
 }
