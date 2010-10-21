@@ -1,6 +1,7 @@
 package models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -51,28 +52,12 @@ public class User extends Model {
 		return this.name;
 	}
 
-	// TODO encrypt password
 	public String password() {
 		return this.password;
 	}
 
 	public String email() {
 		return this.email;
-	}
-	
-	// TODO cache reputation for faster access
-	public int reputation() {
-		int reputation = 0;
-		
-		Iterator<Entry> it = this.entrys.iterator();
-		while(it.hasNext()) {
-			Entry entry = it.next();
-			reputation += entry.rating();
-			if(entry instanceof models.Answer && ((Answer)entry).isBestAnswer())
-				reputation += 50;
-		}
-		
-		return reputation;
 	}
 
 	/**
@@ -149,5 +134,19 @@ public class User extends Model {
 		this.save();
 		return this;
 	}
+	
+	
+	public long getNumberOfVotes() {
+		return Vote.count("owner = ?", this);
+	}
+	
+	public long getNumberOfQuestions() {
+		return Question.count("owner = ?", this);
+	}
+	
+	public long getNumberOfAnswers() {
+		return Answer.count("owner = ?", this);		
+		}
+	
 
 }
