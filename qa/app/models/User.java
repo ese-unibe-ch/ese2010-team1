@@ -1,5 +1,7 @@
 package models;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,13 +40,18 @@ public class User extends Model {
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
-		this.password = password;
+		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
 
 	}
 
 	// TODO cache reputation for faster access
+	/**
+	 * Reputation.
+	 * 
+	 * @return the reputation
+	 */
 	public int reputation() {
 		int reputation = 0;
 
@@ -73,7 +80,7 @@ public class User extends Model {
 
 		User loginUser = User.find("byName", username).first();
 
-		if (loginUser != null && loginUser.password.equals(password))
+		if (loginUser != null && loginUser.password.equals(encrypt(password)))
 			return loginUser;
 		else
 			return null;
@@ -90,6 +97,24 @@ public class User extends Model {
 	public static boolean exists(String username) {
 
 		return User.find("byName", username).first() != null;
+	}
+
+	/**
+	 * Encrypt.
+	 * 
+	 * @param password
+	 *            the password
+	 * @return the encrypted password
+	 */
+	private static String encrypt(String password) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-1");
+			md.update(password.getBytes());
+			return new BigInteger(1, md.digest(password.getBytes()))
+					.toString(16);
+		} catch (Exception e) {
+			return password;
+		}
 	}
 
 	/**
