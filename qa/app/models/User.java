@@ -16,18 +16,18 @@ public class User extends Model {
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Entry> entrys;
+	public List<Entry> entrys;
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Vote> votes;
+	public List<Vote> votes;
 
 	@Required
-	private String name;
+	public String name;
 	@Required
-	private String password;
+	public String password;
 	@Required
-	private String email;
+	public String email;
 
 	/**
 	 * Creates a <code>User</code> with a given name.
@@ -42,24 +42,6 @@ public class User extends Model {
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
 
-	}
-
-	/**
-	 * Returns the name of the <code>User</code>.
-	 * 
-	 * @return name of the <code>User</code>
-	 */
-	public String name() {
-		return this.name;
-	}
-
-	// TODO encrypt password
-	public String password() {
-		return this.password;
-	}
-
-	public String email() {
-		return this.email;
 	}
 
 	// TODO cache reputation for faster access
@@ -91,7 +73,7 @@ public class User extends Model {
 
 		User loginUser = User.find("byName", username).first();
 
-		if (loginUser != null && loginUser.password().equals(password))
+		if (loginUser != null && loginUser.password.equals(password))
 			return loginUser;
 		else
 			return null;

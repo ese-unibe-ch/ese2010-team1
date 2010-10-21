@@ -1,6 +1,7 @@
 import java.util.List;
 
-import models.*;
+import models.Question;
+import models.User;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +28,8 @@ public class UserTest extends UnitTest {
 		new User("Jack", "test@mail.com", "password").save();
 		List<User> user = User.find("byName", "Jack").fetch();
 		assertEquals(1, user.size());
-		assertEquals(user.get(0).name(), "Jack");
-		assertEquals(user.get(0).email(), "test@mail.com");
+		assertEquals(user.get(0).name, "Jack");
+		assertEquals(user.get(0).email, "test@mail.com");
 	}
 
 	@Test
@@ -36,7 +37,7 @@ public class UserTest extends UnitTest {
 		new User("Jack", "test@mail.com", "password").save();
 		List<User> user = User.find("byNameAndPassword", "Jack", "password")
 				.fetch();
-		assertEquals("password", user.get(0).password());
+		assertEquals("password", user.get(0).password);
 
 	}
 
@@ -62,7 +63,7 @@ public class UserTest extends UnitTest {
 		user.delete();
 		assertEquals(0, User.count());
 	}
-	
+
 	@Test
 	public void reputation() {
 		User jack = new User("Jack", "test@mail.com", "password").save();

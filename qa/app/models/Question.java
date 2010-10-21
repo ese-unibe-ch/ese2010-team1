@@ -9,20 +9,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-// TODO: Auto-generated Javadoc
 /**
  * A {@link Entry} containing a question as <code>content</code> and.
  * 
  * {@link Answer}s.
  * 
- * @author Simon Marti
- * @author Mirco Kocher
  */
 @Entity
 public class Question extends Entry {
 
 	/** The title. */
-	private String title;
+	public String title;
 
 	/** The is best answer set. */
 	public boolean isBestAnswerSet;
@@ -30,7 +27,7 @@ public class Question extends Entry {
 	/** The answers. */
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Answer> answers;
+	public List<Answer> answers;
 
 	/**
 	 * Create a Question.
@@ -49,7 +46,6 @@ public class Question extends Entry {
 		this.answers = new ArrayList<Answer>();
 
 	}
-
 
 	/**
 	 * Title.

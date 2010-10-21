@@ -20,7 +20,7 @@ public class ProfileItem extends Model {
 
 	@OneToMany(mappedBy = "item", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<ProfileEntry> entrys;
+	public List<ProfileEntry> entrys;
 
 	/**
 	 * Instantiates a new profile item.
