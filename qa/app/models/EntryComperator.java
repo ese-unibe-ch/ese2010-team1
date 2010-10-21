@@ -7,12 +7,14 @@ import java.util.Comparator;
  */
 public class EntryComperator implements Comparator {
 
+	public int compare(Object o1, Object o2) {
+		if ((o1 instanceof Entry) && (o2 instanceof Entry))
+			if (((Entry) o2).rating() - ((Entry) o1).rating() > 0) {
+				return 1;
+			} else if (((Entry) o2).rating() - ((Entry) o1).rating() < 0) {
+				return -1;
+			}
 
-		public int compare(Object o1, Object o2) {
-			if((o1 instanceof Entry) && (o2 instanceof Entry))
-				return ((Entry) o2).rating() - ((Entry) o1).rating();
-			return 0;
-		}
-		
-		
+		return 0;
+	}
 }

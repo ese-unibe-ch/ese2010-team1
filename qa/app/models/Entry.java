@@ -68,13 +68,13 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return number of positive {@link Vote}s
 	 */
-	public int upVotes() {
-		return Vote.find("byEntryAndUp", this, true).fetch().size();
+	public long upVotes() {
+		return Vote.count("entry = ? and up = ?", this, true);
 	}
 
-	public int numberOfVotes() {
+	public long numberOfVotes() {
 
-		return Vote.find("byEntry", this).fetch().size();
+		return Vote.count("entry = ?", this);
 	}
 
 	/**
@@ -82,9 +82,9 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return number of negative {@link Vote}s
 	 */
-	public int downVotes() {
+	public long downVotes() {
 
-		return Vote.find("byEntryAndUp", this, false).fetch().size();
+		return Vote.count("entry = ? and up = ?", this, false);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return rating as an <code>Integer</code>
 	 */
-	public int rating() {
+	public long rating() {
 		return this.upVotes() - this.downVotes();
 	}
 
