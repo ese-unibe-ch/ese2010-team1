@@ -48,8 +48,6 @@ public abstract class Entry extends Model {
 		this.votes = new ArrayList<Vote>();
 	}
 
-	public abstract String type();
-
 	public String content() {
 		return this.content;
 	}
