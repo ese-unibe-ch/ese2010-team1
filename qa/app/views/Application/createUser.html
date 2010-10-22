@@ -3,8 +3,17 @@
 #{form @Application.addUser()}
 
 #{ifErrors}
-<div class="error"> Please fill out all required fields. </div>
+<div class="error">
+<h1>Oooops something went wrong!</h1>
+<ul>
+	#{errors}
+	<li> ${error} </li>
+	#{/errors}
+</ul>
+</div>
+<div class="clear"></div>
 #{/ifErrors}
+
 
 <div>Username: </div>
 <input type="text" id="username" name="username" value="${username}" />

@@ -63,14 +63,18 @@ public class Application extends Controller {
 	 * @param password
 	 *            the password
 	 */
-	public static void addUser(@Required String username,
-			@Required @Email String email, @Required String password) {
+	public static void addUser(
+			@Required(message = "A valid username is required") String username,
+			@Required(message = "A valid e-mail is required") @Email String email,
+			@Required(message = "A password is required") String password) {
 		if (validation.hasErrors()) {
 			render("Application/createUser.html", username, email, password);
 		}
 		if (!User.exists(username)) {
 
 			new User(username, email, password).save();
+		} else {
+			// TS generate method for notificate username exists already
 		}
 		Application.index();
 	}
