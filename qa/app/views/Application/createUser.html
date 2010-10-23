@@ -18,7 +18,8 @@
 
 
 <div>Username: </div>
-<input type="text" id="username" name="username" value="${flash.username}" />
+<input type="text" id="username" name="username" value="${flash.username}" onkeyup="twitter.updateUrl(this.value)" />
+<div id="status"></div>
 <div>Email: </div>
 <input type="text" id="email" name="email" value="${flash.email}" />
 <div>Password:  </div>
@@ -28,3 +29,12 @@
 <input type="submit" value="Register" style="margin-top: 5px;" />
 
 #{/form}
+
+
+
+<script type="text/javascript">
+	$( function () {
+		twitter.screenNameKeyUp();
+  		$('#user_screen_name').focus();
+  	});
+</script>

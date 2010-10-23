@@ -62,6 +62,8 @@ public class Application extends Controller {
 	 *            the email
 	 * @param password
 	 *            the password
+	 * @param password2
+	 *            the confirmation of the password
 	 */
 	public static void addUser(
 			@Required(message = "A valid username is required") String username,
@@ -69,7 +71,7 @@ public class Application extends Controller {
 			@Required(message = "A password is required") String password,
 			String password2) {
 		if (!password.isEmpty())
-			validation.isTrue(password.equals(password2)).message(
+			validation.equals(password, password2).message(
 					"passwords don't match");
 
 		if (validation.hasErrors()) {
@@ -84,6 +86,11 @@ public class Application extends Controller {
 			// TS generate method for notificate username exists already
 		}
 		Application.index();
+	}
+
+	public static void userCheck(String username) {
+		boolean exists = User.exists(username);
+		render(exists);
 	}
 
 }
