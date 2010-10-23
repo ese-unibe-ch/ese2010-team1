@@ -14,7 +14,7 @@
         <script src="@{'/public/javascripts/settings.js'}" type="text/javascript"></script>
 		<SCRIPT type="text/javascript">
 			pic1 = new Image(16, 16); 
-			pic1.src = "loader.gif";
+			pic1.src = "@{'/public/images/loader.gif'}";
 			
 			$(document).ready(function(){
 			
@@ -24,7 +24,7 @@
 			
 			if(usr.length >= 3)
 			{
-			$("#status").html('<img src="loader.gif" align="absmiddle">&nbsp;Checking availability...');
+			$("#status").html('<img src="@{'/public/images/loader.gif'}" align="absmiddle">&nbsp;Checking availability...');
 			
 			    $.ajax({  
 			    type: "POST",  
@@ -38,7 +38,7 @@
 				{ 
 			        $("#username").removeClass('object_error'); // if necessary
 					$("#username").addClass("object_ok");
-					$(this).html('&nbsp;<img src="accepted.png" align="absmiddle"> <font color="Green"> Available </font>  ');
+					$(this).html('&nbsp;<img src="@{'/public/images/accepted.png'}" align="absmiddle"> <font color="Green"> Available </font>  ');
 				}  
 				else  
 				{  
