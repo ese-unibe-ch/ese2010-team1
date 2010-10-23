@@ -124,4 +124,9 @@ public class Question extends Entry {
 		this.isBestAnswerSet = s;
 	}
 
+	// TS Replace whitespace by percent symbol to get more hits
+	public static List<Entry> searchTitle(String searchString) {
+		return Question.find("byTitleLike", "%" + searchString + "%").fetch();
+	}
+
 }

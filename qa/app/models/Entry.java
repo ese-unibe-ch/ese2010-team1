@@ -133,10 +133,10 @@ public abstract class Entry extends Model {
 		return vote;
 	}
 
-	public List<Entry> searchContent(String searchString) {
+	// TS Replace whitespace by percent symbol to get more hits
+	public static List<Entry> searchContent(String searchString) {
 
-		List<Entry> result = Entry.find("byContentLike",
-				"%" + searchString + "%").fetch();
-		return result;
+		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
+
 	}
 }
