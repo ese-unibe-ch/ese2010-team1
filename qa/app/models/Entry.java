@@ -132,4 +132,11 @@ public abstract class Entry extends Model {
 		this.votes.add(vote);
 		return vote;
 	}
+
+	public List<Entry> searchContent(String searchString) {
+
+		List<Entry> result = Entry.find("byContentLike",
+				"%" + searchString + "%").fetch();
+		return result;
+	}
 }
