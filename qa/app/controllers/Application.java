@@ -66,9 +66,16 @@ public class Application extends Controller {
 	public static void addUser(
 			@Required(message = "A valid username is required") String username,
 			@Required(message = "A valid e-mail is required") @Email String email,
-			@Required(message = "A password is required") String password) {
+			@Required(message = "A password is required") String password,
+			String password2) {
+		if (!password.isEmpty())
+			validation.isTrue(password.equals(password2)).message(
+					"passwords don't match");
+
 		if (validation.hasErrors()) {
-			render("Application/createUser.html", username, email, password);
+			params.flash();
+			validation.keep();
+			Application.createUser();
 		}
 		if (!User.exists(username)) {
 
