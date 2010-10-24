@@ -50,6 +50,10 @@ public abstract class Entry extends Model {
 		return this.content;
 	}
 
+	public void content(String content) {
+		this.content = content;
+	}
+
 	public User owner() {
 		return this.owner;
 	}
