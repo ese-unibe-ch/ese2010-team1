@@ -4,20 +4,24 @@
 
 
 <ul>
+#{if questionResults.size() > 0}
 <li><b>Question Titles:</b>
 #{list items:questionResults, as:'question'}
 
 <li><a href="@{Application.question(question.id)}">${question.title}</a></li>
 #{/list}
+#{/if}
 
+#{if entryResults.size() > 0}
 <li><b>Entrys:</b></li>
 #{list items:entryResults, as:'entry'}
-#{if entry instanceof models.Question}
-<li><a href="@{Application.question(entry.id)}">${entry.content}</a></li>
-#{/if}
-#{elseif entry instanceof models.Answer} 
-<li><a href="@{Application.question(entry.question.id)}">${entry.content}</a></li>
-#{/elseif}
+	#{if entry instanceof models.Question}
+	<li><a href="@{Application.question(entry.id)}">${entry.content}</a></li>
+	#{/if}
+	#{elseif entry instanceof models.Answer} 
+	<li><a href="@{Application.question(entry.question.id)}">${entry.content}</a></li>
+	#{/elseif}
 #{/list}
 
+#{/if}
 </ul>
