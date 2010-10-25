@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Answer;
+import models.Entry;
 import models.Question;
 import models.User;
 import play.data.validation.Email;
@@ -70,9 +71,12 @@ public class Application extends Controller {
 			@Required(message = "A valid e-mail is required") @Email String email,
 			@Required(message = "A password is required") String password,
 			String password2) {
-		if (!password.isEmpty())
+
+		// validate all parameters
+		if (!password.isEmpty()) {
 			validation.equals(password, password2).message(
 					"passwords don't match");
+		}
 
 		validation.isTrue(!User.exists(username)).message(
 				"Username already exists");
@@ -93,8 +97,12 @@ public class Application extends Controller {
 		render(exists);
 	}
 
-	public static void search(String searchstring) {
-		render(searchstring);
+	public static void search(String searchString) {
+
+		List<Entry> questionResults = Question.searchTitle(searchString);
+		List<Entry> entryResults = Entry.searchContent(searchString);
+
+		render(searchString, questionResults, entryResults);
 	}
 
 }
