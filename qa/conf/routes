@@ -23,6 +23,8 @@ POST	/register								Application.addUser
 GET		/showProfile/{id}						UserFuncs.showProfile
 GET		/editProfile/{id}						UserFuncs.editProfile
 
+GET		/search/{searchstring}					Application.search
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

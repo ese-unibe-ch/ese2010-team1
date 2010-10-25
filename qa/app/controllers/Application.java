@@ -74,23 +74,27 @@ public class Application extends Controller {
 			validation.equals(password, password2).message(
 					"passwords don't match");
 
+		validation.isTrue(!User.exists(username)).message(
+				"Username already exists");
+
 		if (validation.hasErrors()) {
 			params.flash();
 			validation.keep();
 			Application.createUser();
 		}
-		if (!User.exists(username)) {
 
-			new User(username, email, password).save();
-		} else {
-			// TS generate method for notificate username exists already
-		}
+		new User(username, email, password).save();
+
 		Application.index();
 	}
 
 	public static void userCheck(String username) {
 		boolean exists = User.exists(username);
 		render(exists);
+	}
+
+	public static void search(String searchstring) {
+		render(searchstring);
 	}
 
 }
