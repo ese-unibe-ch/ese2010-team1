@@ -2,6 +2,7 @@ package controllers;
 
 import models.Answer;
 import models.BestAnswerSetter;
+import models.Entry;
 import models.Question;
 import models.User;
 import play.data.validation.Required;
@@ -117,5 +118,13 @@ public class Secured extends Controller {
 
 		Application.index();
 
+	}
+
+	public static void deleteEntry(long id) {
+
+		Entry entry = Entry.findById(id);
+		entry.delete();
+
+		Application.index();
 	}
 }

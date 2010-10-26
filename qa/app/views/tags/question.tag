@@ -2,8 +2,9 @@
 	#{vote entry:_question, user:_user /}
 	
 	 #{secure.check 'admin'}
-	  Delete Entry
+	  <a href="@{Secured.deleteEntry(_question.id)}">Delete Question</a>
 	 #{/secure.check}
+	 <h3>${_question.title()}</h3>
 	<p>
 		${_question.content().nl2br()}
 	</p>
