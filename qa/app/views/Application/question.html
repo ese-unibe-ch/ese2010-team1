@@ -14,7 +14,7 @@
 			<li>
 				<h2><a href="@{UserFuncs.showProfile(answer.owner().id)}">${answer.owner().name}:</a></h2>
 				<p>
-					${answer.content()}
+					${answer.content().nl2br()}
 				</p>
 				#{date answer /}
 

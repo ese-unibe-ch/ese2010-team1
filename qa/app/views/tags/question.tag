@@ -3,7 +3,7 @@
 		<h2>${_question.owner().name}:</h2>
 	</a>
 	<p>
-		${_question.content()}
+		${_question.content().nl2br()}
 	</p>
 	#{date _question /}
 	#{vote entry:_question, user:_user /}
