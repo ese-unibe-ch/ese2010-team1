@@ -31,7 +31,6 @@ public class Answer extends Entry {
 		super(owner, content);
 		this.question = question;
 		owner.addAnswer(this);
-
 	}
 
 	/**

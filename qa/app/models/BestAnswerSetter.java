@@ -2,7 +2,7 @@ package models;
 
 import jobs.Timer;
 import play.db.jpa.Model;
-
+//OT I'm not really sure, if this class is even necessary, but let's discuss this in the next meeting!
 public class BestAnswerSetter extends Model {
 
 	private long answerID;
