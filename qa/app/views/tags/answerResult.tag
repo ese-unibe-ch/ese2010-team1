@@ -2,7 +2,7 @@
 	<a href="@{Application.question(_answer.question.id)}">
 		<h2>${_answer.owner().name}:</h2>
 	</a>
-	<p>
+	<p class="hl-content">
 		${_answer.content().nl2br()}
 	</p>
 	#{date _answer /}

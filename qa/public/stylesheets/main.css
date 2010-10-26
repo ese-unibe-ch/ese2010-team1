@@ -227,7 +227,6 @@ UL.tabNavigation {
 			margin-top: 0;
 		}
 
-		highlight {
-			font-weight: bold;
-			background-color: yellow;
+		.highlight {
+			background-color: white;
 		}

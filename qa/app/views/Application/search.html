@@ -2,6 +2,28 @@
 
 #{set title:'Results for ' + searchString /}
 
+<script type="text/javascript">
+jQuery.fn.highlight = function (str, className)
+{
+    var regex = new RegExp(str, "g");
+    return this.each(function ()
+
+    {
+        if (str.length > 0) {
+        	this.innerHTML = this.innerHTML.replace(regex, "<span class=\"" + className + "\">" + str + "</span>");
+        }
+    });
+
+};
+
+$(document).ready(function() {
+
+	$(".hl-content").highlight("${searchString}", "highlight");
+
+})
+</script>
+
+
 #{if results.size!=0}
 <h1>Search Results</h1>
 <ul>

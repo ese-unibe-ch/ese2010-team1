@@ -101,10 +101,11 @@ public class Application extends Controller {
 	public static void search(@Required String searchString) {
 
 		List<Entry> results = new ArrayList<Entry>();
-		results.addAll(Question.searchTitle(searchString));
-		results.addAll(Entry.searchContent(searchString));
+		if (!validation.hasErrors()) {
+			results.addAll(Question.searchTitle(searchString));
+			results.addAll(Entry.searchContent(searchString));
+		}
 
 		render(searchString, results);
 	}
-
 }
