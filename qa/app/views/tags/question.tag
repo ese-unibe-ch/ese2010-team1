@@ -7,4 +7,8 @@
 	</p>
 	#{date _question /}
 	#{vote entry:_question, user:_user /}
+	
+	  #{secure.check 'admin'}
+	  Delete Entry
+	 #{/secure.check}
 </li>

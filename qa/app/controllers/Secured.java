@@ -104,4 +104,18 @@ public class Secured extends Controller {
 			Application.index();
 		}
 	}
+
+	public static void toggleAdminState() {
+		User user = User.find("byName", Security.connected()).first();
+
+		if (user.isAdmin)
+			user.isAdmin = false;
+		else
+			user.isAdmin = true;
+
+		user.save();
+
+		Application.index();
+
+	}
 }

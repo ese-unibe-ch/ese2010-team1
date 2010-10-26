@@ -31,6 +31,8 @@ public class User extends Model {
 	@Required
 	public String email;
 
+	public boolean isAdmin = false;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 

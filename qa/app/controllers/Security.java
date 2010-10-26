@@ -26,4 +26,12 @@ public class Security extends Secure.Security {
 	static void onDisconnected() {
 		Application.index();
 	}
+
+	static boolean check(String profile) {
+		if ("admin".equals(profile)) {
+			return User.find("byName", connected()).<User> first().isAdmin;
+		}
+		return false;
+	}
+
 }
