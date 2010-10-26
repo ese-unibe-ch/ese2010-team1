@@ -1,5 +1,5 @@
 <li>
-		
+			<a name="${_answer.id}"></a>
 			<p>
 				${_answer.content().nl2br()}
 			</p>
