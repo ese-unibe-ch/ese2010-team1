@@ -1,14 +1,18 @@
 <li onclick="goto('@@{Application.question(_question.id)}')">
-	<a href="@{Application.question(_question.id)}">
-		<h2>${_question.owner().name}:</h2>
-	</a>
-	<p>
-		${_question.content()}
-	</p>
-	#{date _question /}
 	#{vote entry:_question, user:_user /}
 	
-	  #{secure.check 'admin'}
+	 #{secure.check 'admin'}
 	  Delete Entry
 	 #{/secure.check}
+	<p>
+		${_question.content().nl2br()}
+	</p>
+	#{date _question /}
+
+	
+	
+	<a href="@{UserFuncs.showProfile(_question.owner().id)}">
+		<h3>by ${_question.owner().name} (${_question.owner().reputation()})</h3>
+	</a>
+
 </li>
