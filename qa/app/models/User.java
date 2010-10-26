@@ -3,6 +3,8 @@ package models;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Entity
 public class User extends Model {
@@ -31,6 +34,10 @@ public class User extends Model {
 	@Required
 	public String email;
 
+	public Date timestamp;
+
+	public static final int bestAnswerReputation = 50;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
@@ -43,7 +50,7 @@ public class User extends Model {
 		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
-
+		this.timestamp = new Date();
 	}
 
 	// TODO cache reputation for faster access
@@ -61,10 +68,83 @@ public class User extends Model {
 			reputation += entry.rating();
 			if (entry instanceof models.Answer
 					&& ((Answer) entry).isBestAnswer())
-				reputation += 50;
+				reputation += bestAnswerReputation;
 		}
 
 		return reputation;
+	}
+
+	// SM Using JSON Objects from http://www.json.org/java/ might be better
+	/**
+	 * Graph data.
+	 * 
+	 * @return graph data as JSON string
+	 */
+	public String graphData() {
+
+		ArrayList points = new ArrayList();
+
+		points.add(new Point(this.timestamp, 0));
+		points.add(new Point(new Date(), 0));
+
+		Iterator<Entry> en = this.entrys.iterator();
+		while (en.hasNext()) {
+			Entry entry = en.next();
+			if (entry instanceof Answer && ((Answer) entry).isBestAnswer()) {
+				points.add(new Point(((Answer) entry).bestAnswerTime,
+						bestAnswerReputation));
+			}
+
+			Iterator<Vote> vt = entry.votes.iterator();
+			while (vt.hasNext()) {
+				Vote vote = vt.next();
+				points.add(new Point(vote.freezer.timestamp, vote.up ? 1 : -1));
+			}
+		}
+
+		Collections.sort(points, new PointComparator());
+
+		int reputation = 0;
+		StringBuffer data = new StringBuffer("[");
+		Iterator<Point> it = points.iterator();
+		while (it.hasNext()) {
+			Point pt = it.next();
+			reputation += pt.change;
+			data.append("{\"time\": " + pt.time + ", \"value\": " + reputation
+					+ "}");
+			if (it.hasNext())
+				data.append(',');
+		}
+		data.append(']');
+
+		return data.toString();
+	}
+
+	/**
+	 * A Point on the reputation graph.
+	 */
+	public class Point {
+		public long time;
+		public int change;
+		public int reputation;
+
+		public Point(Date timestamp, int change) {
+			this.time = timestamp.getTime();
+			this.change = change;
+		}
+	}
+
+	/**
+	 * Compares Points by timestamp.
+	 */
+	public class PointComparator implements Comparator {
+		public int compare(Object arg0, Object arg1) {
+			if (arg0 instanceof Point && arg1 instanceof Point) {
+				return (int) (((Point) arg0).time - ((Point) arg1).time);
+			} else {
+				return 0;
+			}
+		}
 	}
 
 	/**
