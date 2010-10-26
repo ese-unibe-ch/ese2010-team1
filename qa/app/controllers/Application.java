@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
@@ -97,12 +98,13 @@ public class Application extends Controller {
 		render(exists);
 	}
 
-	public static void search(String searchString) {
+	public static void search(@Required String searchString) {
 
-		List<Entry> questionResults = Question.searchTitle(searchString);
-		List<Entry> entryResults = Entry.searchContent(searchString);
+		List<Entry> results = new ArrayList<Entry>();
+		results.addAll(Question.searchTitle(searchString));
+		results.addAll(Entry.searchContent(searchString));
 
-		render(searchString, questionResults, entryResults);
+		render(searchString, results);
 	}
 
 }

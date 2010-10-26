@@ -2,26 +2,28 @@
 
 #{set title:'Results for ' + searchString /}
 
-
+#{if results.size!=0}
+<h1>Search Results</h1>
 <ul>
-#{if questionResults.size() > 0}
-<li><b>Question Titles:</b>
-#{list items:questionResults, as:'question'}
 
-<li><a href="@{Application.question(question.id)}">${question.title}</a></li>
-#{/list}
-#{/if}
 
-#{if entryResults.size() > 0}
-<li><b>Entrys:</b></li>
-#{list items:entryResults, as:'entry'}
-	#{if entry instanceof models.Question}
-	<li><a href="@{Application.question(entry.id)}">${entry.content}</a></li>
-	#{/if}
-	#{elseif entry instanceof models.Answer} 
-	<li><a href="@{Application.question(entry.question.id)}">${entry.content}</a></li>
-	#{/elseif}
-#{/list}
+#{list items:results, as:'entry'}
+
+#{if entry instanceof models.Question}
+
+#{questionResult question:entry /}
 
 #{/if}
+#{elseif entry instanceof models.Answer}
+#{answerResult answer:entry /}
+#{/elseif}
+
+
+
+#{/list}
+
 </ul>
+#{/if}
+#{else}
+<h1>There were no search results!</h1>
+#{/else}
