@@ -40,6 +40,11 @@ public class UserFuncs extends Controller {
 		render(puser, titles);
 	}
 
+	public static void graphData(long id) {
+		User puser = User.findById(id);
+		render(puser);
+	}
+
 	/**
 	 * Shows the user profile edit page for a given id.
 	 * 

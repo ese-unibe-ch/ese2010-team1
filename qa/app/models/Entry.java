@@ -125,7 +125,10 @@ public abstract class Entry extends Model {
 		if (user == this.owner)
 			return null;
 		if (alreadyVoted != null) {
-			alreadyVoted.delete();
+			if (alreadyVoted.frozen())
+				return null;
+			else
+				alreadyVoted.delete();
 		}
 
 		Vote vote = new Vote(user, this, up).save();
