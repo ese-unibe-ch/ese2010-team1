@@ -118,6 +118,12 @@ public abstract class Entry extends Model {
 		return this.vote(user, false);
 	}
 
+	public boolean canVote(User user) {
+		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
+		return user != this.owner
+				&& (alreadyVoted == null || !alreadyVoted.frozen());
+	}
+
 	private Vote vote(User user, boolean up) {
 
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
