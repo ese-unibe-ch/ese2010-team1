@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -19,20 +20,17 @@ import javax.persistence.OneToMany;
 @Entity
 public class Question extends Entry {
 
-
 	/** The title. */
 	public String title;
 
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<Answer> answers;
-	
-	
-	// NEW by OLLI
-	
-	@ManyToMany(cascade=CascadeType.PERSIST)
-	public Set<Tag> tags;
 
+	// NEW by OLLI
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	public Set<Tag> tags;
 
 	/**
 	 * Create a Question.
@@ -49,7 +47,6 @@ public class Question extends Entry {
 		this.tags = new TreeSet<Tag>();
 
 	}
-
 
 	public String title() {
 		return this.title;
@@ -103,22 +100,21 @@ public class Question extends Entry {
 		Collections.sort(list, new EntryComperator());
 		return list;
 	}
-	
+
 	public Question tagItWith(String name) {
 		tags.add(Tag.findOrCreateByName(name));
 		return this;
 	}
-	
+
 	public static List<Question> findTaggedWith(String tag) {
-		return Question.find("select distinct q from Question q join q.tags as t where t.name = ?", tag).fetch();
+		return Question
+				.find("select distinct q from Question q join q.tags as t where t.name = ?",
+						tag).fetch();
 	}
-<<<<<<< HEAD
-=======
 
 	// TS Replace whitespace by percent symbol to get more hits
 	public static List<Entry> searchTitle(String searchString) {
 		return Question.find("byTitleLike", "%" + searchString + "%").fetch();
 	}
 
->>>>>>> master
 }
