@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import models.ProfileItem;
+import models.Question;
 import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -83,6 +84,12 @@ public class UserFuncs extends Controller {
 		}
 
 		showProfile(id);
+
+	}
+
+	public static void tagQuestion(long id, String tag) {
+		Question.<Question> findById(id).tagItWith(tag).save();
+		Application.index();
 
 	}
 }

@@ -16,20 +16,37 @@
 		</ul>
 	#{/if}
 	
-	
+	#{form @UserFuncs.tagQuestion(question.id)}
+			#{field 'tag'}
+	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+			#{/field}
+			<input type="submit" value="Tag" />
+		#{/form}
+		
+	#{list items:question.tags, as:'tag'}
+     <a href="#">${tag.name}</a>$
+     #{/list}
+		
 	#{if user}
-		<h1>Add Answer</h1>
+		<h1>Add Answers</h1>
 		#{form @Secured.newAnswer(question.id)}
 			#{field 'content'}
 	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 			#{/field}
 			<input type="submit" value="Post" />
 		#{/form}
+		
 	#{/if}
+	
+	
+	
+	
+
 
 
 #{/if}#{else}
 	#{set title:'Error' /}
 	<h1>Question does not exist.</h1>
 #{/else}
+
 
