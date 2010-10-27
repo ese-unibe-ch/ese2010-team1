@@ -137,6 +137,7 @@ public class User extends Model {
 	/**
 	 * Compares Points by timestamp.
 	 */
+	// TS Make this type safe! See Entry Comparator
 	public class PointComparator implements Comparator {
 		public int compare(Object arg0, Object arg1) {
 			if (arg0 instanceof Point && arg1 instanceof Point) {
