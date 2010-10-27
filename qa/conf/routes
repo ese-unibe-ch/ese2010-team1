@@ -6,7 +6,7 @@
 GET     /                                       Application.index
 POST	/										Secured.newQuestion
 
-GET		/recent									Application.index(show:'recent')
+GET		/recent									Application.recentQuestions
 
 GET		/question/{id}							Application.question
 POST	/question/{id}							Secured.newAnswer

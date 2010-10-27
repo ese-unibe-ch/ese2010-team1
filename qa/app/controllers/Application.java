@@ -23,22 +23,21 @@ public class Application extends Controller {
 	}
 
 	public static void index() {
-		index(null);
+		long userCount = User.count();
+		List<Question> questions = Question.questions();
+		boolean recent = false;
+		render(questions, userCount, recent);
 	}
 
 	/**
 	 * Renders the home screen.
 	 */
-	public static void index(String show) {
+	public static void recentQuestions() {
 		long userCount = User.count();
-		List<Question> questions;
-		boolean recent = show != null;
-		if (recent) {
-			questions = Question.recentQuestions();
-		} else {
-			questions = Question.questions();
-		}
-		render(questions, userCount, recent);
+		List<Question> questions = Question.recentQuestions();
+		boolean recent = true;
+
+		render("Application/index.html", questions, userCount, recent);
 	}
 
 	/**
