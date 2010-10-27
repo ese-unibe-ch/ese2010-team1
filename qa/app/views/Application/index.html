@@ -3,16 +3,7 @@
 
 <ul>
 #{list items:questions, as:'question'}
-	<li onclick="goto('@@{Application.question(question.id)}')">
-		<a href="@{Application.question(question.id)}">
-			<h2>${question.owner().name()}:</h2>
-		</a>
-		<p>
-			${question.content()}
-		</p>
-		#{date question /}
-		#{vote entry:question, user:user /}
-	</li>
+	#{question question:question, user:user /}
 #{/list}
 </ul>
 

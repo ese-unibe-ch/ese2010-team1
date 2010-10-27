@@ -29,8 +29,8 @@ public class UserTest extends UnitTest {
 		new User("Jack", "test@mail.com", "password").save();
 		List<User> user = User.find("byName", "Jack").fetch();
 		assertEquals(1, user.size());
-		assertEquals(user.get(0).name(), "Jack");
-		assertEquals(user.get(0).email(), "test@mail.com");
+		assertEquals(user.get(0).name, "Jack");
+		assertEquals(user.get(0).email, "test@mail.com");
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class UserTest extends UnitTest {
 		new User("Jack", "test@mail.com", "password").save();
 		List<User> user = User.find("byNameAndPassword", "Jack", "password")
 				.fetch();
-		assertEquals("password", user.get(0).password());
+		assertEquals("password", user.get(0).password);
 
 	}
 
@@ -71,23 +71,23 @@ public class UserTest extends UnitTest {
 		Question question = user.addQuestion("A title", "My first question");
 		Question question2 = user.addQuestion("A title2", "My first question2");
 		assertEquals(user.getNumberOfQuestions(), 2);
-		assertFalse(user.getNumberOfQuestions()==3);
+		assertFalse(user.getNumberOfQuestions() == 3);
 	}
-	
+
 	@Test
 	public void getNumberOfVotes() {
 		User user = new User("Jack", "test@mail.com", "password").save();
 		User user2 = new User("John", "tes2t@mail.com", "password2").save();
 		Question question = user2.addQuestion("A title", "My first question");
 		question.voteUp(user);
-		assertTrue(user.getNumberOfVotes()==1);
+		assertEquals(1, user.getNumberOfVotes());
 	}
-	
+
 	@Test
 	public void getNumberOfAnswers() {
 		User user = new User("Jack", "test@mail.com", "password").save();
 		Question question = user.addQuestion("A title", "My first question");
 		Answer answer = question.answer(user, "an answer");
-		assertTrue(user.getNumberOfAnswers()==1);
+		assertEquals(1, user.getNumberOfAnswers());
 	}
 }

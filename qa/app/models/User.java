@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,18 +16,18 @@ public class User extends Model {
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Entry> entrys;
+	public List<Entry> entrys;
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Vote> votes;
+	public List<Vote> votes;
 
 	@Required
-	private String name;
+	public String name;
 	@Required
-	private String password;
+	public String password;
 	@Required
-	private String email;
+	public String email;
 
 	/**
 	 * Creates a <code>User</code> with a given name.
@@ -43,21 +44,20 @@ public class User extends Model {
 
 	}
 
-	/**
-	 * Returns the name of the <code>User</code>.
-	 * 
-	 * @return name of the <code>User</code>
-	 */
-	public String name() {
-		return this.name;
-	}
+	// TODO cache reputation for faster access
+	public int reputation() {
+		int reputation = 0;
 
-	public String password() {
-		return this.password;
-	}
+		Iterator<Entry> it = this.entrys.iterator();
+		while (it.hasNext()) {
+			Entry entry = it.next();
+			reputation += entry.rating();
+			if (entry instanceof models.Answer
+					&& ((Answer) entry).isBestAnswer())
+				reputation += 50;
+		}
 
-	public String email() {
-		return this.email;
+		return reputation;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class User extends Model {
 
 		User loginUser = User.find("byName", username).first();
 
-		if (loginUser != null && loginUser.password().equals(password))
+		if (loginUser != null && loginUser.password.equals(password))
 			return loginUser;
 		else
 			return null;
@@ -134,19 +134,22 @@ public class User extends Model {
 		this.save();
 		return this;
 	}
-	
-	
+
 	public long getNumberOfVotes() {
 		return Vote.count("owner = ?", this);
 	}
-	
+
 	public long getNumberOfQuestions() {
 		return Question.count("owner = ?", this);
 	}
-	
+
 	public long getNumberOfAnswers() {
-		return Answer.count("owner = ?", this);		
-		}
-	
+		return Answer.count("owner = ?", this);
+	}
+
+	public List<Entry> getActivities(int numberOfActivitys) {
+
+		return Entry.find("order by timestamp desc").fetch(numberOfActivitys);
+	}
 
 }

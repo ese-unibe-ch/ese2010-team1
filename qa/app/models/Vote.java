@@ -13,12 +13,12 @@ import play.db.jpa.Model;
 @Entity
 public class Vote extends Model {
 
-	private boolean up;
+	public boolean up;
 	@ManyToOne
-	private Entry entry;
+	public Entry entry;
 
 	@ManyToOne
-	private User owner;
+	public User owner;
 
 	/**
 	 * Create a <code>Vote</code>.

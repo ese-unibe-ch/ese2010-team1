@@ -6,6 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+<<<<<<< HEAD
+//df
+=======
+
+>>>>>>> b5a6423b0ebc1529068a1832ad54a38c1fd383b7
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -15,16 +20,27 @@ import javax.persistence.OneToMany;
  * A {@link Entry} containing a question as <code>content</code> and
  * {@link Answer}s.
  * 
+<<<<<<< HEAD
+ * @author Simon Marti
+ * @author Mirco Kocher
+ * 
+=======
+>>>>>>> b5a6423b0ebc1529068a1832ad54a38c1fd383b7
  */
 @Entity
 public class Question extends Entry {
 
+<<<<<<< HEAD
+	private String title;
+=======
+	// NEW by OLLI
 
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	public Set<Tag> tags;
 
 	/** The title. */
 	public String title;
+>>>>>>> b5a6423b0ebc1529068a1832ad54a38c1fd383b7
 
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })

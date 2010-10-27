@@ -3,7 +3,8 @@ package controllers;
 import java.util.Iterator;
 import java.util.List;
 
-import models.*;
+import models.ProfileItem;
+import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -75,8 +76,6 @@ public class UserFuncs extends Controller {
 			pentry.editUserEntry(user, entry);
 
 		}
-
-		System.out.print(ProfileEntry.count());
 
 		showProfile(id);
 

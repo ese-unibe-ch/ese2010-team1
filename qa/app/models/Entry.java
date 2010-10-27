@@ -10,8 +10,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import controllers.Security;
-
 import play.db.jpa.Model;
 
 /**
@@ -23,15 +21,15 @@ import play.db.jpa.Model;
 public abstract class Entry extends Model {
 
 	@Lob
-	private String content;
+	public String content;
 	@ManyToOne
-	private User owner;
+	public User owner;
 
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Vote> votes;
+	public List<Vote> votes;
 
-	private Date timestamp;
+	public Date timestamp;
 
 	/**
 	 * Create an <code>Entry</code>.

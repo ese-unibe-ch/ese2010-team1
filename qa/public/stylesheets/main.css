@@ -180,6 +180,49 @@ dd {
 	line-height: 0px;
 }
 
-table.profile {
-	color: white;
-}
+/* Profile Tabs */
+
+UL.tabNavigation {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		    overflow: hidden;
+		}
+
+		UL.tabNavigation LI {
+		    display: inline;
+		}
+
+		UL.tabNavigation LI A {
+			display: block;
+			text-align: center;
+			float: left;
+			width: 100px;
+			border: 1px solid white;
+		    padding: 3px 5px;
+		    background-color: white;
+		    color: #000;
+		    text-decoration: none;
+		    margin-right: 5px;
+		}
+
+		UL.tabNavigation LI A.selected,
+		UL.tabNavigation LI A:hover {
+		    background-color: #333;
+		    color: #fff;
+		}
+		
+		UL.tabNavigation LI A:focus {
+			outline: 0;
+		}
+
+		div.tabs > div {
+			color: white;
+			padding: 5px;
+			margin-top: 3px;
+			border: 5px solid #333;
+		}
+		
+		div.tabs > div h2 {
+			margin-top: 0;
+		}

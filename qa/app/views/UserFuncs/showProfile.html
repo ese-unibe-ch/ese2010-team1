@@ -1,29 +1,70 @@
 #{extends 'main.html' /}
 
-#{set title:puser.name() + '\'s User Profile' /}
+#{set title:puser.name + '\'s User Profile' /}
 
 <div class="pageContent">
 
 	<h1>
-		${puser.name()}'s Profile
+		${puser.name}'s Profile
 		#{if puser==user}
 		<span style="font-size: 10px;"><a href="@{UserFuncs.editProfile(user.id)}">edit</a></span>
 		#{/if}
 	</h1>
 	
-	<dl>
-		#{list items:titles, as:'title'}
-			<dt>${title.title()}:<dd>
-			<dd>
-				#{if title.hasUserEntry(puser)}
-					${title.findUserEntry(puser).entry}
-				#{/if}#{else}
-					&nbsp;
-				#{/else}
-			</dd>
-		#{/list}
-		<dt>Reputation:<dd>
-		<dd>${puser.reputation()}</dd>
-	</dl>
+	<div class="tabs">
+  	<!-- tabs -->
+  		<ul class="tabNavigation">
+    		<li><a href="#profile">Profile</a></li>
+    		<li><a href="#activities">Activities</a></li>
+    		<li><a href="#statistics">Statistics</a></li>
+  		</ul>
+
+  		<!-- tab containers -->
+  		<div id="profile">
+	
+		<dl>
+			#{list items:titles, as:'title'}
+				<dt>${title.title()}:</dt>
+				<dd>
+					#{if title.hasUserEntry(puser)}
+						${title.findUserEntry(puser).entry}
+					#{/if}#{else}
+						&nbsp;
+					#{/else}
+				</dd>
+			#{/list}
+			<dt>Reputation:</dt>
+			<dd>${puser.reputation()}</dd>
+		</dl>	
+	     
+	  	</div>
+	  	<div id="activities">
+	    	<b>Latest 10 activities:</b> <br />
+	    	#{if puser.getActivities(1).size()!=1}
+	    		There were no activities.
+	    	#{/if}
+	    	#{else}
+	    		#{list items:puser.getActivities(10), as:'activity'}
+	    		
+	    			#{if activity instanceof models.Answer}
+	    				${activity.timestamp().format('dd.MM.yyyy, HH:mm')} - answer created <br />
+	    			#{/if}
+	    			#{else}
+	    				${activity.timestamp().format('dd.MM.yyyy, HH:mm')} - question created<br />
+	    			#{/else}
+	    	
+	    		#{/list}
+	    	#{/else}
+	  	</div>
+	  	<div id="statistics">
+	  	
+	  	<dl>
+	  		<dt>Number of questions:</dt><dd>${puser.getNumberOfQuestions()}</dd>
+	  		<dt>Number of answers:</dt><dd>${puser.getNumberOfAnswers()}</dd>
+	  		<dt>Number of votes:</dt><dd>${puser.getNumberOfVotes()}</dd>
+	  	</dl>
+	    	
+	  	</div>
+	</div>          
 
 </div>

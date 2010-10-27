@@ -4,15 +4,7 @@
 #{if question}
 #{set title:'ajopi - Question by ' + question.owner().name /}
 	<ul>
-		<li>
-			<h2><a href="@{UserFuncs.showProfile(question.owner().id)}">${question.owner().name()}:</a></h2>
-			<h3>${question.title()}</h3>
-			<p>
-				${question.content()}
-			</p>
-			#{date question /}
-			#{vote entry:question, user:user /}
-		</li>
+		#{question question:question, user:user /}
 	</ul>
 	
 	#{if answers.size() > 0}
@@ -20,7 +12,7 @@
 		<ul>
 			#{list items:answers, as:'answer'}
 			<li>
-				<h2><a href="@{UserFuncs.showProfile(answer.owner().id)}">${answer.owner().name()}:</a></h2>
+				<h2><a href="@{UserFuncs.showProfile(answer.owner().id)}">${answer.owner().name}:</a></h2>
 				<p>
 					${answer.content()}
 				</p>

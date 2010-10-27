@@ -12,10 +12,10 @@ import javax.persistence.ManyToOne;
 public class Answer extends Entry {
 
 	@ManyToOne
-	private Question question;
+	public Question question;
 
-	private boolean isBestAnswer = false;
-	private BestAnswerSetter bestAnswerSetter = null;
+	public boolean isBestAnswer = false;
+	public BestAnswerSetter bestAnswerSetter = null;
 
 	/**
 	 * Create an <code>Answer</code> to a {@link Question}.
