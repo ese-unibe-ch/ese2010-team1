@@ -103,6 +103,22 @@ article {
 				top:	 			7px;
 				color: 				#222;
 			}
+			
+			.setBestAnswer	{
+				position:			absolute;
+				right:				250px;
+				top:				7px;
+			}
+			
+			.edit			 {
+				position: 			absolute;
+				right:				210px;
+				top:				7px;
+			}
+			
+			.edit:hover		{
+				cursor:             pointer; 
+			}
 
 	
 

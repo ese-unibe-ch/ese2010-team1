@@ -18,6 +18,7 @@ test-result/
 # ignoring some files we don't want on our repo
 # e.g. nasty editor backup files and OS X FS information
 *~
+*.orig
 .DS_Store
 
 
