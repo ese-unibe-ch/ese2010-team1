@@ -92,7 +92,8 @@ public class User extends Model {
 		while (en.hasNext()) {
 			Entry entry = en.next();
 			if (entry instanceof Answer && ((Answer) entry).isBestAnswer()) {
-				points.add(new Point(((Answer) entry).bestAnswerTime,
+				points.add(new Point(
+						((Answer) entry).question.bestAnswerFreezer.timestamp,
 						bestAnswerReputation));
 			}
 

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * A {@link Entry} containing a question as <code>content</code> and.
@@ -29,6 +30,12 @@ public class Question extends Entry {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Answer> answers;
 
+	@OneToOne
+	public Answer bestAnswer;
+
+	@OneToOne
+	public TimeFreezer bestAnswerFreezer;
+
 	/**
 	 * Create a Question.
 	 * 
@@ -44,7 +51,6 @@ public class Question extends Entry {
 		isBestAnswerSet = false;
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
-
 	}
 
 	/**
@@ -105,23 +111,25 @@ public class Question extends Entry {
 		return list;
 	}
 
-	/**
-	 * Checks if is a best answer set.
-	 * 
-	 * @return true, if is best answer is set
-	 */
-	public boolean isBestAnswerSet() {
-		return isBestAnswerSet;
+	public void setBestAnswer(Answer answer) {
+		if (this.canSetBestAnswer()) {
+			this.bestAnswerFreezer = new TimeFreezer(1 * 60).save();
+			this.bestAnswer = answer;
+			this.save();
+		}
 	}
 
-	/**
-	 * Sets the best answer.
-	 * 
-	 * @param s
-	 *            the new best answer
-	 */
-	public void setBestAnswerFlag(boolean s) {
-		this.isBestAnswerSet = s;
+	public void resetBestAnswer() {
+		if (this.canSetBestAnswer()) {
+			this.bestAnswer = null;
+			this.bestAnswerFreezer = null;
+			this.save();
+		}
+	}
+
+	public boolean canSetBestAnswer() {
+		return this.bestAnswerFreezer == null
+				|| !this.bestAnswerFreezer.frozen();
 	}
 
 	// TS Replace whitespace by percent symbol to get more hits

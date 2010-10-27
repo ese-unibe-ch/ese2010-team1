@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Answer;
-import models.BestAnswerSetter;
 import models.Entry;
 import models.Question;
 import models.User;
@@ -80,29 +79,24 @@ public class Secured extends Controller {
 	}
 
 	public static void setBestAnswer(long id) {
-		if (Answer.<Answer> findById(id) != null) {
-			Answer answer = Answer.<Answer> findById(id);
-			User user = User.find("byName", Security.connected()).first();
-			assert (user == answer.question().owner());
-			BestAnswerSetter bestAnswerSetter = new BestAnswerSetter(id);
-			Application.question(answer.question().id);
-
-		} else {
+		Answer answer = Answer.<Answer> findById(id);
+		if (answer == null
+				|| !answer.question.owner.name.equals(Security.connected())) {
 			Application.index();
+		} else if (answer.question.canSetBestAnswer()) {
+			answer.question.setBestAnswer(answer);
+			Application.question(answer.question.id);
 		}
 	}
 
-	public static void undoBestAnswer(long id) {
-		if (Answer.<Answer> findById(id) != null) {
-			Answer answer = Answer.<Answer> findById(id);
-			User user = User.find("byName", Security.connected()).first();
-			assert (user == answer.question().owner());
-			answer.bestAnswerSetter().undo();
-			answer.save();
-			answer.question().save();
-			Application.question(answer.question().id);
-		} else {
+	public static void resetBestAnswer(long id) {
+		Question question = Question.<Question> findById(id);
+		if (question == null
+				|| !question.owner.name.equals(Security.connected())) {
 			Application.index();
+		} else if (question.canSetBestAnswer()) {
+			question.resetBestAnswer();
+			Application.question(question.id);
 		}
 	}
 
