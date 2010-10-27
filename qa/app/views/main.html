@@ -83,7 +83,8 @@
     			
     			#{/form}
     			<nav>
-    				<a href="@{Application.index}">Questions</a>
+    				<a href="@{Application.index}">Popular Questions</a>
+    				<a href="@{Application.index('recent')}">Recent Activity</a>
     				<span>
     					#{if user}
 							Hi <a href="@{UserFuncs.showProfile(user.id)}">${user.name}!</a>

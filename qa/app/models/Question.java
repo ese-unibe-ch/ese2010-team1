@@ -19,6 +19,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Question extends Entry {
 
+	private static final int recentQuestionCount = 10;
+
 	/** The title. */
 	public String title;
 
@@ -89,7 +91,8 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Get a <@link Collection} of all <code>Questions</code>.
+	 * Get a {@link Collection} of all <code>Questions</code> sorted by creation
+	 * time.
 	 * 
 	 * @return all <code>Questions</code>
 	 */
@@ -97,6 +100,27 @@ public class Question extends Entry {
 		List<Question> list = new ArrayList();
 		list.addAll(Question.<Question> findAll());
 		Collections.sort(list, new EntryComperator());
+		return list;
+	}
+
+	/**
+	 * Get a {@link Collection} of all <code>Questions</code> sorted by last
+	 * activity.
+	 * 
+	 * @return all <code>Questions</code>
+	 */
+	public static List<Question> recentQuestions() {
+		List<Entry> entrys = Entry.find("order by timestamp desc").fetch();
+		List<Question> list = new ArrayList();
+		for (Entry entry : entrys) {
+			Question question = (entry instanceof Question) ? (Question) entry
+					: ((Answer) entry).question;
+			if (!list.contains(question)) {
+				list.add(question);
+				if (list.size() == recentQuestionCount)
+					break;
+			}
+		}
 		return list;
 	}
 
