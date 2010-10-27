@@ -43,4 +43,12 @@ function displayGraph(data, status) {
     	}
     } );
  }
+ 
+function showEditBox(cid, eid){
+	$("#" + cid).hide();
+	$("#" + eid).show();
+	
+	return true;
+}
+		
 
