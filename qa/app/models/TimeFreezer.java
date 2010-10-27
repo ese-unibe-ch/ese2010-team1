@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import play.db.jpa.Model;
 
 // TODO: Auto-generated Javadoc
-// SM Needs to be Generic
 
 /**
  * The TimeFreezer.
