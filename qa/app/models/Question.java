@@ -32,6 +32,8 @@ public class Question extends Entry {
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	public Set<Tag> tags;
 
+	public boolean isBestAnswerSet = false;
+
 	/**
 	 * Create a Question.
 	 * 
@@ -110,6 +112,25 @@ public class Question extends Entry {
 		return Question
 				.find("select distinct q from Question q join q.tags as t where t.name = ?",
 						tag).fetch();
+	}
+
+	/**
+	 * Checks if is a best answer set.
+	 * 
+	 * @return true, if is best answer is set
+	 */
+	public boolean isBestAnswerSet() {
+		return isBestAnswerSet;
+	}
+
+	/**
+	 * Sets the best answer.
+	 * 
+	 * @param s
+	 *            the new best answer
+	 */
+	public void setBestAnswerFlag(boolean s) {
+		this.isBestAnswerSet = s;
 	}
 
 	// TS Replace whitespace by percent symbol to get more hits
