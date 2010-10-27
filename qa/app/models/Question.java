@@ -20,15 +20,11 @@ import javax.persistence.OneToMany;
 public class Question extends Entry {
 
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	public Set<Tag> tags;
-
 	/** The title. */
 	public String title;
 
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-<<<<<<< HEAD
 	private List<Answer> answers;
 	
 	
@@ -36,9 +32,7 @@ public class Question extends Entry {
 	
 	@ManyToMany(cascade=CascadeType.PERSIST)
 	public Set<Tag> tags;
-=======
-	public List<Answer> answers;
->>>>>>> b5a6423b0ebc1529068a1832ad54a38c1fd383b7
+
 
 	/**
 	 * Create a Question.
@@ -56,18 +50,7 @@ public class Question extends Entry {
 
 	}
 
-<<<<<<< HEAD
-	public String type() {
-		return "Question";
-	}
 
-=======
-	/**
-	 * Title.
-	 * 
-	 * @return the string
-	 */
->>>>>>> b5a6423b0ebc1529068a1832ad54a38c1fd383b7
 	public String title() {
 		return this.title;
 	}
@@ -129,20 +112,4 @@ public class Question extends Entry {
 	public static List<Question> findTaggedWith(String tag) {
 		return Question.find("select distinct q from Question q join q.tags as t where t.name = ?", tag).fetch();
 	}
-<<<<<<< HEAD
-=======
-
-	public Question tagItWith(String name) {
-		tags.add(Tag.findOrCreateByName(name));
-		return this;
-	}
-
-	public static List<Question> findTaggedWith(String tag) {
-		return Question
-				.find(
-						"select distinct q from Question q join q.tags as t where t.name = ?",
-						tag).fetch();
-	}
-
->>>>>>> b5a6423b0ebc1529068a1832ad54a38c1fd383b7
 }
