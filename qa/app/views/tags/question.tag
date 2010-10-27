@@ -13,6 +13,10 @@
 		#{content entry:_question, user:_user /}
 	</p>
 	
+	#{list items:_question.tags, as:'tag'}
+     <a href="#" class="tags">${tag.name}</a>
+     #{/list}
+	
 	#{date _question /}
 
 	<a href="@{UserFuncs.showProfile(_question.owner().id)}">
@@ -20,3 +24,4 @@
 	</a>
 
 </li>
+

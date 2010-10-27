@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- * A {@link Entry} containing a question as <code>content</code> and.
- * 
+ * A {@link Entry} containing a question as <code>content</code> and
  * {@link Answer}s.
  * 
  */
@@ -24,13 +26,14 @@ public class Question extends Entry {
 	/** The title. */
 	public String title;
 
-	/** The is best answer set. */
-	public boolean isBestAnswerSet;
-
-	/** The answers. */
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Answer> answers;
+	private List<Answer> answers;
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	public Set<Tag> tags;
+
+	public boolean isBestAnswerSet = false;
 
 	@OneToOne
 	public Answer bestAnswer;
@@ -43,29 +46,23 @@ public class Question extends Entry {
 	 * 
 	 * @param owner
 	 *            the {@link User} who posted the <code>Question</code>
-	 * @param title
-	 *            the title
 	 * @param content
 	 *            the question
 	 */
 	public Question(User owner, String title, String content) {
 		super(owner, content);
-		isBestAnswerSet = false;
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
+		this.tags = new TreeSet<Tag>();
+
 	}
 
-	/**
-	 * Title.
-	 * 
-	 * @return the string
-	 */
 	public String title() {
 		return this.title;
 	}
 
 	/**
-	 * Post a {@link Answer} to a <code>Question</code>.
+	 * Post a {@link Answer} to a <code>Question</code>
 	 * 
 	 * @param user
 	 *            the {@link User} posting the {@link Answer}
@@ -80,7 +77,7 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Checks if a {@link Answer} belongs to a <code>Question</code>.
+	 * Checks if a {@link Answer} belongs to a <code>Question</code>
 	 * 
 	 * @param answer
 	 *            the {@link Answer} to check
@@ -133,6 +130,18 @@ public class Question extends Entry {
 		List<Answer> list = Answer.find("byQuestion", this).fetch();
 		Collections.sort(list, new EntryComperator());
 		return list;
+	}
+
+	public Question tagItWith(String name) {
+		tags.add(Tag.findOrCreateByName(name));
+		return this;
+	}
+
+	public static List<Question> findTaggedWith(String tag) {
+		return Question
+				.find(
+						"select distinct q from Question q join q.tags as t where t.name = ?",
+						tag).fetch();
 	}
 
 	public void setBestAnswer(Answer answer) {

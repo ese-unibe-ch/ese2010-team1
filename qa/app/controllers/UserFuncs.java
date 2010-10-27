@@ -85,4 +85,5 @@ public class UserFuncs extends Controller {
 		showProfile(id);
 
 	}
+
 }

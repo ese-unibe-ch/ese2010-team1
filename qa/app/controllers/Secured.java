@@ -12,10 +12,16 @@ import play.mvc.With;
 public class Secured extends Controller {
 
 	public static void newQuestion(@Required String title,
-			@Required String content) {
+			@Required String content, String tags) {
 		if (!validation.hasErrors()) {
 			User user = User.find("byName", Security.connected()).first();
 			Question question = user.addQuestion(title, content);
+			// neu
+			String[] separatedTags = tags.split(",");
+			for (String tag : separatedTags) {
+				question.tagItWith(tag).save();
+			}
+
 			Application.question(question.id);
 		} else {
 			Application.index();
