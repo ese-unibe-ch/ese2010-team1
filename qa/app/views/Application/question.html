@@ -16,12 +16,7 @@
 		</ul>
 	#{/if}
 	
-	#{form @UserFuncs.tagQuestion(question.id)}
-			#{field 'tag'}
-	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
-			#{/field}
-			<input type="submit" value="Tag" />
-		#{/form}
+	
 		
 	#{list items:question.tags, as:'tag'}
      <a href="#">${tag.name}</a>$
