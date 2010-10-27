@@ -4,7 +4,7 @@
 	#{/secure.check}		
 			<a name="${_answer.id}"></a>
 			<p>
-				${_answer.content().nl2br()}
+				#{content entry:_answer, user:_user /}
 			</p>
 			#{date _answer /}
 
