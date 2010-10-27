@@ -135,4 +135,11 @@ public abstract class Entry extends Model {
 		this.votes.add(vote);
 		return vote;
 	}
+
+	// TS Replace whitespace by percent symbol to get more hits
+	public static List<Entry> searchContent(String searchString) {
+
+		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
+
+	}
 }
