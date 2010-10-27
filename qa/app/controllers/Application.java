@@ -38,6 +38,8 @@ public class Application extends Controller {
 	 * @param id
 	 *            the question id
 	 */
+
+	// TS Remove vote links if vote is frozen
 	public static void question(long id) {
 		Question question = Question.find("byID", id).first();
 		if (question == null) {
