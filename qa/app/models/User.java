@@ -251,7 +251,8 @@ public class User extends Model {
 
 	public List<Entry> getActivities(int numberOfActivitys) {
 
-		return Entry.find("order by timestamp desc").fetch(numberOfActivitys);
+		return Entry.find("owner like ? order by timestamp desc", this).fetch(
+				numberOfActivitys);
 	}
 
 }
