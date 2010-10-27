@@ -4,3 +4,80 @@ ProfileItem(philosophy):
     title: Life Philosophy
 ProfileItem(editor):
     title: Editor of choice
+# Users
+User(simon):
+    name: Simon
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: simon@example.com
+    isAdmin: false
+    timestamp: 2010-10-20
+User(tobias):
+    name: Tobias
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: tobias@example.com
+    isAdmin: false
+    timestamp: 2010-10-20
+User(thomas):
+    name: Thomas
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: thomas@example.com
+    isAdmin: false
+    timestamp: 2010-10-20
+User(oliver):
+    name: Oliver
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: oliver@example.com
+    isAdmin: false
+    timestamp: 2010-10-20
+User(mark):
+    name: Mark
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: mark@example.com
+    isAdmin: false
+    timestamp: 2010-10-20
+    
+# Questions
+Question(q1):
+    owner: simon
+    title: first 
+    content: some dummy content
+    timestamp: 2010-10-20
+Question(q2):
+    owner: tobias
+    title: second
+    content: another dummy content
+    timestamp: 2010-10-22
+Question(q3):
+    owner: oliver
+    title: third?
+    content: lorem ipsum
+    timestamp: 2010-10-25
+
+# Answers
+Answer(a1):
+    owner: tobias
+    content: sorry i don't understand your question!
+    timestamp: 2010-10-27
+    isBestAnswer: false
+    question: q1
+    
+Answer(a2):
+    owner: mark
+    content: don't know what you mean
+    timestamp: 2010-10-25
+    isBestAnswer: false
+    question: q1
+    
+Answer(a3):
+    owner: thomas
+    content: bla bla bla
+    timestamp: 2010-10-27
+    isBestAnswer: false
+    question: q2
+Answer(a4):
+    owner: simon
+    content: i'm absolute sure about that!
+    timestamp: 2010-10-26
+    isBestAnswer: false
+    question: q3
+ 
