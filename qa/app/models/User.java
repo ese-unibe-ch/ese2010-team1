@@ -37,6 +37,7 @@ public class User extends Model {
 	public Date timestamp;
 
 	public static final int bestAnswerReputation = 50;
+	public boolean isAdmin = false;
 
 	/**
 	 * Creates a <code>User</code> with a given name.

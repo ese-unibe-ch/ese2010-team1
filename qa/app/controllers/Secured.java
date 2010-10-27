@@ -2,6 +2,7 @@ package controllers;
 
 import models.Answer;
 import models.BestAnswerSetter;
+import models.Entry;
 import models.Question;
 import models.User;
 import play.data.validation.Required;
@@ -103,5 +104,27 @@ public class Secured extends Controller {
 		} else {
 			Application.index();
 		}
+	}
+
+	public static void toggleAdminState() {
+		User user = User.find("byName", Security.connected()).first();
+
+		if (user.isAdmin)
+			user.isAdmin = false;
+		else
+			user.isAdmin = true;
+
+		user.save();
+
+		Application.index();
+
+	}
+
+	public static void deleteEntry(long id) {
+
+		Entry entry = Entry.findById(id);
+		entry.delete();
+
+		Application.index();
 	}
 }

@@ -1,4 +1,7 @@
-<li>
+<li>	
+	#{secure.check 'admin'}
+	  <a href="@{Secured.deleteEntry(_answer.id)}">Delete Answer</a>
+	#{/secure.check}		
 			<a name="${_answer.id}"></a>
 			<p>
 				${_answer.content().nl2br()}
