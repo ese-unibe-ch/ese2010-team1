@@ -34,8 +34,5 @@ public class ProfileTest extends UnitTest {
 		assertEquals(1, ProfileEntry.count());
 		List<ProfileEntry> entrys = ProfileEntry.findAll();
 		assertTrue(entrys.size() > 0);
-
-		System.out.println(entrys.get(0).user.name);
-
 	}
 }

@@ -112,4 +112,13 @@ public class Question extends Entry {
 	public static List<Question> findTaggedWith(String tag) {
 		return Question.find("select distinct q from Question q join q.tags as t where t.name = ?", tag).fetch();
 	}
+<<<<<<< HEAD
+=======
+
+	// TS Replace whitespace by percent symbol to get more hits
+	public static List<Entry> searchTitle(String searchString) {
+		return Question.find("byTitleLike", "%" + searchString + "%").fetch();
+	}
+
+>>>>>>> master
 }

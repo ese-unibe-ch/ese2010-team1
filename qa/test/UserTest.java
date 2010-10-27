@@ -36,10 +36,8 @@ public class UserTest extends UnitTest {
 	@Test
 	public void shouldHaveAPassword() {
 		new User("Jack", "test@mail.com", "password").save();
-		List<User> user = User.find("byNameAndPassword", "Jack", "password")
-				.fetch();
-		assertEquals("password", user.get(0).password);
-
+		assertTrue(User.connect("Jack", "password") != null);
+		assertEquals(null, User.connect("Jack", "PaSsWoRd"));
 	}
 
 	@Test

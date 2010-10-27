@@ -1,6 +1,10 @@
 package models;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +14,7 @@ import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Entity
 public class User extends Model {
@@ -29,6 +34,11 @@ public class User extends Model {
 	@Required
 	public String email;
 
+	public Date timestamp;
+
+	public static final int bestAnswerReputation = 50;
+	public boolean isAdmin = false;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
@@ -38,13 +48,18 @@ public class User extends Model {
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
-		this.password = password;
+		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
-
+		this.timestamp = new Date();
 	}
 
 	// TODO cache reputation for faster access
+	/**
+	 * Reputation.
+	 * 
+	 * @return the reputation
+	 */
 	public int reputation() {
 		int reputation = 0;
 
@@ -54,10 +69,79 @@ public class User extends Model {
 			reputation += entry.rating();
 			if (entry instanceof models.Answer
 					&& ((Answer) entry).isBestAnswer())
-				reputation += 50;
+				reputation += bestAnswerReputation;
 		}
 
 		return reputation;
+	}
+
+	// SM Using JSON Objects from http://www.json.org/java/ might be better
+	/**
+	 * Graph data.
+	 * 
+	 * @return graph data as JSON string
+	 */
+	public String graphData() {
+
+		ArrayList points = new ArrayList();
+
+		points.add(new Point(this.timestamp, 0));
+		points.add(new Point(new Date(), 0));
+
+		Iterator<Entry> en = this.entrys.iterator();
+		while (en.hasNext()) {
+			Entry entry = en.next();
+			if (entry instanceof Answer && ((Answer) entry).isBestAnswer()) {
+				points.add(new Point(((Answer) entry).bestAnswerTime,
+						bestAnswerReputation));
+			}
+
+			Iterator<Vote> vt = entry.votes.iterator();
+			while (vt.hasNext()) {
+				Vote vote = vt.next();
+				points.add(new Point(vote.freezer.timestamp, vote.up ? 1 : -1));
+			}
+		}
+
+		Collections.sort(points, new PointComparator());
+
+		int reputation = 0;
+		StringBuffer data = new StringBuffer("[");
+		Iterator<Point> it = points.iterator();
+		while (it.hasNext()) {
+			Point pt = it.next();
+			reputation += pt.change;
+			data.append("{\"time\": " + pt.time + ", \"value\": " + reputation
+					+ "}");
+			if (it.hasNext())
+				data.append(',');
+		}
+		data.append(']');
+
+		return data.toString();
+	}
+
+	/**
+	 * A Point on the reputation graph.
+	 */
+	public class Point {
+		public long time;
+		public int change;
+		public int reputation;
+
+		public Point(Date timestamp, int change) {
+			this.time = timestamp.getTime();
+			this.change = change;
+		}
+	}
+
+	/**
+	 * Compares Points by timestamp.
+	 */
+	public class PointComparator implements Comparator<Point> {
+		public int compare(Point arg0, Point arg1) {
+			return (int) (((Point) arg0).time - ((Point) arg1).time);
+		}
 	}
 
 	/**
@@ -73,7 +157,7 @@ public class User extends Model {
 
 		User loginUser = User.find("byName", username).first();
 
-		if (loginUser != null && loginUser.password.equals(password))
+		if (loginUser != null && loginUser.password.equals(encrypt(password)))
 			return loginUser;
 		else
 			return null;
@@ -90,6 +174,24 @@ public class User extends Model {
 	public static boolean exists(String username) {
 
 		return User.find("byName", username).first() != null;
+	}
+
+	/**
+	 * Encrypt.
+	 * 
+	 * @param password
+	 *            the password
+	 * @return the encrypted password
+	 */
+	private static String encrypt(String password) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-1");
+			md.update(password.getBytes());
+			return new BigInteger(1, md.digest(password.getBytes()))
+					.toString(16);
+		} catch (Exception e) {
+			return password;
+		}
 	}
 
 	/**
@@ -149,7 +251,8 @@ public class User extends Model {
 
 	public List<Entry> getActivities(int numberOfActivitys) {
 
-		return Entry.find("order by timestamp desc").fetch(numberOfActivitys);
+		return Entry.find("owner like ? order by timestamp desc", this).fetch(
+				numberOfActivitys);
 	}
 
 }

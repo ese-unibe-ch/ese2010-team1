@@ -17,6 +17,7 @@
     		<li><a href="#profile">Profile</a></li>
     		<li><a href="#activities">Activities</a></li>
     		<li><a href="#statistics">Statistics</a></li>
+    		<li><a href="#graph">Graph</a></li>
   		</ul>
 
   		<!-- tab containers -->
@@ -28,9 +29,8 @@
 				<dd>
 					#{if title.hasUserEntry(puser)}
 						${title.findUserEntry(puser).entry}
-					#{/if}#{else}
-						&nbsp;
-					#{/else}
+					#{/if}
+					&nbsp;
 				</dd>
 			#{/list}
 			<dt>Reputation:</dt>
@@ -47,10 +47,17 @@
 	    		#{list items:puser.getActivities(10), as:'activity'}
 	    		
 	    			#{if activity instanceof models.Answer}
+<<<<<<< HEAD
 	    				${activity.timestamp().format('dd.MM.yyyy, HH:mm')} - answer created <br />
 	    			#{/if}
 	    			#{else}
 	    				${activity.timestamp().format('dd.MM.yyyy, HH:mm')} - question created<br />
+=======
+	    				${activity.timestamp().format('dd.MM.yyyy, hh:mm')} - User <a href="@{Application.question(activity.question.id)}#${activity.id}">answered</a> the <a href="@{Application.question(activity.question.id)}">question</a>  <br />
+	    			#{/if}
+	    			#{else}
+	    				${activity.timestamp().format('dd.MM.yyyy, hh:mm')} - User created a new <a href="@{Application.question(activity.id)}">question</a><br />
+>>>>>>> master
 	    			#{/else}
 	    	
 	    		#{/list}
@@ -64,6 +71,9 @@
 	  		<dt>Number of votes:</dt><dd>${puser.getNumberOfVotes()}</dd>
 	  	</dl>
 	    	
+	  	</div>
+	  	<div id="graph">
+	  		 <div id="graphcanvas" style="width:600px;height:300px"></div>
 	  	</div>
 	</div>          
 

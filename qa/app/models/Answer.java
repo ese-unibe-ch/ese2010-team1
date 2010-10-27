@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -17,6 +19,9 @@ public class Answer extends Entry {
 	public boolean isBestAnswer = false;
 	public BestAnswerSetter bestAnswerSetter = null;
 
+	// SM should be replaced with generic TimeFreezer
+	public Date bestAnswerTime;
+
 	/**
 	 * Create an <code>Answer</code> to a {@link Question}.
 	 * 
@@ -31,7 +36,6 @@ public class Answer extends Entry {
 		super(owner, content);
 		this.question = question;
 		owner.addAnswer(this);
-
 	}
 
 	/**

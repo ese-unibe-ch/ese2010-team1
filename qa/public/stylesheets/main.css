@@ -226,3 +226,7 @@ UL.tabNavigation {
 		div.tabs > div h2 {
 			margin-top: 0;
 		}
+
+		.highlight {
+			background-color: white;
+		}

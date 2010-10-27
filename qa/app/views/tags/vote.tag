@@ -1,7 +1,11 @@
+%{
+	canVote = _user && _entry.canVote(_user)
+	isAnswer = _entry instanceof models.Answer
+}%
 <span class="vote">
-	#{if _user && _user != _entry.owner()}
+	#{if canVote}
 	<a href="
-		#{if _entry instanceof models.Answer}
+		#{if isAnswer}
 			@{Secured.voteAnswerDown(_entry.question().id, _entry.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionDown(_entry.id)}
@@ -12,9 +16,9 @@
 	
 	${_entry.rating()}
 
-	#{if _user && _user != _entry.owner()}
+	#{if canVote}
 	<a href="
-		#{if _entry instanceof models.Answer}
+		#{if isAnswer}
 			@{Secured.voteAnswerUp(_entry.question().id, _entry.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionUp(_entry.id)}

@@ -11,18 +11,7 @@
 		<h1>Answers</h1>
 		<ul>
 			#{list items:answers, as:'answer'}
-			<li>
-				<h2><a href="@{UserFuncs.showProfile(answer.owner().id)}">${answer.owner().name}:</a></h2>
-				<p>
-					${answer.content()}
-				</p>
-				#{date answer /}
-
-				#{vote entry:answer, user:user /}
-											
-				#{setBestAnswer answer:answer, user:user /}
-											
-			</li>
+				#{answer answer:answer, user:user /}
 			#{/list}
 		</ul>
 	#{/if}

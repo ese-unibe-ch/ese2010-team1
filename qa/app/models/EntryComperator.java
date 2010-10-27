@@ -2,17 +2,20 @@ package models;
 
 import java.util.Comparator;
 
+//OT make this comperator type-save! using EntryComperator<Entry> implements Comperator<Entry>
+//TS fixed
 /**
  * Compares two <code>Entrys</code> by their timestamp.
  */
-public class EntryComperator implements Comparator {
+public class EntryComperator implements Comparator<Entry> {
 
+	public int compare(Entry o1, Entry o2) {
 
-		public int compare(Object o1, Object o2) {
-			if((o1 instanceof Entry) && (o2 instanceof Entry))
-				return ((Entry) o2).rating() - ((Entry) o1).rating();
-			return 0;
+		if (o2.rating() - o1.rating() > 0) {
+			return 1;
+		} else if (o2.rating() - o1.rating() < 0) {
+			return -1;
 		}
-		
-		
+		return 0;
+	}
 }

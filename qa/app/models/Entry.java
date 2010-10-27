@@ -68,13 +68,13 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return number of positive {@link Vote}s
 	 */
-	public int upVotes() {
-		return Vote.find("byEntryAndUp", this, true).fetch().size();
+	public long upVotes() {
+		return Vote.count("entry = ? and up = ?", this, true);
 	}
 
-	public int numberOfVotes() {
+	public long numberOfVotes() {
 
-		return Vote.find("byEntry", this).fetch().size();
+		return Vote.count("entry = ?", this);
 	}
 
 	/**
@@ -82,9 +82,9 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return number of negative {@link Vote}s
 	 */
-	public int downVotes() {
+	public long downVotes() {
 
-		return Vote.find("byEntryAndUp", this, false).fetch().size();
+		return Vote.count("entry = ? and up = ?", this, false);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return rating as an <code>Integer</code>
 	 */
-	public int rating() {
+	public long rating() {
 		return this.upVotes() - this.downVotes();
 	}
 
@@ -118,6 +118,12 @@ public abstract class Entry extends Model {
 		return this.vote(user, false);
 	}
 
+	public boolean canVote(User user) {
+		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
+		return user != this.owner
+				&& (alreadyVoted == null || !alreadyVoted.frozen());
+	}
+
 	private Vote vote(User user, boolean up) {
 
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
@@ -125,11 +131,21 @@ public abstract class Entry extends Model {
 		if (user == this.owner)
 			return null;
 		if (alreadyVoted != null) {
-			alreadyVoted.delete();
+			if (alreadyVoted.frozen())
+				return null;
+			else
+				alreadyVoted.delete();
 		}
 
 		Vote vote = new Vote(user, this, up).save();
 		this.votes.add(vote);
 		return vote;
+	}
+
+	// TS Replace whitespace by percent symbol to get more hits
+	public static List<Entry> searchContent(String searchString) {
+
+		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
+
 	}
 }

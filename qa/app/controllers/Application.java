@@ -1,8 +1,10 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
+import models.Entry;
 import models.Question;
 import models.User;
 import play.data.validation.Email;
@@ -36,6 +38,7 @@ public class Application extends Controller {
 	 * @param id
 	 *            the question id
 	 */
+
 	public static void question(long id) {
 		Question question = Question.find("byID", id).first();
 		if (question == null) {
@@ -62,17 +65,48 @@ public class Application extends Controller {
 	 *            the email
 	 * @param password
 	 *            the password
+	 * @param password2
+	 *            the confirmation of the password
 	 */
-	public static void addUser(@Required String username,
-			@Required @Email String email, @Required String password) {
-		if (validation.hasErrors()) {
-			render("Application/createUser.html", username, email, password);
-		}
-		if (!User.exists(username)) {
+	public static void addUser(
+			@Required(message = "A valid username is required") String username,
+			@Required(message = "A valid e-mail is required") @Email String email,
+			@Required(message = "A password is required") String password,
+			String password2) {
 
-			new User(username, email, password).save();
+		// validate all parameters
+		if (!password.isEmpty()) {
+			validation.equals(password, password2).message(
+					"passwords don't match");
 		}
+
+		validation.isTrue(!User.exists(username)).message(
+				"Username already exists");
+
+		if (validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			Application.createUser();
+		}
+
+		new User(username, email, password).save();
+
 		Application.index();
 	}
 
+	public static void userCheck(String username) {
+		boolean exists = User.exists(username);
+		render(exists);
+	}
+
+	public static void search(@Required String searchString) {
+
+		List<Entry> results = new ArrayList<Entry>();
+		if (!validation.hasErrors()) {
+			results.addAll(Question.searchTitle(searchString));
+			results.addAll(Entry.searchContent(searchString));
+		}
+
+		render(searchString, results);
+	}
 }

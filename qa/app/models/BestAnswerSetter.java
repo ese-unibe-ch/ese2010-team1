@@ -1,8 +1,10 @@
 package models;
 
+import java.util.Date;
+
 import jobs.Timer;
 import play.db.jpa.Model;
-
+//OT I'm not really sure, if this class is even necessary, but let's discuss this in the next meeting!
 public class BestAnswerSetter extends Model {
 
 	private long answerID;
@@ -15,6 +17,7 @@ public class BestAnswerSetter extends Model {
 		Answer answer = Answer.<Answer> findById(answerID);
 		answer.bestAnswerSetter(this);
 		answer.isBestAnswer(true);
+		answer.bestAnswerTime = new Date();
 		answer.question().setBestAnswerFlag(true);
 		answer.save();
 		answer.question().save();
