@@ -10,14 +10,14 @@ public class TimeFreezerTest extends UnitTest {
 
 	@Test
 	public void createTimeFreezer() {
-		TimeFreezer tf = new TimeFreezer(null, 10);
+		TimeFreezer tf = new TimeFreezer(10);
 		assertTrue((new Date()).compareTo(tf.timestamp) >= 0);
 		assertFalse(tf.frozen());
 	}
 
 	@Test
 	public void freeze() {
-		TimeFreezer tf = new TimeFreezer(null, -1);
+		TimeFreezer tf = new TimeFreezer(-1);
 		assertTrue(tf.frozen());
 	}
 

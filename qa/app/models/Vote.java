@@ -1,6 +1,5 @@
 package models;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -22,8 +21,7 @@ public class Vote extends Model {
 	@ManyToOne
 	public User owner;
 
-	@OneToOne(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
+	@OneToOne
 	public TimeFreezer freezer;
 
 	/**
@@ -40,7 +38,7 @@ public class Vote extends Model {
 		this.owner = owner;
 		this.up = up;
 		this.entry = entry;
-		this.freezer = new TimeFreezer(this, 60 * 2).save();
+		this.freezer = new TimeFreezer(60 * 2).save();
 		owner.addVote(this);
 	}
 

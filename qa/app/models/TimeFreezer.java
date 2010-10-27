@@ -3,7 +3,6 @@ package models;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 import play.db.jpa.Model;
 
@@ -15,9 +14,6 @@ import play.db.jpa.Model;
  */
 @Entity
 public class TimeFreezer extends Model {
-
-	@OneToOne
-	public Vote owner;
 
 	public Date timestamp;
 
@@ -31,9 +27,7 @@ public class TimeFreezer extends Model {
 	 * @param delay
 	 *            the delay
 	 */
-	public TimeFreezer(Vote owner, int delay) {
-		if (owner != null)
-			this.owner = owner.save();
+	public TimeFreezer(int delay) {
 		this.delay = delay;
 		this.timestamp = now();
 	}
