@@ -43,4 +43,9 @@ public class Answer extends Entry {
 		return this.question.bestAnswer == this;
 	}
 
+	public boolean canBeBestAnswer() {
+		return this.question.canSetBestAnswer()
+				&& this.owner != this.question.owner;
+	}
+
 }
