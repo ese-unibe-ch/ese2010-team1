@@ -109,10 +109,20 @@ public class Application extends Controller {
 
 	public static void search(@Required String searchString) {
 
+		List<Entry> foundEntrys = new ArrayList<Entry>();
 		List<Entry> results = new ArrayList<Entry>();
 		if (!validation.hasErrors()) {
-			results.addAll(Question.searchTitle(searchString));
-			results.addAll(Entry.searchContent(searchString));
+			foundEntrys.addAll(Question.searchTitle(searchString));
+			foundEntrys.addAll(Entry.searchContent(searchString));
+			foundEntrys.addAll(Question.searchTaggedWith(searchString));
+
+			for (Entry entry : foundEntrys) {
+
+				if (!results.contains(entry)) {
+					results.add(entry);
+				}
+			}
+
 		}
 
 		render(searchString, results);
