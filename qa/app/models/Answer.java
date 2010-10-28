@@ -44,6 +44,7 @@ public class Answer extends Entry {
 	}
 
 	public boolean canBeBestAnswer() {
+		assert this.question != null;
 		return this.question.canSetBestAnswer()
 				&& this.owner != this.question.owner;
 	}

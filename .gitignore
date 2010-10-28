@@ -29,5 +29,5 @@ nbproject
 *.launch
 
 # cobertura server file
-cobertura.ser
+*.ser
 

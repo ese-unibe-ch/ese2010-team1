@@ -145,18 +145,19 @@ public class Question extends Entry {
 	}
 
 	public void setBestAnswer(Answer answer) {
-		if (this.canSetBestAnswer()) {
+		if (answer == null) {
+			this.bestAnswer = null;
+			this.bestAnswerFreezer = null;
+		} else if (answer.canBeBestAnswer()) {
 			this.bestAnswerFreezer = new TimeFreezer(1 * 60).save();
 			this.bestAnswer = answer;
-			this.save();
 		}
+		this.save();
 	}
 
 	public void resetBestAnswer() {
 		if (this.canSetBestAnswer()) {
-			this.bestAnswer = null;
-			this.bestAnswerFreezer = null;
-			this.save();
+			this.setBestAnswer(null);
 		}
 	}
 

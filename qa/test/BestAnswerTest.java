@@ -21,9 +21,9 @@ public class BestAnswerTest extends UnitTest {
 		User jack = new User("Jack", "test@mail.com", "password").save();
 		User bill = new User("Bill", "bill@mail.com", "secret").save();
 		Question question = jack.addQuestion("A title", "My first question");
-		Answer firstAnswer = question.answer(jack, "first answer");
-		Answer secondAnswer = question.answer(bill, "second answer");
-		Answer thirdAnswer = question.answer(bill, "third answer");
+		Answer firstAnswer = question.answer(jack, "first answer").save();
+		Answer secondAnswer = question.answer(bill, "second answer").save();
+		Answer thirdAnswer = question.answer(bill, "third answer").save();
 
 		assertFalse(firstAnswer.isBestAnswer());
 		assertFalse(secondAnswer.isBestAnswer());
@@ -35,6 +35,10 @@ public class BestAnswerTest extends UnitTest {
 		assertTrue(secondAnswer.canBeBestAnswer());
 		assertTrue(thirdAnswer.canBeBestAnswer());
 
+		assertFalse(firstAnswer == null);
+		assertFalse(secondAnswer == null);
+		assertFalse(thirdAnswer == null);
+
 		question.setBestAnswer(secondAnswer);
 
 		assertFalse(firstAnswer.isBestAnswer());
@@ -42,7 +46,6 @@ public class BestAnswerTest extends UnitTest {
 		assertFalse(thirdAnswer.isBestAnswer());
 
 		assertTrue(question.canSetBestAnswer());
-
 		question.resetBestAnswer();
 
 		assertFalse(firstAnswer.isBestAnswer());
