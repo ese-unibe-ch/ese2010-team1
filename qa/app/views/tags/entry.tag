@@ -16,7 +16,7 @@
 	*{ content }*
 	<div id= "content${_entry.id }">
 		<p>
-			${_entry.content }
+			${_entry.content.nl2br() }
 		</p>
 	</div>
 	
