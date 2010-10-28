@@ -4,8 +4,12 @@
 	<p class="hl-content">
 		${_question.content().nl2br()}
 	</p>
+	#{list items:_question.tags, as:'tag'}
+     <a href="#" class="tags">${tag.name}</a>
+     #{/list}
+	
 	#{date _question /}
 	<a href="@{Application.question(_question.id)}">
-		<h2>by ${_question.owner().name} (${_question.owner().reputation()})</h2>
+		<h3>by ${_question.owner().name} (${_question.owner().reputation()})</h3>
 	</a>
 </li>

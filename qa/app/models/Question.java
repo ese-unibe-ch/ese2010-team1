@@ -144,6 +144,24 @@ public class Question extends Entry {
 						tag).fetch();
 	}
 
+	public static List<Question> searchTaggedWith(String searchString) {
+		List<Tag> matchingTags = Tag.find("byNameLike",
+				"%" + searchString + "%").fetch();
+
+		List<Question> result = new ArrayList<Question>();
+		for (Tag tag : matchingTags) {
+			for (Question question : Question.findTaggedWith(tag.name)) {
+
+				if (!result.contains(question)) {
+					result.add(question);
+
+				}
+			}
+		}
+
+		return result;
+	}
+
 	public void setBestAnswer(Answer answer) {
 		if (this.canSetBestAnswer()) {
 			this.bestAnswerFreezer = new TimeFreezer(1 * 60).save();
