@@ -30,15 +30,6 @@ public class Answer extends Entry {
 		owner.addAnswer(this);
 	}
 
-	/**
-	 * Get the {@link Question} belonging to the <code>Answer</code>.
-	 * 
-	 * @return the {@link Question} this <code>Answer</code> belongs to
-	 */
-	public Question question() {
-		return this.question;
-	}
-
 	public boolean isBestAnswer() {
 		return this.question.bestAnswer == this;
 	}

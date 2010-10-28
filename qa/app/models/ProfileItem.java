@@ -47,10 +47,6 @@ public class ProfileItem extends Model {
 		return this;
 	}
 
-	public String title() {
-		return this.title;
-	}
-
 	/**
 	 * Find user entry which belongs to the called item.
 	 * 

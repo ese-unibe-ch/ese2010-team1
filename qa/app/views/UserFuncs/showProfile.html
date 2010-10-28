@@ -25,7 +25,7 @@
 	
 		<dl>
 			#{list items:titles, as:'title'}
-				<dt>${title.title()}:</dt>
+				<dt>${title.title}:</dt>
 				<dd>
 					#{if title.hasUserEntry(puser)}
 						${title.findUserEntry(puser).entry}
@@ -48,10 +48,10 @@
 	    		
 	    			#{if activity instanceof models.Answer}
 
-	    				${activity.timestamp().format('dd.MM.yyyy, hh:mm')} - User <a href="@{Application.question(activity.question.id)}#${activity.id}">answered</a> the <a href="@{Application.question(activity.question.id)}">question</a>  <br />
+	    				${activity.timestamp.format('dd.MM.yyyy, hh:mm')} - User <a href="@{Application.question(activity.question.id)}#${activity.id}">answered</a> the <a href="@{Application.question(activity.question.id)}">question</a>  <br />
 	    			#{/if}
 	    			#{else}
-	    				${activity.timestamp().format('dd.MM.yyyy, hh:mm')} - User created a new <a href="@{Application.question(activity.id)}">question</a><br />
+	    				${activity.timestamp.format('dd.MM.yyyy, hh:mm')} - User created a new <a href="@{Application.question(activity.id)}">question</a><br />
 	    			#{/else}
 	    	
 	    		#{/list}

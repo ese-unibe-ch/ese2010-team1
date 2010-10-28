@@ -46,13 +46,4 @@ public class Vote extends Model {
 		return this.freezer.frozen();
 	}
 
-	/**
-	 * Check if a <code>Vote</code> is positive or negative.
-	 * 
-	 * @return true if the <code>Vote</code> is positive
-	 */
-	public boolean up() {
-		return this.up;
-	}
-
 }

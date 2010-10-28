@@ -38,15 +38,16 @@ header {
 		background: 		#555;
 		color: 				#222;
 	}
+	
+		nav a {
+			margin-left: 		5px;
+		}
 			
 		nav span {
 			position: 			absolute;
 			right: 				5px;
 		}
-		
-			nav span a {
-				margin-left: 		5px;
-			}
+
 	
 article {
 	padding: 		10px;
@@ -128,24 +129,17 @@ article {
 		textarea {
 			height: 			50px;
 			width: 				300px;
-			background: 		#222;
-			border: 			1px #000 solid;
-			color: 				#aecbfb;
 		}
 		
-		input {
+		input, textarea {
 			display: block;
 			background: #222;
 			color: #aecbfb;
 			border: 	1px #000 solid;
 		}
 		
-		input[type=submit]{
+		input[type=submit], input[type=button]{
 			display:	inline;
-		}
-		
-		textarea + input[type=submit]:before {
-			content:  '<br>';
 		}
 
 		

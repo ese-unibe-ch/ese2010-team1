@@ -46,27 +46,6 @@ public abstract class Entry extends Model {
 		this.votes = new ArrayList<Vote>();
 	}
 
-	public String content() {
-		return this.content;
-	}
-
-	public void content(String content) {
-		this.content = content;
-	}
-
-	public User owner() {
-		return this.owner;
-	}
-
-	/**
-	 * Get the time the <code>Entry</code> was created.
-	 * 
-	 * @return the creation date as a UNIX timestamp
-	 */
-	public Date timestamp() {
-		return this.timestamp;
-	}
-
 	/**
 	 * Count all positive {@link Vote}s on an <code>Entry</code>
 	 * 

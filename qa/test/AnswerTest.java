@@ -27,8 +27,8 @@ public class AnswerTest extends UnitTest {
 		assertTrue(question.hasAnswer(answer));
 		question.answer(user, "another answer");
 
-		assertEquals(answer.content(), "an answer");
-		assertEquals(answer.question(), question);
+		assertEquals(answer.content, "an answer");
+		assertEquals(answer.question, question);
 	}
 
 	@Test
@@ -45,7 +45,7 @@ public class AnswerTest extends UnitTest {
 		assertEquals(1, Answer.count());
 		Answer answer2 = question.answer(user, "another answer");
 
-		assertEquals(answer.content(), "an answer");
+		assertEquals(answer.content, "an answer");
 
 		Answer answer3 = question2
 				.answer(user2, "I also not really likt it...");

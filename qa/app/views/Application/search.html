@@ -31,14 +31,7 @@ $(document).ready(function() {
 
 #{list items:results, as:'entry'}
 
-#{if entry instanceof models.Question}
-
-#{questionResult question:entry /}
-
-#{/if}
-#{elseif entry instanceof models.Answer}
-#{answerResult answer:entry /}
-#{/elseif}
+#{entry entry:entry, user:user /}
 
 
 

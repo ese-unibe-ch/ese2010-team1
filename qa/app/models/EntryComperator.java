@@ -2,8 +2,6 @@ package models;
 
 import java.util.Comparator;
 
-//OT make this comperator type-save! using EntryComperator<Entry> implements Comperator<Entry>
-//TS fixed
 /**
  * Compares two <code>Entrys</code> by their timestamp.
  */
