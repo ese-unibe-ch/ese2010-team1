@@ -18,9 +18,6 @@ public class Bootstrap extends Job {
 			User tobias = User.find("byName", "Tobias").first();
 			User simon = User.find("byName", "Simon").first();
 			Question question = Question.find("byOwner", tobias).first();
-			question.tagItWith("world");
-			question.tagItWith("test");
-			question.tagItWith("java");
 			question.voteUp(simon);
 
 		}

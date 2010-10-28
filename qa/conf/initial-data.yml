@@ -4,6 +4,15 @@ ProfileItem(philosophy):
     title: Life Philosophy
 ProfileItem(editor):
     title: Editor of choice
+    
+# tags
+Tag(java):
+     name: Java
+Tag(world):
+     name: World
+Tag(test):
+     name: Test
+
 # Users
 User(admin):
     name: Admin
@@ -48,16 +57,24 @@ Question(q1):
     title: first 
     content: some dummy content
     timestamp: 2010-10-20
+    tags:
+     - world
+     - java
+     - test
 Question(q2):
     owner: tobias
     title: second
     content: another dummy content
     timestamp: 2010-10-22
+    tags:
+     - world
 Question(q3):
     owner: oliver
     title: third?
     content: lorem ipsum
     timestamp: 2010-10-25
+    tags: 
+     - test
 
 # Answers
 Answer(a1):
