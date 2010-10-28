@@ -45,16 +45,19 @@
 	    	#{/if}
 	    	#{else}
 	    		#{list items:puser.getActivities(10), as:'activity'}
-	    		
+	    			<dl id="activity">
 	    			#{if activity instanceof models.Answer}
 
-	    				${activity.timestamp.format('dd.MM.yyyy, hh:mm')} - User <a href="@{Application.question(activity.question.id)}#${activity.id}">answered</a> the <a href="@{Application.question(activity.question.id)}">question</a>  <br />
+	    				<dt><div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div><div class="activity-box"> answered </div><div class="clear"> </div></dt>  
+	    				<dd><a class="activity" href="@{Application.question(activity.question.id)}#${activity.id}">${activity.question.title}</a>  </dd>
 	    			#{/if}
 	    			#{else}
-	    				${activity.timestamp.format('dd.MM.yyyy, hh:mm')} - User created a new <a href="@{Application.question(activity.id)}">question</a><br />
+	    				<dt><div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div><div class="activity-box"> asked </div> <div class="clear"></div> </dt> 
+	    				<dd> <a class="activity" href="@{Application.question(activity.id)}">${activity.title}</a></dd>
 	    			#{/else}
 	    	
 	    		#{/list}
+	    		</dl>
 	    	#{/else}
 	  	</div>
 	  	<div id="statistics">

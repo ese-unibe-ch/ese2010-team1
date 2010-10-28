@@ -243,3 +243,44 @@ UL.tabNavigation {
 			padding: 5px;
 			margin-right: 5px;
 		}
+		
+		dl#activity dd , dl#activity dt {
+			margin-bottom: 10px;
+			height: 42px;
+			background-color: #222;
+		
+		}
+		
+		dl#activity dt {
+			widht: 150px;
+		}
+		
+		dl#activity dd {
+			margin-left: 150px;
+		}
+		
+		.activity-date {
+			width: 50px; 
+			height: 40px; 
+			background-color: white;
+			color: #333;
+			font-weight: bold; 
+			text-align: center; 
+			border: 1px solid white; 
+			float: left;
+		}
+		
+		.activity-box {
+			width: 100px;
+			margin-top: 10px;
+			float: left;
+			margin-left: 15px;
+			
+		}
+		a.activity {
+			display: block;
+			margin-top: 10px;
+			margin-left: 20px;
+			position: absolute;
+		}
+		
