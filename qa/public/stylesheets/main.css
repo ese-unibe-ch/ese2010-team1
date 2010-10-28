@@ -105,6 +105,10 @@ article {
 				font-size: 			0.7em;
 			}
 			
+				.info span {
+					margin-right: 		5px;
+				}
+			
 			.actions {
 				top:	 			7px;
 				right: 				7px;
