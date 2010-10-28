@@ -54,8 +54,10 @@ User(mark):
 # Questions
 Question(q1):
     owner: simon
-    title: first 
-    content: some dummy content
+    title: What's about life, the universe and everything?
+    content:   > 
+        Since a long I try to get the answer about life, the universe and everything.
+        Can you help me?
     timestamp: 2010-10-20
     tags:
      - world
@@ -79,13 +81,13 @@ Question(q3):
 # Answers
 Answer(a1):
     owner: tobias
-    content: sorry i don't understand your question!
+    content: I think the problem, to be quite honest with you, is that you've never actually known what the question is.
     timestamp: 2010-10-27
     isBestAnswer: false
     question: q1    
 Answer(a2):
     owner: mark
-    content: don't know what you mean
+    content: It's very simple, the answer is 42.
     timestamp: 2010-10-25
     isBestAnswer: false
     question: q1    
