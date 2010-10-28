@@ -4,14 +4,14 @@
 #{if question}
 #{set title:'ajopi - Question by ' + question.owner().name /}
 	<ul>
-		#{question question:question, user:user /}
+		#{entry entry:question, user:user /}
 	</ul>
 	
 	#{if answers.size() > 0}
 		<h1>Answers</h1>
 		<ul>
 			#{list items:answers, as:'answer'}
-				#{answer answer:answer, user:user /}
+				#{entry entry:answer, user:user /}
 			#{/list}
 		</ul>
 	#{/if}
