@@ -23,9 +23,9 @@ public class QuestionTest extends UnitTest {
 		Question question = user.addQuestion("A title", "My first question");
 
 		// check question attributes
-		assertEquals("A title", question.title());
-		assertEquals("My first question", question.content());
-		assertNotNull(question.timestamp());
+		assertEquals("A title", question.title);
+		assertEquals("My first question", question.content);
+		assertNotNull(question.timestamp);
 
 		// check number of questions
 		assertEquals(1, Question.count());

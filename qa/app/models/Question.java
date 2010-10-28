@@ -57,10 +57,6 @@ public class Question extends Entry {
 
 	}
 
-	public String title() {
-		return this.title;
-	}
-
 	/**
 	 * Post a {@link Answer} to a <code>Question</code>
 	 * 

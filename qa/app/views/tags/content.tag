@@ -1,13 +1,13 @@
 <div id= "content${_entry.id }">
 	<p>
-		${_entry.content() }
+		${_entry.content }
 	</p>
 </div>
 
 <div id="edit${_entry.id }" style="display:none">
 	#{form @Secured.edit(_entry.id)} 
 		#{field 'content'}
-			<textarea name="${field.name}" class="${field.errorClass}">${_entry.content() }</textarea> 
+			<textarea name="${field.name}" class="${field.errorClass}">${_entry.content }</textarea> 
 		#{/ field}
 		<input type="submit" value="Save" /> 
 		#{if _entry instanceof models.Question}
@@ -19,6 +19,6 @@
 	#{/form }
 </div>
 
-#{if _user == _entry.owner() }
+#{if _user == _entry.owner }
 	<a class="edit" onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">edit</a>
 #{/if }

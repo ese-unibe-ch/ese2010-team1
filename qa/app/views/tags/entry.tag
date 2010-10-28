@@ -16,7 +16,7 @@
 	*{ content }*
 	<div id= "content${_entry.id }">
 		<p>
-			${_entry.content() }
+			${_entry.content }
 		</p>
 	</div>
 	
@@ -24,7 +24,7 @@
 	<div id="edit${_entry.id }" style="display:none">
 		#{form @Secured.edit(_entry.id)} 
 			#{field 'content'}
-				<textarea name="${field.name}" class="${field.errorClass}">${_entry.content() }</textarea> 
+				<textarea name="${field.name}" class="${field.errorClass}">${_entry.content }</textarea> 
 			#{/ field}
 			<input type="submit" value="Save" /> 
 			#{if _entry instanceof models.Question}
@@ -55,7 +55,7 @@
 		#{if answer}
 			#{setBestAnswer answer:_entry, user:_user /}
 		#{/if}
-		#{if _user == _entry.owner() }
+		#{if _user == _entry.owner }
 			<a href="#" onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">
 		  		<img src="@{'/public/images/edit.png'}" alt="edit" title="edit" />
 			</a>
@@ -64,10 +64,10 @@
 	
 	*{ info }*
 	<div class="info">
-		<a href="@{UserFuncs.showProfile(_entry.owner().id)}">
-			${_entry.owner().name} (${_entry.owner().reputation()})
+		<span>${_entry.timestamp.format('dd.mm.yyyy hh:mm:ss')}</span>
+		<a href="@{UserFuncs.showProfile(_entry.owner.id)}">
+			${_entry.owner.name} (${_entry.owner.reputation()})
 		</a>
-		#{date _entry /}
 	</div>
 	
 	*{ vote }*

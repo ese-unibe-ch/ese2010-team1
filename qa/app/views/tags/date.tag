@@ -1,1 +1,0 @@
-<span class="date">${_arg.timestamp().format('dd MMMM yyyy hh:mm:ss')}</span>

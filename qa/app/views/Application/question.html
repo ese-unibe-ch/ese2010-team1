@@ -2,7 +2,7 @@
 
 
 #{if question}
-#{set title:'ajopi - Question by ' + question.owner().name /}
+#{set title:'ajopi - Question by ' + question.owner.name /}
 	<ul>
 		#{entry entry:question, user:user /}
 	</ul>
