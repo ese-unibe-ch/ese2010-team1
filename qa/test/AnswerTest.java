@@ -28,7 +28,7 @@ public class AnswerTest extends UnitTest {
 		question.answer(user, "another answer");
 
 		assertEquals(answer.content(), "an answer");
-		assertEquals(answer.question(), question);
+		assertEquals(answer.question, question);
 	}
 
 	@Test

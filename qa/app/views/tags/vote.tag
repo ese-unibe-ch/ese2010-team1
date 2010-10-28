@@ -6,7 +6,7 @@
 	#{if canVote}
 	<a href="
 		#{if isAnswer}
-			@{Secured.voteAnswerDown(_entry.question().id, _entry.id)}
+			@{Secured.voteAnswerDown(_entry.question.id, _entry.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionDown(_entry.id)}
 
@@ -19,7 +19,7 @@
 	#{if canVote}
 	<a href="
 		#{if isAnswer}
-			@{Secured.voteAnswerUp(_entry.question().id, _entry.id)}
+			@{Secured.voteAnswerUp(_entry.question.id, _entry.id)}
 		#{/if}#{else}
 			@{Secured.voteQuestionUp(_entry.id)}
 

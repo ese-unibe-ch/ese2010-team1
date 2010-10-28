@@ -31,7 +31,7 @@
 				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.id)}')" />
 			#{/if }	
 			#{if _entry instanceof models.Answer}
-				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.question().id)}')" />
+				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.question.id)}')" />
 			#{/if }
 		#{/form }
 	</div>

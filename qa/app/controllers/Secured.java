@@ -129,18 +129,17 @@ public class Secured extends Controller {
 	}
 
 	public static void edit(long id, String content) {
-		if (Answer.<Answer> findById(id) != null) {
-			Answer answer = Answer.<Answer> findById(id);
-			answer.content(content);
-			answer.save();
-			Application.question(answer.question().id);
+
+		Entry entry = Entry.findById(id);
+		entry.content = content;
+		entry.save();
+
+		if (entry instanceof Answer) {
+			Application.question(((Answer) entry).question.id);
+		} else {
+			Application.question(entry.id);
+
 		}
 
-		if (Question.<Question> findById(id) != null) {
-			Question question = Question.<Question> findById(id);
-			question.content(content);
-			question.save();
-			Application.question(question.id);
-		}
 	}
 }
