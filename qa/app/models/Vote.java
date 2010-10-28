@@ -6,7 +6,6 @@ import javax.persistence.OneToOne;
 
 import play.db.jpa.Model;
 
-// TODO: Auto-generated Javadoc
 /**
  * A vote on a {@link Entry} belonging to a {@link User}. The <code>Vote</code>
  * can be positive or negative.

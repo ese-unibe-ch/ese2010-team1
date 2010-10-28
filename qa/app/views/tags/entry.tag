@@ -40,7 +40,7 @@
 	#{if question}
 		<div class="tags">
 			#{list items:_entry.tags, as:'tag'}
-     			<a href="#">${tag.name}</a>
+     			<a href="#" class="tags">${tag.name}</a>
     		 #{/list}
 		</div>
 	#{/if}

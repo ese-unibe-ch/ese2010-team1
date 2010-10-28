@@ -145,6 +145,7 @@ public class Question extends Entry {
 	 */
 	public Question tagItWith(String name) {
 		tags.add(Tag.findOrCreateByName(name));
+		this.save();
 		return this;
 	}
 

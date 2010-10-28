@@ -5,8 +5,7 @@ ProfileItem(philosophy):
 ProfileItem(editor):
     title: Editor of choice
 # Users
-
-User(admin)
+User(admin):
     name: Admin
     password: e579c4fea528a36862a0a5352587a30d58da532f
     email: admin@example.com
@@ -66,15 +65,13 @@ Answer(a1):
     content: sorry i don't understand your question!
     timestamp: 2010-10-27
     isBestAnswer: false
-    question: q1
-    
+    question: q1    
 Answer(a2):
     owner: mark
     content: don't know what you mean
     timestamp: 2010-10-25
     isBestAnswer: false
-    question: q1
-    
+    question: q1    
 Answer(a3):
     owner: thomas
     content: bla bla bla
