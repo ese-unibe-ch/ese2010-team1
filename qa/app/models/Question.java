@@ -14,30 +14,36 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
- * A {@link Entry} containing a question as <code>content</code> and
- * {@link Answer}s.
+ * A {@link Entry} containing a question as <code>content</code> and.
  * 
+ * {@link Answer}s.
  */
 @Entity
 public class Question extends Entry {
 
+	/** The Constant recentQuestionCount. */
 	private static final int recentQuestionCount = 10;
 
 	/** The title. */
 	public String title;
 
+	/** The answers. */
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<Answer> answers;
 
+	/** The tags. */
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	public Set<Tag> tags;
 
+	/** The is best answer set. */
 	public boolean isBestAnswerSet = false;
 
+	/** The best answer. */
 	@OneToOne
 	public Answer bestAnswer;
 
+	/** The best answer freezer. */
 	@OneToOne
 	public TimeFreezer bestAnswerFreezer;
 
@@ -46,6 +52,8 @@ public class Question extends Entry {
 	 * 
 	 * @param owner
 	 *            the {@link User} who posted the <code>Question</code>
+	 * @param title
+	 *            the title
 	 * @param content
 	 *            the question
 	 */
@@ -58,7 +66,7 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Post a {@link Answer} to a <code>Question</code>
+	 * Post a {@link Answer} to a <code>Question</code>.
 	 * 
 	 * @param user
 	 *            the {@link User} posting the {@link Answer}
@@ -73,7 +81,7 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Checks if a {@link Answer} belongs to a <code>Question</code>
+	 * Checks if a {@link Answer} belongs to a <code>Question</code>.
 	 * 
 	 * @param answer
 	 *            the {@link Answer} to check
@@ -128,11 +136,25 @@ public class Question extends Entry {
 		return list;
 	}
 
+	/**
+	 * Tag it with.
+	 * 
+	 * @param name
+	 *            the name
+	 * @return the question
+	 */
 	public Question tagItWith(String name) {
 		tags.add(Tag.findOrCreateByName(name));
 		return this;
 	}
 
+	/**
+	 * Find questions tagged with tagname.
+	 * 
+	 * @param tag
+	 *            the tag
+	 * @return the list
+	 */
 	public static List<Question> findTaggedWith(String tag) {
 		return Question
 				.find(
@@ -140,6 +162,13 @@ public class Question extends Entry {
 						tag).fetch();
 	}
 
+	/**
+	 * Search questions tagged with the searchString.
+	 * 
+	 * @param searchString
+	 *            the search string
+	 * @return the list
+	 */
 	public static List<Question> searchTaggedWith(String searchString) {
 		List<Tag> matchingTags = Tag.find("byNameLike",
 				"%" + searchString + "%").fetch();
@@ -158,6 +187,12 @@ public class Question extends Entry {
 		return result;
 	}
 
+	/**
+	 * Sets the best answer.
+	 * 
+	 * @param answer
+	 *            the new best answer
+	 */
 	public void setBestAnswer(Answer answer) {
 		if (answer == null) {
 			this.bestAnswer = null;
@@ -169,18 +204,33 @@ public class Question extends Entry {
 		this.save();
 	}
 
+	/**
+	 * Reset best answer.
+	 */
 	public void resetBestAnswer() {
 		if (this.canSetBestAnswer()) {
 			this.setBestAnswer(null);
 		}
 	}
 
+	/**
+	 * Can set best answer.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean canSetBestAnswer() {
 		return this.bestAnswerFreezer == null
 				|| !this.bestAnswerFreezer.frozen();
 	}
 
 	// TS Replace whitespace by percent symbol to get more hits
+	/**
+	 * Search the titles for the searchString.
+	 * 
+	 * @param searchString
+	 *            the search string
+	 * @return the list
+	 */
 	public static List<Entry> searchTitle(String searchString) {
 		return Question.find("byTitleLike", "%" + searchString + "%").fetch();
 	}

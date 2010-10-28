@@ -5,6 +5,13 @@ ProfileItem(philosophy):
 ProfileItem(editor):
     title: Editor of choice
 # Users
+
+User(admin)
+    name: Admin
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: admin@example.com
+    isAdmin: true
+    timestamp: 2010-10-20
 User(simon):
     name: Simon
     password: e579c4fea528a36862a0a5352587a30d58da532f

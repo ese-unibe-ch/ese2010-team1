@@ -16,27 +16,42 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 import edu.emory.mathcs.backport.java.util.Collections;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class User.
+ */
 @Entity
 public class User extends Model {
 
+	/** The entrys. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Entry> entrys;
 
+	/** The votes. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
+	/** The name. */
 	@Required
 	public String name;
+
+	/** The password. */
 	@Required
 	public String password;
+
+	/** The email. */
 	@Required
 	public String email;
 
+	/** The timestamp. */
 	public Date timestamp;
 
+	/** The Constant bestAnswerReputation. */
 	public static final int bestAnswerReputation = 50;
+
+	/** The is admin. */
 	public boolean isAdmin = false;
 
 	/**
@@ -44,6 +59,10 @@ public class User extends Model {
 	 * 
 	 * @param name
 	 *            the name of the <code>User</code>
+	 * @param email
+	 *            the email
+	 * @param password
+	 *            the password
 	 */
 	public User(String name, String email, String password) {
 		this.name = name;
@@ -54,7 +73,7 @@ public class User extends Model {
 		this.timestamp = new Date();
 	}
 
-	// TODO cache reputation for faster access
+	// SM cache reputation for faster access
 	/**
 	 * Reputation.
 	 * 
@@ -126,10 +145,24 @@ public class User extends Model {
 	 * A Point on the reputation graph.
 	 */
 	public class Point {
+
+		/** The time. */
 		public long time;
+
+		/** The change. */
 		public int change;
+
+		/** The reputation. */
 		public int reputation;
 
+		/**
+		 * Instantiates a new point.
+		 * 
+		 * @param timestamp
+		 *            the timestamp
+		 * @param change
+		 *            the change
+		 */
 		public Point(Date timestamp, int change) {
 			this.time = timestamp.getTime();
 			this.change = change;
@@ -140,6 +173,12 @@ public class User extends Model {
 	 * Compares Points by timestamp.
 	 */
 	public class PointComparator implements Comparator<Point> {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 */
 		public int compare(Point arg0, Point arg1) {
 			return (int) (((Point) arg0).time - ((Point) arg1).time);
 		}
@@ -238,18 +277,40 @@ public class User extends Model {
 		return this;
 	}
 
+	/**
+	 * Gets the number of votes.
+	 * 
+	 * @return the number of votes
+	 */
 	public long getNumberOfVotes() {
 		return Vote.count("owner = ?", this);
 	}
 
+	/**
+	 * Gets the number of questions.
+	 * 
+	 * @return the number of questions
+	 */
 	public long getNumberOfQuestions() {
 		return Question.count("owner = ?", this);
 	}
 
+	/**
+	 * Gets the number of answers.
+	 * 
+	 * @return the number of answers
+	 */
 	public long getNumberOfAnswers() {
 		return Answer.count("owner = ?", this);
 	}
 
+	/**
+	 * Gets the activities.
+	 * 
+	 * @param numberOfActivitys
+	 *            the number of activitys
+	 * @return the activities
+	 */
 	public List<Entry> getActivities(int numberOfActivitys) {
 
 		return Entry.find("owner like ? order by timestamp desc", this).fetch(

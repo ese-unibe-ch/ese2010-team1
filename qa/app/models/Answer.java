@@ -4,13 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- * A {@link Entry} containing an answer to a {@link Question}
- * 
- * 
+ * A {@link Entry} containing an answer to a {@link Question}.
  */
 @Entity
 public class Answer extends Entry {
 
+	/** The question. */
 	@ManyToOne
 	public Question question;
 
@@ -30,10 +29,20 @@ public class Answer extends Entry {
 		owner.addAnswer(this);
 	}
 
+	/**
+	 * Checks if is the best answer.
+	 * 
+	 * @return true, if is best answer
+	 */
 	public boolean isBestAnswer() {
 		return this.question.bestAnswer == this;
 	}
 
+	/**
+	 * Can be best answer.
+	 * 
+	 * @return true, if can be set to best answer
+	 */
 	public boolean canBeBestAnswer() {
 		assert this.question != null;
 		return this.question.canSetBestAnswer()
