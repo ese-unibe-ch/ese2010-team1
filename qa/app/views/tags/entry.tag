@@ -64,7 +64,7 @@
 	
 	*{ info }*
 	<div class="info">
-		<span>${_entry.timestamp.format('dd.mm.yyyy hh:mm:ss')}</span>
+		<span>${_entry.timestamp.format('dd.MM.yyyy hh:mm:ss')}</span>
 		<a href="@{UserFuncs.showProfile(_entry.owner().id)}">
 			${_entry.owner().name} (${_entry.owner().reputation()})
 		</a>

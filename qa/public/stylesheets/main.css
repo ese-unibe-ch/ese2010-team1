@@ -140,10 +140,13 @@ article {
 			border: 	1px #000 solid;
 		}
 		
-		input[type="submit"] {
-			display: 			block;
+		input[type=submit]{
+			display:	inline;
 		}
 		
+		textarea + input[type=submit]:before {
+			content:  '<br>';
+		}
 
 		
 footer {
