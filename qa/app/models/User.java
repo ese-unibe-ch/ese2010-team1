@@ -16,7 +16,6 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 import edu.emory.mathcs.backport.java.util.Collections;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class User.
  */
@@ -32,6 +31,10 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
+
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<FileEntry> files;
 
 	/** The name. */
 	@Required
@@ -70,6 +73,7 @@ public class User extends Model {
 		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
+		this.files = new ArrayList<FileEntry>();
 		this.timestamp = new Date();
 	}
 

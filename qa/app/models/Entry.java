@@ -33,6 +33,10 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
+	@OneToMany(mappedBy = "belongsTo", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<FileEntry> files;
+
 	/** The timestamp. */
 	public Date timestamp;
 
@@ -49,6 +53,7 @@ public abstract class Entry extends Model {
 		this.content = content;
 		this.timestamp = new Date();
 		this.votes = new ArrayList<Vote>();
+		this.files = new ArrayList<FileEntry>();
 	}
 
 	/**
