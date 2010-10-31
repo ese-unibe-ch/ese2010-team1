@@ -31,11 +31,10 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
-
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<FileEntry> files;
-
+	/*
+	 * @OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+	 * CascadeType.REMOVE, CascadeType.REFRESH }) public List<FileEntry> files;
+	 */
 	/** The name. */
 	@Required
 	public String name;
@@ -73,7 +72,7 @@ public class User extends Model {
 		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
-		this.files = new ArrayList<FileEntry>();
+		// this.files = new ArrayList<FileEntry>();
 		this.timestamp = new Date();
 	}
 

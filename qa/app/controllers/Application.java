@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,5 +148,21 @@ public class Application extends Controller {
 		}
 
 		render(searchString, results);
+	}
+
+	public static void fileUploadForm() {
+
+		render();
+	}
+
+	public static void uploadFile(File file) {
+
+		System.out.println(file.getAbsolutePath());
+
+		System.out.println(file.renameTo(new File(
+				"/home/tobias/ese-workspace/ese2010-team1/qa/public/files/"
+						+ file.getName())));
+
+		System.out.println(file.getPath());
 	}
 }
