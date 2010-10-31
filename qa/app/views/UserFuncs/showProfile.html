@@ -16,6 +16,7 @@
   		<ul class="tabNavigation">
     		<li><a href="#profile">Profile</a></li>
     		<li><a href="#activities">Activities</a></li>
+    		<li><a href="#entries">Entries</a></li>
     		<li><a href="#statistics">Statistics</a></li>
     		<li><a href="#graph">Graph</a></li>
   		</ul>
@@ -68,6 +69,29 @@
 	  	</div>
 	  	<div id="graph">
 	  		 <div id="graphcanvas" style="width:600px;height:300px"></div>
+	  	</div>
+	  	
+	  	<div id="entries">
+	  	<h1>Questions</h1>
+		<div id="inProfile">
+			<ul>
+			#{list items:puser.entrys, as:'entry'}
+				#{if entry instanceof models.Question}
+					#{entry entry:entry, user:user /}
+				#{/if}
+			#{/list}
+			</ul>
+		</div>
+	  	<h1>Answers</h1>
+	  		<ul>
+	  	
+			#{list items:puser.entrys, as:'entry'}
+				#{if entry instanceof models.Answer}
+					#{entry entry:entry, user:user /}
+				#{/if}
+			#{/list}
+		
+			</ul>
 	  	</div>
 	</div>          
 
