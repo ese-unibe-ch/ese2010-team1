@@ -12,12 +12,15 @@ import play.db.jpa.Model;
 @Entity
 public class ProfileEntry extends Model {
 
+	/** The entry. */
 	@Lob
 	public String entry;
 
+	/** The item. */
 	@ManyToOne
 	public ProfileItem item;
 
+	/** The user. */
 	public User user;
 
 	/**

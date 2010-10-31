@@ -20,15 +20,20 @@ import play.db.jpa.Model;
 @Entity
 public abstract class Entry extends Model {
 
+	/** The content. */
 	@Lob
 	public String content;
+
+	/** The owner. */
 	@ManyToOne
 	public User owner;
 
+	/** The votes. */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
+	/** The timestamp. */
 	public Date timestamp;
 
 	/**
@@ -47,7 +52,7 @@ public abstract class Entry extends Model {
 	}
 
 	/**
-	 * Count all positive {@link Vote}s on an <code>Entry</code>
+	 * Count all positive {@link Vote}s on an <code>Entry</code>.
 	 * 
 	 * @return number of positive {@link Vote}s
 	 */
@@ -55,13 +60,18 @@ public abstract class Entry extends Model {
 		return Vote.count("entry = ? and up = ?", this, true);
 	}
 
+	/**
+	 * Number of votes.
+	 * 
+	 * @return the long
+	 */
 	public long numberOfVotes() {
 
 		return Vote.count("entry = ?", this);
 	}
 
 	/**
-	 * Count all negative {@link Vote}s on an <code>Entry</code>
+	 * Count all negative {@link Vote}s on an <code>Entry</code>.
 	 * 
 	 * @return number of negative {@link Vote}s
 	 */
@@ -101,12 +111,28 @@ public abstract class Entry extends Model {
 		return this.vote(user, false);
 	}
 
+	/**
+	 * Check if user is allowed to vote.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return true, if user is allowed to vote
+	 */
 	public boolean canVote(User user) {
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
 		return user != this.owner
 				&& (alreadyVoted == null || !alreadyVoted.frozen());
 	}
 
+	/**
+	 * Vote an <code>Entry</code>.
+	 * 
+	 * @param user
+	 *            the user
+	 * @param up
+	 *            the up
+	 * @return the vote
+	 */
 	private Vote vote(User user, boolean up) {
 
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
@@ -126,6 +152,13 @@ public abstract class Entry extends Model {
 	}
 
 	// TS Replace whitespace by percent symbol to get more hits
+	/**
+	 * Search the content field for the searchString.
+	 * 
+	 * @param searchString
+	 *            the search string
+	 * @return the result list
+	 */
 	public static List<Entry> searchContent(String searchString) {
 
 		return Entry.find("byContentLike", "%" + searchString + "%").fetch();

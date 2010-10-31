@@ -14,13 +14,18 @@ import play.db.jpa.Model;
 @Entity
 public class Vote extends Model {
 
+	/** The state of the vote. */
 	public boolean up;
+
+	/** The entry. */
 	@ManyToOne
 	public Entry entry;
 
+	/** The owner. */
 	@ManyToOne
 	public User owner;
 
+	/** The freezer. */
 	@OneToOne
 	public TimeFreezer freezer;
 
@@ -42,6 +47,11 @@ public class Vote extends Model {
 		owner.addVote(this);
 	}
 
+	/**
+	 * Check if a vote can't get changed.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean frozen() {
 		return this.freezer.frozen();
 	}
