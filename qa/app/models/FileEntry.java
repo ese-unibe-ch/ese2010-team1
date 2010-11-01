@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import play.Play;
 import play.db.jpa.Model;
 
 @Entity
@@ -19,6 +20,8 @@ public class FileEntry extends Model {
 	 */
 
 	public Date timestamp;
+	public int picID;
+	private static int pictureCounter = 1;
 
 	private static String uploadPath = "/public/files/";
 
@@ -28,6 +31,8 @@ public class FileEntry extends Model {
 		// this.owner = owner;
 		this.timestamp = new Date();
 		this.extension = getFileExtension(filename);
+		this.picID = pictureCounter++;
+
 	}
 
 	public static FileEntry upload(File input) {
@@ -35,18 +40,30 @@ public class FileEntry extends Model {
 		FileEntry file = new FileEntry(input.getName());
 
 		// Rename and Move File
-		String newFilename = file.id.toString() + "." + file.extension;
+		String newFilename = file.picID + "." + file.extension;
 
-		input.renameTo(new File(uploadPath, newFilename));
+		input
+				.renameTo(new File(Play.applicationPath + uploadPath
+						+ newFilename));
 
 		file.save();
 
 		return file;
 	}
 
+	public boolean deleteFile() {
+		File file = new File(Play.applicationPath + uploadPath + this.picID
+				+ "." + this.extension);
+		if (file.exists()) {
+			return file.delete();
+		}
+
+		return false;
+	}
+
 	public String absoluteFilename() {
 
-		return this.id + "." + this.extension;
+		return this.picID + "." + this.extension;
 	}
 
 	public static boolean deleteFile(FileEntry file) {

@@ -8,6 +8,7 @@ import models.Answer;
 import models.Entry;
 import models.Question;
 import models.User;
+import play.Play;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -156,6 +157,8 @@ public class Application extends Controller {
 	}
 
 	public static void uploadFile(File file) {
+
+		System.out.println(Play.applicationPath);
 
 		System.out.println(file.getAbsolutePath());
 
