@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import play.Play;
 import play.db.jpa.Model;
@@ -13,11 +14,10 @@ public class FileEntry extends Model {
 
 	public String uploadFilename;
 	public String extension;
-	/*
-	 * @ManyToOne public Entry belongsTo;
-	 * 
-	 * @ManyToOne public User owner;
-	 */
+	@ManyToOne
+	public Entry belongsTo;
+	@ManyToOne
+	public User owner;
 
 	public Date timestamp;
 	public int picID;
@@ -25,19 +25,20 @@ public class FileEntry extends Model {
 
 	private static String uploadPath = "/public/files/";
 
-	private FileEntry(String filename) {
+	private FileEntry(String filename, Entry belongsTo, User owner) {
 		this.uploadFilename = filename;
-		// this.belongsTo = belongsTo;
-		// this.owner = owner;
+		this.belongsTo = belongsTo;
+		this.owner = owner;
 		this.timestamp = new Date();
 		this.extension = getFileExtension(filename);
 		this.picID = pictureCounter++;
 
 	}
 
-	public static FileEntry upload(File input) {
+	public static FileEntry upload(File input, Entry entry, User user) {
 
-		FileEntry file = new FileEntry(input.getName());
+		// change it...
+		FileEntry file = new FileEntry(input.getName(), entry, user);
 
 		// Rename and Move File
 		String newFilename = file.picID + "." + file.extension;
@@ -47,6 +48,8 @@ public class FileEntry extends Model {
 						+ newFilename));
 
 		file.save();
+
+		System.out.println("tried to upload " + input.getName());
 
 		return file;
 	}

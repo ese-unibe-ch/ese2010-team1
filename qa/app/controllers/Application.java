@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import models.Answer;
 import models.Entry;
 import models.Question;
 import models.User;
-import play.Play;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -149,23 +147,5 @@ public class Application extends Controller {
 		}
 
 		render(searchString, results);
-	}
-
-	public static void fileUploadForm() {
-
-		render();
-	}
-
-	public static void uploadFile(File file) {
-
-		System.out.println(Play.applicationPath);
-
-		System.out.println(file.getAbsolutePath());
-
-		System.out.println(file.renameTo(new File(
-				"/home/tobias/ese-workspace/ese2010-team1/qa/public/files/"
-						+ file.getName())));
-
-		System.out.println(file.getPath());
 	}
 }

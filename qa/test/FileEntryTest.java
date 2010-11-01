@@ -39,7 +39,7 @@ public class FileEntryTest extends UnitTest {
 		}
 
 		assertNotNull(testFile);
-		FileEntry file = FileEntry.upload(testFile);
+		FileEntry file = FileEntry.upload(testFile, null, null);
 
 		assertNotNull(file);
 		FileEntry foundFile = FileEntry.findById(file.id);
@@ -58,7 +58,7 @@ public class FileEntryTest extends UnitTest {
 			e.printStackTrace();
 		}
 
-		FileEntry file = FileEntry.upload(testFile);
+		FileEntry file = FileEntry.upload(testFile, null, null);
 
 		FileEntry entry = FileEntry.find("byUploadFilename", "test.txt")
 				.first();
