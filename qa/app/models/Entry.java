@@ -34,7 +34,7 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
-	@OneToMany(mappedBy = "belongsTo", cascade = { CascadeType.MERGE,
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
@@ -179,5 +179,10 @@ public abstract class Entry extends Model {
 		this.save();
 
 		return entry;
+	}
+
+	public List<FileEntry> getFiles() {
+
+		return FileEntry.find("byEntry", this).fetch();
 	}
 }

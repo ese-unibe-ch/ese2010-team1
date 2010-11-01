@@ -15,7 +15,7 @@ public class FileEntry extends Model {
 	public String uploadFilename;
 	public String extension;
 	@ManyToOne
-	public Entry belongsTo;
+	public Entry entry;
 	@ManyToOne
 	public User owner;
 
@@ -25,9 +25,9 @@ public class FileEntry extends Model {
 
 	private static String uploadPath = "/public/files/";
 
-	private FileEntry(String filename, Entry belongsTo, User owner) {
+	private FileEntry(String filename, Entry entry, User owner) {
 		this.uploadFilename = filename;
-		this.belongsTo = belongsTo;
+		this.entry = entry;
 		this.owner = owner;
 		this.timestamp = new Date();
 		this.extension = getFileExtension(filename);
@@ -81,6 +81,13 @@ public class FileEntry extends Model {
 			ext = f.substring(i + 1).toLowerCase();
 		}
 		return ext;
+	}
+
+	public String getAbsolutePath() {
+
+		return Play.applicationPath + uploadPath + this.picID + "."
+				+ this.extension;
+
 	}
 
 }

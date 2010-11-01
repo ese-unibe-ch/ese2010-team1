@@ -1,10 +1,12 @@
 package controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
 import models.Entry;
+import models.FileEntry;
 import models.Question;
 import models.User;
 import play.data.validation.Email;
@@ -147,5 +149,14 @@ public class Application extends Controller {
 		}
 
 		render(searchString, results);
+	}
+
+	public static void getFile(long id) {
+
+		FileEntry entry = FileEntry.findById(id);
+
+		File file = new File(entry.getAbsolutePath());
+
+		renderBinary(file, entry.uploadFilename);
 	}
 }
