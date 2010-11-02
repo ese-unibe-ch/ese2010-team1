@@ -13,6 +13,6 @@
 /tmp
 /test-result
 /server.pid
-
+/public/files/*
 
 .DS_Store
