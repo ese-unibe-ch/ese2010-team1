@@ -1,7 +1,10 @@
 package controllers;
 
+import java.io.File;
+
 import models.Answer;
 import models.Entry;
+import models.FileEntry;
 import models.Question;
 import models.User;
 import models.Vote;
@@ -28,10 +31,17 @@ public class Secured extends Controller {
 		}
 	}
 
-	public static void newAnswer(long id, @Required String content) {
+	public static void newAnswer(long id, @Required String content, File file) {
 		if (!validation.hasErrors() && Question.findById(id) != null) {
 			User user = User.find("byName", Security.connected()).first();
-			Question.<Question> findById(id).answer(user, content);
+			Answer answer = Question.<Question> findById(id).answer(user,
+					content);
+
+			if (file != null && file.exists()) {
+
+				user.addFileToEntry(file, answer);
+			}
+
 			Application.question(id);
 		} else {
 			Application.index();
@@ -117,6 +127,14 @@ public class Secured extends Controller {
 		entry.delete();
 
 		Application.index();
+	}
+
+	public static void deleteFileEntry(long id, long qid) {
+
+		FileEntry entry = FileEntry.findById(id);
+		entry.delete();
+
+		Application.question(qid);
 	}
 
 	public static void edit(long id, String content) {

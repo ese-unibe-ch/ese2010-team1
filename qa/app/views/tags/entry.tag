@@ -1,6 +1,7 @@
 %{
 	question = _entry instanceof models.Question
 	answer = !question
+	files = _entry.getFiles()
 }%
 
 <li class="entry" id="${question ? 'question' : _entry.id}">
@@ -18,6 +19,18 @@
 		<p>
 			${_entry.content.nl2br() }
 		</p>
+		#{if files.size()>0}
+		File(s):
+		#{list items:files, as:'file'}
+		
+		<a href="@{Application.getFile(file.id)}" target="_blank">${file.uploadFilename}</a>
+		#{if _user==file.owner}
+		<a href="@{Secured.deleteFileEntry(file.id, file.entry.question.id)}">delete</a>
+		#{/if}
+		
+		#{/list}
+		#{/if}
+		
 	</div>
 	
 	*{ edit form }*

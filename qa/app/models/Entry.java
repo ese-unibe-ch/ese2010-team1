@@ -1,5 +1,6 @@
 package models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,10 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<FileEntry> files;
+
 	/** The timestamp. */
 	public Date timestamp;
 
@@ -49,6 +54,7 @@ public abstract class Entry extends Model {
 		this.content = content;
 		this.timestamp = new Date();
 		this.votes = new ArrayList<Vote>();
+		this.files = new ArrayList<FileEntry>();
 	}
 
 	/**
@@ -189,5 +195,20 @@ public abstract class Entry extends Model {
 
 		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
 
+	}
+
+	public FileEntry addFile(File file, User user) {
+
+		FileEntry entry = FileEntry.upload(file, this, user);
+		files.add(entry);
+
+		this.save();
+
+		return entry;
+	}
+
+	public List<FileEntry> getFiles() {
+
+		return FileEntry.find("byEntry", this).fetch();
 	}
 }

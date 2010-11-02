@@ -1,5 +1,6 @@
 package models;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 import edu.emory.mathcs.backport.java.util.Collections;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class User.
  */
@@ -32,6 +32,9 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<FileEntry> files;
 
 	/** The name. */
 	@Required
@@ -70,6 +73,7 @@ public class User extends Model {
 		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
+		this.files = new ArrayList<FileEntry>();
 		this.timestamp = new Date();
 	}
 
@@ -273,6 +277,15 @@ public class User extends Model {
 	 */
 	public User addVote(Vote vote) {
 		this.votes.add(vote);
+		this.save();
+		return this;
+	}
+
+	public User addFileToEntry(File file, Entry entry) {
+
+		FileEntry fileEntry = entry.addFile(file, this);
+		this.files.add(fileEntry);
+
 		this.save();
 		return this;
 	}
