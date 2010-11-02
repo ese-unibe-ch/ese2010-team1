@@ -138,6 +138,8 @@ public class Application extends Controller {
 			foundEntrys.addAll(Question.searchTitle(searchString));
 			foundEntrys.addAll(Entry.searchContent(searchString));
 			foundEntrys.addAll(Question.searchTaggedWith(searchString));
+			foundEntrys
+					.addAll(FileEntry.searchEntrysWithFilename(searchString));
 
 			for (Entry entry : foundEntrys) {
 
