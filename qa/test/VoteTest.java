@@ -14,6 +14,7 @@ public class VoteTest extends UnitTest {
 	@Before
 	public void setUp() {
 		Fixtures.deleteAll();
+		new User("Anonym", "anonymous@example.com", "itsasecret").save();
 	}
 
 	@Test
@@ -120,10 +121,10 @@ public class VoteTest extends UnitTest {
 
 		user.delete();
 
-		assertEquals(1, User.count());
-		assertEquals(0, Vote.count());
-		assertEquals(0, Answer.count());
-		assertEquals(0, Question.count());
+		assertEquals(2, User.count());
+		assertEquals(1, Vote.count());
+		assertEquals(2, Answer.count());
+		assertEquals(1, Question.count());
 
 	}
 
@@ -152,7 +153,7 @@ public class VoteTest extends UnitTest {
 
 		question.delete();
 
-		assertEquals(2, User.count());
+		assertEquals(3, User.count());
 		assertEquals(0, Vote.count());
 		assertEquals(0, Answer.count());
 		assertEquals(0, Question.count());
@@ -184,7 +185,7 @@ public class VoteTest extends UnitTest {
 
 		answer.delete();
 
-		assertEquals(2, User.count());
+		assertEquals(3, User.count());
 		assertEquals(2, Vote.count());
 		assertEquals(1, Answer.count());
 		assertEquals(1, Question.count());
