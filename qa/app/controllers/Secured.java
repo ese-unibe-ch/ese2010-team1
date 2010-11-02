@@ -16,10 +16,9 @@ public class Secured extends Controller {
 		if (!validation.hasErrors()) {
 			User user = User.find("byName", Security.connected()).first();
 			Question question = user.addQuestion(title, content);
-			// neu
-			String[] separatedTags = tags.split(",");
+			String[] separatedTags = tags.split(", ");
 			for (String tag : separatedTags) {
-				question.tagItWith(tag).save();
+				question.tagItWith(tag);
 			}
 
 			Application.question(question.id);

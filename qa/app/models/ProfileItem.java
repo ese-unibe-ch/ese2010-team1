@@ -16,8 +16,10 @@ import play.db.jpa.Model;
 @Entity
 public class ProfileItem extends Model {
 
+	/** The title. */
 	public String title;
 
+	/** The entrys. */
 	@OneToMany(mappedBy = "item", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<ProfileEntry> entrys;
@@ -60,6 +62,13 @@ public class ProfileItem extends Model {
 
 	}
 
+	/**
+	 * Checks for user entry.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return true, if successful
+	 */
 	public boolean hasUserEntry(User user) {
 		return findUserEntry(user) != null;
 	}

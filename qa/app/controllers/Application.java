@@ -12,8 +12,14 @@ import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
 
+/**
+ * The Class Application.
+ */
 public class Application extends Controller {
 
+	/**
+	 * Sets the connected user.
+	 */
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
@@ -22,6 +28,9 @@ public class Application extends Controller {
 		}
 	}
 
+	/**
+	 * Index.
+	 */
 	public static void index() {
 		long userCount = User.count();
 		List<Question> questions = Question.questions();
@@ -102,11 +111,23 @@ public class Application extends Controller {
 		Application.index();
 	}
 
+	/**
+	 * User check.
+	 * 
+	 * @param username
+	 *            the username
+	 */
 	public static void userCheck(String username) {
 		boolean exists = User.exists(username);
 		render(exists);
 	}
 
+	/**
+	 * Search.
+	 * 
+	 * @param searchString
+	 *            the search string
+	 */
 	public static void search(@Required String searchString) {
 
 		List<Entry> foundEntrys = new ArrayList<Entry>();

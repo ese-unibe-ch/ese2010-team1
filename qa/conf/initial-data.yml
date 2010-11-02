@@ -4,7 +4,22 @@ ProfileItem(philosophy):
     title: Life Philosophy
 ProfileItem(editor):
     title: Editor of choice
+    
+# tags
+Tag(java):
+     name: Java
+Tag(world):
+     name: World
+Tag(test):
+     name: Test
+
 # Users
+User(admin):
+    name: Admin
+    password: e579c4fea528a36862a0a5352587a30d58da532f
+    email: admin@example.com
+    isAdmin: true
+    timestamp: 2010-10-20
 User(simon):
     name: Simon
     password: e579c4fea528a36862a0a5352587a30d58da532f
@@ -39,35 +54,43 @@ User(mark):
 # Questions
 Question(q1):
     owner: simon
-    title: first 
-    content: some dummy content
+    title: What's about life, the universe and everything?
+    content:   > 
+        For a long time I've been trying to get the answer to the ultimate question of life, the universe, and everything.
+        Can you help me?
     timestamp: 2010-10-20
+    tags:
+     - world
+     - java
+     - test
 Question(q2):
     owner: tobias
     title: second
     content: another dummy content
     timestamp: 2010-10-22
+    tags:
+     - world
 Question(q3):
     owner: oliver
     title: third?
     content: lorem ipsum
     timestamp: 2010-10-25
+    tags: 
+     - test
 
 # Answers
 Answer(a1):
     owner: tobias
-    content: sorry i don't understand your question!
+    content: I think the problem, to be quite honest with you, is that you've never actually known what the question is.
     timestamp: 2010-10-27
     isBestAnswer: false
-    question: q1
-    
+    question: q1    
 Answer(a2):
     owner: mark
-    content: don't know what you mean
+    content: It's very simple, the answer is 42.
     timestamp: 2010-10-25
     isBestAnswer: false
-    question: q1
-    
+    question: q1    
 Answer(a3):
     owner: thomas
     content: bla bla bla
