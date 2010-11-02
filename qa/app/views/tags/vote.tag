@@ -6,19 +6,11 @@
 	#{if canVote}
 		#{if _entry.alreadyVoted(_user, false)}
 			<a href="
-				#{if isAnswer}
-					@{Secured.removeAnswerVote(_entry.question.id, _entry.id)}
-				#{/if}#{else}
-						@{Secured.removeQuestionVote(_entry.id)}
-				#{/else}
+				@{Secured.removeEntryVote( _entry.id)}
 			">x</a>
 		#{/if}#{else}
 			<a href="
-				#{if isAnswer}
-					@{Secured.voteAnswerDown(_entry.question.id, _entry.id)}
-				#{/if}#{else}
-					@{Secured.voteQuestionDown(_entry.id)}
-				#{/else}
+					@{Secured.voteEntryDown(_entry.id)}
 			">-</a>
 		#{/else}
 	#{/if}
@@ -28,19 +20,11 @@
 	#{if canVote}
 		#{if _entry.alreadyVoted(_user, true)}
 			<a href="
-				#{if isAnswer}
-					@{Secured.removeAnswerVote(_entry.question.id, _entry.id)}
-				#{/if}#{else}
-						@{Secured.removeQuestionVote(_entry.id)}
-				#{/else}
+				@{Secured.removeEntryVote( _entry.id)}
 			">x</a>
 		#{/if}#{else}
 			<a href="
-				#{if isAnswer}
-					@{Secured.voteAnswerUp(_entry.question.id, _entry.id)}
-				#{/if}#{else}
-					@{Secured.voteQuestionUp(_entry.id)}
-				#{/else}
+					@{Secured.voteEntryUp(_entry.id)}
 			">+</a>
 		#{/else}
 	#{/if}

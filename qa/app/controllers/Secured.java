@@ -38,72 +38,38 @@ public class Secured extends Controller {
 		}
 	}
 
-	public static void voteQuestionUp(long id) {
-		if (Question.findById(id) != null) {
+	public static void voteEntryDown(long id) {
+		Entry entry = Entry.<Entry> findById(id);
+		if (entry != null) {
 			User user = User.find("byName", Security.connected()).first();
-			Question.<Question> findById(id).voteUp(user);
-			Application.question(id);
+			entry.voteDown(user);
+			Application.question(entry instanceof Question ? id
+					: ((Answer) entry).question.id);
 		} else {
 			Application.index();
 		}
 	}
 
-	public static void voteQuestionDown(long id) {
-		if (Question.<Question> findById(id) != null) {
+	public static void voteEntryUp(long id) {
+		Entry entry = Entry.<Entry> findById(id);
+		if (entry != null) {
 			User user = User.find("byName", Security.connected()).first();
-			Question.<Question> findById(id).voteDown(user);
-			Application.question(id);
+			entry.voteUp(user);
+			Application.question(entry instanceof Question ? id
+					: ((Answer) entry).question.id);
 		} else {
 			Application.index();
 		}
 	}
 
-	public static void removeQuestionVote(long id) {
+	public static void removeEntryVote(long id) {
 		User user = User.find("byName", Security.connected()).first();
-		Question question = Question.findById(id);
-		if (question != null) {
-			question.removeVote((Vote) Vote.find("byOwnerAndEntry", user,
-					question).first());
-			Application.question(id);
-		} else {
-			Application.index();
-		}
-	}
-
-	public static void voteAnswerUp(long qid, long aid) {
-		User user = User.find("byName", Security.connected()).first();
-		Answer answer = Answer.findById(aid);
-		Question question = Question.findById(qid);
-		if (question != null && question.hasAnswer(answer)) {
-
-			answer.voteUp(user);
-			Application.question(qid);
-
-		} else {
-			Application.index();
-		}
-	}
-
-	public static void voteAnswerDown(long qid, long aid) {
-		User user = User.find("byName", Security.connected()).first();
-		Answer answer = Answer.findById(aid);
-		Question question = Question.findById(qid);
-		if (question != null && question.hasAnswer(answer)) {
-			answer.voteDown(user);
-			Application.question(qid);
-		} else {
-			Application.index();
-		}
-	}
-
-	public static void removeAnswerVote(long qid, long aid) {
-		User user = User.find("byName", Security.connected()).first();
-		Answer answer = Answer.findById(aid);
-		Question question = Question.findById(qid);
-		if (question != null && question.hasAnswer(answer)) {
-			answer.removeVote((Vote) Vote.find("byOwnerAndEntry", user, answer)
+		Entry entry = Entry.findById(id);
+		if (entry != null) {
+			entry.removeVote((Vote) Vote.find("byOwnerAndEntry", user, entry)
 					.first());
-			Application.question(qid);
+			Application.question(entry instanceof Question ? id
+					: ((Answer) entry).question.id);
 		} else {
 			Application.index();
 		}
