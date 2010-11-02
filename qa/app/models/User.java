@@ -16,7 +16,6 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 import edu.emory.mathcs.backport.java.util.Collections;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class User.
  */
@@ -27,6 +26,10 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Entry> entrys;
+
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<Comment> comments;
 
 	/** The votes. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
@@ -275,6 +278,14 @@ public class User extends Model {
 		this.votes.add(vote);
 		this.save();
 		return this;
+	}
+
+	public User addComment(Entry entry, String content) {
+		Comment comment = entry.addComment(this, content);
+		this.comments.add(comment);
+		this.save();
+		return this;
+
 	}
 
 	/**
