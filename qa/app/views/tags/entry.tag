@@ -69,7 +69,7 @@
 			#{setBestAnswer answer:_entry, user:_user /}
 		#{/if}
 		#{if _user == _entry.owner }
-			<a href="#" onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">
+			<a onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">
 		  		<img src="@{'/public/images/edit.png'}" alt="edit" title="edit" />
 			</a>
 		#{/if }
