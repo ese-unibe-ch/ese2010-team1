@@ -24,6 +24,9 @@
 		#{list items:files, as:'file'}
 		
 		<a href="@{Application.getFile(file.id)}" target="_blank">${file.uploadFilename}</a>
+		#{if _user==file.owner}
+		<a href="@{Secured.deleteFileEntry(file.id, file.entry.question.id)}">delete</a>
+		#{/if}
 		
 		#{/list}
 		#{/if}

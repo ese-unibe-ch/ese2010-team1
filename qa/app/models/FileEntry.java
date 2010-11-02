@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import play.Play;
+import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
 
 @Entity
@@ -39,7 +40,6 @@ public class FileEntry extends Model {
 
 	public static FileEntry upload(File input, Entry entry, User user) {
 
-		// change it...
 		FileEntry file = new FileEntry(input.getName(), entry, user);
 
 		// Rename and Move File
@@ -51,8 +51,6 @@ public class FileEntry extends Model {
 
 		file.save();
 
-		System.out.println("tried to upload " + input.getName());
-
 		return file;
 	}
 
@@ -61,6 +59,7 @@ public class FileEntry extends Model {
 				+ "." + this.extension);
 		if (file.exists()) {
 			return file.delete();
+
 		}
 
 		return false;
@@ -107,6 +106,15 @@ public class FileEntry extends Model {
 		}
 
 		return entrys;
+	}
+
+	@Override
+	public <T extends JPASupport> T delete() {
+
+		this.deleteFile();
+
+		return super.delete();
+
 	}
 
 }

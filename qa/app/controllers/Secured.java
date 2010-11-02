@@ -4,6 +4,7 @@ import java.io.File;
 
 import models.Answer;
 import models.Entry;
+import models.FileEntry;
 import models.Question;
 import models.User;
 import play.data.validation.Required;
@@ -134,6 +135,14 @@ public class Secured extends Controller {
 		entry.delete();
 
 		Application.index();
+	}
+
+	public static void deleteFileEntry(long id, long qid) {
+
+		FileEntry entry = FileEntry.findById(id);
+		entry.delete();
+
+		Application.question(qid);
 	}
 
 	public static void edit(long id, String content) {

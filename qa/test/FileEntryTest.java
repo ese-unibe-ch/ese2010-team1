@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 
 import models.FileEntry;
+import models.User;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,12 +58,13 @@ public class FileEntryTest extends UnitTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		FileEntry file = FileEntry.upload(testFile, null, null);
+		User user = new User("test", "test", "test").save();
+		FileEntry file = FileEntry.upload(testFile, null, user);
 
 		FileEntry entry = FileEntry.find("byUploadFilename", "test.txt")
 				.first();
 		assertNotNull(entry);
+		assertEquals(file.owner, user);
 
 		assertTrue(entry.deleteFile());
 	}
