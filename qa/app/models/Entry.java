@@ -33,6 +33,11 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
+	/** The Comments */
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	private List<Comment> comments;
+
 	/** The timestamp. */
 	public Date timestamp;
 
@@ -49,6 +54,7 @@ public abstract class Entry extends Model {
 		this.content = content;
 		this.timestamp = new Date();
 		this.votes = new ArrayList<Vote>();
+		this.comments = new ArrayList<Comment>();
 	}
 
 	/**
@@ -162,6 +168,24 @@ public abstract class Entry extends Model {
 	public static List<Entry> searchContent(String searchString) {
 
 		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
+
+	}
+
+	public List<Comment> listComments() {
+		List<Comment> list = Comment.find("byEntry", this).fetch();
+		return list;
+	}
+
+	/**
+	 * 
+	 * 
+	 * 
+	 */
+	public Comment addComment(User owner, String content) {
+		Comment comment = new Comment(owner, this, content).save();
+		this.comments.add(comment);
+		this.save();
+		return comment;
 
 	}
 }

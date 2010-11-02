@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
+import models.Comment;
 import models.Entry;
 import models.Question;
 import models.User;
@@ -62,7 +63,9 @@ public class Application extends Controller {
 			render();
 		} else {
 			List<Answer> answers = question.answers();
-			render(question, answers);
+			List<Comment> comments = question.listComments();
+			render(question, answers, comments);
+
 		}
 	}
 

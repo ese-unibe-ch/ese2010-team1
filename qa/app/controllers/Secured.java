@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Answer;
+import models.Comment;
 import models.Entry;
 import models.Question;
 import models.User;
@@ -35,6 +36,17 @@ public class Secured extends Controller {
 		} else {
 			Application.index();
 		}
+	}
+
+	public static void newComment(long id, @Required String content) {
+		if (!validation.hasErrors() && Comment.findById(id) != null) {
+			User user = User.find("byName", Security.connected()).first();
+			Entry.<Entry> findById(id).addComment(user, content);
+			Application.question(id);
+		} else {
+			Application.index();
+		}
+
 	}
 
 	public static void voteQuestionUp(long id) {

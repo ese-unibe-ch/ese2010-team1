@@ -1,6 +1,7 @@
 %{
 	question = _entry instanceof models.Question
 	answer = !question
+	comments = _entry.listComments();
 }%
 
 <li class="entry" id="${question ? 'question' : _entry.id}">
@@ -18,6 +19,32 @@
 		<p>
 			${_entry.content.nl2br() }
 		</p>
+	
+
+	#{if comments.size() > 0}
+		<h1>Comments</h1>
+		<ul>
+			#{list items:comments, as:'comment'}
+				#{entry entry:comment, user:user /}
+			#{/list}
+		</ul>
+	#{/if}
+
+	#{if user}
+
+	<h1>Comment</h1>
+	#{form @Secured.newComment()}
+		#{field 'content'}
+			<input type="text" name="title" id="title" value="Title" />
+        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		<input type="text" name="tags" id="tags" value="Tags" />
+		<input type="submit" value="Post" />
+	#{/form}
+
+
+	#{/if}
+
 	</div>
 	
 	*{ edit form }*

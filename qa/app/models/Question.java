@@ -158,8 +158,7 @@ public class Question extends Entry {
 	 */
 	public static List<Question> findTaggedWith(String tag) {
 		return Question
-				.find(
-						"select distinct q from Question q join q.tags as t where t.name = ?",
+				.find("select distinct q from Question q join q.tags as t where t.name = ?",
 						tag).fetch();
 	}
 
