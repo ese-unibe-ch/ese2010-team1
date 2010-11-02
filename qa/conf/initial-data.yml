@@ -14,6 +14,13 @@ Tag(test):
      name: Test
 
 # Users
+User(anonym):
+    name: Anonym
+    password: willnotwork
+    email: anonymous@example.com
+    isAdmin: false
+    timestamp: 2010-09-10
+
 User(admin):
     name: Admin
     password: e579c4fea528a36862a0a5352587a30d58da532f

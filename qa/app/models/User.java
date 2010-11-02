@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
+import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
 import edu.emory.mathcs.backport.java.util.Collections;
 
@@ -315,6 +316,25 @@ public class User extends Model {
 
 		return Entry.find("owner like ? order by timestamp desc", this).fetch(
 				numberOfActivitys);
+	}
+
+	public void anonymify() {
+		User anonym = User.find("byName", "Anonym").first();
+		for (Entry entry : entrys) {
+			entry.owner = anonym;
+			entry.save();
+		}
+		this.refresh();
+
+	}
+
+	@Override
+	public <T extends JPASupport> T delete() {
+		anonymify();
+		entrys.clear();
+		this.save();
+
+		return super.delete();
 	}
 
 }

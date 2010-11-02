@@ -14,6 +14,7 @@ public class QuestionTest extends UnitTest {
 	@Before
 	public void setUp() {
 		Fixtures.deleteAll();
+		new User("Anonym", "anonymous@example.com", "itsasecret").save();
 	}
 
 	@Test
@@ -68,12 +69,12 @@ public class QuestionTest extends UnitTest {
 		user.addQuestion("A title", "My first question");
 		user.addQuestion("Second title", "My second question");
 
-		assertEquals(1, User.count());
+		assertEquals(2, User.count());
 		assertEquals(2, Question.count());
 		user.delete();
 
-		assertEquals(0, User.count());
-		assertEquals(0, Question.count());
+		assertEquals(1, User.count());
+		assertEquals(2, Question.count());
 
 	}
 

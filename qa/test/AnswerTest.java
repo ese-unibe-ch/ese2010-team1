@@ -13,6 +13,7 @@ public class AnswerTest extends UnitTest {
 	@Before
 	public void setUp() {
 		Fixtures.deleteAll();
+		new User("Anonym", "anonymous@example.com", "itsasecret").save();
 	}
 
 	@Test
@@ -102,15 +103,15 @@ public class AnswerTest extends UnitTest {
 		Answer answer = question.answer(user, "an answer");
 		question.answer(user, "another answer");
 
-		assertEquals(1, User.count());
+		assertEquals(2, User.count());
 		assertEquals(2, Question.count());
 		assertEquals(2, Answer.count());
 
 		user.delete();
 
-		assertEquals(0, User.count());
-		assertEquals(0, Question.count());
-		assertEquals(0, Answer.count());
+		assertEquals(1, User.count());
+		assertEquals(2, Question.count());
+		assertEquals(2, Answer.count());
 
 	}
 
@@ -126,15 +127,15 @@ public class AnswerTest extends UnitTest {
 		Answer answer = question.answer(user, "an answer");
 		question.answer(user, "another answer");
 
-		assertEquals(2, User.count());
+		assertEquals(3, User.count());
 		assertEquals(2, Question.count());
 		assertEquals(3, Answer.count());
 
 		user.delete();
 
-		assertEquals(1, User.count());
-		assertEquals(0, Question.count());
-		assertEquals(0, Answer.count());
+		assertEquals(2, User.count());
+		assertEquals(2, Question.count());
+		assertEquals(3, Answer.count());
 
 	}
 
