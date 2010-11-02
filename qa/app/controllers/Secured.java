@@ -4,6 +4,7 @@ import models.Answer;
 import models.Entry;
 import models.Question;
 import models.User;
+import models.Vote;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -57,6 +58,18 @@ public class Secured extends Controller {
 		}
 	}
 
+	public static void removeQuestionVote(long id) {
+		User user = User.find("byName", Security.connected()).first();
+		Question question = Question.findById(id);
+		if (question != null) {
+			question.removeVote((Vote) Vote.find("byOwnerAndEntry", user,
+					question).first());
+			Application.question(id);
+		} else {
+			Application.index();
+		}
+	}
+
 	public static void voteAnswerUp(long qid, long aid) {
 		User user = User.find("byName", Security.connected()).first();
 		Answer answer = Answer.findById(aid);
@@ -77,6 +90,19 @@ public class Secured extends Controller {
 		Question question = Question.findById(qid);
 		if (question != null && question.hasAnswer(answer)) {
 			answer.voteDown(user);
+			Application.question(qid);
+		} else {
+			Application.index();
+		}
+	}
+
+	public static void removeAnswerVote(long qid, long aid) {
+		User user = User.find("byName", Security.connected()).first();
+		Answer answer = Answer.findById(aid);
+		Question question = Question.findById(qid);
+		if (question != null && question.hasAnswer(answer)) {
+			answer.removeVote((Vote) Vote.find("byOwnerAndEntry", user, answer)
+					.first());
 			Application.question(qid);
 		} else {
 			Application.index();

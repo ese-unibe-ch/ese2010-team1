@@ -112,6 +112,32 @@ public abstract class Entry extends Model {
 	}
 
 	/**
+	 * Removes a vote.
+	 * 
+	 * @param vote
+	 *            the vote
+	 */
+	public void removeVote(Vote vote) {
+		if (vote != null && !vote.frozen()) {
+			vote.delete();
+		}
+	}
+
+	/**
+	 * Check if a user already voted the entry.
+	 * 
+	 * @param user
+	 *            the user
+	 * @param up
+	 *            true, if the vote should be positive
+	 * @return true, if a vote exists
+	 */
+	public boolean alreadyVoted(User user, boolean up) {
+		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
+		return alreadyVoted != null && alreadyVoted.up == up;
+	}
+
+	/**
 	 * Check if user is allowed to vote.
 	 * 
 	 * @param user

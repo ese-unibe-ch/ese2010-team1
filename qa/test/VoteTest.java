@@ -191,4 +191,27 @@ public class VoteTest extends UnitTest {
 
 	}
 
+	@Test
+	public void removeVote() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("John", "john@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+
+		assertEquals(0, question.rating());
+		assertFalse(question.alreadyVoted(user2, false));
+		assertFalse(question.alreadyVoted(user2, false));
+
+		Vote vote = question.voteUp(user2);
+
+		assertEquals(1, question.rating());
+		assertTrue(question.alreadyVoted(user2, true));
+		assertFalse(question.alreadyVoted(user2, false));
+
+		question.removeVote(vote);
+
+		assertEquals(0, question.rating());
+		assertFalse(question.alreadyVoted(user2, false));
+		assertFalse(question.alreadyVoted(user2, false));
+	}
+
 }
