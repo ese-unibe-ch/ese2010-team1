@@ -47,7 +47,7 @@
 
 	*{ actions }*
 	<div class="actions">
-		#{secure.check 'admin'}
+		#{secure.check 'isAdmin'}
 		  <a href="@{Secured.deleteEntry(_entry.id)}">
 		  	<img src="@{'/public/images/delete.png'}" alt="delete" title="delete" />
 		  </a>

@@ -16,7 +16,6 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 import edu.emory.mathcs.backport.java.util.Collections;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class User.
  */

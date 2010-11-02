@@ -88,7 +88,9 @@
     				<span>
     					#{if user}
 							Hi <a href="@{UserFuncs.showProfile(user.id)}">${user.name}!</a>
-							<a href="@{Secured.toggleAdminState()}">Toggle Admin</a>
+							#{secure.check 'isAdmin'}
+							<a href="@{Admin.adminPanel()}">Admin Panel</a>
+							#{/secure.check}
 							<a href="@{Secure.logout}">Logout</a>
 						#{/if}
 						#{else}
