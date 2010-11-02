@@ -42,4 +42,19 @@ public class Admin extends Controller {
 		Admin.showUserlist();
 	}
 
+	@Check("isAdmin")
+	public static void toggleAdminState(long id) {
+		User user = User.findById(id);
+
+		if (user.isAdmin)
+			user.isAdmin = false;
+		else
+			user.isAdmin = true;
+
+		user.save();
+
+		Application.index();
+
+	}
+
 }

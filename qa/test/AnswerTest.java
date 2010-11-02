@@ -114,4 +114,28 @@ public class AnswerTest extends UnitTest {
 
 	}
 
+	@Test
+	public void deleteUser2() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("john", "test@blub.com", "bla").save();
+		Question question = user.addQuestion("A title", "My first question");
+		user.addQuestion("Second title", "Second question");
+		question.answer(user2, "blub");
+
+		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "another answer");
+
+		assertEquals(2, User.count());
+		assertEquals(2, Question.count());
+		assertEquals(3, Answer.count());
+
+		user.delete();
+
+		assertEquals(1, User.count());
+		assertEquals(0, Question.count());
+		assertEquals(0, Answer.count());
+
+	}
+
 }

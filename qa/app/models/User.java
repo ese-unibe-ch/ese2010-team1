@@ -23,6 +23,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 public class User extends Model {
 
 	/** The entrys. */
+
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Entry> entrys;

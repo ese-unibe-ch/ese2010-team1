@@ -16,9 +16,12 @@ public class Secured extends Controller {
 		if (!validation.hasErrors()) {
 			User user = User.find("byName", Security.connected()).first();
 			Question question = user.addQuestion(title, content);
-			String[] separatedTags = tags.split(", ");
-			for (String tag : separatedTags) {
-				question.tagItWith(tag);
+			if (!tags.equals("Tags")) {
+				String[] separatedTags = tags.split(", ");
+
+				for (String tag : separatedTags) {
+					question.tagItWith(tag);
+				}
 			}
 
 			Application.question(question.id);
@@ -103,20 +106,6 @@ public class Secured extends Controller {
 			question.resetBestAnswer();
 			Application.question(question.id);
 		}
-	}
-
-	public static void toggleAdminState() {
-		User user = User.find("byName", Security.connected()).first();
-
-		if (user.isAdmin)
-			user.isAdmin = false;
-		else
-			user.isAdmin = true;
-
-		user.save();
-
-		Application.index();
-
 	}
 
 	public static void deleteEntry(long id) {
