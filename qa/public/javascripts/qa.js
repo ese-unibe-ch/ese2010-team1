@@ -16,13 +16,13 @@ $(function () {
 		return false;
 	}).filter(':first').click();
 	
-	$("a.pulldown").click(function() {$(this).next().toggle();});
+	$("a.pulldown").click(function() {$(this).next().toggle();return false});
 });
 
 function loadGraph() {
-	if(!$("#graph").loaded) {
+	if(!$("#graph")[0].loaded) {
 		jQuery.getJSON( self.location, displayGraph);
-		$("#graph").loaded = true;
+		$("#graph")[0].loaded = true;
 	}
 }
 
@@ -45,6 +45,62 @@ function displayGraph(data, status) {
     	}
     } );
  }
+ 
+ 
+ 
+ 
+ pic1 = new Image(16, 16); 
+			pic1.src = "/public/images/loader.gif";
+			
+			$(document).ready(function(){
+			
+			$("#username").change(function() { 
+			
+			var usr = $("#username").val();
+			
+			if(usr.length >= 3)
+			{
+			$("#status").html('<img src="/public/images/loader.gif" align="absmiddle">&nbsp;Checking availability...');
+			
+			    $.ajax({  
+			    type: "POST",  
+			    url: userCheckURL,  
+			    data: "username="+ usr,  
+			    success: function(msg){  
+			   
+			   $("#status").ajaxComplete(function(event, request, settings){ 
+			
+				if(msg == 'OK')
+				{ 
+			        $("#username").removeClass('object_error'); // if necessary
+					$("#username").addClass("object_ok");
+					$(this).html('&nbsp;<img src="/public/images/accepted.png" align="absmiddle"> <font color="Green"> Available </font>  ');
+				}  
+				else  
+				{  
+					$("#username").removeClass('object_ok'); // if necessary
+					$("#username").addClass("object_error");
+					$(this).html(msg);
+				}  
+			   
+			   });
+			
+			 } 
+			   
+			  }); 
+			
+			}
+			else
+				{
+				$("#status").html('<font color="red">The username should have at least <strong>3</strong> characters.</font>');
+				$("#username").removeClass('object_ok'); // if necessary
+		$("#username").addClass("object_error");
+		}
+	
+	});
+	
+	});
+
  
 function showEditBox(cid, eid){
 	$("#" + cid).hide();
