@@ -22,17 +22,22 @@
 	
 
 	#{if comments.size() > 0}
-		<h1>Comments</h1>
+		<h3>Comments</h3>
 		<ul>
 			#{list items:comments, as:'comment'}
-				<li>${comment.owner.name} -  ${comment.content.nl2br()} </li>
+				<li>${comment.owner.name} -  ${comment.content.nl2br()} 
+				#{if _user.isAdmin || _user== comment.owner}
+				<a href="@{Secured.deleteComment(comment.id)}">delete</a>
+				#{/if}
+				
+				 </li>
 			#{/list}
 		</ul>
 	#{/if}
 
 	#{if _user}
 
-	<h1>Comment</h1>
+	<h3>Comment</h3>
 	#{form @Secured.newComment(_entry.id)}
 		#{field 'content'}
 			<textarea name="${field.name}" class="${field.errorClass}"></textarea>

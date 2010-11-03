@@ -42,7 +42,7 @@ public class Secured extends Controller {
 		if (!validation.hasErrors() && Entry.findById(id) != null) {
 			User user = User.find("byName", Security.connected()).first();
 			Entry entry = Entry.findById(id);
-			entry.addComment(user, content);
+			user.addComment(entry, content);
 
 			if (entry instanceof models.Question)
 				Application.question(id);
