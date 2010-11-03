@@ -4,6 +4,7 @@ import java.io.File;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -16,7 +17,6 @@ import javax.persistence.OneToMany;
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * The Class User.
