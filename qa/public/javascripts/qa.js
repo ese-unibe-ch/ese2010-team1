@@ -15,6 +15,8 @@ $(function () {
 			loadGraph();
 		return false;
 	}).filter(':first').click();
+	
+	$("a.pulldown").click(function() {$(this).next().toggle();});
 });
 
 function loadGraph() {

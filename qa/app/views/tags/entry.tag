@@ -20,7 +20,7 @@
 	*{ content }*
 	<div id= "content${_entry.id }">
 		<p>
-			${_entry.content.nl2br() }
+			${_entry.content.nl2br()}
 		</p>
 
 	#{if comments.size() > 0}
@@ -106,6 +106,7 @@
 		  		<img src="@{'/public/images/edit.png'}" alt="edit" title="edit" />
 			</a>
 		#{/if }
+		#{version entry:_entry /}
 	</div>
 	
 	*{ info }*
@@ -118,5 +119,6 @@
 	
 	*{ vote }*
 	#{vote entry:_entry, user:_user /}
+	
 </li>
 
