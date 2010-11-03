@@ -4,6 +4,14 @@
 	comments = _entry.listComments()
 	files = _entry.getFiles()
 	
+	if(_user!=null) {
+	
+		isAdmin = _user.isAdmin
+	}
+	else {
+		isAdmin = false;
+	}
+	
 	
 }%
 
@@ -28,7 +36,7 @@
 		<ul>
 			#{list items:comments, as:'comment'}
 				<li>${comment.owner.name} -  ${comment.content.nl2br()} 
-				#{if _user== comment.owner || (_user && user.isAdmin)}
+				#{if _user== comment.owner || isAdmin}
 				<a href="@{Secured.deleteComment(comment.id)}">delete</a>
 				#{/if}
 				
@@ -56,7 +64,7 @@
 		#{list items:files, as:'file'}
 		
 		<a href="@{Application.getFile(file.id)}" target="_blank">${file.uploadFilename}</a>
-		#{if _user==file.owner || (_user && user.isAdmin)}
+		#{if _user==file.owner}
 		<a href="@{Secured.deleteFileEntry(file.id, file.entry.question.id)}">delete</a>
 		#{/if}
 		
@@ -101,7 +109,7 @@
 			#{setBestAnswer answer:_entry, user:_user /}
 		#{/if}
 
-		#{if _user == _entry.owner}
+		#{if _user == _entry.owner|| isAdmin}
 			<a href="#" onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">
 		  		<img src="@{'/public/images/edit.png'}" alt="edit" title="edit" />
 			</a>
