@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Answer;
+import models.Comment;
 import models.Entry;
 import models.Question;
 import models.User;
@@ -41,7 +42,7 @@ public class Secured extends Controller {
 		if (!validation.hasErrors() && Entry.findById(id) != null) {
 			User user = User.find("byName", Security.connected()).first();
 			Entry entry = Entry.findById(id);
-			user.addComment(entry, content);
+			entry.addComment(user, content);
 
 			if (entry instanceof models.Question)
 				Application.question(id);
@@ -139,6 +140,14 @@ public class Secured extends Controller {
 
 		Entry entry = Entry.findById(id);
 		entry.delete();
+
+		Application.index();
+	}
+
+	public static void deleteComment(long id) {
+
+		Comment comment = Comment.findById(id);
+		comment.delete();
 
 		Application.index();
 	}
