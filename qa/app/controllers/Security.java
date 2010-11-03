@@ -28,7 +28,7 @@ public class Security extends Secure.Security {
 	}
 
 	static boolean check(String profile) {
-		if ("admin".equals(profile)) {
+		if ("isAdmin".equals(profile)) {
 			return User.find("byName", connected()).<User> first().isAdmin;
 		}
 		return false;

@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+
+#{set title: ' Userlist' /}
+
+<dl>
+
+<dt><b style="color: white;">Username</b></dt> <dd><b style="color: white;">E-Mail </b></dd>
+
+#{list items: users, as: 'luser'}
+
+<dt>${luser.name}</dt> <dd>${luser.email} #{if luser!=user}<a href="@{Admin.deleteUser(luser.id)}">delete</a>#{/if}</dd>
+
+#{/list}
+
+</dl>

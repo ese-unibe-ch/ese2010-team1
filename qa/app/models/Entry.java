@@ -1,5 +1,6 @@
 package models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,10 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<Comment> comments;
 
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<FileEntry> files;
+
 	/** The timestamp. */
 	public Date timestamp;
 
@@ -55,6 +60,8 @@ public abstract class Entry extends Model {
 		this.timestamp = new Date();
 		this.votes = new ArrayList<Vote>();
 		this.comments = new ArrayList<Comment>();
+		this.files = new ArrayList<FileEntry>();
+
 	}
 
 	/**
@@ -115,6 +122,32 @@ public abstract class Entry extends Model {
 	 */
 	public Vote voteDown(User user) {
 		return this.vote(user, false);
+	}
+
+	/**
+	 * Removes a vote.
+	 * 
+	 * @param vote
+	 *            the vote
+	 */
+	public void removeVote(Vote vote) {
+		if (vote != null && !vote.frozen()) {
+			vote.delete();
+		}
+	}
+
+	/**
+	 * Check if a user already voted the entry.
+	 * 
+	 * @param user
+	 *            the user
+	 * @param up
+	 *            true, if the vote should be positive
+	 * @return true, if a vote exists
+	 */
+	public boolean alreadyVoted(User user, boolean up) {
+		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
+		return alreadyVoted != null && alreadyVoted.up == up;
 	}
 
 	/**
@@ -186,6 +219,20 @@ public abstract class Entry extends Model {
 		this.comments.add(comment);
 		this.save();
 		return comment;
+	}
 
+	public FileEntry addFile(File file, User user) {
+
+		FileEntry entry = FileEntry.upload(file, this, user);
+		files.add(entry);
+
+		this.save();
+
+		return entry;
+	}
+
+	public List<FileEntry> getFiles() {
+
+		return FileEntry.find("byEntry", this).fetch();
 	}
 }

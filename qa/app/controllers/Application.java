@@ -1,11 +1,13 @@
 package controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
 import models.Comment;
 import models.Entry;
+import models.FileEntry;
 import models.Question;
 import models.User;
 import play.data.validation.Email;
@@ -139,6 +141,8 @@ public class Application extends Controller {
 			foundEntrys.addAll(Question.searchTitle(searchString));
 			foundEntrys.addAll(Entry.searchContent(searchString));
 			foundEntrys.addAll(Question.searchTaggedWith(searchString));
+			foundEntrys
+					.addAll(FileEntry.searchEntrysWithFilename(searchString));
 
 			for (Entry entry : foundEntrys) {
 
@@ -150,5 +154,14 @@ public class Application extends Controller {
 		}
 
 		render(searchString, results);
+	}
+
+	public static void getFile(long id) {
+
+		FileEntry entry = FileEntry.findById(id);
+
+		File file = new File(entry.getAbsolutePath());
+
+		renderBinary(file, entry.uploadFilename);
 	}
 }

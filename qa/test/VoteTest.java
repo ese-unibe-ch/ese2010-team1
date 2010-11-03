@@ -14,6 +14,7 @@ public class VoteTest extends UnitTest {
 	@Before
 	public void setUp() {
 		Fixtures.deleteAll();
+		new User("Anonym", "anonymous@example.com", "itsasecret").save();
 	}
 
 	@Test
@@ -120,10 +121,10 @@ public class VoteTest extends UnitTest {
 
 		user.delete();
 
-		assertEquals(1, User.count());
-		assertEquals(0, Vote.count());
-		assertEquals(0, Answer.count());
-		assertEquals(0, Question.count());
+		assertEquals(2, User.count());
+		assertEquals(1, Vote.count());
+		assertEquals(2, Answer.count());
+		assertEquals(1, Question.count());
 
 	}
 
@@ -152,7 +153,7 @@ public class VoteTest extends UnitTest {
 
 		question.delete();
 
-		assertEquals(2, User.count());
+		assertEquals(3, User.count());
 		assertEquals(0, Vote.count());
 		assertEquals(0, Answer.count());
 		assertEquals(0, Question.count());
@@ -184,11 +185,34 @@ public class VoteTest extends UnitTest {
 
 		answer.delete();
 
-		assertEquals(2, User.count());
+		assertEquals(3, User.count());
 		assertEquals(2, Vote.count());
 		assertEquals(1, Answer.count());
 		assertEquals(1, Question.count());
 
+	}
+
+	@Test
+	public void removeVote() {
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("John", "john@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+
+		assertEquals(0, question.rating());
+		assertFalse(question.alreadyVoted(user2, false));
+		assertFalse(question.alreadyVoted(user2, false));
+
+		Vote vote = question.voteUp(user2);
+
+		assertEquals(1, question.rating());
+		assertTrue(question.alreadyVoted(user2, true));
+		assertFalse(question.alreadyVoted(user2, false));
+
+		question.removeVote(vote);
+
+		assertEquals(0, question.rating());
+		assertFalse(question.alreadyVoted(user2, false));
+		assertFalse(question.alreadyVoted(user2, false));
 	}
 
 }

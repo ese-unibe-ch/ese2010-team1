@@ -63,6 +63,7 @@ article {
 		padding: 			0;
 		margin: 			0;
 	}
+	
 
 		li.entry {
 			background: 		#333;
@@ -74,6 +75,9 @@ article {
 			overflow: 			hidden;
 			min-height: 		70px;
 		}
+		inProfile.li.entry{
+			background:			#000;
+	}
 		
 			li.entry p {
 				margin: 			5px 0;

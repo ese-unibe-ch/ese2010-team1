@@ -4,27 +4,29 @@
 }%
 <span class="vote">
 	#{if canVote}
-	<a href="
-		#{if isAnswer}
-			@{Secured.voteAnswerDown(_entry.question.id, _entry.id)}
+		#{if _entry.alreadyVoted(_user, false)}
+			<a href="
+				@{Secured.removeEntryVote( _entry.id)}
+			">x</a>
 		#{/if}#{else}
-			@{Secured.voteQuestionDown(_entry.id)}
-
+			<a href="
+					@{Secured.voteEntryDown(_entry.id)}
+			">-</a>
 		#{/else}
-	">-</a>
 	#{/if}
 	
 	${_entry.rating()}
 
 	#{if canVote}
-	<a href="
-		#{if isAnswer}
-			@{Secured.voteAnswerUp(_entry.question.id, _entry.id)}
+		#{if _entry.alreadyVoted(_user, true)}
+			<a href="
+				@{Secured.removeEntryVote( _entry.id)}
+			">x</a>
 		#{/if}#{else}
-			@{Secured.voteQuestionUp(_entry.id)}
-
+			<a href="
+					@{Secured.voteEntryUp(_entry.id)}
+			">+</a>
 		#{/else}
-	">+</a>
 	#{/if}
 
 </span>

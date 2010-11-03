@@ -30,7 +30,7 @@ public class Question extends Entry {
 	/** The answers. */
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Answer> answers;
+	public List<Answer> answers;
 
 	/** The tags. */
 	@ManyToMany(cascade = CascadeType.PERSIST)

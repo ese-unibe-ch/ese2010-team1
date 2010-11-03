@@ -20,12 +20,14 @@
 		
 	#{if user}
 		<h1>Add Answers</h1>
-		#{form @Secured.newAnswer(question.id)}
+		<form action="@{Secured.newAnswer(question.id)}" method="POST" enctype="multipart/form-data">
+
 			#{field 'content'}
 	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 			#{/field}
+			<input type="file" name ="file" />
 			<input type="submit" value="Post" />
-		#{/form}
+
 		
 	#{/if}
 
