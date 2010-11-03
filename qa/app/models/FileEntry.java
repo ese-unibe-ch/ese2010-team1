@@ -1,9 +1,7 @@
 package models;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -89,23 +87,6 @@ public class FileEntry extends Model {
 		return Play.applicationPath + uploadPath + this.picID + "."
 				+ this.extension;
 
-	}
-
-	public static List<FileEntry> searchFilename(String searchString) {
-
-		return FileEntry.find("byUploadFilenameLike", "%" + searchString + "%")
-				.fetch();
-	}
-
-	public static List<Entry> searchEntrysWithFilename(String searchString) {
-
-		List<Entry> entrys = new ArrayList<Entry>();
-
-		for (FileEntry entry : searchFilename(searchString)) {
-			entrys.add(entry.entry);
-		}
-
-		return entrys;
 	}
 
 	@Override
