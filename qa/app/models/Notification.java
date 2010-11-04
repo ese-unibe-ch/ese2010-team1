@@ -31,4 +31,10 @@ public class Notification extends Model {
 		this.isNew = true;
 
 	}
+
+	public static void hasBeenRed(long id) {
+		Notification notification = Notification.findById(id);
+		notification.isNew = false;
+		notification.save();
+	}
 }
