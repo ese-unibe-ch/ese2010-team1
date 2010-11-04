@@ -11,7 +11,7 @@
 		background: green;
 	}
 	
-		nav, article {
+		nav, section {
 			height: 600px;
 			overflow: auto;
 		}
@@ -26,7 +26,7 @@
 				left: 0;
 			}
 		
-		article {
+		section {
 			width: 580px;
 			background: blue;
 			float: right;
@@ -35,3 +35,24 @@
 	footer {
 		
 	}
+	
+	
+/*** Sidebar navigation ***/
+
+nav a {
+	display: block;
+	width: 	340px;
+	margin: 10px;
+	padding: 10px;
+	background: white;
+}
+
+/*** Entries ***/
+
+.entry {
+	width: 540px;
+	margin: 10px;
+	padding: 10px;
+	background: white;
+}
+
