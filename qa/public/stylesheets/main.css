@@ -43,7 +43,14 @@ body {
 	footer {
 		background: yellow;	
 	}
+
 	
+/*** Navigation ***/	
+
+input[type=search] {
+	background: #fff url(../images/search.png) right center no-repeat;
+}
+
 	
 /*** Sidebar navigation ***/
 

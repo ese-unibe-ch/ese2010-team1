@@ -9,7 +9,7 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-menu, section, article, nav, command {
+menu, section, article, nav, command, header, footer {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -50,4 +50,9 @@ del {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+/* html5 block elements */
+section, footer, article, header {
+	display: block;
 }
