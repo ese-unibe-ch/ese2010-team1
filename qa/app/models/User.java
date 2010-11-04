@@ -42,6 +42,10 @@ public class User extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<Notification> notifications;
+
 	/** The name. */
 	@Required
 	public String name;
@@ -80,6 +84,7 @@ public class User extends Model {
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
 		this.files = new ArrayList<FileEntry>();
+		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
 	}
 
