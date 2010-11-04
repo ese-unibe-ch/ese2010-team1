@@ -318,6 +318,17 @@ public class User extends Model {
 		return this;
 	}
 
+	public List<Notification> getNewNotifications() {
+
+		return Notification.find("byOwnerAndIsNew order by timestamp desc",
+				this, true).fetch();
+	}
+
+	public List<Notification> getNotifications(int numberOfNotifications) {
+
+		return Notification.find("byOwner", this).fetch(numberOfNotifications);
+	}
+
 	/**
 	 * Gets the number of votes.
 	 * 
