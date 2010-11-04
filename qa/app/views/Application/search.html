@@ -41,4 +41,12 @@ $(document).ready(function() {
 #{/if}
 #{else}
 <h1>There were no search results!</h1>
+
+#{ifErrors}
+#{errors}<div class="error">
+ ${error}
+ </div>
+#{/errors}
+
+#{/ifErrors}
 #{/else}
