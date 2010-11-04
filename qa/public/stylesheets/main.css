@@ -3,6 +3,7 @@
 body {
 	background: #dedede;
 	font-size: 16px;
+	font-family: Calibri, Helvetica, Arial, sans-serif;
 }
 
 #all {
@@ -87,10 +88,13 @@ nav a {
 	margin: 10px;
 	padding: 10px;
 	background: #fff;
+	text-decoration: none;
+	color: #803ab4;
 }
 
 	nav a.active {
 			background: #803ab4;
+			color: #fff;
 	}
 	
 /*** Dropdown menus ***/
