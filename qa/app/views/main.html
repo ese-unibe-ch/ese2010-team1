@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>#{get 'title' /}</title>
+        <title>Knowledge Base - #{get 'title' /}</title>
         <meta charset="utf-8">  
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
         
@@ -19,14 +19,7 @@
     	<div id="all">
     		<header>
     			<div id="pagecontrols">
-    				<form action="" method="get">
-    					<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
-    				</form>
-    				#{tabbar 'filter'}
-    					#{tab 'Hot' /}
-    					#{tab 'Mine' /}
-    					#{tab 'Search' /}
-    				#{/tabbar}
+    				#{get 'controls' /}
     			</div>
     			<div id="sitecontrols">
     				<span>
@@ -42,65 +35,9 @@
     				#{/pulldown}
     			</div>
     		</header>
-    		<nav>
-    			<a href="#">Where's my wallet?</a>
-    			<a href="#">What's the answer?</a>
-    			<a href="#" class="active">Question</a>
-    		</nav>
+    			#{get 'nav' /}
     		<section>
-    			<article class="entry question">
-        			<h3>Question</h3>
-    				<menu>
-        				<li>+</li>
-        				<li>-</li>
-        			</menu>
-        			<p>Why is there stuff?</p>
-        		</article>
-        		
-        		<article class="entry answer">
-        			<h3>Answer</h3>
-        			<menu>
-        				<li>+</li>
-        				<li>-</li>
-        			</menu>
-        			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-        			 tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis 
-        			 nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
-        			 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel 
-        			 illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui 
-        			 blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-        			</p>
-        		</article>
-        		
-        		<article class="entry answer">
-        			<h3>Answer</h3>
-        			<menu>
-        				<command>+</command>
-        				<command>-</command>
-        			</menu>
-        			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-        			 tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis 
-        			 nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
-        			 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel 
-        			 illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui 
-        			 blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-        			</p>
-        		</article>
-        		
-        		<article class="entry answer">
-        			<h3>Answer</h3>
-        			<menu>
-        				<command>+</command>
-        				<command>-</command>
-        			</menu>
-        			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-        			 tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis 
-        			 nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
-        			 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel 
-        			 illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui 
-        			 blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-        			</p>
-        		</article>
+    			#{doLayout /}
         	</section>
         </div>
     </body>

@@ -1,6 +1,43 @@
 %{
 	question = _entry instanceof models.Question
 	answer = !question
+}%
+
+*{ navigation representation }*
+
+#{if _display == "nav"}
+	<a href="#">${_entry.title}</a>
+#{/if}
+
+
+*{ full representation }*
+
+#{else}
+	<article class="entry ${question.yesno('question','answer')}">
+	
+	*{ title }*
+	<h3>${question ? _entry.title : "Answer"}</h3>
+	
+	*{ vote }*
+	<menu>
+		<li>+</li>
+		<li>-</li>
+	</menu>
+	
+	*{ content }*
+	<p>${_entry.content.nl2br()}</p>
+	
+	</article>
+#{/else}
+
+
+
+
+*{
+
+%{
+	question = _entry instanceof models.Question
+	answer = !question
 	comments = _entry.listComments()
 	files = _entry.getFiles()
 	
@@ -16,7 +53,7 @@
 }%
 
 <li class="entry" id="${question ? 'question' : _entry.id}">
-	*{ title }*
+	*{ title 
 	#{if question}
 		<a href="@{Application.question(_entry.id)}">
 			<h3>
@@ -25,7 +62,7 @@
 		</a>
 	#{/if}
 	
-	*{ content }*
+	*{ content 
 	<div id= "content${_entry.id }">
 		<p>
 			${_entry.content.nl2br()}
@@ -73,7 +110,7 @@
 		
 	</div>
 	
-	*{ edit form }*
+	*{ edit form 
 	<div id="edit${_entry.id }" style="display:none">
 		#{form @Secured.edit(_entry.id)} 
 			#{field 'content'}
@@ -89,7 +126,7 @@
 		#{/form }
 	</div>
 
-	*{ tags }*
+	*{ tags 
 	#{if question}
 		<div class="tags">
 			#{list items:_entry.tags, as:'tag'}
@@ -98,7 +135,7 @@
 		</div>
 	#{/if}
 
-	*{ actions }*
+	*{ actions 
 	<div class="actions">
 		#{secure.check 'isAdmin'}
 		  <a href="@{Secured.deleteEntry(_entry.id)}">
@@ -117,7 +154,7 @@
 		#{version entry:_entry /}
 	</div>
 	
-	*{ info }*
+	*{ info 
 	<div class="info">
 		<span>${_entry.timestamp.format('dd.MM.yyyy hh:mm:ss')}</span>
 		<a href="@{UserFuncs.showProfile(_entry.owner.id)}">
@@ -125,8 +162,9 @@
 		</a>
 	</div>
 	
-	*{ vote }*
+	*{ vote 
 	#{vote entry:_entry, user:_user /}
 	
 </li>
 
+}*
