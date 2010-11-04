@@ -22,21 +22,3 @@
 #{list items:questions.get(0).answers, as:'entry'}
 	#{entry entry:entry, user:user /}
 #{/list}
-
-
-#{if user}
-
-	<h1>Ask Question</h1>
-	#{form @Secured.newQuestion()}
-		#{field 'content'}
-			<input type="text" name="title" id="title" value="Title" />
-        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
-		#{/field}
-		<input type="text" name="tags" id="tags" value="Tags" />
-		<input type="submit" value="Post" />
-	#{/form}
-
-
-#{/if}
-
-<span style="color: white;">Anzahl User: ${userCount}</span>

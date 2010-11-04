@@ -6,7 +6,7 @@
 *{ navigation representation }*
 
 #{if _display == "nav"}
-	<a href="#">${_entry.title}</a>
+	<a href="#${_entry.id}">${_entry.title}</a>
 #{/if}
 
 

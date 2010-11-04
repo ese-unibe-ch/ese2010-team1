@@ -3,31 +3,10 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
-POST	/										Secured.newQuestion
+GET     /                                       Questions.list
 
-GET		/recent									Application.recentQuestions
+GET		/question/{id}							Question.get
 
-GET		/question/{id}							Application.question
-POST	/question/{id}							Secured.newAnswer
-
-GET		/question/{id}/up						Secured.voteQuestionUp
-GET		/question/{id}/down						Secured.voteQuestionDown
-
-GET		/answer/{question}/{id}/up				Secured.voteAnswerUp
-GET		/answer/{question}/{id}/down			Secured.voteAnswerDown
-
-
-GET 	/download/{id}							Application.getFile
-
-
-GET 	/register								Application.createUser
-POST	/register								Application.addUser
-
-GET		/showProfile/{id}						UserFuncs.showProfile
-GET		/editProfile/{id}						UserFuncs.editProfile
-
-*		/search/{searchString}					Application.search
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
