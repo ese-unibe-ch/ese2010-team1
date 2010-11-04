@@ -148,6 +148,8 @@ public class User extends Model {
 		}
 		data.append(']');
 
+		System.out.println(data.toString());
+
 		return data.toString();
 	}
 

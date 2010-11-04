@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
@@ -133,10 +134,13 @@ public class Application extends Controller {
 	 * @param searchString
 	 *            the search string
 	 */
-	public static void search(@Required String searchString) {
+	public static void search(
+			@Required(message = "Please enter a search string") String searchString) {
+		List<Entry> results = new ArrayList<Entry>();
 
-		List<Entry> results = Search.searchEntry(searchString);
-
+		if (!validation.hasErrors()) {
+			results = Search.searchEntry(searchString);
+		}
 		render(searchString, results);
 	}
 
