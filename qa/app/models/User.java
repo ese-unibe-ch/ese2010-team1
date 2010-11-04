@@ -320,8 +320,14 @@ public class User extends Model {
 
 	public List<Notification> getNewNotifications() {
 
-		return Notification.find("byOwnerAndIsNew order by timestamp desc",
-				this, true).fetch();
+		return Notification.find(
+				"owner =? and isNew = ? order by timestamp desc", this, true)
+				.fetch();
+	}
+
+	public boolean hasNewNotifications() {
+
+		return Notification.count("owner = ? and isNew = ?", this, true) > 0;
 	}
 
 	public List<Notification> getNotifications(int numberOfNotifications) {

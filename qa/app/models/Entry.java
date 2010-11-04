@@ -217,6 +217,7 @@ public abstract class Entry extends Model {
 		Notification notification = new Notification(this.owner, this, activity)
 				.save();
 		this.owner.addNotification(notification);
+		this.notifications.add(notification);
 		this.save();
 
 	}

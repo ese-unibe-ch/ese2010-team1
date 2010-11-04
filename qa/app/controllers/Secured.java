@@ -38,8 +38,11 @@ public class Secured extends Controller {
 	public static void newAnswer(long id, @Required String content, File file) {
 		if (!validation.hasErrors() && Question.findById(id) != null) {
 			User user = User.find("byName", Security.connected()).first();
-			Answer answer = Question.<Question> findById(id).answer(user,
-					content);
+			Question question = Question.findById(id);
+			Answer answer = question.answer(user, content);
+			if (user != question.owner) {
+				question.addNotification("has been answered");
+			}
 
 			if (file != null && file.exists()) {
 
@@ -54,6 +57,10 @@ public class Secured extends Controller {
 			User user = User.find("byName", Security.connected()).first();
 			Entry entry = Entry.findById(id);
 			user.addComment(entry, content);
+
+			if (user != entry.owner) {
+				entry.addNotification("has been commented");
+			}
 
 			if (entry instanceof models.Question)
 				Application.question(id);
