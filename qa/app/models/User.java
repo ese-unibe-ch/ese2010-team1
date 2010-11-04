@@ -311,6 +311,13 @@ public class User extends Model {
 		return this;
 	}
 
+	public User addNotification(Notification notification) {
+
+		this.notifications.add(notification);
+		this.save();
+		return this;
+	}
+
 	/**
 	 * Gets the number of votes.
 	 * 

@@ -43,6 +43,10 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<Notification> notifications;
+
 	/** The timestamp. */
 	public Date timestamp;
 
@@ -61,6 +65,7 @@ public abstract class Entry extends Model {
 		this.votes = new ArrayList<Vote>();
 		this.comments = new ArrayList<Comment>();
 		this.files = new ArrayList<FileEntry>();
+		this.notifications = new ArrayList<Notification>();
 
 	}
 
@@ -205,6 +210,15 @@ public abstract class Entry extends Model {
 		this.comments.add(comment);
 		this.save();
 		return comment;
+	}
+
+	public void addNotification(String activity) {
+
+		Notification notification = new Notification(this.owner, this, activity)
+				.save();
+		this.owner.addNotification(notification);
+		this.save();
+
 	}
 
 	public FileEntry addFile(File file, User user) {
