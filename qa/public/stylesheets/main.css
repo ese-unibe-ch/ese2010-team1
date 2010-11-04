@@ -1,5 +1,9 @@
 /*** Global Structure ***/
 
+body {
+	background: black;
+}
+
 #all {
 	margin: 0 auto;
 	width: 960px;
@@ -8,7 +12,7 @@
 
 	header {
 		height: 50px;
-		background: green;
+		background: #0f0;
 	}
 	
 		nav, section {
@@ -37,7 +41,7 @@
 			}
 	
 	footer {
-		
+		background: yellow;	
 	}
 	
 	
@@ -47,7 +51,7 @@ nav a {
 	display: block;
 	margin: 10px;
 	padding: 10px;
-	background: white;
+	background: cyan;
 }
 
 	nav a.active {
@@ -64,7 +68,7 @@ nav a {
 	.entry p, .entry h3 {
 		padding: 10px;
 		margin-right: 35px;
-		background: white;
+		background: magenta;
 	}
 
 	.entry p {
