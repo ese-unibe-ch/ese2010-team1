@@ -18,9 +18,29 @@
     <body>
     	<div id="all">
     		<header>
-    			<form action="" method="get">
-    				<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
-    			</form>
+    			<div id="pagecontrols">
+    				<form action="" method="get">
+    					<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
+    				</form>
+    				#{tabbar 'filter'}
+    					#{tab 'Hot' /}
+    					#{tab 'Mine' /}
+    					#{tab 'Search' /}
+    				#{/tabbar}
+    			</div>
+    			<div id="sitecontrols">
+    				<span>
+    					Admin: 235
+    				</span>
+    				#{pulldown label:'Activity'}
+    					<li>Something</li>
+    					<li>Something else</li>
+    				#{/pulldown}
+    				#{pulldown label:'Account'}
+    					<li>Something</li>
+    					<li>Something else</li>
+    				#{/pulldown}
+    			</div>
     		</header>
     		<nav>
     			<a href="#">Where's my wallet?</a>
@@ -31,8 +51,8 @@
     			<article class="entry question">
         			<h3>Question</h3>
     				<menu>
-        				<command>+</command>
-        				<command>-</command>
+        				<li>+</li>
+        				<li>-</li>
         			</menu>
         			<p>Why is there stuff?</p>
         		</article>
@@ -40,8 +60,8 @@
         		<article class="entry answer">
         			<h3>Answer</h3>
         			<menu>
-        				<command>+</command>
-        				<command>-</command>
+        				<li>+</li>
+        				<li>-</li>
         			</menu>
         			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
         			 tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis 

@@ -2,17 +2,20 @@
 
 body {
 	background: black;
+	font-size: 16px;
 }
 
 #all {
 	margin: 0 auto;
 	width: 960px;
 	padding: 20px;
+	position: relative;
 }
 
 	header {
-		height: 50px;
+		height: 30px;
 		background: #0f0;
+		position: relative;
 	}
 	
 		nav, section {
@@ -45,11 +48,36 @@ body {
 	}
 
 	
-/*** Navigation ***/	
+/*** Top Navigation ***/	
 
-input[type=search] {
-	background: #fff url(../images/search.png) right center no-repeat;
+#pagecontrols, #sitecontrols {
+	position: absolute;
+	top: 7px;
 }
+
+	#pagecontrols {
+		left: 7px;
+		top:  4px;
+	}
+	
+		#pagecontrols form, #pagecontrols menu {
+			float: left;
+			margin-right: 10px;
+		}
+	
+	#sitecontrols {
+		right: 7px;
+		width: 400px;
+	}
+	
+		#sitecontrols div {
+			float: right;
+			margin-left: 10px;
+		}
+
+	input[type=search] {
+		background: #fff url(../images/search.png) right center no-repeat;
+	}
 
 	
 /*** Sidebar navigation ***/
@@ -63,6 +91,41 @@ nav a {
 
 	nav a.active {
 		background: violet;
+	}
+	
+/*** Dropdown menus ***/
+
+.pulldown {
+	display: inline;
+	position: relative;
+}
+
+	.pulldown a {
+		background: white;
+		padding: 2px;
+		font-size: 0.8em;
+	}
+	
+	.pulldown menu {
+		display: none;
+		position: absolute;
+		background: wheat;
+		z-index: 100;
+		right: 0;
+	}
+
+
+/*** Tab bars ***/
+
+.tabbar {
+	overflow: hidden;
+}
+
+	.tabbar li {
+		float: left;
+		border: 1px solid #000;
+		padding: 3px;
+		font-size: 0.8em;
 	}
 	
 	
