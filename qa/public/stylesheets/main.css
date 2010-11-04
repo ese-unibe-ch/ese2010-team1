@@ -1,7 +1,7 @@
 /*** Global Structure ***/
 
 body {
-	background: black;
+	background: #dedede;
 	font-size: 16px;
 }
 
@@ -14,7 +14,7 @@ body {
 
 	header {
 		height: 30px;
-		background: #0f0;
+		background: #501e73 url(../images/header.jpg);
 		position: relative;
 	}
 	
@@ -24,8 +24,9 @@ body {
 		}
 		
 		nav {
-			width: 380px;
-			background: red;
+			width: 355px;
+			background: #6e6e6e url(../images/shadow.jpg) top right repeat-y;
+			padding-right: 25px;
 			float: left;
 		}
 		
@@ -35,7 +36,7 @@ body {
 		
 		section {
 			width: 100%;
-			background: blue;
+			background: #803ab4 top left url(../images/retro.jpg);
 			float: right;
 		}
 		
@@ -44,7 +45,6 @@ body {
 			}
 	
 	footer {
-		background: yellow;	
 	}
 
 	
@@ -52,7 +52,7 @@ body {
 
 #pagecontrols, #sitecontrols {
 	position: absolute;
-	top: 7px;
+	top: 5px;
 }
 
 	#pagecontrols {
@@ -86,11 +86,11 @@ nav a {
 	display: block;
 	margin: 10px;
 	padding: 10px;
-	background: cyan;
+	background: #fff;
 }
 
 	nav a.active {
-		background: violet;
+			background: #803ab4;
 	}
 	
 /*** Dropdown menus ***/
@@ -101,30 +101,61 @@ nav a {
 }
 
 	.pulldown a {
-		background: white;
 		padding: 2px;
 		font-size: 0.8em;
+		background: url(../images/header_inv.jpg);
+		border-radius: 5px;
+		color: #fff;
+		text-decoration: none;
+		padding: 3px 10px;
 	}
 	
 	.pulldown menu {
 		display: none;
 		position: absolute;
-		background: wheat;
+		background: #6e6e6e;
+		width: 200px;
 		z-index: 100;
 		right: 0;
+		margin-top: 7px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
+	
+		.pulldown li {
+			padding: 7px;
+		}
+	
+		.pulldown li:nth-child(2n) {
+			background: #666;
+		}
+		
+		.pulldown li:last-child {
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
 
 
 /*** Tab bars ***/
 
 .tabbar {
 	overflow: hidden;
+	border-radius: 5px;
 }
 
 	.tabbar li {
 		float: left;
-		border: 1px solid #000;
-		padding: 3px;
+		padding: 3px 10px;
+		background: url(../images/header_inv.jpg);
+	}
+	
+		.tabbar li + li {
+			margin-left: 1px;
+		}
+	
+	.tabbar a {
+		color: #fff;
+		text-decoration: none;
 		font-size: 0.8em;
 	}
 	
@@ -138,7 +169,7 @@ nav a {
 	.entry p, .entry h3 {
 		padding: 10px;
 		margin-right: 35px;
-		background: magenta;
+		background: rgba(255,254,255,0.59);
 	}
 
 	.entry p {
