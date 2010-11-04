@@ -190,20 +190,6 @@ public abstract class Entry extends Model {
 		return vote;
 	}
 
-	// TS Replace whitespace by percent symbol to get more hits
-	/**
-	 * Search the content field for the searchString.
-	 * 
-	 * @param searchString
-	 *            the search string
-	 * @return the result list
-	 */
-	public static List<Entry> searchContent(String searchString) {
-
-		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
-
-	}
-
 	public List<Comment> listComments() {
 		List<Comment> list = Comment.find("byEntry", this).fetch();
 		return list;

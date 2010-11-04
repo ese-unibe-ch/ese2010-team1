@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
@@ -9,6 +8,7 @@ import models.Comment;
 import models.Entry;
 import models.FileEntry;
 import models.Question;
+import models.Search;
 import models.User;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -135,23 +135,7 @@ public class Application extends Controller {
 	 */
 	public static void search(@Required String searchString) {
 
-		List<Entry> foundEntrys = new ArrayList<Entry>();
-		List<Entry> results = new ArrayList<Entry>();
-		if (!validation.hasErrors()) {
-			foundEntrys.addAll(Question.searchTitle(searchString));
-			foundEntrys.addAll(Entry.searchContent(searchString));
-			foundEntrys.addAll(Question.searchTaggedWith(searchString));
-			foundEntrys
-					.addAll(FileEntry.searchEntrysWithFilename(searchString));
-
-			for (Entry entry : foundEntrys) {
-
-				if (!results.contains(entry)) {
-					results.add(entry);
-				}
-			}
-
-		}
+		List<Entry> results = Search.searchEntry(searchString);
 
 		render(searchString, results);
 	}
