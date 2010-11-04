@@ -27,10 +27,14 @@
 			}
 		
 		section {
-			width: 580px;
+			width: 100%;
 			background: blue;
 			float: right;
 		}
+		
+			nav + section {
+				width: 580px;	
+			}
 	
 	footer {
 		
@@ -41,18 +45,40 @@
 
 nav a {
 	display: block;
-	width: 	340px;
 	margin: 10px;
 	padding: 10px;
 	background: white;
 }
 
+	nav a.active {
+		background: violet;
+	}
+	
+	
 /*** Entries ***/
 
 .entry {
-	width: 540px;
 	margin: 10px;
-	padding: 10px;
-	background: white;
 }
+	
+	.entry p, .entry h3 {
+		padding: 10px;
+		margin-right: 35px;
+		background: white;
+	}
 
+	.entry p {
+		margin-top: 5px;
+	}
+	
+	.entry menu {
+		float: right;
+		width: 30px;
+		color: white;
+		text-align: center;
+		font-size: 1.5em;
+	}
+	
+		.entry menu command {
+			display: block;
+		}
