@@ -40,9 +40,6 @@ public class Secured extends Controller {
 			User user = User.find("byName", Security.connected()).first();
 			Question question = Question.findById(id);
 			Answer answer = question.answer(user, content);
-			if (user != question.owner) {
-				question.addNotification("has been answered");
-			}
 
 			if (file != null && file.exists()) {
 
@@ -57,10 +54,6 @@ public class Secured extends Controller {
 			User user = User.find("byName", Security.connected()).first();
 			Entry entry = Entry.findById(id);
 			user.addComment(entry, content);
-
-			if (user != entry.owner) {
-				entry.addNotification("has been commented");
-			}
 
 			if (entry instanceof models.Question)
 				Application.question(id);

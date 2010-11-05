@@ -1,3 +1,4 @@
+import models.Question;
 import models.User;
 
 import org.junit.Before;
@@ -21,7 +22,16 @@ public class NotificationTest extends UnitTest {
 		User user = new User("user1", "user1@test.com", "test").save();
 		User user2 = new User("tes", "test@test.com", "test").save();
 
-		user.addQuestion("test title", "content");
+		Question question = user.addQuestion("test title", "content");
+		question.answer(user2, "mycontent");
+
+		assertTrue(user.hasNewNotifications());
+		assertEquals(1, user.getNewNotifications().size());
+
+		question.addComment(user2, "my comment");
+
+		assertTrue(user.hasNewNotifications());
+		assertEquals(2, user.getNewNotifications().size());
 
 	}
 }

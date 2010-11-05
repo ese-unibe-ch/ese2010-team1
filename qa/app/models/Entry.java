@@ -209,6 +209,10 @@ public abstract class Entry extends Model {
 		Comment comment = new Comment(owner, this, content).save();
 		this.comments.add(comment);
 		this.save();
+
+		if (owner != this.owner) {
+			this.addNotification("has been commented");
+		}
 		return comment;
 	}
 
