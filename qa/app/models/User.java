@@ -1,8 +1,10 @@
 package models;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -13,10 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Required;
+import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
-import edu.emory.mathcs.backport.java.util.Collections;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class User.
  */
@@ -24,14 +25,22 @@ import edu.emory.mathcs.backport.java.util.Collections;
 public class User extends Model {
 
 	/** The entrys. */
+
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Entry> entrys;
+
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<Comment> comments;
 
 	/** The votes. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<FileEntry> files;
 
 	/** The name. */
 	@Required
@@ -70,6 +79,7 @@ public class User extends Model {
 		this.password = encrypt(password);
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
+		this.files = new ArrayList<FileEntry>();
 		this.timestamp = new Date();
 	}
 
@@ -137,6 +147,8 @@ public class User extends Model {
 				data.append(',');
 		}
 		data.append(']');
+
+		System.out.println(data.toString());
 
 		return data.toString();
 	}
@@ -277,6 +289,23 @@ public class User extends Model {
 		return this;
 	}
 
+	public User addComment(Entry entry, String content) {
+		Comment comment = entry.addComment(this, content);
+		this.comments.add(comment);
+		this.save();
+		return this;
+
+	}
+
+	public User addFileToEntry(File file, Entry entry) {
+
+		FileEntry fileEntry = entry.addFile(file, this);
+		this.files.add(fileEntry);
+
+		this.save();
+		return this;
+	}
+
 	/**
 	 * Gets the number of votes.
 	 * 
@@ -315,6 +344,25 @@ public class User extends Model {
 
 		return Entry.find("owner like ? order by timestamp desc", this).fetch(
 				numberOfActivitys);
+	}
+
+	public void anonymify() {
+		User anonym = User.find("byName", "Anonym").first();
+		for (Entry entry : entrys) {
+			entry.owner = anonym;
+			entry.save();
+		}
+		this.refresh();
+
+	}
+
+	@Override
+	public <T extends JPASupport> T delete() {
+		anonymify();
+		entrys.clear();
+		this.save();
+
+		return super.delete();
 	}
 
 }

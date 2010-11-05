@@ -1,6 +1,18 @@
 %{
 	question = _entry instanceof models.Question
 	answer = !question
+	comments = _entry.listComments()
+	files = _entry.getFiles()
+	
+	if(_user!=null) {
+	
+		isAdmin = _user.isAdmin
+	}
+	else {
+		isAdmin = false;
+	}
+	
+	
 }%
 
 <li class="entry" id="${question ? 'question' : _entry.id}">
@@ -16,8 +28,49 @@
 	*{ content }*
 	<div id= "content${_entry.id }">
 		<p>
-			${_entry.content.nl2br() }
+			${_entry.content.nl2br()}
 		</p>
+
+	#{if comments.size() > 0}
+		<h3>Comments</h3>
+		<ul>
+			#{list items:comments, as:'comment'}
+				<li>${comment.owner.name} -  ${comment.content.nl2br()} 
+				#{if _user== comment.owner || isAdmin}
+				<a href="@{Secured.deleteComment(comment.id)}">delete</a>
+				#{/if}
+				
+				 </li>
+			#{/list}
+		</ul>
+	#{/if}
+
+	#{if _user}
+
+	<h3>Comment</h3>
+	#{form @Secured.newComment(_entry.id)}
+		#{field 'content'}
+			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		<input type="submit" value="Post" />
+	#{/form}
+
+
+	#{/if}
+
+
+		#{if files.size()>0}
+		File(s):
+		#{list items:files, as:'file'}
+		
+		<a href="@{Application.getFile(file.id)}" target="_blank">${file.uploadFilename}</a>
+		#{if _user==file.owner}
+		<a href="@{Secured.deleteFileEntry(file.id, file.entry.question.id)}">delete</a>
+		#{/if}
+		
+		#{/list}
+		#{/if}
+		
 	</div>
 	
 	*{ edit form }*
@@ -47,7 +100,7 @@
 
 	*{ actions }*
 	<div class="actions">
-		#{secure.check 'admin'}
+		#{secure.check 'isAdmin'}
 		  <a href="@{Secured.deleteEntry(_entry.id)}">
 		  	<img src="@{'/public/images/delete.png'}" alt="delete" title="delete" />
 		  </a>
@@ -55,11 +108,13 @@
 		#{if answer}
 			#{setBestAnswer answer:_entry, user:_user /}
 		#{/if}
-		#{if _user == _entry.owner }
-			<a onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">
+
+		#{if _user == _entry.owner|| isAdmin}
+			<a href="#" onclick="return showEditBox('content${_entry.id }', 'edit${_entry.id }');">
 		  		<img src="@{'/public/images/edit.png'}" alt="edit" title="edit" />
 			</a>
 		#{/if }
+		#{version entry:_entry /}
 	</div>
 	
 	*{ info }*
@@ -72,5 +127,6 @@
 	
 	*{ vote }*
 	#{vote entry:_entry, user:_user /}
+	
 </li>
 

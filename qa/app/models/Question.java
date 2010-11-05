@@ -30,7 +30,7 @@ public class Question extends Entry {
 	/** The answers. */
 	@OneToMany(mappedBy = "question", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Answer> answers;
+	public List<Answer> answers;
 
 	/** The tags. */
 	@ManyToMany(cascade = CascadeType.PERSIST)
@@ -164,31 +164,6 @@ public class Question extends Entry {
 	}
 
 	/**
-	 * Search questions tagged with the searchString.
-	 * 
-	 * @param searchString
-	 *            the search string
-	 * @return the list
-	 */
-	public static List<Question> searchTaggedWith(String searchString) {
-		List<Tag> matchingTags = Tag.find("byNameLike",
-				"%" + searchString + "%").fetch();
-
-		List<Question> result = new ArrayList<Question>();
-		for (Tag tag : matchingTags) {
-			for (Question question : Question.findTaggedWith(tag.name)) {
-
-				if (!result.contains(question)) {
-					result.add(question);
-
-				}
-			}
-		}
-
-		return result;
-	}
-
-	/**
 	 * Sets the best answer.
 	 * 
 	 * @param answer
@@ -222,18 +197,6 @@ public class Question extends Entry {
 	public boolean canSetBestAnswer() {
 		return this.bestAnswerFreezer == null
 				|| !this.bestAnswerFreezer.frozen();
-	}
-
-	// TS Replace whitespace by percent symbol to get more hits
-	/**
-	 * Search the titles for the searchString.
-	 * 
-	 * @param searchString
-	 *            the search string
-	 * @return the list
-	 */
-	public static List<Entry> searchTitle(String searchString) {
-		return Question.find("byTitleLike", "%" + searchString + "%").fetch();
 	}
 
 }

@@ -18,6 +18,8 @@ GET		/answer/{question}/{id}/up				Secured.voteAnswerUp
 GET		/answer/{question}/{id}/down			Secured.voteAnswerDown
 
 
+GET 	/download/{id}							Application.getFile
+
 
 GET 	/register								Application.createUser
 POST	/register								Application.addUser

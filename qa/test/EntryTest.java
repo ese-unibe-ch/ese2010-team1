@@ -2,6 +2,7 @@ import java.util.List;
 
 import models.Entry;
 import models.Question;
+import models.Search;
 import models.User;
 
 import org.junit.Before;
@@ -26,14 +27,14 @@ public class EntryTest extends UnitTest {
 		Question question = user.addQuestion("title", "a test");
 		question.answer(user, "is that the right question?");
 
-		List<Entry> searchResult = Entry.searchContent("question");
+		List<Entry> searchResult = Search.searchContent("question");
 
 		assertEquals(3, searchResult.size());
 
-		List<Entry> searchResult2 = Entry.searchContent("quest");
+		List<Entry> searchResult2 = Search.searchContent("quest");
 		assertEquals(3, searchResult2.size());
 
-		List<Entry> searchResult3 = Entry.searchContent("blub");
+		List<Entry> searchResult3 = Search.searchContent("blub");
 		assertEquals(0, searchResult3.size());
 
 	}

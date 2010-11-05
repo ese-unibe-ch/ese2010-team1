@@ -1,11 +1,15 @@
 package controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
+import models.Comment;
 import models.Entry;
+import models.FileEntry;
 import models.Question;
+import models.Search;
 import models.User;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -62,7 +66,9 @@ public class Application extends Controller {
 			render();
 		} else {
 			List<Answer> answers = question.answers();
-			render(question, answers);
+			List<Comment> comments = question.listComments();
+			render(question, answers, comments);
+
 		}
 	}
 
@@ -128,24 +134,22 @@ public class Application extends Controller {
 	 * @param searchString
 	 *            the search string
 	 */
-	public static void search(@Required String searchString) {
-
-		List<Entry> foundEntrys = new ArrayList<Entry>();
+	public static void search(
+			@Required(message = "Please enter a search string") String searchString) {
 		List<Entry> results = new ArrayList<Entry>();
+
 		if (!validation.hasErrors()) {
-			foundEntrys.addAll(Question.searchTitle(searchString));
-			foundEntrys.addAll(Entry.searchContent(searchString));
-			foundEntrys.addAll(Question.searchTaggedWith(searchString));
-
-			for (Entry entry : foundEntrys) {
-
-				if (!results.contains(entry)) {
-					results.add(entry);
-				}
-			}
-
+			results = Search.searchEntry(searchString);
 		}
-
 		render(searchString, results);
+	}
+
+	public static void getFile(long id) {
+
+		FileEntry entry = FileEntry.findById(id);
+
+		File file = new File(entry.getAbsolutePath());
+
+		renderBinary(file, entry.uploadFilename);
 	}
 }
