@@ -23,7 +23,7 @@ public class ProfileTest extends UnitTest {
 		User user = new User("testuser", "test@mail.com", "password").save();
 
 		assertEquals(0, ProfileItem.count());
-		ProfileItem item1 = new ProfileItem("Test1").save();
+		new ProfileItem("Test1").save();
 		ProfileItem item2 = new ProfileItem("Test2").save();
 
 		assertEquals(2, ProfileItem.count());

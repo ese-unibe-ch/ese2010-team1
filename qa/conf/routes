@@ -2,10 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# Questions
 GET     /                                       Questions.list
 
 GET		/question/{id}							Question.get
+
+
+# Users
+GET		/user/{id}								Users.profile
 
 
 # Map static resources from the /app/public folder to the /public path

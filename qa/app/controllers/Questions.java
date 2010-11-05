@@ -24,6 +24,8 @@ public class Questions extends Controller {
 		}
 	}
 
+	/**** VIEWS ****/
+
 	/**
 	 * List and show questions.
 	 */
@@ -32,8 +34,10 @@ public class Questions extends Controller {
 		render(questions);
 	}
 
+	/*** AJAX ***/
+
 	/**
-	 * 
+	 * Get a question.
 	 */
 	public static void get(int id) {
 		Question question = Question.find("byID", id).first();

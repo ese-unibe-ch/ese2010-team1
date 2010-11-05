@@ -16,6 +16,7 @@ $(function() {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
 			$('section').html(data);
 		});
+		return false;
 	});
 	
 });

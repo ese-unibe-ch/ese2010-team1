@@ -7,6 +7,6 @@ import play.mvc.Controller;
  */
 public class JavaScript extends Controller {
 	public static void controller() {
-		render("JavaScript/controler.js");
+		render("JavaScript/controller.js");
 	}
 }
