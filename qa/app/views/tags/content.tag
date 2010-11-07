@@ -1,6 +1,6 @@
 <div id= "content${_entry.id }">
 	<p>
-		${_entry.content.nl2br() }
+		${_entry.content().nl2br() }
 	</p>
 </div>
 

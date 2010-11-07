@@ -162,7 +162,8 @@ public class Secured extends Controller {
 	public static void edit(long id, String content) {
 
 		Entry entry = Entry.findById(id);
-		entry.content = content;
+		entry.edit(content, (User) User.find("byName", Security.connected())
+				.first());
 		entry.save();
 
 		if (entry instanceof Answer) {
