@@ -11,6 +11,8 @@ GET		/recent									Application.recentQuestions
 GET		/question/{id}							Application.question
 POST	/question/{id}							Secured.newAnswer
 
+GET 	/version/{id}							Application.version
+
 GET		/question/{id}/up						Secured.voteQuestionUp
 GET		/question/{id}/down						Secured.voteQuestionDown
 

@@ -11,6 +11,7 @@ import models.FileEntry;
 import models.Question;
 import models.Search;
 import models.User;
+import models.Entry.ContentState;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -151,5 +152,12 @@ public class Application extends Controller {
 		File file = new File(entry.getAbsolutePath());
 
 		renderBinary(file, entry.uploadFilename);
+	}
+
+	public static void version(long id) {
+		ContentState state = ContentState.findById(id);
+		if (state != null) {
+			renderText(state.content);
+		}
 	}
 }

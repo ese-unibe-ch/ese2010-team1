@@ -106,6 +106,11 @@ public abstract class Entry extends Model {
 	}
 
 	public void edit(String content, User user) {
+		if (this.states.size() == 0) {
+			ContentState state = new ContentState(this.content, this.owner)
+					.save();
+			this.states.add(state);
+		}
 		ContentState state = new ContentState(content, user).save();
 		this.states.add(state);
 		this.content = content;
