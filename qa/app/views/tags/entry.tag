@@ -24,8 +24,8 @@
 	</menu>
 	*{ title }*
 	<h3>
-		<div style="float: left; width: 50%;">${question ? _entry.title : "Answer"}</div>
-		<div style="float: left; width: 50%; text-align: right;"><a href="@{Users.profile(_entry.owner.id)}"> ${_entry.owner.name}</a></div>
+		${question ? _entry.title : "Answer"}
+		<a style="position: absolute; text-align: right; right: 50px;" href="@{Users.profile(_entry.owner.id)}"> ${_entry.owner.name}</a>
 	</h3>
 	
 	
