@@ -5,9 +5,9 @@ $(function() {
 	$('section').jScrollPane();
 	
 	// pulldown menus
-	$('.pulldown a').click(function() {
+	$('.pulldown > a').click(function() {
 		$(this).next().toggle();
-		$('.pulldown a').not(this).next().hide();
+		$('.pulldown > a').not(this).next().hide();
 		return false;
 	});
 	

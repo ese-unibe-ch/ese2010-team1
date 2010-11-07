@@ -15,14 +15,21 @@
 #{else}
 	<article class="entry ${question.yesno('question','answer')}">
 	
-	*{ title }*
-	<h3>${question ? _entry.title : "Answer"}</h3>
 	
 	*{ vote }*
 	<menu>
 		<li>+</li>
+		<li>${_entry.rating()}</li>
 		<li>-</li>
 	</menu>
+	*{ title }*
+	<h3>
+		<div style="float: left; width: 50%;">${question ? _entry.title : "Answer"}</div>
+		<div style="float: left; width: 50%; text-align: right;"><a href="@{Users.profile(_entry.owner.id)}"> ${_entry.owner.name}</a></div>
+		<div style="clear: both;"></div>
+	</h3>
+	
+	
 	
 	*{ content }*
 	<p>${_entry.content.nl2br()}</p>

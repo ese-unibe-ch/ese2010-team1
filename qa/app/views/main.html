@@ -23,17 +23,34 @@
     				#{get 'controls' /}
     			</div>
     			<div id="sitecontrols">
-    				<span>
-    					Admin: 235
-    				</span>
-    				#{pulldown label:'Activity'}
-    					<li>Something</li>
-    					<li>Something else</li>
-    				#{/pulldown}
-    				#{pulldown label:'Account'}
-    					<li>Something</li>
-    					<li>Something else</li>
-    				#{/pulldown}
+    				
+    				#{if user}
+    					<span>
+    			  			${user.name} : ${user.reputation()}
+    					</span>
+    				
+	    				#{pulldown label:'Activity'}
+	    					<li></li>
+	    					<li>Something else</li>
+	    				#{/pulldown}
+	    				#{pulldown label:'Account'}
+	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
+	    					<li>Something else</li>
+	    				#{/pulldown}
+    				#{/if}
+    				#{else}
+    					<div class="login">
+    						<a href="login">Login</a>
+    					</div>
+    					#{pulldown label:'Register'}
+    					<li>Username: <input type="text" name="username" /></li>
+    					<li>Email: <input type="text" name="email" /></li>
+    					<li>Password: <input type="password" name="password" /></li>
+    					<li>Confirm Password: <input type="password" name="password2" /></li>
+    					<li><input type="submit" value="Register" /> </li>
+    					#{/pulldown}
+    					
+    				#{/else}
     			</div>
     		</header>
     		#{get 'nav' /}

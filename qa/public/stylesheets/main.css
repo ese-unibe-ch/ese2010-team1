@@ -99,12 +99,12 @@ nav a {
 	
 /*** Dropdown menus ***/
 
-.pulldown {
+.pulldown, .login {
 	display: inline;
 	position: relative;
 }
 
-	.pulldown a {
+	.pulldown a, .login a {
 		padding: 2px;
 		font-size: 0.8em;
 		background: url(../images/header_inv.jpg);
@@ -128,6 +128,17 @@ nav a {
 	
 		.pulldown li {
 			padding: 7px;
+		}
+		
+		.pulldown li a {
+			background: none;
+			border: 0px;
+			padding: 0;		
+		}
+		
+		.pulldown li a:hover {
+			text-decoration: underline;
+			
 		}
 	
 		.pulldown li:nth-child(2n) {
