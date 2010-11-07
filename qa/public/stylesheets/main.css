@@ -185,6 +185,8 @@ nav a {
 		padding: 10px;
 		margin-right: 35px;
 		background: rgba(255,254,255,0.59);
+		overflow: hidden;
+		margin: 0;
 	}
 
 	.entry p {

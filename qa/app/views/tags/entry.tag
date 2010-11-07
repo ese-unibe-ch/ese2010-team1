@@ -26,7 +26,6 @@
 	<h3>
 		<div style="float: left; width: 50%;">${question ? _entry.title : "Answer"}</div>
 		<div style="float: left; width: 50%; text-align: right;"><a href="@{Users.profile(_entry.owner.id)}"> ${_entry.owner.name}</a></div>
-		<div style="clear: both;"></div>
 	</h3>
 	
 	
