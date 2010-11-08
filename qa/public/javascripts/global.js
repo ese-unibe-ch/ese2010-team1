@@ -3,6 +3,9 @@ $(function() {
 	$('nav').jScrollPane();
 	$('section').jScrollPane();
 	
+	
+		
+	
 	// pulldown menus
 	$('.pulldown > a').click(function() {
 		$(this).next().toggle();
@@ -11,17 +14,25 @@ $(function() {
 	});
 	
 	// load question
-	$('nav a').click(function() {
+	$('nav a').livequery('click', function(event) {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
 			$('section').html(data);
-			$('section').jScrollPane();
+			api.reinitialise();
 		});
 		return false;
 	});
 	
 	// vote up
-	$('.entry a.up').click(function() {
+	$('a.up').livequery('click', function(event) {
 		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
+			$('section').html(data)
+		});
+		return false;
+	});
+	
+	// vote down
+	$('a.down').livequery('click', function(event) {
+		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
 			$('section').html(data)
 		});
 		return false;
@@ -29,12 +40,10 @@ $(function() {
 	
 	// load profile tabs
 	$('.profileTabs a').click(function() {
-		$('.profileContent').html(bla);
-		alert(this.hash);
+		
+		
 	
 	});
 
 	
 });
-
-var bla = 'test';

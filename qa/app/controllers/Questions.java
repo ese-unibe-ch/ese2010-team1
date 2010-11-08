@@ -63,4 +63,18 @@ public class Questions extends Controller {
 			Questions.get(((Answer) entry).question.id);
 
 	}
+
+	public static void voteDown(long id) {
+
+		Entry entry = Entry.findById(id);
+		User user = User.find("byName", Security.connected()).first();
+		entry.voteDown(user);
+		entry.save();
+
+		if (entry instanceof models.Question)
+			Questions.get(id);
+		else
+			Questions.get(((Answer) entry).question.id);
+	}
+
 }
