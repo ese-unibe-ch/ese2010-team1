@@ -18,7 +18,7 @@ $(function() {
 	$('nav a').livequery('click', function(event) {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
 			$('div#content').html(data);
-			$('section').reinitialise();
+			scrollPane.reinitialise();
 		});
 		return false;
 	});
@@ -27,6 +27,7 @@ $(function() {
 	$('a.up').livequery('click', function(event) {
 		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
 			$('#div#content').html(data)
+			scrollPane.reinitialise();
 		});
 		return false;
 	});
@@ -35,6 +36,7 @@ $(function() {
 	$('a.down').livequery('click', function(event) {
 		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
 			$('div#content').html(data)
+			scrollPane.reinitialise();
 		});
 		return false;
 	});
