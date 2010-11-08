@@ -1,7 +1,8 @@
 $(function() {
 	// display scrollbars
 	$('nav').jScrollPane();
-	$('section').jScrollPane();
+	var scrollPane = $('section');
+	scrollPane.jScrollPane();
 	
 	
 		
@@ -17,7 +18,7 @@ $(function() {
 	$('nav a').livequery('click', function(event) {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
 			$('div#content').html(data);
-			api.reinitialise();
+			$('section').reinitialise();
 		});
 		return false;
 	});
