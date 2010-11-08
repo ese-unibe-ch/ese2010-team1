@@ -16,7 +16,7 @@ $(function() {
 	// load question
 	$('nav a').livequery('click', function(event) {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
-			$('section').html(data);
+			$('div#content').html(data);
 			api.reinitialise();
 		});
 		return false;
@@ -25,7 +25,7 @@ $(function() {
 	// vote up
 	$('a.up').livequery('click', function(event) {
 		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
-			$('section').html(data)
+			$('#div#content').html(data)
 		});
 		return false;
 	});
@@ -33,7 +33,7 @@ $(function() {
 	// vote down
 	$('a.down').livequery('click', function(event) {
 		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
-			$('section').html(data)
+			$('div#content').html(data)
 		});
 		return false;
 	});
