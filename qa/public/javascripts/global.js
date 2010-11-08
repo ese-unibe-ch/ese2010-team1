@@ -14,6 +14,7 @@ $(function() {
 	$('nav a').click(function() {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
 			$('section').html(data);
+			$('section').jScrollPane();
 		});
 		return false;
 	});
@@ -21,7 +22,7 @@ $(function() {
 	// vote up
 	$('.entry a.up').click(function() {
 		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
-			$('section').html(data);
+			$('section').html(data)
 		});
 		return false;
 	});

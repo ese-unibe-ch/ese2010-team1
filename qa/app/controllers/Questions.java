@@ -55,11 +55,12 @@ public class Questions extends Controller {
 		Entry entry = Entry.findById(id);
 		User user = User.find("byName", Security.connected()).first();
 		entry.voteUp(user);
+		entry.save();
 
 		if (entry instanceof models.Question)
-			get(id);
+			Questions.get(id);
 		else
-			get(((Answer) entry).question.id);
+			Questions.get(((Answer) entry).question.id);
 
 	}
 }

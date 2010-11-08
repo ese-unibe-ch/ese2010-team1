@@ -5,7 +5,7 @@
 # Questions
 GET     /                                       Questions.list
 
-GET		/question/{id}							Question.get
+GET		/question/{id}							Questions.get
 
 
 # Users
