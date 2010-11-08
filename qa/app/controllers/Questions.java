@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Answer;
+import models.Entry;
 import models.Question;
 import models.User;
 import play.mvc.Before;
@@ -39,13 +40,26 @@ public class Questions extends Controller {
 	/**
 	 * Get a question.
 	 */
-	public static void get(int id) {
-		Question question = Question.find("byID", id).first();
+	public static void get(long id) {
+		Question question = Question.findById(id);
 		if (question == null) {
 			render();
 		} else {
 			List<Answer> answers = question.answers();
 			render(question, answers);
 		}
+	}
+
+	public static void voteUp(long id) {
+
+		Entry entry = Entry.findById(id);
+		User user = User.find("byName", Security.connected()).first();
+		entry.voteUp(user);
+
+		if (entry instanceof models.Question)
+			get(id);
+		else
+			get(((Answer) entry).question.id);
+
 	}
 }

@@ -22,3 +22,14 @@
 #{list items:questions.get(0).answers, as:'entry'}
 	#{entry entry:entry, user:user /}
 #{/list}
+
+#{if user}
+	
+	<article class="entry">
+	<h3>Answer</h3>
+	
+		<textarea name="content"></textarea>
+		<input type="submit" value="Answer" />
+	
+	</article>
+#{/if}

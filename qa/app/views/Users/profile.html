@@ -1,1 +1,51 @@
 #{extends 'main.html' /}
+
+#{set 'controls'}
+<a href="/">Home</a>
+#{/set}
+
+
+<article class="profileHeader">
+
+	<h3>${puser.name}'s Profile</h3>
+	
+	<dl>
+		<dt>Registered since:</dt>
+		<dd>${puser.timestamp.format('dd.MM.yyyy')}</dd>
+		<dt>Reputation:</dt>
+		<dd>${puser.reputation()}</dd>
+		#{list items:titles, as:'title'}
+			<dt>${title.title}:</dt>
+			<dd>
+				#{if title.hasUserEntry(puser)}
+					${title.findUserEntry(puser).entry}
+				#{/if}
+				&nbsp;
+			</dd>
+		#{/list}
+	</dl>	
+
+</article>
+
+<div class="profileTabs">
+
+	<a class="tab" href="#activities#1">Activities</a>
+	<a class="tab" href="#questions#2">Questions</a>
+	<a class="tab" href="#answers">Answers</a>
+	<a class="tab" href="#graph">Reputation Graph</a>
+	<a class="tab" href="#statistics">Statistics</a>
+
+</div>
+
+<article class="profileContent">
+
+</article>
+
+
+
+
+
+
+
+
+

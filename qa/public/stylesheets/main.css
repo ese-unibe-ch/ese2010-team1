@@ -6,6 +6,15 @@ body {
 	font-family: Calibri, Helvetica, Arial, sans-serif;
 }
 
+a {
+	text-decoration: none;
+	color: #000;	
+}
+
+a:hover {
+	text-decoration: underline;	
+}
+
 #all {
 	margin: 0 auto;
 	width: 960px;
@@ -180,6 +189,10 @@ nav a {
 .entry {
 	margin: 10px;
 }
+	.entry a.up, .entry a.down {
+		color: white;
+		text-decoration: none;		
+	}
 	
 	.entry p, .entry h3 {
 		padding: 10px;
@@ -193,6 +206,16 @@ nav a {
 		margin-top: 5px;
 	}
 	
+	.tags {
+		background: rgba(255,254,255,0.59);
+		width: 80px;
+		height: 20px;
+		margin-top: 5px;
+		margin-right: 5px;
+		float: left;
+		text-align: center;
+	}
+	
 	.entry menu {
 		float: right;
 		width: 30px;
@@ -204,3 +227,39 @@ nav a {
 		.entry menu command {
 			display: block;
 		}
+		
+/*** Profile ***/
+
+.profileHeader, .profileTabs, .profileContent {
+	
+	background: rgba(255, 254,255,0.59);
+	margin: 15px;
+	
+	}
+	
+	.profileHeader h3 {
+		margin: 5px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-bottom: 1px solid black;
+	}
+	
+	.profileHeader dl dt {
+		line-height: 20px;
+		margin-left: 5px;
+		width: 200px;
+		float: left;
+	}
+	
+	.profileHeader dl dd {
+		line-height: 20px;
+		margin-left: 250px;
+		display: block;
+	
+	}
+	.profileTabs a.tab {
+		width: 150px;
+		line-height: 20px;
+		margin-right: 5px;	
+	}
+	

@@ -35,19 +35,19 @@
 	    				#{/pulldown}
 	    				#{pulldown label:'Account'}
 	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
-	    					<li>Something else</li>
+	    					<li><a href="/logout">Logout</a></li>
 	    				#{/pulldown}
     				#{/if}
     				#{else}
     					<div class="login">
-    						<a href="login">Login</a>
+    						<a href="/login">Login</a>
     					</div>
     					#{pulldown label:'Register'}
-    					<li>Username: <input type="text" name="username" /></li>
-    					<li>Email: <input type="text" name="email" /></li>
-    					<li>Password: <input type="password" name="password" /></li>
-    					<li>Confirm Password: <input type="password" name="password2" /></li>
-    					<li><input type="submit" value="Register" /> </li>
+	    					<li>Username: <input type="text" name="username" /></li>
+	    					<li>Email: <input type="text" name="email" /></li>
+	    					<li>Password: <input type="password" name="password" /></li>
+	    					<li>Confirm Password: <input type="password" name="password2" /></li>
+	    					<li><input type="submit" value="Register" /> </li>
     					#{/pulldown}
     					
     				#{/else}
