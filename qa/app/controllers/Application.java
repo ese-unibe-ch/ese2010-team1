@@ -73,6 +73,7 @@ public class Application extends Controller {
 		} else {
 			List<Answer> answers = question.answers();
 			List<Comment> comments = question.listComments();
+			/* String tagsAsString = question.tagsToString(); */
 			render(question, answers, comments/* , tagsAsString */);
 
 		}
@@ -170,4 +171,5 @@ public class Application extends Controller {
 		renderJSON(tagList);
 
 	}
+
 }

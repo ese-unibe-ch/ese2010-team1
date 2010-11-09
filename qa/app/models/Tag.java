@@ -72,4 +72,12 @@ public class Tag extends Model implements Comparable<Tag> {
 	public void editTag(String newName) {
 		this.name = newName;
 	}
+
+	/*
+	 * public static String tagsToString(Question question) { String
+	 * tagsAsString = ""; for (Tag tag : question.tags) tagsAsString +=
+	 * tag.toString() + ", "; return tagsAsString;
+	 * 
+	 * }
+	 */
 }

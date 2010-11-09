@@ -159,19 +159,30 @@ public class Secured extends Controller {
 		Application.index();
 	}
 
-	public static void edit(long id, String content) {
+	public static void edit(long id, String content, String newTags) {
 
 		Entry entry = Entry.findById(id);
 		entry.content = content;
-		entry.save();
+		if (entry instanceof Question) {
+			((Question) entry).removeAllTags();
+			if (!newTags.equals("Tags")) {
+				String[] separatedTags = newTags.split(", ");
 
-		if (entry instanceof Answer) {
-			Application.question(((Answer) entry).question.id);
-		} else {
-			Application.question(entry.id);
+				for (String tag : separatedTags) {
+					((Question) entry).tagItWith(tag);
+				}
+
+			}
+			entry.save();
+
+			if (entry instanceof Answer) {
+				Application.question(((Answer) entry).question.id);
+			} else {
+				Application.question(entry.id);
+
+			}
 
 		}
 
 	}
-
 }
