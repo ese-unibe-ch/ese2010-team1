@@ -27,6 +27,9 @@ public class Answer extends Entry {
 		super(owner, content);
 		this.question = question;
 		owner.addAnswer(this);
+		if (owner != question.owner) {
+			question.addNotification("has been answered");
+		}
 	}
 
 	/**
