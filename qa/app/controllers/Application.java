@@ -10,6 +10,7 @@ import models.Entry;
 import models.FileEntry;
 import models.Question;
 import models.Search;
+import models.Tag;
 import models.User;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -156,5 +157,17 @@ public class Application extends Controller {
 		File file = new File(entry.getAbsolutePath());
 
 		renderBinary(file, entry.uploadFilename);
+	}
+
+	public static void getTagList() {
+
+		List<Tag> tags = Tag.findAll();
+		List<String> tagList = new ArrayList<String>();
+		for (Tag tag : tags) {
+
+			tagList.add(tag.name);
+		}
+		renderJSON(tagList);
+
 	}
 }

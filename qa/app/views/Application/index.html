@@ -22,13 +22,16 @@
 		<input type="submit" value="Post" />
 	#{/form}
 	 <script type="text/javascript">
-		var data = tagsAsString.split(" ");
-		var options, a;
-		jQuery(function(){
-		options = { serviceUrl:'public/javascripts/jquery.autocomplete.js' };
- 		a = $('#tags').autocomplete(data);
-		});
+	 
+	 	$(function () {
+			var tags = #{jsAction @Application.getTagList() /};
+			
+			$('input#tags').autocomplete({
+				source: tags(),
+				delay: 0,
+			});
 
+		});
 
 		</script>
 
