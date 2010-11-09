@@ -21,6 +21,12 @@
     	<div id="all">
     		<header>
     			<div id="pagecontrols">
+    				<menu class="tabbar">
+						<li>
+						<a href="/">Home</a>
+						</li>
+					</menu>
+    				
     				#{get 'controls' /}
     			</div>
     			<div id="sitecontrols">
@@ -44,11 +50,13 @@
     						<a href="/login">Login</a>
     					</div>
     					#{pulldown label:'Register'}
-	    					<li>Username: <input type="text" name="username" /></li>
-	    					<li>Email: <input type="text" name="email" /></li>
-	    					<li>Password: <input type="password" name="password" /></li>
-	    					<li>Confirm Password: <input type="password" name="password2" /></li>
-	    					<li><input type="submit" value="Register" /> </li>
+    						#{form @Users.addUser()}
+	    						<li>Username: <input type="text" name="username" /></li>
+	    						<li>Email: <input type="text" name="email" /></li>
+	    						<li>Password: <input type="password" name="password" /></li>
+	    						<li>Confirm Password: <input type="password" name="password2" /></li>
+	    						<li><input type="submit" value="Register" /> </li>
+	    					#{/form}
     					#{/pulldown}
     					
     				#{/else}

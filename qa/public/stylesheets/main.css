@@ -15,6 +15,11 @@ a:hover {
 	text-decoration: underline;	
 }
 
+input {
+	border: 1px solid black;	
+	
+}
+
 #all {
 	margin: 0 auto;
 	width: 960px;
@@ -118,6 +123,7 @@ nav a {
 		font-size: 0.8em;
 		background: url(../images/header_inv.jpg);
 		border-radius: 5px;
+		-moz-border-radius: 5px;
 		color: #fff;
 		text-decoration: none;
 		padding: 3px 10px;
@@ -132,6 +138,7 @@ nav a {
 		right: 0;
 		margin-top: 7px;
 		border-radius: 5px;
+		-moz-border-radius: 5px;
 		overflow: hidden;
 	}
 	
@@ -156,7 +163,9 @@ nav a {
 		
 		.pulldown li:last-child {
 			border-bottom-left-radius: 5px;
+			-moz-border-radius-bottomleft: 5px;
 			border-bottom-right-radius: 5px;
+			-moz-border-radius-bottomright: 5px;
 		}
 
 
@@ -165,6 +174,7 @@ nav a {
 .tabbar {
 	overflow: hidden;
 	border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 
 	.tabbar li {
