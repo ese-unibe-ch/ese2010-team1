@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,10 +57,19 @@ public class Tag extends Model implements Comparable<Tag> {
 	 */
 	public static List<Map> getTagCloud() {
 		List<Map> result = Tag
-				.find(
-						"select new map(t.name as tag, count(q.id) as pound) from Question q join p.tags as t group by t.name order by t.name")
+				.find("select new map(t.name as tag, count(q.id) as pound) from Question q join p.tags as t group by t.name order by t.name")
 				.fetch();
 		return result;
 	}
 
+	public static List<Tag> getAllTags() {
+		List<Tag> allTags = new ArrayList();
+		allTags.addAll(Question.<Tag> findAll());
+
+		return allTags;
+	}
+
+	public void editTag(String newName) {
+		this.name = newName;
+	}
 }

@@ -16,9 +16,21 @@
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		<input type="text" name="tags" id="tags" value="Tags" />
+		
+	
+		
 		<input type="submit" value="Post" />
 	#{/form}
+	 <script type="text/javascript">
+		var data = tagsAsString.split(" ");
+		var options, a;
+		jQuery(function(){
+		options = { serviceUrl:'public/javascripts/jquery.autocomplete.js' };
+ 		a = $('#tags').autocomplete(data);
+		});
 
+
+		</script>
 
 #{/if}
 
