@@ -199,4 +199,25 @@ public class Question extends Entry {
 				|| !this.bestAnswerFreezer.frozen();
 	}
 
+	public void removeAllTags() {
+		this.tags = new TreeSet<Tag>();
+	}
+
+	public String tagsToString() {
+		StringBuffer buffer = new StringBuffer();
+		int i = 1;
+		for (Tag tag : tags) {
+
+			buffer.append(tag.name);
+			if (i < tags.size()) {
+				buffer.append(", ");
+			}
+			i++;
+
+		}
+
+		return buffer.toString();
+
+	}
+
 }

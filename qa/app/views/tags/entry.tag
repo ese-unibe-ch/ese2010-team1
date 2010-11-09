@@ -79,13 +79,15 @@
 			#{field 'content'}
 				<textarea name="${field.name}" class="${field.errorClass}">${_entry.content }</textarea> 
 			#{/ field}
+			#{if question}
+				<input type="text" name="newTags" id="newTags" value="${_entry.tagsToString()}" />
 			<input type="submit" value="Save" /> 
-			#{if _entry instanceof models.Question}
 				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.id)}')" />
 			#{/if }	
-			#{if _entry instanceof models.Answer}
+			#{if answer}
 				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.question.id)}')" />
 			#{/if }
+
 		#{/form }
 	</div>
 
