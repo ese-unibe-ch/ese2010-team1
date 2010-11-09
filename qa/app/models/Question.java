@@ -206,6 +206,7 @@ public class Question extends Entry {
 		String tagsAsString = "";
 		for (Tag tag : tags)
 			tagsAsString += tag.toString() + ", ";
+		System.out.println(tagsAsString);
 		return tagsAsString;
 
 	}
