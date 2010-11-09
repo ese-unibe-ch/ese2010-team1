@@ -158,7 +158,8 @@ public class Question extends Entry {
 	 */
 	public static List<Question> findTaggedWith(String tag) {
 		return Question
-				.find("select distinct q from Question q join q.tags as t where t.name = ?",
+				.find(
+						"select distinct q from Question q join q.tags as t where t.name = ?",
 						tag).fetch();
 	}
 
@@ -203,10 +204,19 @@ public class Question extends Entry {
 	}
 
 	public String tagsToString() {
-		String tagsAsString = "";
-		for (Tag tag : tags)
-			tagsAsString += tag.toString() + ", ";
-		return tagsAsString;
+		StringBuffer buffer = new StringBuffer();
+		int i = 1;
+		for (Tag tag : tags) {
+
+			buffer.append(tag.name);
+			if (i < tags.size()) {
+				buffer.append(", ");
+			}
+			i++;
+
+		}
+
+		return buffer.toString();
 
 	}
 
