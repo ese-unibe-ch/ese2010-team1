@@ -59,7 +59,7 @@ public abstract class Entry extends Model {
 	 */
 	public Entry(User owner, String content) {
 		this.owner = owner;
-		this.edit(content, owner);
+		this.content = content;
 		this.timestamp = new Date();
 		this.votes = new ArrayList<Vote>();
 		this.comments = new ArrayList<Comment>();
