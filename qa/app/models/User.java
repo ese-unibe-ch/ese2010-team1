@@ -42,6 +42,10 @@ public class User extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<Notification> notifications;
+
 	/** The name. */
 	@Required
 	public String name;
@@ -80,6 +84,7 @@ public class User extends Model {
 		this.entrys = new ArrayList<Entry>();
 		this.votes = new ArrayList<Vote>();
 		this.files = new ArrayList<FileEntry>();
+		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
 	}
 
@@ -304,6 +309,30 @@ public class User extends Model {
 
 		this.save();
 		return this;
+	}
+
+	public User addNotification(Notification notification) {
+
+		this.notifications.add(notification);
+		this.save();
+		return this;
+	}
+
+	public List<Notification> getNewNotifications() {
+
+		return Notification.find(
+				"owner =? and isNew = ? order by timestamp desc", this, true)
+				.fetch();
+	}
+
+	public boolean hasNewNotifications() {
+
+		return Notification.count("owner = ? and isNew = ?", this, true) > 0;
+	}
+
+	public List<Notification> getNotifications(int numberOfNotifications) {
+
+		return Notification.find("byOwner", this).fetch(numberOfNotifications);
 	}
 
 	/**

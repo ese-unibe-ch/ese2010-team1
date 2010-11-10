@@ -31,32 +31,7 @@
 			${_entry.content.nl2br()}
 		</p>
 
-	#{if comments.size() > 0}
-		<h3>Comments</h3>
-		<ul>
-			#{list items:comments, as:'comment'}
-				<li>${comment.owner.name} -  ${comment.content.nl2br()} 
-				#{if _user== comment.owner || isAdmin}
-				<a href="@{Secured.deleteComment(comment.id)}">delete</a>
-				#{/if}
-				
-				 </li>
-			#{/list}
-		</ul>
-	#{/if}
 
-	#{if _user}
-
-	<h3>Comment</h3>
-	#{form @Secured.newComment(_entry.id)}
-		#{field 'content'}
-			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
-		#{/field}
-		<input type="submit" value="Post" />
-	#{/form}
-
-
-	#{/if}
 
 
 		#{if files.size()>0}
@@ -79,13 +54,15 @@
 			#{field 'content'}
 				<textarea name="${field.name}" class="${field.errorClass}">${_entry.content }</textarea> 
 			#{/ field}
+			#{if question}
+				<input type="text" name="newTags" id="newTags" value="${_entry.tagsToString()}" />
 			<input type="submit" value="Save" /> 
-			#{if _entry instanceof models.Question}
 				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.id)}')" />
 			#{/if }	
-			#{if _entry instanceof models.Answer}
+			#{if answer}
 				<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.question.id)}')" />
 			#{/if }
+
 		#{/form }
 	</div>
 
@@ -97,6 +74,39 @@
     		 #{/list}
 		</div>
 	#{/if}
+	
+	<div style="clear: both;"></div>
+	
+	
+		#{if comments.size() > 0}
+		<h4>Comments</h4>
+		<ul>
+			#{list items:comments, as:'comment'}
+				<li>${comment.owner.name} -  ${comment.content.nl2br()} 
+				#{if _user== comment.owner || isAdmin}
+				<a href="@{Secured.deleteComment(comment.id)}">delete</a>
+				#{/if}
+				
+				 </li>
+			#{/list}
+		</ul>
+	#{/if}
+
+	#{if _user}
+
+	<h4>Comment</h4>
+	#{form @Secured.newComment(_entry.id)}
+		#{field 'content'}
+			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		<input type="submit" value="Post" />
+	#{/form}
+
+
+	#{/if}
+	
+	
+	
 
 	*{ actions }*
 	<div class="actions">

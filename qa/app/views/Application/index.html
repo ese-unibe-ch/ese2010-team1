@@ -17,9 +17,24 @@
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		<input type="text" name="tags" id="tags" value="Tags" />
+		
+	
+		
 		<input type="submit" value="Post" />
 	#{/form}
+	 <script type="text/javascript">
+	 
+	 	$(function () {
+			var tags = #{jsAction @Application.getTagList() /};
+			
+			$('input#tags').autocomplete({
+				source: tags(),
+				delay: 0,
+			});
 
+		});
+
+		</script>
 
 #{/if}
 

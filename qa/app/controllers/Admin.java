@@ -53,7 +53,7 @@ public class Admin extends Controller {
 
 		user.save();
 
-		Application.index();
+		Admin.showUserlist();
 
 	}
 

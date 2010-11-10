@@ -20,6 +20,10 @@ a {
 	a:hover {
 		color: 				#c71c1c;
 	}
+	
+img {
+	border: 0px;
+	}
 
 header {
 	margin: 			0;
@@ -290,6 +294,7 @@ UL.tabNavigation {
 		
 		
 div.pulldown {
+	z-index: 99;
 	position: absolute;
 	display: none;
 	width: 200px;
