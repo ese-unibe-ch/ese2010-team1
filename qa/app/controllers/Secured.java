@@ -1,12 +1,15 @@
 package controllers;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.Answer;
 import models.Comment;
 import models.Entry;
 import models.FileEntry;
 import models.Question;
+import models.RelatedQuestions;
 import models.User;
 import models.Vote;
 import play.data.validation.Required;
@@ -171,6 +174,15 @@ public class Secured extends Controller {
 			Application.question(entry.id);
 
 		}
+
+	}
+
+	public static void relatedQuestions(String title) {
+		List<Question> relatedQuestions = new ArrayList<Question>();
+		RelatedQuestions rq = new RelatedQuestions();
+		relatedQuestions = rq.getRelatedQuestions(title);
+
+		render(relatedQuestions);
 
 	}
 }
