@@ -20,6 +20,10 @@ a {
 	a:hover {
 		color: 				#c71c1c;
 	}
+	
+img {
+	border: 0px;
+	}
 
 header {
 	margin: 			0;
