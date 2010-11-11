@@ -41,19 +41,37 @@ public class XMLreader extends DefaultHandler {
 		saxParser.parse(input, this);
 	}
 
+	/**
+	 * This method is called when a new element begins.
+	 */
 	public void startElement(String uri, String localName, String qName,
 			Attributes atts) {
 		checkStartElement(qName);
 	}
 
+	/**
+	 * This method is called when an element is closed.
+	 */
 	public void endElement(String uri, String localName, String qName) {
 		checkEndElement(qName);
 	}
 
+	/**
+	 * This method is called when the parser encounters plain text (not XML
+	 * elements). This method stores the text in the StringBuilder
+	 */
 	public void characters(char[] ch, int start, int length) {
 		builder.append(ch, start, length);
 	}
 
+	// Diese Methode checkt um was für ein Elemnt es sich handelt. Das level
+	// beschreibt die Ebene im File. Also
+	// auf Höhe <QA> ist das level noch 0 und je tiefer man geht um so höher
+	// wird es. Es checkt also immer nur
+	// das was auf dem level überhaupt möglich ist. case 0 wird das current
+	// Object zu User Question oder Answer.
+	// case 1 wird ein neuer User gemacht. und case 2 erneuert den
+	// Stringbuilder.
 	public void checkStartElement(String qName) {
 
 		switch (level) {
@@ -103,6 +121,10 @@ public class XMLreader extends DefaultHandler {
 			return;
 		}
 	}
+
+	// wenn das element geschlossen wird und mann auf level 3 ist, werden die
+	// Attribute zugeteilt. auf level 2 wird der
+	// User gesaved.(Fehler) case 1 wird nichts gemacht.
 
 	public void checkEndElement(String qName) {
 
