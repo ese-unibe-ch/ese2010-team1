@@ -38,8 +38,8 @@ public class Secured extends Controller {
 	public static void newAnswer(long id, @Required String content, File file) {
 		if (!validation.hasErrors() && Question.findById(id) != null) {
 			User user = User.find("byName", Security.connected()).first();
-			Answer answer = Question.<Question> findById(id).answer(user,
-					content);
+			Question question = Question.findById(id);
+			Answer answer = question.answer(user, content);
 
 			if (file != null && file.exists()) {
 

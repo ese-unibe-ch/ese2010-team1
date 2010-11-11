@@ -38,6 +38,19 @@
     				<span>
     					#{if user}
 							Hi <a href="@{UserFuncs.showProfile(user.id)}">${user.name}!</a>
+							
+							#{if user.hasNewNotifications()}
+							
+							
+							<a href="#" class="pulldown">New Notifications</a>
+							
+							<div class="pulldown">
+							#{list items:user.getNewNotifications(), as: 'notification'}
+							<a href="#">${notification.activity}</a>
+							#{/list}
+							</div>
+							#{/if}
+							
 							#{secure.check 'isAdmin'}
 							<a href="@{Admin.adminPanel()}">Admin Panel</a>
 							#{/secure.check}
