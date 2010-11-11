@@ -24,7 +24,7 @@ public class Security extends Secure.Security {
 	 * Switch to the home screen after logout.
 	 */
 	static void onDisconnected() {
-		Application.index();
+		Questions.list();
 	}
 
 	static boolean check(String profile) {

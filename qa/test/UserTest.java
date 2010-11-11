@@ -1,6 +1,5 @@
 import java.util.List;
 
-import models.Answer;
 import models.Question;
 import models.User;
 
@@ -66,8 +65,8 @@ public class UserTest extends UnitTest {
 	@Test
 	public void getNumberOfQuestions() {
 		User user = new User("Jack", "test@mail.com", "password").save();
-		Question question = user.addQuestion("A title", "My first question");
-		Question question2 = user.addQuestion("A title2", "My first question2");
+		user.addQuestion("A title", "My first question");
+		user.addQuestion("A title2", "My first question2");
 		assertEquals(user.getNumberOfQuestions(), 2);
 		assertFalse(user.getNumberOfQuestions() == 3);
 	}
@@ -85,7 +84,7 @@ public class UserTest extends UnitTest {
 	public void getNumberOfAnswers() {
 		User user = new User("Jack", "test@mail.com", "password").save();
 		Question question = user.addQuestion("A title", "My first question");
-		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "an answer");
 		assertEquals(1, user.getNumberOfAnswers());
 	}
 }
