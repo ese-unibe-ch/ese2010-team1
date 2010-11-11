@@ -1,30 +1,21 @@
 <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
-<script type="text/javascript">
 
-function showRelated(value){
-	if(value!= ""){
-		$("#ajaxresults").show();
+
+<script type="text/javascript">
+	var relatedQuestions;
+	function related(value){
+		relatedQuestions = #{jsAction @Application.relatedQuestions(value) /};
+	}
+
+	$(function()  {
 		
-	$.post("{{=URL(r=request,f='Secured.relatedQuestions')}}", {title:value},function(result) {
-		$("#ajaxresults").html(result);
+	$("input#title").autocomplete({
+		source: relatedQuestions,
+		delay: 0,
 	});
 
-	}
-		
-	else{
-		$("#ajaxresults").hide();
-	}
-}
+});
+
 </script>
 
-<div id = "ajaxresults">test 
-#{list items:relatedQuestion, as:'question'}
-	<h1>${question.title}</h1>
-#{/list}
-</div>
-
-<p>
-  <label for="relatedQuestion">Test:</label>
-  <br />
-  <input id="relatedQuestion" autocomplete="off"  type="text" onkeyup="showRelated(this.value);" />
-</p>
+<input type="text" name="title" id="title" value="Title" onkeyup="related(this.value);" />
