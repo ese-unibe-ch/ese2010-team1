@@ -88,6 +88,10 @@ public class User extends Model {
 		this.timestamp = new Date();
 	}
 
+	public User() {
+
+	}
+
 	// SM cache reputation for faster access
 	/**
 	 * Reputation.
@@ -392,6 +396,26 @@ public class User extends Model {
 		this.save();
 
 		return super.delete();
+	}
+
+	public void name(String name) {
+		this.name = name;
+
+	}
+
+	public void isAdmin(boolean b) {
+		this.isAdmin = b;
+
+	}
+
+	public void email(String email) {
+		this.email = email;
+
+	}
+
+	public void password(String pw) {
+		this.password = pw;
+
 	}
 
 }

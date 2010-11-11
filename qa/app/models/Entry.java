@@ -50,6 +50,10 @@ public abstract class Entry extends Model {
 	/** The timestamp. */
 	public Date timestamp;
 
+	public Entry() {
+
+	}
+
 	/**
 	 * Create an <code>Entry</code>.
 	 * 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Knowledge Base - #{get 'title' /}</title>
+        <meta charset="utf-8">  
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
+        
+        #{stylesheet 'reset.css' /}
+        #{stylesheet 'jquery.jscrollpane.css' /}
+        #{stylesheet 'main.css' /}
+        
+        #{script 'jquery-1.4.2.min.js' /}
+        #{script 'plugins/flot/jquery.flot.js' /}   
+        #{script 'plugins/scrollbar/jquery.mousewheel.js' /}   
+        #{script 'plugins/scrollbar/jquery.jscrollpane.min.js' /}  
+        #{script 'plugins/livequery/jquery.livequery.min.js'/}
+        <script src="@{JavaScript.controller}"></script> 
+        #{script 'global.js' /}   
+    </head>
+    <body>
+    	<div id="all">
+    		<header>
+    			<div id="pagecontrols">
+    				<menu class="tabbar">
+						<li>
+						<a href="/">Home</a>
+						</li>
+					</menu>
+    				
+    				#{get 'controls' /}
+    			</div>
+    			<div id="sitecontrols">
+    				
+    				#{if user}
+    					<span>
+    			  			${user.name} : ${user.reputation()}
+    					</span>
+    				
+	    				#{pulldown label:'Activity'}
+	    					<li></li>
+	    					<li>Something else</li>
+	    				#{/pulldown}
+	    				#{pulldown label:'Account'}
+	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
+	    					<li><a href="/logout">Logout</a></li>
+	    				#{/pulldown}
+    				#{/if}
+    				#{else}
+    					<div class="login">
+    						<a href="/login">Login</a>
+    					</div>
+    					#{pulldown label:'Register'}
+    						#{form @Users.addUser()}
+	    						<li>Username: <input type="text" name="username" /></li>
+	    						<li>Email: <input type="text" name="email" /></li>
+	    						<li>Password: <input type="password" name="password" /></li>
+	    						<li>Confirm Password: <input type="password" name="password2" /></li>
+	    						<li><input type="submit" value="Register" /> </li>
+	    					#{/form}
+    					#{/pulldown}
+    					
+    				#{/else}
+    			</div>
+    		</header>
+    		#{get 'nav' /}
+    		<section>
+    			<div id="content">
+    			#{doLayout /}
+    			</div>
+        	</section>
+        	
+        </div>
+    </body>
+</html>
