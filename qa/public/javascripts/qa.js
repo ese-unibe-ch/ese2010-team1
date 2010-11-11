@@ -17,6 +17,13 @@ $(function () {
 	}).filter(':first').click();
 	
 	$("a.pulldown").click(function() {$(this).next().toggle();return false});
+	
+	$(".version a").click(function() {
+		var p = $(this).parents("li").find("p");
+		$.get("/version/" + this.hash.substr(1), function(data) {
+			$(p).html(data);
+		});
+	});
 });
 
 function loadGraph() {
