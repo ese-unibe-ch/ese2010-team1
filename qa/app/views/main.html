@@ -9,6 +9,10 @@
         #{stylesheet 'jquery.jscrollpane.css' /}
         #{stylesheet 'main.css' /}
         
+        <!--[if lt IE 9]>
+			#{script 'html5.js' /}
+		<![endif]-->
+		
         #{script 'jquery-1.4.2.min.js' /}
         #{script 'plugins/flot/jquery.flot.js' /}   
         #{script 'plugins/scrollbar/jquery.mousewheel.js' /}   
@@ -64,8 +68,8 @@
     		</header>
     		#{get 'nav' /}
     		<section>
-    			<div id="content">
-    			#{doLayout /}
+    			<div id="section">
+    				#{doLayout /}
     			</div>
         	</section>
         	

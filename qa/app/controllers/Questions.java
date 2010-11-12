@@ -51,30 +51,29 @@ public class Questions extends Controller {
 	}
 
 	public static void voteUp(long id) {
-
-		Entry entry = Entry.findById(id);
+		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
-		entry.voteUp(user);
-		entry.save();
-
-		if (entry instanceof models.Question)
-			Questions.get(id);
-		else
-			Questions.get(((Answer) entry).question.id);
-
+		if (entry != null && user != null) {
+			entry.voteUp(user);
+			entry.save();
+			renderText("{\"success\": 1, \"rating\": " + entry.rating()
+					+ ", \"reputation\": " + entry.owner.reputation() + "}");
+		} else {
+			renderText("{\"success\": 0}");
+		}
 	}
 
 	public static void voteDown(long id) {
-
-		Entry entry = Entry.findById(id);
+		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
-		entry.voteDown(user);
-		entry.save();
-
-		if (entry instanceof models.Question)
-			Questions.get(id);
-		else
-			Questions.get(((Answer) entry).question.id);
+		if (entry != null && user != null) {
+			entry.voteDown(user);
+			entry.save();
+			renderText("{\"success\": 1, \"rating\": " + entry.rating()
+					+ ", \"reputation\": " + entry.owner.reputation() + "}");
+		} else {
+			renderText("{\"success\": 0}");
+		}
 	}
 
 }

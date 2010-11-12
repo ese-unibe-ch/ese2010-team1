@@ -19,16 +19,17 @@
 	*{ vote }*
 	<menu>
 		<li><a class="up" href="#${_entry.id}">+</a></li>
-		<li>${_entry.rating()}</li>
+		<li class="rating">${_entry.rating()}</li>
 		<li><a class="down" href="#${_entry.id}">-</a></li>
 	</menu>
+	
 	*{ title }*
 	<h3>
 		${question ? _entry.title : "Answer"}
-		<a style="position: absolute; text-align: right; right: 50px;" href="@{Users.profile(_entry.owner.id)}"> ${_entry.owner.name} (${_entry.owner.reputation()})</a>
+		<a href="@{Users.profile(_entry.owner.id)}">
+			${_entry.owner.name} (<span class="reputation">${_entry.owner.reputation()}</span>)
+		</a>
 	</h3>
-	
-	
 	
 	*{ content }*
 	<p>${_entry.content.nl2br()}</p>
@@ -38,7 +39,6 @@
 		<div class="tags">${tag.name}</div>
 		
 		#{/list}
-		<div style="clear:both;"></div>
 	#{/if}
 	
 	</article>

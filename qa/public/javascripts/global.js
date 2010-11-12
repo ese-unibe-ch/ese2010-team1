@@ -3,10 +3,7 @@ $(function() {
 	$('nav').jScrollPane();
 	var scrollPane = $('section');
 	scrollPane.jScrollPane();
-	
-	
-		
-	
+
 	// pulldown menus
 	$('.pulldown > a').click(function() {
 		$(this).next().toggle();
@@ -17,36 +14,33 @@ $(function() {
 	// load question
 	$('nav a').livequery('click', function(event) {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
-			$('div#content').html(data);
-			scrollPane.reinitialise();
+			$('#section').html(data);
 		});
 		return false;
 	});
 	
 	// vote up
 	$('a.up').livequery('click', function(event) {
-		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
-			$('#div#content').html(data)
-			scrollPane.reinitialise();
+		var entry = $(this).parents("article");
+		$.getJSON(voteUp({id: this.hash.substr(1)}), function(data) {
+			if(data['success']) {
+				entry.find(".rating").html(data['rating']);
+				entry.find(".reputation").html(data['reputation']);
+			}
 		});
 		return false;
 	});
 	
 	// vote down
 	$('a.down').livequery('click', function(event) {
-		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
-			$('div#content').html(data)
-			scrollPane.reinitialise();
+		var entry = $(this).parents("article");
+		$.getJSON(voteDown({id: this.hash.substr(1)}), function(data) {
+			if(data['success']) {
+				entry.find(".rating").html(data['rating']);
+				entry.find(".reputation").html(data['reputation']);
+			}
 		});
 		return false;
 	});
-	
-	// load profile tabs
-	$('.profileTabs a').click(function() {
-		
-		
-	
-	});
 
-	
 });
