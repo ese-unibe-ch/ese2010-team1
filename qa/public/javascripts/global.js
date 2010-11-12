@@ -22,11 +22,8 @@ $(function() {
 	// vote up
 	$('a.up').livequery('click', function(event) {
 		var entry = $(this).parents("article");
-		$.getJSON(voteUp({id: this.hash.substr(1)}), function(data) {
-			if(data['success']) {
-				entry.find(".rating").html(data['rating']);
-				entry.find(".reputation").html(data['reputation']);
-			}
+		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
+			entry.html(data);
 		});
 		return false;
 	});
@@ -34,11 +31,17 @@ $(function() {
 	// vote down
 	$('a.down').livequery('click', function(event) {
 		var entry = $(this).parents("article");
-		$.getJSON(voteDown({id: this.hash.substr(1)}), function(data) {
-			if(data['success']) {
-				entry.find(".rating").html(data['rating']);
-				entry.find(".reputation").html(data['reputation']);
-			}
+		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
+			entry.html(data);
+		});
+		return false;
+	});
+	
+	// remove vote
+	$('a.delete').livequery('click', function(event) {
+		var entry = $(this).parents("article");
+		$.get(removeVote({id: this.hash.substr(1)}), function(data) {
+			entry.html(data);
 		});
 		return false;
 	});

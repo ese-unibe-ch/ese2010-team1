@@ -6,6 +6,7 @@ import models.Answer;
 import models.Entry;
 import models.Question;
 import models.User;
+import models.Vote;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -56,11 +57,8 @@ public class Questions extends Controller {
 		if (entry != null && user != null) {
 			entry.voteUp(user);
 			entry.save();
-			renderText("{\"success\": 1, \"rating\": " + entry.rating()
-					+ ", \"reputation\": " + entry.owner.reputation() + "}");
-		} else {
-			renderText("{\"success\": 0}");
 		}
+		render("Questions/entry.html", entry);
 	}
 
 	public static void voteDown(long id) {
@@ -69,11 +67,18 @@ public class Questions extends Controller {
 		if (entry != null && user != null) {
 			entry.voteDown(user);
 			entry.save();
-			renderText("{\"success\": 1, \"rating\": " + entry.rating()
-					+ ", \"reputation\": " + entry.owner.reputation() + "}");
-		} else {
-			renderText("{\"success\": 0}");
 		}
+		render("Questions/entry.html", entry);
+	}
+
+	public static void removeVote(long id) {
+		User user = User.find("byName", Security.connected()).first();
+		Entry entry = Entry.findById(id);
+		if (entry != null && user != null) {
+			entry.removeVote((Vote) Vote.find("byOwnerAndEntry", user, entry)
+					.first());
+		}
+		render("Questions/entry.html", entry);
 	}
 
 }

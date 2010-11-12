@@ -13,14 +13,23 @@
 *{ full representation }*
 
 #{else}
-	<article class="entry ${question.yesno('question','answer')}">
-	
+	#{if _display != "innerHTML"}
+		<article class="entry ${question.yesno('question','answer')}">
+	#{/if}
 	
 	*{ vote }*
+	%{ 	
+		up = _entry.alreadyVoted(_user, true) ? "delete" : "up";
+		down =  _entry.alreadyVoted(_user, false) ? "delete" : "down";
+		if(!_user || !_entry.canVote(_user)) {
+			up += " disabled";
+			down += " disabled";
+		}
+	}%
 	<menu>
-		<li><a class="up" href="#${_entry.id}">+</a></li>
+		<li><a href="#${_entry.id}" class="${up}"></a></li>
 		<li class="rating">${_entry.rating()}</li>
-		<li><a class="down" href="#${_entry.id}">-</a></li>
+		<li><a href="#${_entry.id}" class="${down}" href="#${_entry.id}"></a></li>
 	</menu>
 	
 	*{ title }*
@@ -41,7 +50,9 @@
 		#{/list}
 	#{/if}
 	
-	</article>
+	#{if _display != "innerHTML"}
+		</article>
+	#{/if}
 #{/else}
 
 

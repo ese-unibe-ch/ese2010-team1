@@ -209,10 +209,40 @@ nav a {
 	margin: 10px;
 	overflow: hidden;
 }
-	.entry a.up, .entry a.down {
-		color: white;
-		text-decoration: none;		
+	.entry a.up, .entry a.down, .entry a.delete {
+		width: 10px;
+		height: 10px;	
+		display: block;	
+		margin: 3px auto 2px;
 	}
+	
+		.entry a.disabled {
+			cursor:	default;
+		}
+	
+		.entry a.up {
+			background: url(../images/arrow_up.png) no-repeat center;
+		}
+		
+			.entry a.up.disabled {
+				background: url(../images/arrow_up_disabled.png) no-repeat center;
+			}
+		
+		.entry a.down {
+			background: url(../images/arrow_down.png) no-repeat center;
+		}
+		
+			.entry a.down.disabled {
+				background: url(../images/arrow_down_disabled.png) no-repeat center;
+			}
+			
+		.entry a.delete {
+			background: url(../images/delete.png) no-repeat center;
+		}
+		
+			.entry a.delete.disabled {
+				background: url(../images/delete_disabled.png) no-repeat center;
+			}
 	
 	.entry p, .entry h3 {
 		padding: 10px;
