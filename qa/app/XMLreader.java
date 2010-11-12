@@ -19,15 +19,15 @@ public class XMLreader extends DefaultHandler {
 
 	private StringBuilder builder;
 
-	private static int level = 0;
+	private static int level = -1;
 
 	private static User currentUser;
 	private static Question currentQuestion;
 	private static Answer currentAnswer;
-	private static Object currentObject;
 
 	public XMLreader(String file) throws SAXException, IOException,
 			ParserConfigurationException {
+
 		// Create a JAXP "parser factory" for creating SAX parsers
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 
@@ -46,7 +46,9 @@ public class XMLreader extends DefaultHandler {
 	 */
 	public void startElement(String uri, String localName, String qName,
 			Attributes atts) {
-		checkStartElement(qName);
+		builder = new StringBuilder();
+		checkStartElement(qName, atts);
+		level++;
 	}
 
 	/**
@@ -54,6 +56,7 @@ public class XMLreader extends DefaultHandler {
 	 */
 	public void endElement(String uri, String localName, String qName) {
 		checkEndElement(qName);
+		level--;
 	}
 
 	/**
@@ -72,101 +75,136 @@ public class XMLreader extends DefaultHandler {
 	// Object zu User Question oder Answer.
 	// case 1 wird ein neuer User gemacht. und case 2 erneuert den
 	// Stringbuilder.
-	public void checkStartElement(String qName) {
-
+	public void checkStartElement(String qName, Attributes atts) {
 		switch (level) {
 		case 0:
 			if (qName == "users") {
-				currentObject = currentUser;
-				level = 1;
+				currentUser = new User();
 				return;
 			}
 
 			if (qName == "questions") {
-				currentObject = currentQuestion;
-				level = 1;
+				currentQuestion = new Question();
+				currentAnswer = new Answer();
 				return;
 			}
 
 			if (qName == "answers") {
-				currentObject = currentAnswer;
-				level = 1;
+				currentAnswer = new Answer();
 				return;
 			}
 		case 1:
 
 			if (qName == "user") {
-				currentUser = new User();
-				level = 2;
+				currentUser.id = Long.valueOf(atts.getValue(0)).longValue();
 				return;
 			}
 
 			if (qName == "question") {
-				Question question = new Question();
-				currentQuestion = question;
-				level = 2;
+				currentQuestion.id = Long.valueOf(atts.getValue(0)).longValue();
 				return;
 			}
 
 			if (qName == "answer") {
-				Answer answer = new Answer();
-				currentAnswer = answer;
-				level = 2;
+				currentAnswer.id = Long.valueOf(atts.getValue(0)).longValue();
 				return;
 			}
-
-		case 2:
-			builder = new StringBuilder();
-			level = 3;
-			return;
 		}
 	}
 
 	// wenn das element geschlossen wird und mann auf level 3 ist, werden die
-	// Attribute zugeteilt. auf level 2 wird der
-	// User gesaved.(Fehler) case 1 wird nichts gemacht.
+	// Attribute zugeteilt. auf level 2 werden die Einträge gesaved.
 
 	public void checkEndElement(String qName) {
 
 		switch (level) {
-		case 1:
-			level = 0;
 		case 2:
 			if (qName == "user") {
-				currentUser.save();
-				level = 1;
+
+				User user = new User(currentUser.name, currentUser.email,
+						currentUser.password).save();
+				user.fakeId = currentUser.id; // added a fakeId to escape form
+												// db error
+				user.isAdmin = currentUser.isAdmin;
+				user.save();
 				return;
 			}
-			level = 1;
+
+			if (qName == "question") {
+				Question q = currentQuestion.owner.addQuestion(
+						currentQuestion.title, currentQuestion.content);
+				q.fakeId = currentQuestion.id;
+				q.save();
+				return;
+			}
+
+			if (qName == "answer") {
+				Answer a = new Answer(currentAnswer.owner,
+						currentAnswer.question, currentAnswer.content);
+				a.save();
+				return;
+			}
 
 		case 3:
-			if (qName == "diplayname" && currentObject instanceof User) {
-				currentUser.name(builder.toString());
+			if (qName == "displayname") {
+				currentUser.name = builder.toString();
 				return;
 			}
 
-			if (qName == "ismoderator" && currentObject instanceof User) {
+			if (qName == "ismoderator") {
 				if (builder.toString() == "true")
-					currentUser.isAdmin(true);
+					currentUser.isAdmin = true;
 				else
-					currentUser.isAdmin(false);
+					currentUser.isAdmin = false;
 				return;
 			}
-			if (qName == "email" && currentObject instanceof User) {
-				currentUser.email(builder.toString());
-				return;
-			}
-
-			if (qName == "password" && currentObject instanceof User) {
-				currentUser.password(builder.toString());
+			if (qName == "email") {
+				currentUser.email = builder.toString();
 				return;
 			}
 
-			if (qName == "diplayname" && currentObject instanceof User) {
-				currentUser.name(builder.toString());
+			if (qName == "password") {
+				currentUser.password = builder.toString();
 				return;
 			}
-			level = 2;
+
+			if (qName == "diplayname") {
+				currentUser.name = builder.toString();
+				return;
+			}
+
+			if (qName == "ownerid") {
+				User owner = User.find("byFakeId",
+						Long.valueOf(builder.toString()).longValue()).first();
+				if (owner != null) {
+					currentAnswer.owner = owner;
+					currentQuestion.owner = owner;
+				} else {
+					currentAnswer.owner = User.find("byName", "Default")
+							.first();
+					;
+					currentQuestion.owner = User.find("byName", "Default")
+							.first();
+				}
+			}
+
+			if (qName == "title") {
+				currentQuestion.title = builder.toString();
+			}
+			if (qName == "questionid") {
+				Question question = Question.find("byFakeId",
+						Long.valueOf(builder.toString()).longValue()).first();
+
+				currentAnswer.question = question;
+
+			}
+
+			if (qName == "body") {
+				currentQuestion.content = "default";
+				// currentQuestion.content = builder.toString(); //not working
+				currentAnswer.content = "default";
+				// currentAnswer.content = builder.toString(); //not working
+			}
 		}
 	}
 

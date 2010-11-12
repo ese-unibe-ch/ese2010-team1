@@ -67,6 +67,8 @@ public class User extends Model {
 	/** The is admin. */
 	public boolean isAdmin = false;
 
+	public long fakeId;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
@@ -396,26 +398,6 @@ public class User extends Model {
 		this.save();
 
 		return super.delete();
-	}
-
-	public void name(String name) {
-		this.name = name;
-
-	}
-
-	public void isAdmin(boolean b) {
-		this.isAdmin = b;
-
-	}
-
-	public void email(String email) {
-		this.email = email;
-
-	}
-
-	public void password(String pw) {
-		this.password = pw;
-
 	}
 
 }

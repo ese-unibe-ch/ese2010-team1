@@ -50,6 +50,8 @@ public abstract class Entry extends Model {
 	/** The timestamp. */
 	public Date timestamp;
 
+	public long fakeId;
+
 	public Entry() {
 
 	}
