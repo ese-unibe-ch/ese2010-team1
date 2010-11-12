@@ -22,8 +22,9 @@ import play.db.jpa.Model;
 public abstract class Entry extends Model {
 
 	/** The content. */
-	@Lob
-	public String content;
+	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE,
+			CascadeType.REFRESH })
+	public List<ContentState> states;
 
 	/** The owner. */
 	@ManyToOne
@@ -43,8 +44,15 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
+	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
+			CascadeType.REMOVE, CascadeType.REFRESH })
+	public List<Notification> notifications;
+
 	/** The timestamp. */
 	public Date timestamp;
+
+	@Lob
+	public String content;
 
 	/**
 	 * Create an <code>Entry</code>.
@@ -61,6 +69,7 @@ public abstract class Entry extends Model {
 		this.votes = new ArrayList<Vote>();
 		this.comments = new ArrayList<Comment>();
 		this.files = new ArrayList<FileEntry>();
+		this.notifications = new ArrayList<Notification>();
 
 	}
 
@@ -100,6 +109,17 @@ public abstract class Entry extends Model {
 	 */
 	public long rating() {
 		return this.upVotes() - this.downVotes();
+	}
+
+	public void edit(String content, User user) {
+		if (this.states.size() == 0) {
+			ContentState state = new ContentState(this.content, this.owner)
+					.save();
+			this.states.add(state);
+		}
+		ContentState state = new ContentState(content, user).save();
+		this.states.add(state);
+		this.content = content;
 	}
 
 	/**
@@ -204,7 +224,21 @@ public abstract class Entry extends Model {
 		Comment comment = new Comment(owner, this, content).save();
 		this.comments.add(comment);
 		this.save();
+
+		if (owner != this.owner) {
+			this.addNotification("has been commented");
+		}
 		return comment;
+	}
+
+	public void addNotification(String activity) {
+
+		Notification notification = new Notification(this.owner, this, activity)
+				.save();
+		this.owner.addNotification(notification);
+		this.notifications.add(notification);
+		this.save();
+
 	}
 
 	public FileEntry addFile(File file, User user) {
@@ -220,5 +254,22 @@ public abstract class Entry extends Model {
 	public List<FileEntry> getFiles() {
 
 		return FileEntry.find("byEntry", this).fetch();
+	}
+
+	@Entity
+	public class ContentState extends Model {
+		@ManyToOne
+		public User user;
+
+		public Date timestamp;
+
+		@Lob
+		public String content;
+
+		public ContentState(String content, User user) {
+			this.timestamp = new Date();
+			this.content = content;
+			this.user = user;
+		}
 	}
 }

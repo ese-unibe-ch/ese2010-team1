@@ -8,7 +8,12 @@
 
 #{list items: users, as: 'luser'}
 
-<dt>${luser.name}</dt> <dd>${luser.email} #{if luser!=user}<a href="@{Admin.deleteUser(luser.id)}">delete</a>#{/if}</dd>
+<dt>${luser.name}</dt> 
+<dd>${luser.email}
+#{if luser!=user && !luser.name.equals("Anonym")}<a style="position: absolute; left: 520px;" href="@{Admin.deleteUser(luser.id)}">Delete</a>#{/if}
+#{if !luser.isAdmin && !luser.name.equals("Anonym")}<a style="position: absolute; left: 590px;" href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>#{/if}
+
+</dd>
 
 #{/list}
 

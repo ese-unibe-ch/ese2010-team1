@@ -8,8 +8,10 @@ GET     /                                       Questions.list
 GET		/question/{id}							Questions.get
 
 
-# Users
-GET		/user/{id}								Users.profile
+GET 	/version/{id}							Application.version
+
+GET		/question/{id}/up						Secured.voteQuestionUp
+GET		/question/{id}/down						Secured.voteQuestionDown
 
 
 # Map static resources from the /app/public folder to the /public path

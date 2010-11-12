@@ -38,8 +38,8 @@ public class Secured extends Controller {
 	public static void newAnswer(long id, @Required String content, File file) {
 		if (!validation.hasErrors() && Question.findById(id) != null) {
 			User user = User.find("byName", Security.connected()).first();
-			Answer answer = Question.<Question> findById(id).answer(user,
-					content);
+			Question question = Question.findById(id);
+			Answer answer = question.answer(user, content);
 
 			if (file != null && file.exists()) {
 
@@ -159,16 +159,29 @@ public class Secured extends Controller {
 		Application.index();
 	}
 
-	public static void edit(long id, String content) {
+	public static void edit(long id, String content, String newTags) {
 
 		Entry entry = Entry.findById(id);
-		entry.content = content;
-		entry.save();
+		entry.edit(content, (User) User.find("byName", Security.connected())
+				.first());
+		if (entry instanceof Question) {
+			((Question) entry).removeAllTags();
+			if (!newTags.equals("Tags")) {
+				String[] separatedTags = newTags.split(", ");
 
-		if (entry instanceof Answer) {
-			Application.question(((Answer) entry).question.id);
-		} else {
-			Application.question(entry.id);
+				for (String tag : separatedTags) {
+					((Question) entry).tagItWith(tag);
+				}
+
+			}
+			entry.save();
+
+			if (entry instanceof Answer) {
+				Application.question(((Answer) entry).question.id);
+			} else {
+				Application.question(entry.id);
+
+			}
 
 		}
 

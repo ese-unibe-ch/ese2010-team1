@@ -1,6 +1,6 @@
 <div id= "content${_entry.id }">
 	<p>
-		${_entry.content.nl2br() }
+		${_entry.content().nl2br() }
 	</p>
 </div>
 
@@ -9,6 +9,11 @@
 		#{field 'content'}
 			<textarea name="${field.name}" class="${field.errorClass}">${_entry.content }</textarea> 
 		#{/ field}
+		#{if _entry instanceof models.Question}
+		
+		<input type="text" name="editTags" id="editTags" value="Tags" /> 
+		
+		#{/if }	
 		<input type="submit" value="Save" /> 
 		#{if _entry instanceof models.Question}
 			<input type="button" value="Cancel" onclick="goto('@@{Application.question(_entry.id)}')" />

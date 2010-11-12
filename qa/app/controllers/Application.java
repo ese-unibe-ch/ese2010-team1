@@ -10,7 +10,9 @@ import models.Entry;
 import models.FileEntry;
 import models.Question;
 import models.Search;
+import models.Tag;
 import models.User;
+import models.Entry.ContentState;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -62,12 +64,18 @@ public class Application extends Controller {
 
 	public static void question(long id) {
 		Question question = Question.find("byID", id).first();
+		/*
+		 * List<Tag> allTags = new ArrayList(); allTags = Tag.getAllTags();
+		 * String tagsAsString = ""; for (Tag tag : allTags) tagsAsString +=
+		 * tag.toString() + " ";
+		 */
 		if (question == null) {
 			render();
 		} else {
 			List<Answer> answers = question.answers();
 			List<Comment> comments = question.listComments();
-			render(question, answers, comments);
+			/* String tagsAsString = question.tagsToString(); */
+			render(question, answers, comments/* , tagsAsString */);
 
 		}
 	}
@@ -151,5 +159,25 @@ public class Application extends Controller {
 		File file = new File(entry.getAbsolutePath());
 
 		renderBinary(file, entry.uploadFilename);
+	}
+
+	public static void getTagList() {
+
+		List<Tag> tags = Tag.findAll();
+		List<String> tagList = new ArrayList<String>();
+		for (Tag tag : tags) {
+
+			tagList.add(tag.name);
+		}
+		renderJSON(tagList);
+
+	}
+
+
+	public static void version(long id) {
+		ContentState state = ContentState.findById(id);
+		if (state != null) {
+			renderText(state.content);
+		}
 	}
 }
