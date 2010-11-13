@@ -3,15 +3,9 @@
 # ~~~~
 
 # Questions
-GET     /                                       Questions.list
+GET     /                                       Questions.home
 
-GET		/question/{id}							Questions.get
-
-
-GET 	/version/{id}							Application.version
-
-GET		/question/{id}/up						Secured.voteQuestionUp
-GET		/question/{id}/down						Secured.voteQuestionDown
+GET		/question/{id}							Questions.question
 
 
 # Map static resources from the /app/public folder to the /public path

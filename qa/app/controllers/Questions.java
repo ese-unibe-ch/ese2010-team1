@@ -31,7 +31,7 @@ public class Questions extends Controller {
 	/**
 	 * List and show questions.
 	 */
-	public static void list() {
+	public static void home() {
 		List<Question> questions = Question.questions();
 		render(questions);
 	}
@@ -41,13 +41,28 @@ public class Questions extends Controller {
 	/**
 	 * Get a question.
 	 */
-	public static void get(long id) {
+	public static void question(long id) {
 		Question question = Question.findById(id);
 		if (question == null) {
 			render();
 		} else {
 			List<Answer> answers = question.answers();
 			render(question, answers);
+		}
+	}
+
+	public static void hot() {
+		List<Question> questions = Question.questions();
+		render("Questions/list.html", questions);
+	}
+
+	public static void mine() {
+		if (!Security.isConnected()) {
+			badRequest();
+		} else {
+			List<Question> questions = ((User) User.find("byName",
+					Security.connected()).first()).questions();
+			render("Questions/list.html", questions);
 		}
 	}
 

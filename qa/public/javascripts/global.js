@@ -11,6 +11,19 @@ $(function() {
 		return false;
 	});
 	
+	// filter questions
+	$('#filter a').click(function() {
+		switch(this.hash) {
+			case "#Mine":
+				$("#nav").load(mine());
+				break;
+			case "#Hot":
+				$("#nav").load(hot());
+				break;
+		}
+		return false;
+	});
+	
 	// load question
 	$('nav a').livequery('click', function(event) {
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
@@ -49,11 +62,13 @@ $(function() {
 	// set best answer
 	$('.set.bestAnswer').livequery('click', function(event) {
 		$("#section").load(setBestAnswer({id: this.hash.substr(1)}));
+		return false;
 	});
 	
 	// reset best answer
 	$('.reset.bestAnswer').livequery('click', function(event) {
 		$("#section").load(resetBestAnswer({id: this.hash.substr(1)}));
+		return false;
 	});
 
 });

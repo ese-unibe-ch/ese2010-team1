@@ -394,4 +394,8 @@ public class User extends Model {
 		return super.delete();
 	}
 
+	public List<Question> questions() {
+		return Question.find("byOwner", this).fetch();
+	}
+
 }
