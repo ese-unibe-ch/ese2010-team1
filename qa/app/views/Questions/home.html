@@ -14,7 +14,7 @@
 
 #{nav}
 	#{list items:questions, as:'question'}
-		#{entry entry:question, user:user, display:'nav' /}
+		#{entry entry:question, user:user, display:'nav', active:question==questions.get(0) /}
 	#{/list}
 #{/nav}
 

@@ -98,15 +98,14 @@ input {
 nav a {
 	display: block;
 	margin: 10px;
-	padding: 10px;
-	background: #fff;
+	padding: 10px 20px 10px 10px;
 	text-decoration: none;
 	color: #803ab4;
+	background: #fff url(../images/arrow_right_disabled.png) 315px center no-repeat;
 }
 
 	nav a.active {
-			background: #803ab4;
-			color: #fff;
+		background-image: url(../images/arrow_right.png);
 	}
 	
 /*** Dropdown menus ***/

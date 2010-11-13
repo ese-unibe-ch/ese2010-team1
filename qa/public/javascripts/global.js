@@ -34,8 +34,11 @@ $(function() {
 	
 	// load question
 	$('nav a').livequery('click', function(event) {
+		var a = this;
 		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
 			$('#section').html(data);
+			$('#nav a').removeClass("active");
+			$(a).addClass("active");
 		});
 		return false;
 	});

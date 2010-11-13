@@ -6,7 +6,7 @@
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#${_entry.id}">${_entry.title}</a>
+		<a href="#${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
 	
 #{/if}
 *{ full representation }*
@@ -28,7 +28,7 @@
 	<menu>
 		<li><a href="#${_entry.id}" class="${up}"></a></li>
 		<li class="rating">${_entry.rating()}</li>
-		<li><a href="#${_entry.id}" class="${down}" href="#${_entry.id}"></a></li>
+		<li><a href="#${_entry.id}" class="${down}"></a></li>
 	</menu>
 	
 	*{ title }*
