@@ -6,6 +6,15 @@
 GET     /                                       Questions.home
 
 GET		/question/{id}							Questions.question
+GET		/hot									Questions.hot
+GET		/mine									Questions.mine
+
+GET		/vote/up/{id}							Questions.voteUp
+GET		/vote/down/{id}							Questions.voteDown
+GET 	/vote/remove/{id}						Question.removeVote
+
+GET		/best/set/{id}							Questions.setBestAnswer
+GET		/best/reset/{id}						Questions.resetBestAnswer
 
 
 # Map static resources from the /app/public folder to the /public path

@@ -20,8 +20,16 @@ $(function() {
 			case "#Hot":
 				$("#nav").load(hot());
 				break;
+			case "#Search":
+				$("#nav").load(search({string: $("#search input").val()}));
+				break;
 		}
 		return false;
+	});
+	
+	// search questions
+	$("#search input").keyup(function() {
+		$("#nav").load(search({string: this.value}));
 	});
 	
 	// load question

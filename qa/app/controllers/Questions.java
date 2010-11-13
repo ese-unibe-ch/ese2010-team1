@@ -5,6 +5,7 @@ import java.util.List;
 import models.Answer;
 import models.Entry;
 import models.Question;
+import models.Search;
 import models.User;
 import models.Vote;
 import play.mvc.Before;
@@ -64,6 +65,11 @@ public class Questions extends Controller {
 					Security.connected()).first()).questions();
 			render("Questions/list.html", questions);
 		}
+	}
+
+	public static void search(String string) {
+		List<Question> questions = Search.searchQuestions(string);
+		render("Questions/list.html", questions);
 	}
 
 	public static void voteUp(long id) {

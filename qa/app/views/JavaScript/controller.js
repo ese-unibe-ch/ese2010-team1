@@ -7,3 +7,4 @@ var setBestAnswer = #{jsAction @Questions.setBestAnswer(':id') /}
 var resetBestAnswer = #{jsAction @Questions.resetBestAnswer(':id') /}
 var hot = #{jsAction @Questions.hot() /}
 var mine = #{jsAction @Questions.mine() /}
+var search = #{jsAction @Questions.search(':string') /}
