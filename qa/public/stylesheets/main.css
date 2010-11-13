@@ -1,9 +1,10 @@
 /*** Global Structure ***/
 
-body {
+body, html {
 	background: #dedede;
 	font-size: 16px;
 	font-family: Calibri, Helvetica, Arial, sans-serif;
+	height: 100%;
 }
 
 a {
@@ -58,9 +59,6 @@ input {
 			nav + section {
 				width: 580px;	
 			}
-	
-	footer {
-	}
 
 	
 /*** Top Navigation ***/	
@@ -209,6 +207,16 @@ nav a {
 	margin: 10px;
 	overflow: hidden;
 }
+
+	/*** Vote ***/
+	.entry menu {
+		float: right;
+		width: 30px;
+		color: white;
+		text-align: center;
+		font-size: 1.5em;
+	}
+	
 	.entry a.up, .entry a.down, .entry a.delete {
 		width: 10px;
 		height: 10px;	
@@ -243,6 +251,25 @@ nav a {
 			.entry a.delete.disabled {
 				background: url(../images/delete_disabled.png) no-repeat center;
 			}
+			
+	/*** Best Answer ***/
+	
+	.entry .bestAnswer, .entry .set.bestAnswer:hover {
+		background: url(../images/star.png) no-repeat center;
+		width: 23px;
+		height: 23px;
+		display: block;
+		position: absolute;
+		right: 150px;
+		top: 5px;
+	}
+	
+		.entry .set.bestAnswer {
+			background: url(../images/star_disabled.png) no-repeat center;
+		}
+	
+	
+	/*** Content ***/
 	
 	.entry p, .entry h3 {
 		padding: 10px;
@@ -253,7 +280,7 @@ nav a {
 		position: relative;
 	}
 	
-		.entry h3 a {
+		.entry h3 a.owner {
 			position: absolute;
 			right: 10px;
 		}
@@ -272,17 +299,7 @@ nav a {
 		text-align: center;
 	}
 	
-	.entry menu {
-		float: right;
-		width: 30px;
-		color: white;
-		text-align: center;
-		font-size: 1.5em;
-	}
-	
-		.entry menu command {
-			display: block;
-		}
+
 		
 /*** Profile ***/
 

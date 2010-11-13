@@ -81,4 +81,31 @@ public class Questions extends Controller {
 		render("Questions/entry.html", entry);
 	}
 
+	public static void setBestAnswer(long id) {
+		Answer answer = Answer.<Answer> findById(id);
+		if (answer == null) {
+			badRequest();
+		} else {
+			if (answer.question.owner.name.equals(Security.connected())
+					&& answer.question.canSetBestAnswer()) {
+				answer.question.setBestAnswer(answer);
+			}
+			Question question = answer.question;
+			render("Questions/get.html", question);
+		}
+	}
+
+	public static void resetBestAnswer(long id) {
+		Question question = Question.<Question> findById(id);
+		if (question == null) {
+			badRequest();
+		} else {
+			if (question.owner.name.equals(Security.connected())
+					&& question.canSetBestAnswer()) {
+				question.resetBestAnswer();
+			}
+			render("Questions/get.html", question);
+		}
+	}
+
 }

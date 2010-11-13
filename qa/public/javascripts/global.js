@@ -45,5 +45,15 @@ $(function() {
 		});
 		return false;
 	});
+	
+	// set best answer
+	$('.set.bestAnswer').livequery('click', function(event) {
+		$("#section").load(setBestAnswer({id: this.hash.substr(1)}));
+	});
+	
+	// reset best answer
+	$('.reset.bestAnswer').livequery('click', function(event) {
+		$("#section").load(resetBestAnswer({id: this.hash.substr(1)}));
+	});
 
 });

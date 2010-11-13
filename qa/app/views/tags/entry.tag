@@ -4,15 +4,14 @@
 }%
 
 *{ navigation representation }*
-
 #{if _display == "nav"}
-	<a href="#${_entry.id}">${_entry.title}</a>
+		
+		<a href="#${_entry.id}">${_entry.title}</a>
+	
 #{/if}
-
-
 *{ full representation }*
-
 #{else}
+
 	#{if _display != "innerHTML"}
 		<article class="entry ${question.yesno('question','answer')}">
 	#{/if}
@@ -35,8 +34,9 @@
 	*{ title }*
 	<h3>
 		${question ? _entry.title : "Answer"}
-		<a href="@{Users.profile(_entry.owner.id)}">
-			${_entry.owner.name} (<span class="reputation">${_entry.owner.reputation()}</span>)
+		#{setBestAnswer answer:_entry, user:_user /}
+		<a href="@{Users.profile(_entry.owner.id)}" class="owner">
+			${_entry.owner.name} (${_entry.owner.reputation()})
 		</a>
 	</h3>
 	
