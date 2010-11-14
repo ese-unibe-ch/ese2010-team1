@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.Answer;
 import models.Question;
 import models.User;
 
@@ -165,9 +166,7 @@ public class XMLHandler extends DefaultHandler {
 		if (owner != null && questionExists == null) {
 
 			// remove CDATA declaration
-			String body = dataMap.get("body");
-			body = body.replaceAll("\\<!\\[CDATA\\[", "");
-			body = body.replaceAll("\\]\\]\\>", "");
+			String body = removeCDATAContainer(dataMap.get("body"));
 
 			Question question = owner.addQuestion(dataMap.get("title"), body);
 			question.fakeId = Long.parseLong(dataMap.get("id"));
@@ -194,8 +193,46 @@ public class XMLHandler extends DefaultHandler {
 
 	private void createAnswer() {
 
+		User owner = User.find("byOwner", dataMap.get("ownerid")).first();
+		Question question = Question.find("byFakeId",
+				Long.parseLong(dataMap.get("questionid"))).first();
+		Answer answerExists = Answer.find("byFakeId",
+				Long.parseLong(dataMap.get("id"))).first();
+
+		if (owner != null && question != null && answerExists == null) {
+
+			String body = removeCDATAContainer(dataMap.get("body"));
+
+			Answer answer = question.answer(owner, body);
+			answer.timestamp = new Date(Long.parseLong(dataMap
+					.get("creationdate")));
+
+			Boolean bestAnswer = Boolean.parseBoolean(dataMap.get("accepted"));
+			if (bestAnswer && !question.isBestAnswerSet) {
+				answer.isBestAnswer();
+			} else {
+				report.append("ERROR: Answer {" + dataMap.get("id")
+						+ "} could not be accepted \n");
+			}
+
+			answer.save();
+
+		} else {
+
+			report.append("ERROR: Answer {" + dataMap.get("id")
+					+ "} could not be imported \n");
+		}
+
 		answerCount++;
 
+	}
+
+	private String removeCDATAContainer(String s) {
+
+		s = s.replaceAll("\\<!\\[CDATA\\[", "");
+		s = s.replaceAll("\\]\\]\\>", "");
+
+		return s;
 	}
 
 	public int getUserCount() {
