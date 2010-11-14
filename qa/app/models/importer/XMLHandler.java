@@ -96,7 +96,7 @@ public class XMLHandler extends DefaultHandler {
 
 		case 1:
 			if (qName == "user") {
-				System.out.println(level + " should create user");
+				// System.out.println(level + " should create user");
 				createUser();
 				break;
 			}
@@ -165,9 +165,9 @@ public class XMLHandler extends DefaultHandler {
 
 		if (owner != null && questionExists == null) {
 
-			// remove CDATA declaration
 			String body = removeCDATAContainer(dataMap.get("body"));
 
+			// add question fields
 			Question question = owner.addQuestion(dataMap.get("title"), body);
 			question.fakeId = Long.parseLong(dataMap.get("id"));
 			question.timestamp = new Date(Long.parseLong(dataMap
@@ -211,7 +211,7 @@ public class XMLHandler extends DefaultHandler {
 			Boolean bestAnswer = Boolean.parseBoolean(dataMap.get("accepted"));
 			if (bestAnswer && !question.isBestAnswerSet) {
 				answer.isBestAnswer();
-			} else {
+			} else if (bestAnswer) {
 				report.append("ERROR: Answer {" + dataMap.get("id")
 						+ "} could not be accepted \n");
 			}

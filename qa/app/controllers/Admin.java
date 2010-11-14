@@ -65,9 +65,9 @@ public class Admin extends Controller {
 
 	public static void loadXML(@Required File xmlfile) {
 
-		boolean exists = xmlfile.exists();
 		int userCount = 0;
 		int questionCount = 0;
+		int answerCount = 0;
 		String report = "";
 
 		validation.isTrue(isXMLFile(xmlfile)).message(
@@ -79,6 +79,7 @@ public class Admin extends Controller {
 				XMLHandler handler = importer.getHandler();
 				userCount = handler.getUserCount();
 				questionCount = handler.getQuestionCount();
+				answerCount = handler.getAnswerCount();
 				report = handler.getReport();
 
 			} catch (Exception e) {
@@ -87,26 +88,8 @@ public class Admin extends Controller {
 
 			List<User> users = User.findAll();
 
-			render(exists, users, userCount, questionCount, report);
+			render(users, userCount, questionCount, answerCount, report);
 		}
-
-	}
-
-	public static void flushDatabase() {
-
-		List<User> users = User.findAll();
-		User loggedInUser = User.find("byName", Security.connected()).first();
-
-		for (User u : users) {
-
-			if (!u.equals(loggedInUser)) {
-				u.delete();
-			}
-
-		}
-
-		User anonymous = new User("Anonymous", "anonymous@qa.local",
-				"notAllowedToLogIn").save();
 
 	}
 
