@@ -37,6 +37,8 @@ $(function() {
 	// search questions
 	$("#search input").keyup(function() {
 		$("#nav").load(search({string: this.value}));
+		$('#filter a').removeClass("active");
+		$('#filter a[href=#Search]').addClass("active");
 	});
 	
 	// load question
@@ -54,6 +56,7 @@ $(function() {
 	$("#new a").click(function() {
 		$.get(form({type: "question"}), function(data) {
 			$("#section").html(data);
+			$("#section input[name=title]").foc();
 			$('#nav a').removeClass("active");
 			$("#section form").submit(function() {
 				var title = $("#section input[name=title]").value();

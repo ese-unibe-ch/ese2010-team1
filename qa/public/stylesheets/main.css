@@ -98,6 +98,10 @@ input, textarea {
 			float: right;
 			margin-left: 10px;
 		}
+		
+		#sitecontrols > a {
+			color: white;
+		}
 
 	input[type=search] {
 		background: #fff url(../images/search.png) right center no-repeat;

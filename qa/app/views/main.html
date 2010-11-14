@@ -37,9 +37,9 @@
     			<div id="sitecontrols">
     				
     				#{if user}
-    					<span>
-    			  			${user.name} : ${user.reputation()}
-    					</span>
+    					<a href="@{Users.profile(user.id)}">
+    			  			${user.name} (${user.reputation()})
+    					</a>
     				
 	    				#{pulldown label:'Activity'}
 	    					<li></li>
