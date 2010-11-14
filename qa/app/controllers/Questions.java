@@ -8,6 +8,7 @@ import models.Question;
 import models.Search;
 import models.User;
 import models.Vote;
+import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -70,6 +71,27 @@ public class Questions extends Controller {
 	public static void search(String string) {
 		List<Question> questions = Search.searchQuestions(string);
 		render("Questions/list.html", questions);
+	}
+
+	public static void form(String type) {
+		render(type);
+	}
+
+	public static void add(@Required String title, @Required String content,
+			String tags) {
+		User user = User.find("byName", Security.connected()).first();
+		if (user != null && !validation.hasErrors()) {
+			Question question = user.addQuestion(title, content);
+			String[] separatedTags = tags.split(", ");
+			for (String tag : separatedTags) {
+				if (!tag.equals(""))
+					question.tagItWith(tag);
+			}
+
+			render("Questions/question.html", question);
+		} else {
+			badRequest();
+		}
 	}
 
 	public static void voteUp(long id) {

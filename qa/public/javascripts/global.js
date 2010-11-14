@@ -22,8 +22,11 @@ $(function() {
 				break;
 			case "#Search":
 				$("#nav").load(search({string: $("#search input").val()}));
+				$("#search input").focus();
 				break;
 		}
+		$('#filter a').removeClass("active");
+		$(this).addClass("active");
 		return false;
 	});
 	
@@ -39,6 +42,29 @@ $(function() {
 			$('#section').html(data);
 			$('#nav a').removeClass("active");
 			$(a).addClass("active");
+		});
+		return false;
+	});
+	
+	// new question
+	$("#new a").click(function() {
+		$.get(form({type: "question"}), function(data) {
+			$("#section").html(data);
+			$('#nav a').removeClass("active");
+			$("#section form").submit(function() {
+				var title = $("#section input[name=title]").val();
+				var content = $("#section textarea[name=content]").val();
+				var tags = $("#section input[name=tags]").val();
+				$.get(add({title: title, content: content, tags: tags}), function(data, status) {
+					if(status=="success") {
+						$("#section").html(data);
+						$("#filter a.active").click();
+					} else {
+						alert(status);
+					}
+				});
+				return false;	
+			});
 		});
 		return false;
 	});

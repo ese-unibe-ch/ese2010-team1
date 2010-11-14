@@ -11,6 +11,9 @@ GET		/hot									Questions.hot
 GET		/mine									Questions.mine
 GET		/search/{string}						Question.search
 
+GET		/form/{type}							Questions.form
+POST	/add									Question.add
+
 GET		/vote/up/{id}							Questions.voteUp
 GET		/vote/down/{id}							Questions.voteDown
 GET 	/vote/remove/{id}						Question.removeVote

@@ -1,5 +1,5 @@
 %{
-	question = _entry instanceof models.Question
+	question = _entry != null && _entry instanceof models.Question
 	answer = !question
 }%
 
@@ -9,6 +9,37 @@
 		<a href="#${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
 	
 #{/if}
+
+*{ form representation }*
+#{elseif _display == "form"}
+
+	<article class="entry question">
+	#{form @Questions.add()}
+		<menu>
+		<li><a href="#" class="up disabled"></a></li>
+		<li class="rating">0</li>
+		<li><a href="#" class="down disabled"></a></li>
+		</menu>
+	
+		<h3>
+		#{field 'title'}
+			<input type="text" name="${field.name}" id="title" placeholder="Title" class="${field.errorClass}" />
+		#{/field}
+		</h3>
+		<p>
+		#{field 'content'}
+        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		</p>
+		<input type="text" name="tags" id="tags" placeholder="Tags" />
+		
+		<input type="submit" value="Post" />
+	#{/form}
+	</article>
+
+#{/elseif}
+
+
 *{ full representation }*
 #{else}
 

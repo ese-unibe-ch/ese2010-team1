@@ -1,24 +1,31 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
+%{
+	display = display ? display : questions.get(0)
+}%
+
 #{set 'controls'}
 	<form id="search">
 		<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
 	</form>
 	#{tabbar 'filter'}
-		#{tab 'Hot' /}
+		#{tab 'Hot', selected:true /}
 		#{tab 'Mine' /}
 		#{tab 'Search' /}
+	#{/tabbar}
+	#{tabbar 'new'}
+		#{tab 'New Question' /}
 	#{/tabbar}
  #{/set}
 
 #{nav}
 	#{list items:questions, as:'question'}
-		#{entry entry:question, user:user, display:'nav', active:question==questions.get(0) /}
+		#{entry entry:question, user:user, display:'nav', active:question==display /}
 	#{/list}
 #{/nav}
 
-#{entry entry:questions.get(0), user:user /}
-#{list items:questions.get(0).answers, as:'entry'}
+#{entry entry:display, user:user /}
+#{list items:display.answers, as:'entry'}
 	#{entry entry:entry, user:user /}
 #{/list}
