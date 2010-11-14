@@ -16,10 +16,21 @@ a:hover {
 	text-decoration: underline;	
 }
 
-input {
+input, textarea {
 	border: 1px solid black;	
-	
 }
+
+	input.placeholder, textarea.placeholder {
+		color: #666;
+	}
+	
+	input.error, textarea.error {
+		border: 1px solid red;
+	}
+	
+	input.error.placeholder, textarea.error.placeholder {
+		color: red;
+	}
 
 #all {
 	margin: 0 auto;

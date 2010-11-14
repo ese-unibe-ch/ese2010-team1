@@ -3,6 +3,7 @@ $(function() {
 	$('nav').jScrollPane();
 	var scrollPane = $('section');
 	scrollPane.jScrollPane();
+	
 
 	// pulldown menus
 	$('.pulldown > a').click(function() {
@@ -52,17 +53,24 @@ $(function() {
 			$("#section").html(data);
 			$('#nav a').removeClass("active");
 			$("#section form").submit(function() {
-				var title = $("#section input[name=title]").val();
-				var content = $("#section textarea[name=content]").val();
-				var tags = $("#section input[name=tags]").val();
-				$.get(add({title: title, content: content, tags: tags}), function(data, status) {
-					if(status=="success") {
-						$("#section").html(data);
-						$("#filter a.active").click();
-					} else {
-						alert(status);
-					}
-				});
+				var title = $("#section input[name=title]").value();
+				var content = $("#section textarea[name=content]").value();
+				var tags = $("#section input[name=tags]").value();
+				$("#section input, #section textarea").removeClass("error");
+				if(!title) {
+					$("#section input[name=title]").addClass("error");
+				} else if(!content) {
+					$("#section textarea[name=content]").addClass("error");
+				} else {
+					$.post(add(), {title: title, content: content, tags: tags}, function(data) {
+						if(data.success == 1) {
+							$("#section").load(questionsGet({id: data.id}));	
+							$("#filter a.active").click();
+						} else {
+							alert("Error");
+						}
+					}, "json");
+				}
 				return false;	
 			});
 		});

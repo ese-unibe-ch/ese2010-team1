@@ -14,9 +14,11 @@
 		#{tab 'Mine' /}
 		#{tab 'Search' /}
 	#{/tabbar}
-	#{tabbar 'new'}
-		#{tab 'New Question' /}
-	#{/tabbar}
+	#{if user}
+		#{tabbar 'new'}
+			#{tab 'New Question' /}
+		#{/tabbar}
+	#{/if}
  #{/set}
 
 #{nav}

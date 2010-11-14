@@ -9,4 +9,4 @@ var hot = #{jsAction @Questions.hot() /}
 var mine = #{jsAction @Questions.mine() /}
 var search = #{jsAction @Questions.search(':string') /}
 var form = #{jsAction @Questions.form(':type') /}
-var add = #{jsAction @Questions.add(':title',':content',':tags') /}
+var add = #{jsAction @Questions.add() /}

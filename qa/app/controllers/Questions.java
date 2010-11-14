@@ -88,9 +88,9 @@ public class Questions extends Controller {
 					question.tagItWith(tag);
 			}
 
-			render("Questions/question.html", question);
+			renderJSON("{\"success\": 1, \"id\": " + question.id + "}");
 		} else {
-			badRequest();
+			renderJSON("{\"success\": 0}");
 		}
 	}
 

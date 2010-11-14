@@ -23,7 +23,7 @@
 	
 		<h3>
 		#{field 'title'}
-			<input type="text" name="${field.name}" id="title" placeholder="Title" class="${field.errorClass}" />
+			<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
 		#{/field}
 		</h3>
 		<p>
@@ -31,7 +31,7 @@
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		</p>
-		<input type="text" name="tags" id="tags" placeholder="Tags" />
+		<input type="text" name="tags" placeholder="Tags" />
 		
 		<input type="submit" value="Post" />
 	#{/form}
