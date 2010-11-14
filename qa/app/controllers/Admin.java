@@ -67,6 +67,7 @@ public class Admin extends Controller {
 
 		boolean exists = xmlfile.exists();
 		int userCount = 0;
+		int questionCount = 0;
 		String report = "";
 
 		validation.isTrue(isXMLFile(xmlfile)).message(
@@ -77,6 +78,7 @@ public class Admin extends Controller {
 				XMLImporter importer = new XMLImporter(xmlfile);
 				XMLHandler handler = importer.getHandler();
 				userCount = handler.getUserCount();
+				questionCount = handler.getQuestionCount();
 				report = handler.getReport();
 
 			} catch (Exception e) {
@@ -85,7 +87,7 @@ public class Admin extends Controller {
 
 			List<User> users = User.findAll();
 
-			render(exists, users, userCount, report);
+			render(exists, users, userCount, questionCount, report);
 		}
 
 	}

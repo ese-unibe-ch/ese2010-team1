@@ -1,6 +1,9 @@
 package models.importer;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import models.Question;
@@ -23,8 +26,7 @@ public class XMLHandler extends DefaultHandler {
 	private int answerCount = 0;
 
 	private static Map<String, String> dataMap;
-
-	// private List<String> tagList;
+	private static List<String> tagList;
 
 	public XMLHandler() {
 
@@ -70,11 +72,19 @@ public class XMLHandler extends DefaultHandler {
 			dataMap.put("id", atts.getValue(0));
 			// System.out.println(atts.getValue(0));
 			break;
+		case 2:
+
+			if (qName == "tags") {
+
+				tagList = new ArrayList<String>();
+
+			}
+			break;
 
 		default:
 
-			System.out.println("Start: " + level + " " + qName + " "
-					+ atts.getValue(0));
+			// System.out.println("Start: " + level + " " + qName + " "
+			// + atts.getValue(0));
 			break;
 		}
 	}
@@ -97,18 +107,26 @@ public class XMLHandler extends DefaultHandler {
 			}
 			if (qName == "answer") {
 
-				// createAnswer();
+				createAnswer();
 				break;
 			}
 
 		case 2:
+
 			dataMap.put(qName, builder.toString());
+
+			break;
+		case 3:
+			if (qName == "tag") {
+				tagList.add(builder.toString());
+			}
 			break;
 
 		default:
-			System.out.println("End: " + level + " " + qName);
+			// System.out.println("End: " + level + " " + qName);
 			break;
 		}
+
 	}
 
 	private void createUser() {
@@ -130,7 +148,7 @@ public class XMLHandler extends DefaultHandler {
 			userCount++;
 		} else {
 
-			report.append("User {" + Long.parseLong(dataMap.get("id"))
+			report.append("ERROR: User {" + dataMap.get("id")
 					+ "} already exists \n");
 		}
 
@@ -141,19 +159,33 @@ public class XMLHandler extends DefaultHandler {
 		User owner = User.find("byFakeId",
 				Long.parseLong(dataMap.get("ownerid"))).first();
 
-		if (owner != null) {
+		Question questionExists = Question.find("byFakeId",
+				Long.parseLong(dataMap.get("id"))).first();
 
-			Question question = owner.addQuestion(dataMap.get("title"), dataMap
-					.get("body"));
+		if (owner != null && questionExists == null) {
+
+			// remove CDATA declaration
+			String body = dataMap.get("body");
+			body = body.replaceAll("\\<!\\[CDATA\\[", "");
+			body = body.replaceAll("\\]\\]\\>", "");
+
+			Question question = owner.addQuestion(dataMap.get("title"), body);
 			question.fakeId = Long.parseLong(dataMap.get("id"));
+			question.timestamp = new Date(Long.parseLong(dataMap
+					.get("creationdate")));
+
+			if (tagList != null && tagList.size() > 0) {
+				for (String tag : tagList) {
+					question.tagItWith(tag);
+				}
+			}
 			question.save();
 			questionCount++;
 
 		} else {
 
-			report.append("ERROR: Question {"
-					+ Long.parseLong(dataMap.get("id")
-							+ "} could not be imported \n"));
+			report.append("ERROR: Question {" + dataMap.get("id")
+					+ "} could not be imported \n");
 		}
 
 		questionCount++;
@@ -176,6 +208,16 @@ public class XMLHandler extends DefaultHandler {
 		return this.userCount;
 	}
 
+	public int getAnswerCount() {
+
+		return this.answerCount;
+	}
+
+	public String getReport() {
+
+		return this.report.toString();
+	}
+
 	/** This method is called when warnings occur */
 	public void warning(SAXParseException exception) {
 		System.err.println("WARNING: line " + exception.getLineNumber() + ": "
@@ -195,8 +237,4 @@ public class XMLHandler extends DefaultHandler {
 		throw (exception);
 	}
 
-	public String getReport() {
-
-		return this.report.toString();
-	}
 }
