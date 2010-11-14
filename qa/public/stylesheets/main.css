@@ -164,10 +164,13 @@ nav a {
 			padding: 0;		
 		}
 		
-		.pulldown li a:hover {
-			text-decoration: underline;
-			
+		.pulldown li:hover {
+			cursor: pointer;
 		}
+		
+			.pulldown li:hover a {
+				text-decoration: underline;
+			}
 	
 		.pulldown li:nth-child(2n) {
 			background: #666;

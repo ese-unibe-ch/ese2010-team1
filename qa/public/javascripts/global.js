@@ -12,6 +12,11 @@ $(function() {
 		return false;
 	});
 	
+	$('.pulldown li').click(function() {
+		if($(this).find("a").length > 0)
+			self.location = $(this).find("a").attr("href");
+	});
+	
 	// filter questions
 	$('#filter a').click(function() {
 		switch(this.hash) {
