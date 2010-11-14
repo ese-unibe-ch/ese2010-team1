@@ -193,7 +193,8 @@ public class XMLHandler extends DefaultHandler {
 
 	private void createAnswer() {
 
-		User owner = User.find("byOwner", dataMap.get("ownerid")).first();
+		User owner = User.find("byFakeId",
+				Long.parseLong(dataMap.get("ownerid"))).first();
 		Question question = Question.find("byFakeId",
 				Long.parseLong(dataMap.get("questionid"))).first();
 		Answer answerExists = Answer.find("byFakeId",
