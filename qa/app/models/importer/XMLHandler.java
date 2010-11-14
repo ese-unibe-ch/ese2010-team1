@@ -1,8 +1,9 @@
 package models.importer;
 
-import models.Answer;
+import java.util.HashMap;
+import java.util.Map;
+
 import models.Question;
-import models.Tag;
 import models.User;
 
 import org.xml.sax.Attributes;
@@ -12,21 +13,30 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLHandler extends DefaultHandler {
 
-	private StringBuilder builder;
+	private static StringBuilder builder;
+	private StringBuilder report;
 
-	private static int level = -1;
+	private int level = -1;
 
-	private static User currentUser;
-	private static Question currentQuestion;
-	private static Answer currentAnswer;
+	private int userCount = 0;
+	private int questionCount = 0;
+	private int answerCount = 0;
 
-	private long fakeTagId;
+	private static Map<String, String> dataMap;
+
+	// private List<String> tagList;
+
+	public XMLHandler() {
+
+		this.report = new StringBuilder();
+	}
 
 	/**
 	 * This method is called when a new element begins.
 	 */
 	public void startElement(String uri, String localName, String qName,
 			Attributes atts) {
+
 		builder = new StringBuilder();
 		checkStartElement(qName, atts);
 		level++;
@@ -37,163 +47,133 @@ public class XMLHandler extends DefaultHandler {
 	 * elements). This method stores the text in the StringBuilder
 	 */
 	public void characters(char[] ch, int start, int length) {
+
 		builder.append(ch, start, length);
-	}
-
-	// Diese Methode checkt um was für ein Element es sich handelt. Das level
-	// beschreibt die Ebene im File. Also
-	// auf Höhe <QA> ist das level noch 0 und je tiefer man geht um so höher
-	// wird es. Es checkt also immer nur
-	// das was auf dem level überhaupt möglich ist.
-	// case 0 wird ein neuer User gemacht. und case 1 weisst die id zu.
-
-	public void checkStartElement(String qName, Attributes atts) {
-		switch (level) {
-		case 0:
-			if (qName == "users") {
-				currentUser = new User();
-				return;
-			}
-
-			if (qName == "questions") {
-				currentQuestion = new Question();
-				currentAnswer = new Answer();
-				return;
-			}
-
-			if (qName == "answers") {
-				currentAnswer = new Answer();
-				return;
-			}
-		case 1:
-
-			if (qName == "user") {
-				currentUser.id = Long.valueOf(atts.getValue(0)).longValue();
-				return;
-			}
-
-			if (qName == "question") {
-				currentQuestion.id = Long.valueOf(atts.getValue(0)).longValue();
-				return;
-			}
-
-			if (qName == "answer") {
-				currentAnswer.id = Long.valueOf(atts.getValue(0)).longValue();
-				return;
-			}
-
-		case 2:
-			if (qName == "tag") {
-				fakeTagId = Long.valueOf(atts.getValue(0)).longValue();
-				// in fact the id of tag is not needed yet
-			}
-		}
-	}
-
-	// wenn das element geschlossen wird und mann auf level 3 ist, werden die
-	// Attribute zugeteilt. auf level 2 werden die Einträge gesaved.
-
-	public void checkEndElement(String qName) {
-
-		switch (level) {
-		case 2:
-			if (qName == "user") {
-
-				User user = new User(currentUser.name, currentUser.email,
-						currentUser.password).save();
-				user.fakeId = currentUser.id; // added a fakeId to escape for db
-				// error
-				user.isAdmin = currentUser.isAdmin;
-				user.setNewPassword(currentUser.password);
-				user.save();
-				return;
-			}
-
-			if (qName == "question") {
-				Question q = currentQuestion.owner.addQuestion(
-						currentQuestion.title, currentQuestion.content);
-				q.fakeId = currentQuestion.id;
-				q.save();
-				return;
-			}
-
-			if (qName == "answer") {
-				Answer a = new Answer(currentAnswer.owner,
-						currentAnswer.question, currentAnswer.content);
-				a.save();
-				return;
-			}
-
-		case 3:
-			if (qName == "displayname") {
-				currentUser.name = builder.toString();
-				return;
-			}
-
-			if (qName == "ismoderator") {
-				if (builder.toString() == "true")
-					currentUser.isAdmin = true;
-				else
-					currentUser.isAdmin = false;
-				return;
-			}
-			if (qName == "email") {
-				currentUser.email = builder.toString();
-				return;
-			}
-
-			if (qName == "password") {
-				currentUser.password = builder.toString();
-				return;
-			}
-
-			if (qName == "ownerid") {
-				User owner = User.find("byFakeId",
-						Long.valueOf(builder.toString()).longValue()).first();
-				if (owner != null) {
-					currentAnswer.owner = owner;
-					currentQuestion.owner = owner;
-				} else {
-					currentAnswer.owner = User.find("byName", "Default")
-							.first();
-					;
-					currentQuestion.owner = User.find("byName", "Default")
-							.first();
-				}
-			}
-
-			if (qName == "title") {
-				currentQuestion.title = builder.toString();
-			}
-			if (qName == "questionid") {
-				Question question = Question.find("byFakeId",
-						Long.valueOf(builder.toString()).longValue()).first();
-
-				currentAnswer.question = question;
-
-			}
-
-			if (qName == "body") {
-				currentQuestion.content = "default";
-				// currentQuestion.content = builder.toString(); //not working
-				currentAnswer.content = "default";
-				// currentAnswer.content = builder.toString(); //not working
-			}
-
-			if (qName == "tag") {
-
-				Tag tag = Tag.findOrCreateByName(builder.toString());
-				currentQuestion.tags.add(tag);
-			}
-		}
 	}
 
 	/**
 	 * This method is called when an element is closed.
 	 */
 	public void endElement(String uri, String localName, String qName) {
-		checkEndElement(qName);
 		level--;
+		checkEndElement(qName);
+
+	}
+
+	private void checkStartElement(String qName, Attributes atts) {
+		switch (level) {
+
+		case 1:
+
+			dataMap = new HashMap<String, String>();
+
+			dataMap.put("id", atts.getValue(0));
+			// System.out.println(atts.getValue(0));
+			break;
+
+		default:
+
+			System.out.println("Start: " + level + " " + qName + " "
+					+ atts.getValue(0));
+			break;
+		}
+	}
+
+	private void checkEndElement(String qName) {
+
+		switch (level) {
+
+		case 1:
+			if (qName == "user") {
+				System.out.println(level + " should create user");
+				createUser();
+				break;
+			}
+
+			if (qName == "question") {
+
+				createQuestion();
+				break;
+			}
+			if (qName == "answer") {
+
+				// createAnswer();
+				break;
+			}
+
+		case 2:
+			dataMap.put(qName, builder.toString());
+			break;
+
+		default:
+			System.out.println("End: " + level + " " + qName);
+			break;
+		}
+	}
+
+	private void createUser() {
+
+		User userExists = User.find("byFakeId",
+				Long.parseLong(dataMap.get("id"))).first();
+		// check if userid is already in the database
+		if (userExists == null) {
+
+			// create user and set attributes
+			User user = new User(dataMap.get("displayname"), dataMap
+					.get("email"), dataMap.get("password"));
+			user.fakeId = Long.parseLong(dataMap.get("id"));
+			user.isAdmin = Boolean.parseBoolean(dataMap.get("ismoderator"));
+			user.save();
+
+			// TS to remove, just to see the progress for developing
+			report.append("User " + dataMap.get("displayname") + " created\n");
+			userCount++;
+		} else {
+
+			report.append("User {" + Long.parseLong(dataMap.get("id"))
+					+ "} already exists \n");
+		}
+
+	}
+
+	private void createQuestion() {
+
+		User owner = User.find("byFakeId",
+				Long.parseLong(dataMap.get("ownerid"))).first();
+
+		if (owner != null) {
+
+			Question question = owner.addQuestion(dataMap.get("title"), dataMap
+					.get("body"));
+			question.fakeId = Long.parseLong(dataMap.get("id"));
+			question.save();
+			questionCount++;
+
+		} else {
+
+			report.append("ERROR: Question {"
+					+ Long.parseLong(dataMap.get("id")
+							+ "} could not be imported \n"));
+		}
+
+		questionCount++;
+
+	}
+
+	private void createAnswer() {
+
+		answerCount++;
+
+	}
+
+	public int getUserCount() {
+
+		return this.userCount;
+	}
+
+	public int getQuestionCount() {
+
+		return this.userCount;
 	}
 
 	/** This method is called when warnings occur */
@@ -213,5 +193,10 @@ public class XMLHandler extends DefaultHandler {
 		System.err.println("FATAL: line " + exception.getLineNumber() + ": "
 				+ exception.getMessage());
 		throw (exception);
+	}
+
+	public String getReport() {
+
+		return this.report.toString();
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import models.User;
+import models.importer.XMLHandler;
 import models.importer.XMLImporter;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -65,6 +66,8 @@ public class Admin extends Controller {
 	public static void loadXML(@Required File xmlfile) {
 
 		boolean exists = xmlfile.exists();
+		int userCount = 0;
+		String report = "";
 
 		validation.isTrue(isXMLFile(xmlfile)).message(
 				"Wrong filetype uploaded!");
@@ -72,15 +75,18 @@ public class Admin extends Controller {
 
 			try {
 				XMLImporter importer = new XMLImporter(xmlfile);
+				XMLHandler handler = importer.getHandler();
+				userCount = handler.getUserCount();
+				report = handler.getReport();
 
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
+
+			List<User> users = User.findAll();
+
+			render(exists, users, userCount, report);
 		}
-
-		List<User> users = User.findAll();
-
-		render(exists, users);
 
 	}
 
