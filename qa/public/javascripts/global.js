@@ -21,8 +21,8 @@ $(function() {
 			case "#Hot":
 				$("#nav").load(hot());
 				break;
-			case "#Newest":
-				$("#nav").load(newest());
+			case "#Active":
+				$("#nav").load(active());
 				break;
 			case "#Search":
 				$("#nav").load(search({string: $("#search input").val()}));
