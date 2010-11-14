@@ -283,7 +283,7 @@ nav a {
 	}
 	
 /*** Register ***/
-form.register {
+form.register, div.centeredBox {
 	font-size: 14px;
 	border-radius: 5px; 
 	-moz-border-radius: 5px; 

@@ -1,3 +1,5 @@
+package models;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,18 +8,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import models.Answer;
-import models.Question;
-import models.Tag;
-import models.User;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XMLreader extends DefaultHandler {
+public class XMLImporter extends DefaultHandler {
 
 	private StringBuilder builder;
 
@@ -28,7 +25,7 @@ public class XMLreader extends DefaultHandler {
 	private static Answer currentAnswer;
 	private long fakeTagId;
 
-	public XMLreader(File file) throws SAXException, IOException,
+	public XMLImporter(File file) throws SAXException, IOException,
 			ParserConfigurationException {
 
 		// Create a JAXP "parser factory" for creating SAX parsers
@@ -70,7 +67,7 @@ public class XMLreader extends DefaultHandler {
 		builder.append(ch, start, length);
 	}
 
-	// Diese Methode checkt um was für ein Elemnt es sich handelt. Das level
+	// Diese Methode checkt um was für ein Element es sich handelt. Das level
 	// beschreibt die Ebene im File. Also
 	// auf Höhe <QA> ist das level noch 0 und je tiefer man geht um so höher
 	// wird es. Es checkt also immer nur

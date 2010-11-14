@@ -11,6 +11,9 @@ GET     /recommandedQuestions/{title}			Application.recommandedQuestions
 # Users
 GET		/user/{id}								Users.profile
 
+# Admin
+
+GET		/importXML						Admin.xmlImporter
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
