@@ -34,7 +34,7 @@ public class Questions extends Controller {
 	 * List and show questions.
 	 */
 	public static void home() {
-		List<Question> questions = Question.questions();
+		List<Question> questions = Question.recentQuestions();
 		render(questions);
 	}
 
@@ -54,6 +54,11 @@ public class Questions extends Controller {
 	}
 
 	public static void hot() {
+		List<Question> questions = Question.recentQuestions();
+		render("Questions/list.html", questions);
+	}
+
+	public static void newest() {
 		List<Question> questions = Question.questions();
 		render("Questions/list.html", questions);
 	}

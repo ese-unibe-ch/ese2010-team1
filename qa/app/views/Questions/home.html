@@ -11,7 +11,10 @@
 	</form>
 	#{tabbar 'filter'}
 		#{tab 'Hot', selected:true /}
-		#{tab 'Mine' /}
+		#{tab 'Newest' /}
+		#{if user}
+			#{tab 'Mine' /}
+		#{/if}
 		#{tab 'Search' /}
 	#{/tabbar}
 	#{if user}

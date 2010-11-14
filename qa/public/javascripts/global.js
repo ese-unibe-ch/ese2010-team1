@@ -21,6 +21,9 @@ $(function() {
 			case "#Hot":
 				$("#nav").load(hot());
 				break;
+			case "#Newest":
+				$("#nav").load(newest());
+				break;
 			case "#Search":
 				$("#nav").load(search({string: $("#search input").val()}));
 				$("#search input").focus();
