@@ -1,24 +1,3 @@
-#{extends 'main.html' /}
-#{set title:'Home' /}
-
-#{set 'controls'}
-	<form action="" method="get">
-		<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
-	</form>
-	#{tabbar 'filter'}
-		#{tab 'Hot' /}
-		#{tab 'Mine' /}
-		#{tab 'Search' /}
-	#{/tabbar}
- #{/set}
-
-#{nav}
-	#{list items:questions, as:'question'}
-		#{entry entry:question, user:user, display:'nav' /}
-	#{/list}
-#{/nav}
-
-#{entry entry:questions.get(0), user:user /}
-#{list items:questions.get(0).answers, as:'entry'}
-	#{entry entry:entry, user:user /}
+#{list items:questions, as:'question'}
+	#{entry entry:question, user:user, display:'nav' /}
 #{/list}

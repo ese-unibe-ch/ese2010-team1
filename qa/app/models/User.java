@@ -90,10 +90,6 @@ public class User extends Model {
 		this.timestamp = new Date();
 	}
 
-	public User() {
-
-	}
-
 	// SM cache reputation for faster access
 	/**
 	 * Reputation.
@@ -402,6 +398,10 @@ public class User extends Model {
 
 	public void setNewPassword(String pw) {
 		this.password = encrypt(pw);
+	}
+
+	public List<Question> questions() {
+		return Question.find("byOwner", this).fetch();
 	}
 
 }

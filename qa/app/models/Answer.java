@@ -32,10 +32,6 @@ public class Answer extends Entry {
 		}
 	}
 
-	public Answer() {
-
-	}
-
 	/**
 	 * Checks if is the best answer.
 	 * 

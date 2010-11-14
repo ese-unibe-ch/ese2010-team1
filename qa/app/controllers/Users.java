@@ -69,7 +69,7 @@ public class Users extends Controller {
 
 		new User(username, email, password).save();
 
-		Questions.list();
+		Questions.home();
 	}
 
 	/*** AJAX ***/

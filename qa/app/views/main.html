@@ -9,11 +9,16 @@
         #{stylesheet 'jquery.jscrollpane.css' /}
         #{stylesheet 'main.css' /}
         
+        <!--[if lt IE 9]>
+			#{script 'html5.js' /}
+		<![endif]-->
+		
         #{script 'jquery-1.4.2.min.js' /}
         #{script 'plugins/flot/jquery.flot.js' /}   
         #{script 'plugins/scrollbar/jquery.mousewheel.js' /}   
         #{script 'plugins/scrollbar/jquery.jscrollpane.min.js' /}  
-        #{script 'plugins/livequery/jquery.livequery.min.js'/}
+        #{script 'plugins/livequery/jquery.livequery.min.js'/} 
+        #{script 'plugins/placeholder.js'/}
         <script src="@{JavaScript.controller}"></script> 
         #{script 'global.js' /}   
     </head>
@@ -32,9 +37,9 @@
     			<div id="sitecontrols">
     				
     				#{if user}
-    					<span>
-    			  			${user.name} : ${user.reputation()}
-    					</span>
+    					<a href="@{Users.profile(user.id)}">
+    			  			${user.name} (${user.reputation()})
+    					</a>
     				
 	    				#{pulldown label:'Activity'}
 	    					<li></li>
@@ -64,10 +69,12 @@
     		</header>
     		#{get 'nav' /}
     		<section>
-    			<div id="content">
-    			#{doLayout /}
-    			</section>
-        	</div>
+
+    			<div id="section">
+    				#{doLayout /}
+    			</div>
+        	</section>
+        	
         </div>
     </body>
 </html>
