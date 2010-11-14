@@ -51,12 +51,15 @@ input, textarea {
 		}
 		
 		nav {
-			width: 355px;
+			width: 380px;
 			background: #6e6e6e url(../images/shadow.jpg) top right repeat-y;
-			padding-right: 25px;
 			float: left;
 		}
 		
+			#nav {
+				padding-right: 25px;
+			}
+			
 			nav .jspVerticalBar {
 				left: 0;
 			}
@@ -116,7 +119,7 @@ nav a {
 	padding: 10px 20px 10px 10px;
 	text-decoration: none;
 	color: #803ab4;
-	background: #fff url(../images/arrow_right_disabled.png) 315px center no-repeat;
+	background: #fff url(../images/arrow_right_disabled.png) right center no-repeat;
 }
 
 	nav a.active, nav a:hover {

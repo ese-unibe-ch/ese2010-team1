@@ -1,26 +1,17 @@
 $(function() {
 	
 	var reinitialise = function() {
-		if($('section').data('jsp')) {
+			$('section, nav').height($('body').height() - 70);
 			$('section').data('jsp').reinitialise();
 			$('nav').data('jsp').reinitialise();
-		}
+			$('nav').css({width: "380px"});
 	}
-	
-	var resize = function() {
-		var height = $('body').height() - 70;
-		if($('section, nav').height() != height) {
-			$('section, nav').height(height);
-			reinitialise();
-		}
-	}
-	
-	resize();
 	
 	$('section').jScrollPane();
 	$('nav').jScrollPane({scrollbarOnLeft: true});
 	
-	$(window).resize(resize);
+	reinitialise();
+	$(window).resize(reinitialise);
 	$(window).ajaxComplete(reinitialise);
 	
 	// pulldown menus
