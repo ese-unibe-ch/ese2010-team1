@@ -173,12 +173,15 @@ public class Application extends Controller {
 
 	}
 
-	public static void relatedQuestions(String title) {
-		List<String> relatedQuestions = new ArrayList<String>();
+	public static void recommandedQuestions(String title) {
+		List<String> recommandedQuestions = new ArrayList<String>();
 		RelatedQuestions rq = new RelatedQuestions();
-		relatedQuestions = rq.getRelatedQuestions(title);
+		recommandedQuestions = rq.getRelatedQuestions(title);
 
-		renderJSON(relatedQuestions);
+		recommandedQuestions = Question.find("byTitle", "%" + title + "%")
+				.fetch();
+
+		render(recommandedQuestions);
 
 	}
 

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -7,6 +8,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import models.Answer;
 import models.Question;
+import models.Tag;
 import models.User;
 
 import org.xml.sax.Attributes;
@@ -24,8 +26,9 @@ public class XMLreader extends DefaultHandler {
 	private static User currentUser;
 	private static Question currentQuestion;
 	private static Answer currentAnswer;
+	private long fakeTagId;
 
-	public XMLreader(String file) throws SAXException, IOException,
+	public XMLreader(File file) throws SAXException, IOException,
 			ParserConfigurationException {
 
 		// Create a JAXP "parser factory" for creating SAX parsers
@@ -71,10 +74,9 @@ public class XMLreader extends DefaultHandler {
 	// beschreibt die Ebene im File. Also
 	// auf Höhe <QA> ist das level noch 0 und je tiefer man geht um so höher
 	// wird es. Es checkt also immer nur
-	// das was auf dem level überhaupt möglich ist. case 0 wird das current
-	// Object zu User Question oder Answer.
-	// case 1 wird ein neuer User gemacht. und case 2 erneuert den
-	// Stringbuilder.
+	// das was auf dem level überhaupt möglich ist.
+	// case 0 wird ein neuer User gemacht. und case 1 weisst die id zu.
+
 	public void checkStartElement(String qName, Attributes atts) {
 		switch (level) {
 		case 0:
@@ -109,6 +111,12 @@ public class XMLreader extends DefaultHandler {
 				currentAnswer.id = Long.valueOf(atts.getValue(0)).longValue();
 				return;
 			}
+
+		case 2:
+			if (qName == "tag") {
+				fakeTagId = Long.valueOf(atts.getValue(0)).longValue();
+				// in fact the id of tag is not needed yet
+			}
 		}
 	}
 
@@ -123,9 +131,10 @@ public class XMLreader extends DefaultHandler {
 
 				User user = new User(currentUser.name, currentUser.email,
 						currentUser.password).save();
-				user.fakeId = currentUser.id; // added a fakeId to escape form
-												// db error
+				user.fakeId = currentUser.id; // added a fakeId to escape for db
+				// error
 				user.isAdmin = currentUser.isAdmin;
+				user.setNewPassword(currentUser.password);
 				user.save();
 				return;
 			}
@@ -204,6 +213,12 @@ public class XMLreader extends DefaultHandler {
 				// currentQuestion.content = builder.toString(); //not working
 				currentAnswer.content = "default";
 				// currentAnswer.content = builder.toString(); //not working
+			}
+
+			if (qName == "tag") {
+
+				Tag tag = Tag.findOrCreateByName(builder.toString());
+				currentQuestion.tags.add(tag);
 			}
 		}
 	}

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,7 +26,8 @@ public class Bootstrap extends Job {
 		// }
 		// new User("test", "email", "secret").save();
 		new User("Default", "default", "").save();
-		new XMLreader("C:\\QA3.xml");
+		File file = new File("qa\\QA3.xml");
+		new XMLreader(file);
 
 	}
 }

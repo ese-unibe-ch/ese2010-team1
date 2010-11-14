@@ -400,4 +400,8 @@ public class User extends Model {
 		return super.delete();
 	}
 
+	public void setNewPassword(String pw) {
+		this.password = encrypt(pw);
+	}
+
 }
