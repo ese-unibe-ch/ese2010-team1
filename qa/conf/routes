@@ -13,7 +13,8 @@ GET		/user/{id}								Users.profile
 
 # Admin
 
-GET		/importXML						Admin.xmlImporter
+GET		/importXML								Admin.xmlImporter
+GET		/flush									Admin.flushDatabase
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

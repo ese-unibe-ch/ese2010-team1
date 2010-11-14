@@ -1,20 +1,16 @@
-package models;
+package models.importer;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import models.Answer;
+import models.Question;
+import models.Tag;
+import models.User;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XMLImporter extends DefaultHandler {
+public class XMLHandler extends DefaultHandler {
 
 	private StringBuilder builder;
 
@@ -23,23 +19,8 @@ public class XMLImporter extends DefaultHandler {
 	private static User currentUser;
 	private static Question currentQuestion;
 	private static Answer currentAnswer;
+
 	private long fakeTagId;
-
-	public XMLImporter(File file) throws SAXException, IOException,
-			ParserConfigurationException {
-
-		// Create a JAXP "parser factory" for creating SAX parsers
-		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-
-		// Now use the parser factory to create a SAXParser object
-		SAXParser saxParser = saxParserFactory.newSAXParser();
-
-		// Create a SAX input source for the file argument
-		InputSource input = new InputSource(new FileReader(file));
-
-		// Finally, tell the parser to parse the input and notify the handler
-		saxParser.parse(input, this);
-	}
 
 	/**
 	 * This method is called when a new element begins.
@@ -49,14 +30,6 @@ public class XMLImporter extends DefaultHandler {
 		builder = new StringBuilder();
 		checkStartElement(qName, atts);
 		level++;
-	}
-
-	/**
-	 * This method is called when an element is closed.
-	 */
-	public void endElement(String uri, String localName, String qName) {
-		checkEndElement(qName);
-		level--;
 	}
 
 	/**
@@ -174,11 +147,6 @@ public class XMLImporter extends DefaultHandler {
 				return;
 			}
 
-			if (qName == "diplayname") {
-				currentUser.name = builder.toString();
-				return;
-			}
-
 			if (qName == "ownerid") {
 				User owner = User.find("byFakeId",
 						Long.valueOf(builder.toString()).longValue()).first();
@@ -218,6 +186,14 @@ public class XMLImporter extends DefaultHandler {
 				currentQuestion.tags.add(tag);
 			}
 		}
+	}
+
+	/**
+	 * This method is called when an element is closed.
+	 */
+	public void endElement(String uri, String localName, String qName) {
+		checkEndElement(qName);
+		level--;
 	}
 
 	/** This method is called when warnings occur */

@@ -1,19 +1,11 @@
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import models.User;
-
-import org.xml.sax.SAXException;
-
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 
 @OnApplicationStart
 public class Bootstrap extends Job {
 
-	public void doJob() throws SAXException, IOException,
-			ParserConfigurationException {
+	public void doJob() {
 		// if (User.count() == 0) {
 		// Fixtures.load("initial-data.yml");
 		//
@@ -27,9 +19,9 @@ public class Bootstrap extends Job {
 		User admin = new User("Admin", "admin@root.local", "secret");
 		admin.isAdmin = true;
 		admin.save();
+		User anonymous = new User("Anonymous", "anonymous@qa.local",
+				"notAllowedToLogIn").save();
 		new User("Default", "default", "").save();
-		// File file = new File("qa\\QA3.xml");
-		// new XMLreader(file);
 
 	}
 }

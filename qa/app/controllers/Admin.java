@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import models.User;
-import models.XMLImporter;
+import models.importer.XMLImporter;
 import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -71,7 +71,7 @@ public class Admin extends Controller {
 		if (isXMLFile(xmlfile)) {
 
 			try {
-				XMLImporter reader = new XMLImporter(xmlfile);
+				XMLImporter importer = new XMLImporter(xmlfile);
 
 			} catch (Exception e) {
 
@@ -81,6 +81,24 @@ public class Admin extends Controller {
 		List<User> users = User.findAll();
 
 		render(exists, users);
+
+	}
+
+	public static void flushDatabase() {
+
+		List<User> users = User.findAll();
+		User loggedInUser = User.find("byName", Security.connected()).first();
+
+		for (User u : users) {
+
+			if (!u.equals(loggedInUser)) {
+				u.delete();
+			}
+
+		}
+
+		User anonymous = new User("Anonymous", "anonymous@qa.local",
+				"notAllowedToLogIn").save();
 
 	}
 
