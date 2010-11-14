@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+// TS remove all system.out.println, if it's clear that the importer is working correct.
 public class XMLHandler extends DefaultHandler {
 
 	private static StringBuilder builder;
@@ -68,6 +69,8 @@ public class XMLHandler extends DefaultHandler {
 
 		case 1:
 
+			// TS instantiate in constructor and clear just the whole map, same
+			// procedure @ tagList
 			dataMap = new HashMap<String, String>();
 
 			dataMap.put("id", atts.getValue(0));
@@ -145,7 +148,8 @@ public class XMLHandler extends DefaultHandler {
 			user.save();
 
 			// TS to remove, just to see the progress for developing
-			report.append("User " + dataMap.get("displayname") + " created\n");
+			// report.append("User " + dataMap.get("displayname") +
+			// " created\n");
 			userCount++;
 		} else {
 
