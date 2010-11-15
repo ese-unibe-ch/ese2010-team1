@@ -48,16 +48,16 @@ $(function() {
 	
 	});
 	
-	//recommanded Questions
-//	$('#rq').keyup(function(event){
-//		if(this.value.length > 2){
-//		$.get(recommandedQuestions({title: this.value}), function(data){
-//				$('div#recommandedQuestions').html(data)
-//		
-//		});
-//		}
-//		return false;
-//	});
+	//		recommanded Questions
+	$('input.rq').keyup(function(event){
+		
+		$.get(recommandedQuestions({title: this.value}), function(data){
+				$('div#rqs').html(data)
+		
+		});
+		
+		return false;
+	});
 
 	
 });

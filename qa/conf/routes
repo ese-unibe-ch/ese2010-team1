@@ -6,7 +6,6 @@
 GET     /                                       Questions.list
 
 GET		/question/{id}							Questions.get
-GET     /recommandedQuestions/{title}			Application.recommandedQuestions
 
 # Users
 GET		/user/{id}								Users.profile

@@ -24,7 +24,7 @@ public class Bootstrap extends Job {
 		// question.voteUp(simon);
 		//
 		// }
-		// new User("test", "email", "secret").save();
+		new User("test", "email", "secret").save();
 		new User("Default", "default", "").save();
 		File file = new File("qa\\QA3.xml");
 		new XMLreader(file);
