@@ -73,20 +73,27 @@ public class Users extends Controller {
 	}
 
 	public static void get(long id, String theAction) {
+		User user = User.findById(id);
 
 		if (theAction.equals("activities")) {
 
-			renderText("activities");
+			render("Users/activities.html", user);
 
 		} else if (theAction.equals("questions")) {
 
+			render("Users/questions.html", user);
+
 		} else if (theAction.equals("answers")) {
+
+			render("Users/answers.html", user);
 
 		} else if (theAction.equals("graph")) {
 
 			renderText("<div id=\"graph\"> <div id=\"graphcanvas\" style=\"width:600px;height:300px\"></div></div>");
 
 		} else if (theAction.equals("statistics")) {
+
+			render("Users/statistics.html", user);
 
 		}
 

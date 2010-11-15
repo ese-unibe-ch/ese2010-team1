@@ -1,5 +1,9 @@
 $(function() {
 // profile options
+	
+	$('a.tab[href=#activities]').addClass("active");
+
+
 	$('a.tab').livequery('click', function(event) {
 		var a = this;
 		$.get(profileGet({id: userid, theAction: this.hash.substr(1)}), function(data) {			
@@ -14,6 +18,7 @@ $(function() {
 		return false;
 	});
 	
+
 	
 	$('article.profileContent').load(profileGet({id: userid, theAction: "activities"}));
 

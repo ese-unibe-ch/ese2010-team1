@@ -1,0 +1,17 @@
+%{
+
+answerList = user.getAnswers(); 
+
+}%
+
+#{if answerList.size() > 0}
+<ul>
+#{list items:answerList, as:'answer'}
+<li>answered ${answer.question.title}</li>
+#{/list}
+
+</ul>
+#{/if}
+#{else}
+<p>There were no answers!</p>
+#{/else}

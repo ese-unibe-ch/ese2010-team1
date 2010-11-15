@@ -155,8 +155,6 @@ public class User extends Model {
 		}
 		data.append(']');
 
-		System.out.println(data.toString());
-
 		return data.toString();
 	}
 
@@ -375,6 +373,17 @@ public class User extends Model {
 
 		return Entry.find("owner like ? order by timestamp desc", this).fetch(
 				numberOfActivitys);
+	}
+
+	public List<Entry> getQuestions() {
+
+		return Question.find("owner like ? order by timestamp desc", this)
+				.fetch();
+	}
+
+	public List<Entry> getAnswers() {
+		return Answer.find("owner like ? order by timestamp desc", this)
+				.fetch();
 	}
 
 	public void anonymify() {

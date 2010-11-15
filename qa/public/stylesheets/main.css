@@ -360,6 +360,10 @@ nav a {
 		margin-right: 5px;	
 	}
 	
+	.profileTabs .active {
+		text-decoration: underline;
+	}
+	
 /*** Register ***/
 form.register, div.centeredBox {
 	font-size: 14px;
