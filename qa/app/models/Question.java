@@ -65,10 +65,6 @@ public class Question extends Entry {
 
 	}
 
-	public Question() {
-
-	}
-
 	/**
 	 * Post a {@link Answer} to a <code>Question</code>.
 	 * 

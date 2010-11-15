@@ -1,34 +1,78 @@
 %{
-	question = _entry instanceof models.Question
+	question = _entry != null && _entry instanceof models.Question
 	answer = !question
 }%
 
 *{ navigation representation }*
-
 #{if _display == "nav"}
-	<a href="#${_entry.id}">${_entry.title}</a>
+		
+		<a href="#${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
+	
 #{/if}
+
+*{ form representation }*
+#{elseif _display == "form"}
+
+	<article class="entry question">
+	#{form @Questions.add()}
+		<menu>
+		<li><a href="#" class="up disabled"></a></li>
+		<li class="rating">0</li>
+		<li><a href="#" class="down disabled"></a></li>
+		</menu>
+	
+		<h3>
+		#{field 'title'}
+			<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
+		#{/field}
+		</h3>
+		<p>
+		#{field 'content'}
+        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		</p>
+		<input type="text" name="tags" placeholder="Tags" />
+		
+		<input type="text" id="rq" class="rq" />
+    	<div id="rqs" class="rqs"></div>
+		
+		<input type="submit" value="Post" />
+	#{/form}
+	</article>
+
+#{/elseif}
 
 
 *{ full representation }*
-
 #{else}
-	<article class="entry ${question.yesno('question','answer')}">
-	
+
+	#{if _display != "innerHTML"}
+		<article class="entry ${question.yesno('question','answer')}">
+	#{/if}
 	
 	*{ vote }*
+	%{ 	
+		up = _entry.alreadyVoted(_user, true) ? "delete" : "up";
+		down =  _entry.alreadyVoted(_user, false) ? "delete" : "down";
+		if(!_user || !_entry.canVote(_user)) {
+			up += " disabled";
+			down += " disabled";
+		}
+	}%
 	<menu>
-		<li><a class="up" href="#${_entry.id}">+</a></li>
-		<li>${_entry.rating()}</li>
-		<li><a class="down" href="#${_entry.id}">-</a></li>
+		<li><a href="#${_entry.id}" class="${up}"></a></li>
+		<li class="rating">${_entry.rating()}</li>
+		<li><a href="#${_entry.id}" class="${down}"></a></li>
 	</menu>
+	
 	*{ title }*
 	<h3>
 		${question ? _entry.title : "Answer"}
-		<a style="position: absolute; text-align: right; right: 50px;" href="@{Users.profile(_entry.owner.id)}"> ${_entry.owner.name} (${_entry.owner.reputation()})</a>
+		#{setBestAnswer answer:_entry, user:_user /}
+		<a href="@{Users.profile(_entry.owner.id)}" class="owner">
+			${_entry.owner.name} (${_entry.owner.reputation()})
+		</a>
 	</h3>
-	
-	
 	
 	*{ content }*
 	<p>${_entry.content.nl2br()}</p>
@@ -38,10 +82,11 @@
 		<div class="tags">${tag.name}</div>
 		
 		#{/list}
-		<div style="clear:both;"></div>
 	#{/if}
 	
-	</article>
+	#{if _display != "innerHTML"}
+		</article>
+	#{/if}
 #{/else}
 
 

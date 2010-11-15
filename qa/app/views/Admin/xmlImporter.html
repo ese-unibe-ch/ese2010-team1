@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+
+#{set title:'Create User' /}
+<div style="text-align: center;">
+
+<form method="post" action="@{Admin.loadXML()}" accept-charset="utf-8" enctype="multipart/form-data" class="register">
+<h1>Import Database as XML</h1>
+<input type="file" name="xmlfile" />
+<input type="submit" value="Importieren" />
+
+</form>
+
+</div>

@@ -69,7 +69,27 @@ public class Users extends Controller {
 
 		new User(username, email, password).save();
 
-		Questions.list();
+		Questions.home();
+	}
+
+	public static void get(long id, String theAction) {
+
+		if (theAction.equals("activities")) {
+
+			renderText("activities");
+
+		} else if (theAction.equals("questions")) {
+
+		} else if (theAction.equals("answers")) {
+
+		} else if (theAction.equals("graph")) {
+
+			renderText("<div id=\"graph\"> <div id=\"graphcanvas\" style=\"width:600px;height:300px\"></div></div>");
+
+		} else if (theAction.equals("statistics")) {
+
+		}
+
 	}
 
 	/*** AJAX ***/

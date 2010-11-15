@@ -162,7 +162,8 @@ public class Secured extends Controller {
 	public static void edit(long id, String content, String newTags) {
 
 		Entry entry = Entry.findById(id);
-		entry.content = content;
+		entry.edit(content, (User) User.find("byName", Security.connected())
+				.first());
 		if (entry instanceof Question) {
 			((Question) entry).removeAllTags();
 			if (!newTags.equals("Tags")) {
