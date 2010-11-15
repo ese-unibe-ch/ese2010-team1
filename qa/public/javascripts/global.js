@@ -51,7 +51,7 @@ $(function() {
 	//		recommanded Questions
 	$('input.rq').keyup(function(event){
 		
-		$.get(recommandedQuestions({title: this.value}), function(data){
+		$.get(recommendedQuestions({title: this.value}), function(data){
 				$('div#rqs').html(data)
 		
 		});
