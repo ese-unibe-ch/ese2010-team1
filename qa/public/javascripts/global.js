@@ -40,11 +40,7 @@ $(function() {
 	});
 	
 	
-	$('article.profileContent').load(function() {
-		var a = this;
-		$.get(profileGet({id: userid, theAction: "activities"}), function(data) {
-			a.html(data);
-		});
+	$('article.profileContent').load(profileGet({id: userid, theAction: "activities"}));
 	
 	});
 	
