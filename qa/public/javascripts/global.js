@@ -41,8 +41,7 @@ $(function() {
 	
 	
 	$('article.profileContent').load(profileGet({id: userid, theAction: "activities"}));
-	
-	});
+
 	
 	// filter questions
 	$('#filter a').click(function() {
