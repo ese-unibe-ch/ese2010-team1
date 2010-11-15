@@ -31,7 +31,7 @@ $(function() {
 	$('a.tab').livequery('click', function(event) {
 		var a = this;
 		alert(userid);
-		$.get(profileGet({id: userid, action: this.hash.substr(1)}), function(data) {
+		$.get(profileGet({id: userid, theAction: this.hash.substr(1)}), function(data) {
 			
 			$('article.profileContent').html(data);
 			$('a.tab').removeClass("active");

@@ -72,18 +72,18 @@ public class Users extends Controller {
 		Questions.home();
 	}
 
-	public static void get(long id, String action) {
+	public static void get(long id, String theAction) {
 
-		System.out.println(action);
+		System.out.println(theAction);
 
-		if (action.equals("activities")) {
+		if (theAction.equals("activities")) {
 
 			renderText("activities");
 
 		} else {
 
 			renderText("nothing found");
-			System.out.println(id + " " + action);
+			System.out.println(id + " " + theAction);
 
 		}
 
