@@ -41,10 +41,15 @@
     					<a href="@{Users.profile(user.id)}">
     			  			${user.name} (${user.reputation()})
     					</a>
-    				
+    					
 	    				#{pulldown label:'Activity'}
-	    					<li></li>
-	    					<li>Something else</li>
+							#{list items:user.getNewNotifications(), as:'notification'}
+							<li>${notification.activity}</li>
+							#{/list}
+							#{else}
+							<li>There were no new notifications!</li>
+							#{/else}
+						
 	    				#{/pulldown}
 	    				#{pulldown label:'Account'}
 	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
