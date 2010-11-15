@@ -3,7 +3,8 @@ $(function() {
 	var reinitialise = function() {
 			$('section, nav').height($('body').height() - 70);
 			$('section').data('jsp').reinitialise();
-			$('nav').data('jsp').reinitialise();
+			if($('nav').data('jsp'))
+				$('nav').data('jsp').reinitialise();
 			$('nav').css({width: "380px"});
 	}
 	
@@ -27,7 +28,7 @@ $(function() {
 	});
 	
 	// profile options
-	$('.tab').click(function() {
+	$('a.tab').click(function() {
 		var a = this;
 		alert("test");
 		$.post(profileGet(), {id: userid, action: this.hash.substr(1)}, function(data) {
