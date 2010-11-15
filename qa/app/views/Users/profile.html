@@ -9,7 +9,7 @@ var userid = ${puser.id};
 
 <article class="profileHeader">
 
-	<h3>${puser.name}'s Profile</h3>
+	<h3>${puser.name}'s Profile #{if puser==user}<a class="editProfile" href="#edit">edit</a>#{/if}</h3>
 	
 	<dl>
 		<dt>Registered since:</dt>
@@ -29,18 +29,17 @@ var userid = ${puser.id};
 
 </article>
 
+
 <div class="profileTabs">
-
 #{tabbar 'profileTabs'}
-		#{tab 'Activities', class:"tag" /}
-		#{tab 'Questions', class:"tag" /}
-		#{tab 'Answers', class:"tag" /}
-		#{tab 'Reputation', class:"tag" /}
-		#{tab 'Statistics', class:"tag" /}
-	#{/tabbar}
-
-
+		#{tab 'Activities', class:"tab" /}
+		#{tab 'Questions', class:"tab" /}
+		#{tab 'Answers', class:"tab" /}
+		#{tab 'Reputation', class:"tab" /}
+		#{tab 'Statistics', class:"tab" /}
+#{/tabbar}
 </div>
+
 
 <article class="profileContent">
 

@@ -327,11 +327,16 @@ nav a {
 		
 /*** Profile ***/
 
-.profileHeader, .profileTabs, .profileContent {
+.profileHeader, .profileContent {
 	
 	background: rgba(255, 254,255,0.59);
 	margin: 15px;
+	padding: 5px;
 	
+	}
+	
+.profileTabs {
+	margin: 15px;
 	}
 	
 	.profileHeader h3 {
@@ -353,6 +358,11 @@ nav a {
 		margin-left: 250px;
 		display: block;
 	
+	}
+	.profileHeader a.editProfile {
+		position: absolute; 
+		right: 25px;
+		text-align: right;
 	}
 	.profileTabs a.tab {
 		width: 150px;

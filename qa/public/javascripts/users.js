@@ -11,7 +11,7 @@ $(function() {
 			$('a.tab').removeClass("active");
 			$(a).addClass("active");
 			
-			if(a.hash.substr(1)=="graph") {
+			if(a.hash.substr(1)=="Reputation") {
 				loadGraph();
 			}
 		});
