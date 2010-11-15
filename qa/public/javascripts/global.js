@@ -28,10 +28,10 @@ $(function() {
 	});
 	
 	// profile options
-	$('a.tab').click(function() {
+	$('a.tab').livequery('click', function(event) {
 		var a = this;
-		alert("test");
-		$.post(profileGet(), {id: userid, action: this.hash.substr(1)}, function(data) {
+		alert(userid);
+		$.get(profileGet({id: userid, action: this.hash.substr(1)}), function(data) {
 			
 			$('article.profileContent').html(data);
 			$('a.tab').removeClass("active");

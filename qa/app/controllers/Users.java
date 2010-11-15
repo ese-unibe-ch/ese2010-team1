@@ -74,9 +74,9 @@ public class Users extends Controller {
 
 	public static void get(long id, String action) {
 
-		System.out.println("test");
+		System.out.println(action);
 
-		if (action.equals("activites")) {
+		if (action.equals("activities")) {
 
 			renderText("activities");
 
