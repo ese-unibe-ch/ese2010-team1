@@ -26,6 +26,19 @@ $(function() {
 			self.location = $(this).find("a").attr("href");
 	});
 	
+	// profile options
+	$('.tab').click(function() {
+		var a = this;
+		alert("test");
+		$.post(profileGet(), {id: userid, action: this.hash.substr(1)}, function(data) {
+			
+			$('article.profileContent').html(data);
+			$('a.tab').removeClass("active");
+			$(a).addClass("active");
+		});
+		return false;
+	});
+	
 	// filter questions
 	$('#filter a').click(function() {
 		switch(this.hash) {

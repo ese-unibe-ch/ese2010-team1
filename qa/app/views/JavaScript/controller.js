@@ -11,6 +11,6 @@ var active = #{jsAction @Questions.active() /}
 var search = #{jsAction @Questions.search(':string') /}
 var form = #{jsAction @Questions.form(':type') /}
 var add = #{jsAction @Questions.add() /}
-
+var profileGet = #{jsAction @Users.get() /}
 
 var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}

@@ -25,6 +25,10 @@ GET 	/vote/remove/{id}						Question.removeVote
 GET		/best/set/{id}							Questions.setBestAnswer
 GET		/best/reset/{id}						Questions.resetBestAnswer
 
+# User
+
+GET 	/profile/{id}							Users.profile
+
 # Admin
 GET		/importXML								Admin.xmlImporter
 

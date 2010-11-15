@@ -72,6 +72,23 @@ public class Users extends Controller {
 		Questions.home();
 	}
 
+	public static void get(long id, String action) {
+
+		System.out.println("test");
+
+		if (action.equals("activites")) {
+
+			renderText("activities");
+
+		} else {
+
+			renderText("nothing found");
+			System.out.println(id + " " + action);
+
+		}
+
+	}
+
 	/*** AJAX ***/
 
 	public static void graphData(long id) {
