@@ -199,7 +199,7 @@ public class User extends Model {
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Point arg0, Point arg1) {
-			return (int) (((Point) arg1).time - ((Point) arg0).time);
+			return (((Point) arg1).time < ((Point) arg0).time) ? 1 : -1;
 		}
 	}
 
