@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="/public/stylesheets/${_arg}" />

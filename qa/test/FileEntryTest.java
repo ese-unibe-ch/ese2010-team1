@@ -51,7 +51,8 @@ public class FileEntryTest extends UnitTest {
 	@Test
 	public void deleteUploadeFile() {
 
-		File testFile = new File(Play.applicationPath + "/tmp/uploads/test.txt");
+		File testFile = new File(Play.applicationPath
+				+ "/public/files/test.txt");
 		try {
 			testFile.createNewFile();
 		} catch (IOException e) {

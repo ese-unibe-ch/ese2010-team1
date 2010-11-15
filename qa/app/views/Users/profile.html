@@ -1,9 +1,11 @@
 #{extends 'main.html' /}
-
-#{set 'controls'}
-<a href="/">Home</a>
+#{set 'scripts'}
+	#{script 'users.js' /}
 #{/set}
 
+<script type="text/javascript">
+var userid = ${puser.id};
+</script>
 
 <article class="profileHeader">
 
@@ -29,8 +31,8 @@
 
 <div class="profileTabs">
 
-	<a class="tab" href="#activities#1">Activities</a>
-	<a class="tab" href="#questions#2">Questions</a>
+	<a class="tab" href="#activities">Activities</a>
+	<a class="tab" href="#questions">Questions</a>
 	<a class="tab" href="#answers">Answers</a>
 	<a class="tab" href="#graph">Reputation Graph</a>
 	<a class="tab" href="#statistics">Statistics</a>

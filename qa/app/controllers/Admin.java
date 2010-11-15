@@ -1,12 +1,17 @@
 package controllers;
 
+import java.io.File;
 import java.util.List;
 
 import models.User;
+import models.importer.XMLHandler;
+import models.importer.XMLImporter;
+import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+@Check("isAdmin")
 @With(Secure.class)
 public class Admin extends Controller {
 
@@ -18,14 +23,12 @@ public class Admin extends Controller {
 		}
 	}
 
-	@Check("isAdmin")
 	public static void adminPanel() {
 
 		render();
 
 	}
 
-	@Check("isAdmin")
 	public static void showUserlist() {
 
 		List<User> users = User.findAll();
@@ -34,7 +37,6 @@ public class Admin extends Controller {
 
 	}
 
-	@Check("isAdmin")
 	public static void deleteUser(long id) {
 
 		User user = User.findById(id);
@@ -42,7 +44,6 @@ public class Admin extends Controller {
 		Admin.showUserlist();
 	}
 
-	@Check("isAdmin")
 	public static void toggleAdminState(long id) {
 		User user = User.findById(id);
 
@@ -55,6 +56,46 @@ public class Admin extends Controller {
 
 		Admin.showUserlist();
 
+	}
+
+	public static void xmlImporter() {
+
+		render();
+	}
+
+	public static void loadXML(@Required File xmlfile) {
+
+		int userCount = 0;
+		int questionCount = 0;
+		int answerCount = 0;
+		String report = "";
+
+		validation.isTrue(isXMLFile(xmlfile)).message(
+				"Wrong filetype uploaded!");
+		if (isXMLFile(xmlfile)) {
+
+			try {
+				XMLImporter importer = new XMLImporter(xmlfile);
+				XMLHandler handler = importer.getHandler();
+				userCount = handler.getUserCount();
+				questionCount = handler.getQuestionCount();
+				answerCount = handler.getAnswerCount();
+				report = handler.getReport();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			List<User> users = User.findAll();
+
+			render(users, userCount, questionCount, answerCount, report);
+		}
+
+	}
+
+	private static boolean isXMLFile(File xmlfile) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

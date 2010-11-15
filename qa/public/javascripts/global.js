@@ -1,11 +1,19 @@
 $(function() {
-	// display scrollbars
-	$('nav').jScrollPane();
-	var scrollPane = $('section');
-	scrollPane.jScrollPane();
+
+	var reinitialise = function() {
+			$('section, nav').height($('body').height() - 70);
+			$('section').data('jsp').reinitialise();
+			if($('nav').data('jsp'))
+				$('nav').data('jsp').reinitialise();
+			$('nav').css({width: "380px"});
+	}
 	
+	$('section').jScrollPane();
+	$('nav').jScrollPane({scrollbarOnLeft: true});
 	
-		
+	reinitialise();
+	$(window).resize(reinitialise);
+	$(window).ajaxComplete(reinitialise);
 	
 	// pulldown menus
 	$('.pulldown > a').click(function() {
@@ -14,50 +22,10 @@ $(function() {
 		return false;
 	});
 	
-	// load question
-	$('nav a').livequery('click', function(event) {
-		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
-			$('div#content').html(data);
-			
-		});
-		return false;
-	});
-	
-	// vote up
-	$('a.up').livequery('click', function(event) {
-		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
-			$('#div#content').html(data)
-			
-		});
-		return false;
-	});
-	
-	// vote down
-	$('a.down').livequery('click', function(event) {
-		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
-			$('div#content').html(data)
-	
-		});
-		return false;
-	});
-	
-	// load profile tabs
-	$('.profileTabs a').click(function() {
-		
-		
-	
-	});
-	
-	//		recommanded Questions
-	$('input.rq').keyup(function(event){
-		
-		$.get(recommandedQuestions({title: this.value}), function(data){
-				$('div#rqs').html(data)
-		
-		});
-		
-		return false;
+	$('.pulldown li').click(function() {
+		if($(this).find("a").length > 0)
+			self.location = $(this).find("a").attr("href");
 	});
 
-	
 });
+

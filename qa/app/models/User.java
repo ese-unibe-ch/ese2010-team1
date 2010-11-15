@@ -90,10 +90,6 @@ public class User extends Model {
 		this.timestamp = new Date();
 	}
 
-	public User() {
-
-	}
-
 	// SM cache reputation for faster access
 	/**
 	 * Reputation.
@@ -203,7 +199,7 @@ public class User extends Model {
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Point arg0, Point arg1) {
-			return (int) (((Point) arg0).time - ((Point) arg1).time);
+			return (((Point) arg1).time < ((Point) arg0).time) ? 1 : -1;
 		}
 	}
 
@@ -402,6 +398,10 @@ public class User extends Model {
 
 	public void setNewPassword(String pw) {
 		this.password = encrypt(pw);
+	}
+
+	public List<Question> questions() {
+		return Question.find("byOwner", this).fetch();
 	}
 
 }

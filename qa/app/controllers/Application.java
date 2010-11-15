@@ -13,6 +13,7 @@ import models.RecommandedQuestions;
 import models.Search;
 import models.Tag;
 import models.User;
+import models.Entry.ContentState;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -182,6 +183,13 @@ public class Application extends Controller {
 
 		render(recommandedQuestions, title);
 
+	}
+
+	public static void version(long id) {
+		ContentState state = ContentState.findById(id);
+		if (state != null) {
+			renderText(state.content);
+		}
 	}
 
 }

@@ -1,5 +1,7 @@
 #{set 'nav'}
 	<nav>
-		#{doBody /}
+		<div id="nav">
+			#{doBody /}
+		</div>
 	</nav>
 #{/set}
