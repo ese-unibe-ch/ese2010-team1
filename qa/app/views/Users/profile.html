@@ -31,11 +31,14 @@ var userid = ${puser.id};
 
 <div class="profileTabs">
 
-	<a class="tab" href="#activities">Activities</a>
-	<a class="tab" href="#questions">Questions</a>
-	<a class="tab" href="#answers">Answers</a>
-	<a class="tab" href="#graph">Reputation</a>
-	<a class="tab" href="#statistics">Statistics</a>
+#{tabbar 'profileTabs'}
+		#{tab 'Activities', class:"tag" /}
+		#{tab 'Questions', class:"tag" /}
+		#{tab 'Answers', class:"tag" /}
+		#{tab 'Reputation', class:"tag" /}
+		#{tab 'Statistics', class:"tag" /}
+	#{/tabbar}
+
 
 </div>
 

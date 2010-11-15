@@ -1,7 +1,7 @@
 $(function() {
 // profile options
 	
-	$('a.tab[href=#activities]').addClass("active");
+	$('a.tab[href=#Activities]').addClass("active");
 
 
 	$('a.tab').livequery('click', function(event) {
@@ -20,7 +20,7 @@ $(function() {
 	
 
 	
-	$('article.profileContent').load(profileGet({id: userid, theAction: "activities"}));
+	$('article.profileContent').load(profileGet({id: userid, theAction: "Activities"}));
 
 
 
