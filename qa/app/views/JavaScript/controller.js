@@ -12,5 +12,6 @@ var search = #{jsAction @Questions.search(':string') /}
 var form = #{jsAction @Questions.form(':type') /}
 var add = #{jsAction @Questions.add() /}
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
+var graphData = #{jsAction @Users.graphData(':id') /}
 
 var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}

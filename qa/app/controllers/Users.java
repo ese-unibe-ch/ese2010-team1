@@ -74,8 +74,6 @@ public class Users extends Controller {
 
 	public static void get(long id, String theAction) {
 
-		System.out.println(id);
-
 		if (theAction.equals("activities")) {
 
 			renderText("activities");
@@ -86,9 +84,9 @@ public class Users extends Controller {
 
 		} else if (theAction.equals("graph")) {
 
-		} else {
+			renderText("<div id=\"graph\"> <div id=\"graphcanvas\" style=\"width:600px;height:300px\"></div></div>");
 
-			renderText("nothing found");
+		} else if (theAction.equals("statistics")) {
 
 		}
 
