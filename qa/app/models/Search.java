@@ -135,4 +135,20 @@ public class Search {
 
 	}
 
+	public static List<Question> searchQuestions(String searchString) {
+		List<Question> questions = new ArrayList<Question>();
+		List<Entry> entries = searchEntry(searchString);
+		for (Entry entry : entries) {
+			Question question;
+			if (entry instanceof Answer) {
+				question = ((Answer) entry).question;
+			} else {
+				question = (Question) entry;
+			}
+			if (!questions.contains(question))
+				questions.add(question);
+		}
+		return questions;
+	}
+
 }

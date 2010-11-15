@@ -1,13 +1,15 @@
 #{extends 'main.html' /}
-
-#{set 'controls'}
-<a href="/">Home</a>
+#{set 'scripts'}
+	#{script 'users.js' /}
 #{/set}
 
+<script type="text/javascript">
+var userid = ${puser.id};
+</script>
 
 <article class="profileHeader">
 
-	<h3>${puser.name}'s Profile</h3>
+	<h3>${puser.name}'s Profile #{if puser==user}<a class="editProfile" href="#edit">edit</a>#{/if}</h3>
 	
 	<dl>
 		<dt>Registered since:</dt>
@@ -27,15 +29,17 @@
 
 </article>
 
+
 <div class="profileTabs">
-
-	<a class="tab" href="#activities#1">Activities</a>
-	<a class="tab" href="#questions#2">Questions</a>
-	<a class="tab" href="#answers">Answers</a>
-	<a class="tab" href="#graph">Reputation Graph</a>
-	<a class="tab" href="#statistics">Statistics</a>
-
+#{tabbar 'profileTabs'}
+		#{tab 'Activities', class:"tab" /}
+		#{tab 'Questions', class:"tab" /}
+		#{tab 'Answers', class:"tab" /}
+		#{tab 'Reputation', class:"tab" /}
+		#{tab 'Statistics', class:"tab" /}
+#{/tabbar}
 </div>
+
 
 <article class="profileContent">
 

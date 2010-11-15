@@ -9,13 +9,19 @@
         #{stylesheet 'jquery.jscrollpane.css' /}
         #{stylesheet 'main.css' /}
         
+        <!--[if lt IE 9]>
+			#{script 'html5.js' /}
+		<![endif]-->
+		
         #{script 'jquery-1.4.2.min.js' /}
         #{script 'plugins/flot/jquery.flot.js' /}   
         #{script 'plugins/scrollbar/jquery.mousewheel.js' /}   
         #{script 'plugins/scrollbar/jquery.jscrollpane.min.js' /}  
-        #{script 'plugins/livequery/jquery.livequery.min.js'/}
+        #{script 'plugins/livequery/jquery.livequery.min.js'/} 
+        #{script 'plugins/placeholder.js'/}
         <script src="@{JavaScript.controller}"></script> 
         #{script 'global.js' /}   
+        #{get 'scripts' /}
     </head>
     <body>
     	<div id="all">
@@ -32,13 +38,18 @@
     			<div id="sitecontrols">
     				
     				#{if user}
-    					<span>
-    			  			${user.name} : ${user.reputation()}
-    					</span>
-    				
+    					<a href="@{Users.profile(user.id)}">
+    			  			${user.name} (${user.reputation()})
+    					</a>
+    					
 	    				#{pulldown label:'Activity'}
-	    					<li></li>
-	    					<li>Something else</li>
+							#{list items:user.getNewNotifications(), as:'notification'}
+							<li>${notification.activity}</li>
+							#{/list}
+							#{else}
+							<li>There were no new notifications!</li>
+							#{/else}
+						
 	    				#{/pulldown}
 	    				#{pulldown label:'Account'}
 	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
@@ -64,12 +75,12 @@
     		</header>
     		#{get 'nav' /}
     		<section>
-    			<div id="content">
-    			#{doLayout /}
-    			<input type="text" id="rq" class="rq">Test</input>
-    			<div id="rqs" class="rqs"></div>
-    			</section>
-        	</div>
+<
+    			<div id="section">
+    				#{doLayout /}
+    			</div>
+        	</section>
+        	
         </div>
     </body>
 </html>

@@ -3,12 +3,33 @@
 # ~~~~
 
 # Questions
-GET     /                                       Questions.list
+GET     /                                       Questions.home
+
 
 GET		/question/{id}							Questions.get
 
-# Users
-GET		/user/{id}								Users.profile
+
+GET		/hot									Questions.hot
+GET		/mine									Questions.mine
+GET		/search/{string}						Question.search
+
+
+GET		/form/{type}							Questions.form
+POST	/add									Question.add
+
+GET		/vote/up/{id}							Questions.voteUp
+GET		/vote/down/{id}							Questions.voteDown
+GET 	/vote/remove/{id}						Question.removeVote
+
+GET		/best/set/{id}							Questions.setBestAnswer
+GET		/best/reset/{id}						Questions.resetBestAnswer
+
+# User
+
+GET 	/profile/{id}							Users.profile
+
+# Admin
+GET		/importXML								Admin.xmlImporter
 
 
 # Map static resources from the /app/public folder to the /public path

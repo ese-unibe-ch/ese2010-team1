@@ -1,0 +1,18 @@
+%{
+
+questionList = user.getQuestions(); 
+
+}%
+
+#{if questionList.size() > 0}
+<h1>Questions</h1>
+<ul>
+#{list items:questionList, as:'question'}
+<li>Asked ${question.title} (${question.rating()})</li>
+#{/list}
+
+</ul>
+#{/if}
+#{else}
+<p>There were no questions!</p>
+#{/else}
