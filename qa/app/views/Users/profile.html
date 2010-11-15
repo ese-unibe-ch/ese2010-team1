@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
-
-#{script 'users.js' /}
-
+#{set 'scripts'}
+	#{script 'users.js' /}
+#{/set}
 
 <script type="text/javascript">
 var userid = ${puser.id};

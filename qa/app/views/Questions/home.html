@@ -1,6 +1,11 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
+#{set 'scripts'}
+	#{script 'questions.js' /}
+#{/set}
+
+
 %{
 	display = display ? display : questions.get(0)
 }%
