@@ -30,7 +30,6 @@ $(function() {
 	// profile options
 	$('a.tab').livequery('click', function(event) {
 		var a = this;
-		alert(userid);
 		$.get(profileGet({id: userid, theAction: this.hash.substr(1)}), function(data) {
 			
 			$('article.profileContent').html(data);
@@ -38,6 +37,15 @@ $(function() {
 			$(a).addClass("active");
 		});
 		return false;
+	});
+	
+	
+	$('article.profileContent').load(function() {
+		var a = this;
+		$.get(profileGet({id: userid, theAction: "activities"}), function(data) {
+			a.html(data);
+		});
+	
 	});
 	
 	// filter questions
