@@ -33,10 +33,11 @@ input, textarea {
 	}
 
 #all {
-	margin: 0 auto;
+	margin: 20px auto;
 	width: 960px;
-	padding: 20px;
+	padding: 0;
 	position: relative;
+	overflow: hidden;
 }
 
 	header {
@@ -51,14 +52,10 @@ input, textarea {
 		}
 		
 		nav {
-			width: 380px;
-			background: #6e6e6e url(../images/shadow.jpg) top right repeat-y;
+			width: 360px;
+			background: #6e6e6e;
 			float: left;
 		}
-		
-			#nav {
-				padding-right: 25px;
-			}
 			
 			nav .jspVerticalBar {
 				left: 0;
@@ -71,7 +68,11 @@ input, textarea {
 		}
 		
 			nav + section {
-				width: 580px;	
+				width: 590px;	
+   				-webkit-box-shadow:inset 10px 0px 50px -10px #000;
+   				-moz-box-shadow:inset 60px 0px 30px -60px #000;
+   				box-shadow:inset 10px 0px 50px -10px #000;
+				padding-left: 10px;
 			}
 
 	
@@ -116,7 +117,7 @@ input, textarea {
 nav a {
 	display: block;
 	margin: 10px;
-	padding: 10px 20px 10px 10px;
+	padding: 10px 25px 10px 10px;
 	text-decoration: none;
 	color: #803ab4;
 	background: #fff url(../images/arrow_right_disabled.png) right center no-repeat;
@@ -124,6 +125,16 @@ nav a {
 
 	nav a.active, nav a:hover {
 		background-image: url(../images/arrow_right.png);
+	}
+	
+	a.bottomleft {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 350px;
+		padding: 5px;
+		color: #fff;
+		background: #888;
 	}
 	
 /*** Dropdown menus ***/
@@ -295,7 +306,7 @@ nav a {
 	
 	/*** Content ***/
 	
-	.entry p, .entry h3 {
+	.entry > div, .entry h3, .entry > form > div {
 		padding: 10px;
 		margin-right: 35px;
 		background: rgba(255,254,255,0.59);
@@ -309,7 +320,7 @@ nav a {
 			right: 10px;
 		}
 
-	.entry p {
+	.entry > div, .entry > form > div {
 		margin-top: 5px;
 	}
 	

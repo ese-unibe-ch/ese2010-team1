@@ -31,16 +31,17 @@
 			Answer
 		#{/else}
 		</h3>
-		<p>
+		<div>
 		#{field 'content'}
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
-		</p>
+		
 		#{if question}
 			<input type="text" name="tags" placeholder="Tags" />
 		#{/if}
 		
 		<input type="submit" value="Post" />
+		</div>
 	</form>
 	</article>
 
@@ -79,14 +80,16 @@
 	</h3>
 	
 	*{ content }*
-	<p>${_entry.content.nl2br()}</p>
-	#{if question}
-		#{list items:_entry.tags , as:'tag'}
-		
-		<div class="tags">${tag.name}</div>
-		
-		#{/list}
-	#{/if}
+	<div>
+		<p>${_entry.content.nl2br()}</p>
+		#{if question}
+			#{list items:_entry.tags , as:'tag'}
+			
+			<div class="tags">${tag.name}</div>
+			
+			#{/list}
+		#{/if}
+	</div>
 	
 	#{if _display != "innerHTML"}
 		</article>

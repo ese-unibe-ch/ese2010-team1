@@ -3,8 +3,7 @@
 # ~~~~
 
 # Questions
-GET     /                                       Questions.home			
-GET		/{id}									Questions.question				
+GET     /                                       Questions.home					
 
 GET		/question/{id}							Questions.get
 GET		/answer/{id}							Questions.entry
@@ -40,3 +39,6 @@ GET     /public/                                staticDir:public
 # Catch all
 *		/										module:secure
 *       /{controller}/{action}                  {controller}.{action}
+
+	
+GET		/{id}									Questions.question	

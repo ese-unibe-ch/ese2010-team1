@@ -22,15 +22,16 @@
 		#{/if}
 		#{tab 'Search' /}
 	#{/tabbar}
-	#{if user}
-		#{tabbar 'new'}
-			#{tab 'New Question' /}
-		#{/tabbar}
-	#{/if}
  #{/set}
 
 #{nav}
 	#{include 'Questions/list.html' /}
 #{/nav}
+
+#{if user}
+	#{set 'absolute'}
+		<a class="bottomleft" href="#NewQuestion">New Question</a>
+	#{/set}
+#{/if}
 
 #{include 'Questions/question.html' /}

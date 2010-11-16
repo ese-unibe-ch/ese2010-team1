@@ -1,12 +1,17 @@
 $(function() {
 
 	var reinitialise = function() {
-			$('section, nav').height($('body').height() - 70);
+			var height = $('body').height() - 70;
+			$('section, nav').height(height);
+			if($('.bottomleft').size() >= 1)
+				$('nav').height(height - $('.bottomleft').height());
 			$('section').data('jsp').reinitialise();
-			if($('nav').data('jsp'))
+			if($('nav').data('jsp')) {
 				$('nav').data('jsp').reinitialise();
-			$('nav').css({width: "380px"});
+				$('section').css({width: "600px"});
+			}
 	}
+	
 	
 	$('section').jScrollPane();
 	$('nav').jScrollPane({scrollbarOnLeft: true});
