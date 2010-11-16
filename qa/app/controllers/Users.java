@@ -3,7 +3,6 @@ package controllers;
 import java.util.Iterator;
 import java.util.List;
 
-import models.ProfileEntry;
 import models.ProfileItem;
 import models.User;
 import play.data.validation.Email;
@@ -38,14 +37,6 @@ public class Users extends Controller {
 	public static void profile(long id) {
 
 		List<ProfileItem> titles = ProfileItem.findAll();
-
-		List<ProfileEntry> entrys = ProfileEntry.findAll();
-
-		for (ProfileEntry entry : entrys) {
-
-			System.out.println(entry.user.name + " " + entry.entry + " "
-					+ entry.item.title);
-		}
 
 		User puser = User.findById(id);
 

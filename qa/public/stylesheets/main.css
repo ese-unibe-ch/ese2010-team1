@@ -417,7 +417,7 @@ nav a {
 	}	
 
 	
-	.activity-date {
+	.activity-date, .rating-box {
 		width: 50px;
 		height: 35px;
 		background-color: white;
@@ -428,7 +428,7 @@ nav a {
 		float: left;
 	}
 
-	.activity-box, .rating-box {
+	.activity-box {
 		width: 80px;
 		margin-top: 13px;
 
@@ -439,7 +439,11 @@ nav a {
 	}
 	
 	.rating-box {
+		width: 70px;
+		margin-left: 5px;
 		color: white;
+		background: black;
+		border: 1px solid black;
 	}
 	a.activity {
 		display: block;
