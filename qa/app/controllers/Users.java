@@ -39,6 +39,7 @@ public class Users extends Controller {
 		List<ProfileItem> titles = ProfileItem.findAll();
 
 		User puser = User.findById(id);
+
 		render(puser, titles);
 	}
 
@@ -77,11 +78,6 @@ public class Users extends Controller {
 
 		System.out.println(id);
 
-		for (String entry : profileEntry) {
-
-			System.out.println(entry);
-		}
-
 		User user = User.findById(id);
 		List<ProfileItem> titles = ProfileItem.findAll();
 
@@ -91,8 +87,9 @@ public class Users extends Controller {
 
 			ProfileItem pentry = it.next();
 			System.out.println(pentry.title);
+			System.out.println(entry);
 			pentry.editUserEntry(user, entry);
-
+			System.out.println(pentry.findUserEntry(user).entry);
 		}
 
 		profile(id);
