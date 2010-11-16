@@ -77,31 +77,30 @@ $(function() {
 	});
 	
 	// answer
-	$("#section > a").livequery('click', function() {
-		$(this).hide();
-		var id = this.hash.substr(1);
-		$.get(questionForm({type: "answer"}), function(data) {
-			$("#section").append(data);
-			$("#section textarea").foc();
-			$("#section form").submit(function() {
-				var content = $("#section textarea[name=content]").value();
-				$("#section input, #section textarea").removeClass("error");
-				if(!content) {
-					$("#section textarea[name=content]").addClass("error").focus();
-				} else {
-					$.post(answerQuestion({id: id}), {content: content}, function(data) {
-						if(data.success == 1) {
-							$("#section article:last-child").load(getAnswer({id: data.id}));	
-						} else {
-							alert("Error");
-						}
-					}, "json");
-				}
-				return false;	
-			});
-		});
-		return false;
+	
+	$(".entry.answer form").livequery('submit', function() {
+		var content = $("#section textarea[name=content]").value();
+		$("#section input, #section textarea").removeClass("error");
+		if(!content) {
+			$("#section textarea[name=content]").addClass("error").focus();
+		} else {
+			var id = $('.entry.question').attr('id').substr(5);
+			
+			if($("#section input[type=file]").value() != "") {
+				return true;
+			} else {
+				$.post(answerQuestion({id: id}), {content: content}, function(data) {
+					if(data.success == 1) {
+						$("#section article:last-child").load(getAnswer({id: data.id}));	
+					} else {
+						alert("Error");
+					}
+				}, "json");
+			}
+		}
+		return false;	
 	});
+
 	
 	// vote up
 	$('a.up').livequery('click', function(event) {
