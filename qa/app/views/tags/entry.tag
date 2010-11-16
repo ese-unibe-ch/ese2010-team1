@@ -1,5 +1,5 @@
 %{
-	question = _type == "question" || (_entry != null && _entry instanceof models.Question)
+	question = _type == "question" || (_entry != null && _entry instanceof models.Question && _type != "answer")
 	answer = !question
 }%
 
@@ -14,7 +14,7 @@
 #{elseif _display == "form"}
 
 	<article class="entry ${question?"question":"answer"}">
-	<form>
+	<form method="post" action="@{Questions.answer(_entry.id)}" enctype="multipart/form-data">
 	
 		<menu>
 		<li><a href="#" class="up disabled"></a></li>
@@ -38,7 +38,9 @@
 		
 		#{if question}
 			<input type="text" name="tags" placeholder="Tags" />
-		#{/if}
+		#{/if}#{else}
+			<input type="file" name ="file" />
+		#{/else}
 		
 		<input type="submit" value="Post" />
 		</div>
@@ -79,18 +81,34 @@
 		</a>
 	</h3>
 	
-	*{ content }*
 	<div>
+	
+		*{ content }*
+	
 		<p>${_entry.content.nl2br()}</p>
+		
+		
+		*{ tags }*
+		
 		#{if question}
 			#{list items:_entry.tags , as:'tag'}
-			
-			<div class="tags">${tag.name}</div>
-			
+				<div class="tags">${tag.name}</div>
 			#{/list}
 		#{/if}
+		
+		*{ files }*
+		
+		#{elseif _entry.getFiles().size()>0}
+			#{list items:_entry.getFiles(), as:'file'}
+				<a href="@{Application.getFile(file.id)}">${file.uploadFilename}</a>
+				#{if _user==file.owner}
+				<a href="@{Secured.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
+				#{/if}
+			#{/list}
+		#{/elseif}
+		
+		
 	</div>
-	
 	#{if _display != "innerHTML"}
 		</article>
 	#{/if}

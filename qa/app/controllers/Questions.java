@@ -119,6 +119,7 @@ public class Questions extends Controller {
 			Answer answer = question.answer(user, content);
 			if (file != null && file.exists()) {
 				user.addFileToEntry(file, answer);
+				question(id);
 			}
 			renderJSON("{\"success\": 1, \"id\": " + answer.id + "}");
 		} else {

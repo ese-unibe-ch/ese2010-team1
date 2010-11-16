@@ -85,13 +85,18 @@ $(function() {
 			$("#section textarea[name=content]").addClass("error").focus();
 		} else {
 			var id = $('.entry.question').attr('id').substr(5);
-			$.post(answerQuestion({id: id}), {content: content}, function(data) {
-				if(data.success == 1) {
-					$("#section article:last-child").load(getAnswer({id: data.id}));	
-				} else {
-					alert("Error");
-				}
-			}, "json");
+			
+			if($("#section input[type=file]").value() != "") {
+				return true;
+			} else {
+				$.post(answerQuestion({id: id}), {content: content}, function(data) {
+					if(data.success == 1) {
+						$("#section article:last-child").load(getAnswer({id: data.id}));	
+					} else {
+						alert("Error");
+					}
+				}, "json");
+			}
 		}
 		return false;	
 	});

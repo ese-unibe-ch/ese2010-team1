@@ -287,6 +287,10 @@ nav a {
 				background: url(../images/delete_disabled.png) no-repeat center;
 			}
 			
+	.entry input, .entry textarea {
+		display: block;
+	}
+			
 	/*** Best Answer ***/
 	
 	.entry .bestAnswer, .entry .set.bestAnswer:hover {
