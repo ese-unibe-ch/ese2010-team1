@@ -20,6 +20,7 @@ var userid = ${puser.id};
 
 	<h3>${puser.name}'s Profile #{if puser==user}<a class="editProfile" href="#edit">edit</a>#{/if}</h3>
 	
+	#{form @Users.saveProfile(puser.id)}
 	<dl>
 		<dt>Registered since:</dt>
 		<dd>${puser.timestamp.format('dd.MM.yyyy')}</dd>
@@ -39,6 +40,8 @@ var userid = ${puser.id};
 		#{/list}
 	</dl>	
 	<input class="editProfile hidden" type="submit"  value="save" />
+	
+	#{/form}
 
 </article>
 

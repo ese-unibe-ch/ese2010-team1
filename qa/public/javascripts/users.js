@@ -11,22 +11,14 @@ $(function() {
 		a.removeClass('hidden');
 		a.addClass('show');
 	});
-	
-	$('input.editProfile[type=submit]').livequery('click', function(event) {
-		
-		
-		
-		var a = $('input.editProfile[type=text]');
-		
-		var entrys = { "test" , "blub", "nothing" };
-		
-		
-				
-		$.post(editProfile(), { id: userid, entrys: entrys}, function(data) {
-		
-			alert("a post  call");
-		});
-	});
+	 
+//	$('input.editProfile[type=submit]').livequery('click', function(event) {		
+//		var a = $('input.editProfile[type=text]');		
+//		var entrys = { "test" , "blub", "nothing" };				
+//		$.post(editProfile(), { id: userid, entrys: entrys}, function(data) {		
+//			alert("a post  call");
+//		});
+//	});
 
 
 	$('a.tab').livequery('click', function(event) {

@@ -31,7 +31,8 @@ public class XMLHandler extends DefaultHandler {
 	private static List<String> tagList;
 
 	public XMLHandler() {
-
+		this.dataMap = new HashMap<String, String>();
+		this.tagList = new ArrayList<String>();
 		this.report = new StringBuilder();
 	}
 
@@ -69,27 +70,19 @@ public class XMLHandler extends DefaultHandler {
 
 		case 1:
 
-			// TS instantiate in constructor and clear just the whole map, same
-			// procedure @ tagList
-			dataMap = new HashMap<String, String>();
+			dataMap.clear();
 
 			dataMap.put("id", atts.getValue(0));
-			// System.out.println(atts.getValue(0));
 			break;
 		case 2:
 
-			if (qName == "tags") {
+			if (qName.equals("tags")) {
 
-				tagList = new ArrayList<String>();
+				tagList.clear();
 
 			}
 			break;
 
-		default:
-
-			// System.out.println("Start: " + level + " " + qName + " "
-			// + atts.getValue(0));
-			break;
 		}
 	}
 
@@ -98,18 +91,16 @@ public class XMLHandler extends DefaultHandler {
 		switch (level) {
 
 		case 1:
-			if (qName == "user") {
-				// System.out.println(level + " should create user");
+			if (qName.equals("user")) {
 				createUser();
 				break;
 			}
 
-			if (qName == "question") {
-
+			if (qName.equals("question")) {
 				createQuestion();
 				break;
 			}
-			if (qName == "answer") {
+			if (qName.equals("answer")) {
 
 				createAnswer();
 				break;
@@ -122,13 +113,9 @@ public class XMLHandler extends DefaultHandler {
 
 			break;
 		case 3:
-			if (qName == "tag") {
+			if (qName.equals("tag")) {
 				tagList.add(builder.toString());
 			}
-			break;
-
-		default:
-			// System.out.println("End: " + level + " " + qName);
 			break;
 		}
 
@@ -147,10 +134,6 @@ public class XMLHandler extends DefaultHandler {
 			user.fakeId = Long.parseLong(dataMap.get("id"));
 			user.isAdmin = Boolean.parseBoolean(dataMap.get("ismoderator"));
 			user.save();
-
-			// TS to remove, just to see the progress for developing
-			// report.append("User " + dataMap.get("displayname") +
-			// " created\n");
 			userCount++;
 		} else {
 

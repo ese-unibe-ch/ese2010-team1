@@ -3,6 +3,8 @@ package controllers;
 import java.io.File;
 import java.util.List;
 
+import models.Answer;
+import models.Question;
 import models.User;
 import models.importer.XMLHandler;
 import models.importer.XMLImporter;
@@ -87,8 +89,11 @@ public class Admin extends Controller {
 			}
 
 			List<User> users = User.findAll();
+			List<Question> questions = Question.findAll();
+			List<Answer> answers = Answer.findAll();
 
-			render(users, userCount, questionCount, answerCount, report);
+			render(users, questions, answers, userCount, questionCount,
+					answerCount, report);
 		}
 
 		validation.keep();

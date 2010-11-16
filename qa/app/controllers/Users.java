@@ -73,11 +73,11 @@ public class Users extends Controller {
 		Questions.home();
 	}
 
-	public static void saveProfile(long id, String[] entrys) {
+	public static void saveProfile(long id, String[] profileEntry) {
 
 		System.out.println(id);
 
-		for (String entry : entrys) {
+		for (String entry : profileEntry) {
 
 			System.out.println(entry);
 		}
@@ -87,14 +87,15 @@ public class Users extends Controller {
 
 		Iterator<ProfileItem> it = titles.iterator();
 
-		for (String entry : entrys) {
+		for (String entry : profileEntry) {
 
 			ProfileItem pentry = it.next();
+			System.out.println(pentry.title);
 			pentry.editUserEntry(user, entry);
 
 		}
 
-		// showProfile(id);
+		profile(id);
 
 	}
 
