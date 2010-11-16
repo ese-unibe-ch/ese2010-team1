@@ -4,17 +4,25 @@
 	    	#{/if}
 	    	#{else}
 	    		#{list items:user.getActivities(10), as:'activity'}
-	    			<dl id="activity">
+	    			<ul id="activities">
 	    			#{if activity instanceof models.Answer}
 
-	    				<dt><div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div><div class="activity-box"> answered </div><div class="clear"> </div></dt>  
-	    				<dd><a class="activity" href="@{Application.question(activity.question.id)}#${activity.id}">${activity.question.title}</a>  </dd>
+	    				<li>
+	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
+	    				<div class="activity-box"> answered </div>
+	    				<a class="activity" href="@{Application.question(activity.question.id)}#${activity.id}">${activity.question.title}</a>
+	    				<div class="clear"></div> 
+	    				</li>
 	    			#{/if}
 	    			#{else}
-	    				<dt><div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div><div class="activity-box"> asked </div> <div class="clear"></div> </dt> 
-	    				<dd> <a class="activity" href="@{Application.question(activity.id)}">${activity.title}</a></dd>
+	    				<li>
+	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
+	    				<div class="activity-box"> asked </div> 
+	    				<a class="activity" href="@{Application.question(activity.id)}">${activity.title}</a>
+	    				<div class="clear"></div> 
+	    				</li>
 	    			#{/else}
 	    	
 	    		#{/list}
-	    		</dl>
+	    		</ul>
 	    	#{/else}

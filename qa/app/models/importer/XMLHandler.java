@@ -114,6 +114,7 @@ public class XMLHandler extends DefaultHandler {
 				createAnswer();
 				break;
 			}
+			break;
 
 		case 2:
 
@@ -191,8 +192,6 @@ public class XMLHandler extends DefaultHandler {
 					+ "} could not be imported \n");
 		}
 
-		questionCount++;
-
 	}
 
 	private void createAnswer() {
@@ -221,14 +220,13 @@ public class XMLHandler extends DefaultHandler {
 			}
 
 			answer.save();
+			answerCount++;
 
 		} else {
 
 			report.append("ERROR: Answer {" + dataMap.get("id")
 					+ "} could not be imported \n");
 		}
-
-		answerCount++;
 
 	}
 
@@ -247,7 +245,7 @@ public class XMLHandler extends DefaultHandler {
 
 	public int getQuestionCount() {
 
-		return this.userCount;
+		return this.questionCount;
 	}
 
 	public int getAnswerCount() {
