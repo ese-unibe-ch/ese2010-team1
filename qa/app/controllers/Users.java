@@ -79,7 +79,7 @@ public class Users extends Controller {
 
 		for (String entry : entrys) {
 
-			System.out.println("entry");
+			System.out.println(entry);
 		}
 
 		User user = User.findById(id);

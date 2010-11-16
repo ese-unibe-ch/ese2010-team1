@@ -410,35 +410,35 @@ nav a {
 	ul#activities li {
 	
 		margin-bottom: 5px;
-	}
-	
+	}	
 
 	
 	.activity-date {
 		width: 50px;
-		height: 40px;
+		height: 35px;
 		background-color: white;
 		color: #333;
 		font-weight: bold;
 		text-align: center;
 		border: 1px solid white;
 		float: left;
-}
+	}
 
-.activity-box {
-		width: 100px;
-		margin-top: 10px;
+	.activity-box {
+		width: 80px;
+		margin-top: 13px;
 		float: left;
 		margin-left: 15px;
+		font-weight: bold;
 
-}
-a.activity {
-display: block;
-margin-top: 10px;
-margin-left: 20px;
-float: left;
-}
-
+	}
+	a.activity {
+		display: block;
+		margin-top: 13px;
+		margin-left: 20px;
+		float: left;
+		font-weight: bold;
+	}
 
 		
 	/*** Register ***/

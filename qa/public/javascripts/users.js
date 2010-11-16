@@ -15,11 +15,14 @@ $(function() {
 	$('input.editProfile[type=submit]').livequery('click', function(event) {
 		
 		
-		var entrys = $('input.editProfile[type=text]').serialize();
-			
-			alert(entrys);
 		
-		$.post(editProfile(), {'id': userid, 'entrys[]': entrys}, function(data) {
+		var a = $('input.editProfile[type=text]');
+		
+		var entrys = { "test" , "blub", "nothing" };
+		
+		
+				
+		$.post(editProfile(), { id: userid, entrys: entrys}, function(data) {
 		
 			alert("a post  call");
 		});
