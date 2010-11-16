@@ -39,6 +39,7 @@ public class Users extends Controller {
 		List<ProfileItem> titles = ProfileItem.findAll();
 
 		User puser = User.findById(id);
+
 		render(puser, titles);
 	}
 
