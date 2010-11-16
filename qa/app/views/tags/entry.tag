@@ -51,7 +51,7 @@
 #{else}
 
 	#{if _display != "innerHTML"}
-		<article class="entry ${question.yesno('question','answer')}">
+		<article id="entry${_entry.id}" class="entry ${question.yesno('question','answer')}">
 	#{/if}
 	
 	*{ vote }*

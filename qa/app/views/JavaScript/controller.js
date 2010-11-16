@@ -1,5 +1,6 @@
 var home = #{jsAction @Questions.home() /}
-var getQuestion = #{jsAction @Questions.question(':id') /}
+var showQuestion = #{jsAction @Questions.question(':id') /}
+var getQuestion = #{jsAction @Questions.get(':id') /}
 var getAnswer = #{jsAction @Questions.entry(':id') /}
 var voteUp = #{jsAction @Questions.voteUp(':id') /}
 var voteDown = #{jsAction @Questions.voteDown(':id') /}

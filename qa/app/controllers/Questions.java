@@ -34,9 +34,16 @@ public class Questions extends Controller {
 	/**
 	 * List and show questions.
 	 */
+
 	public static void home() {
 		List<Question> questions = Question.questions();
 		render(questions);
+	}
+
+	public static void question(long id) {
+		Question display = Question.findById(id);
+		List<Question> questions = Question.questions();
+		render("Questions/home.html", questions, display);
 	}
 
 	/*** AJAX ***/
@@ -44,13 +51,13 @@ public class Questions extends Controller {
 	/**
 	 * Get a question.
 	 */
-	public static void question(long id) {
+	public static void get(long id) {
 		Question question = Question.findById(id);
 		if (question == null) {
-			render();
+			render("Questions/question.html");
 		} else {
 			List<Answer> answers = question.answers();
-			render(question, answers);
+			render("Questions/question.html", question, answers);
 		}
 	}
 
