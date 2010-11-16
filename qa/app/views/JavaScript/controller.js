@@ -13,5 +13,6 @@ var form = #{jsAction @Questions.form(':type') /}
 var add = #{jsAction @Questions.add() /}
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
 var graphData = #{jsAction @Users.graphData(':id') /}
+var editProfile = #{jsAction @Users.saveProfile(':id', ':entrys[]') /}
 
 var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}

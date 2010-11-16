@@ -2,6 +2,15 @@
 #{set 'scripts'}
 	#{script 'users.js' /}
 #{/set}
+%{
+
+	if(user && user==puser) {
+		editable = true;
+	}else {
+		editable = false;
+	}
+
+}%
 
 <script type="text/javascript">
 var userid = ${puser.id};
@@ -20,12 +29,16 @@ var userid = ${puser.id};
 			<dt>${title.title}:</dt>
 			<dd>
 				#{if title.hasUserEntry(puser)}
-					${title.findUserEntry(puser).entry}
+					<span class="profileEntry show">${title.findUserEntry(puser).entry}</span>
+				#{/if}
+				#{if editable}
+					<input type="text" class="editProfile hidden" name="profileEntry" value="${title.findUserEntry(puser)?.entry}" />
 				#{/if}
 				&nbsp;
 			</dd>
 		#{/list}
 	</dl>	
+	<input class="editProfile hidden" type="submit"  value="save" />
 
 </article>
 

@@ -337,6 +337,11 @@ nav a {
 	
 .profileTabs {
 	margin: 15px;
+	margin-bottom: 0px;
+	}
+	
+.profileContent {
+	margin-top: 0px;
 	}
 	
 	.profileHeader h3 {
@@ -364,6 +369,11 @@ nav a {
 		right: 25px;
 		text-align: right;
 	}
+	
+	.profileHeader input.editProfile {
+		
+	
+	}
 	.profileTabs a.tab {
 		width: 150px;
 		line-height: 20px;
@@ -372,6 +382,14 @@ nav a {
 	
 	.profileTabs .active {
 		text-decoration: underline;
+	}
+	
+	.hidden {
+		display: none;
+	}
+	
+	.show {
+		display: inline;
 	}
 	
 /*** Register ***/

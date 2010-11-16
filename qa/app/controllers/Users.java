@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Iterator;
 import java.util.List;
 
 import models.ProfileItem;
@@ -70,6 +71,31 @@ public class Users extends Controller {
 		new User(username, email, password).save();
 
 		Questions.home();
+	}
+
+	public static void saveProfile(long id, String[] entrys) {
+
+		System.out.println(id);
+
+		for (String entry : entrys) {
+
+			System.out.println("entry");
+		}
+
+		User user = User.findById(id);
+		List<ProfileItem> titles = ProfileItem.findAll();
+
+		Iterator<ProfileItem> it = titles.iterator();
+
+		for (String entry : entrys) {
+
+			ProfileItem pentry = it.next();
+			pentry.editUserEntry(user, entry);
+
+		}
+
+		// showProfile(id);
+
 	}
 
 	public static void get(long id, String theAction) {

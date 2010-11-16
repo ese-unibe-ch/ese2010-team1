@@ -65,17 +65,17 @@ public class UserFuncs extends Controller {
 	 * 
 	 * @param id
 	 *            the user id
-	 * @param entrys
+	 * @param profileEntrys
 	 *            the data entrys
 	 */
-	public static void saveProfile(long id, String[] entrys) {
+	public static void saveProfile(long id, String[] profileEntrys) {
 
 		User user = User.findById(id);
 		List<ProfileItem> titles = ProfileItem.findAll();
 
 		Iterator<ProfileItem> it = titles.iterator();
 
-		for (String entry : entrys) {
+		for (String entry : profileEntrys) {
 
 			ProfileItem pentry = it.next();
 			pentry.editUserEntry(user, entry);

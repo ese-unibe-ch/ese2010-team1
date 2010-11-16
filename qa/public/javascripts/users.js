@@ -2,6 +2,28 @@ $(function() {
 // profile options
 	
 	$('a.tab[href=#Activities]').addClass("active");
+	
+	$('a.editProfile').livequery('click', function(event) {
+		var a = $('input.editProfile');
+		var b = $('span.profileEntry');
+		b.removeClass('show');
+		b.addClass('hidden');
+		a.removeClass('hidden');
+		a.addClass('show');
+	});
+	
+	$('input.editProfile[type=submit]').livequery('click', function(event) {
+		
+		
+		var entrys = $('input.editProfile[type=text]').serialize();
+			
+			alert(entrys);
+		
+		$.post(editProfile(), {'id': userid, 'entrys[]': entrys}, function(data) {
+		
+			alert("a post  call");
+		});
+	});
 
 
 	$('a.tab').livequery('click', function(event) {
