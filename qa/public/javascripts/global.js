@@ -9,6 +9,7 @@ $(function() {
 			if($('nav').data('jsp')) {
 				$('nav').data('jsp').reinitialise();
 				$('section').css({width: "600px"});
+				$('nav').css({width: "360px"});
 			}
 	}
 	
