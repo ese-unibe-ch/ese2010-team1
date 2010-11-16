@@ -28,7 +28,7 @@
 				<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
 			#{/field}
 		#{/if}#{else}
-			Answer
+			New Answer
 		#{/else}
 		</h3>
 		<div>
