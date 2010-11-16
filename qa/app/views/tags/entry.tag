@@ -1,20 +1,21 @@
 %{
-	question = _entry != null && _entry instanceof models.Question
+	question = _type == "question" || (_entry != null && _entry instanceof models.Question)
 	answer = !question
 }%
 
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
+		<a href="#!${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
 	
 #{/if}
 
 *{ form representation }*
 #{elseif _display == "form"}
 
-	<article class="entry question">
-	#{form @Questions.add()}
+	<article class="entry ${question?"question":"answer"}">
+	<form>
+	
 		<menu>
 		<li><a href="#" class="up disabled"></a></li>
 		<li class="rating">0</li>
@@ -22,19 +23,25 @@
 		</menu>
 	
 		<h3>
-		#{field 'title'}
-			<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
-		#{/field}
+		#{if question}
+			#{field 'title'}
+				<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
+			#{/field}
+		#{/if}#{else}
+			Answer
+		#{/else}
 		</h3>
 		<p>
 		#{field 'content'}
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		</p>
-		<input type="text" name="tags" placeholder="Tags" />
+		#{if question}
+			<input type="text" name="tags" placeholder="Tags" />
+		#{/if}
 		
 		<input type="submit" value="Post" />
-	#{/form}
+	</form>
 	</article>
 
 #{/elseif}

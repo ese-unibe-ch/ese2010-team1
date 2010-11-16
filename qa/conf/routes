@@ -7,16 +7,17 @@ GET     /                                       Questions.home
 
 
 GET		/question/{id}							Questions.get
-GET     /recommandedQuestions/{title}			Application.recommandedQuestions
-
+GET		/answer/{id}							Questions.entry
 
 GET		/hot									Questions.hot
 GET		/mine									Questions.mine
 GET		/search/{string}						Question.search
 
-
 GET		/form/{type}							Questions.form
 POST	/add									Question.add
+POST	/answer/{id}							Question.answer
+
+GET     /recommendedQuestions/{title}			Application.recommendedQuestions
 
 GET		/vote/up/{id}							Questions.voteUp
 GET		/vote/down/{id}							Questions.voteDown

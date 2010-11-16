@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.util.List;
 
 import models.Answer;
@@ -82,6 +83,11 @@ public class Questions extends Controller {
 		render(type);
 	}
 
+	public static void entry(long id) {
+		Entry entry = Entry.findById(id);
+		render("Questions/entry.html", entry);
+	}
+
 	public static void add(@Required String title, @Required String content,
 			String tags) {
 		User user = User.find("byName", Security.connected()).first();
@@ -94,6 +100,20 @@ public class Questions extends Controller {
 			}
 
 			renderJSON("{\"success\": 1, \"id\": " + question.id + "}");
+		} else {
+			renderJSON("{\"success\": 0}");
+		}
+	}
+
+	public static void answer(long id, @Required String content, File file) {
+		User user = User.find("byName", Security.connected()).first();
+		Question question = Question.findById(id);
+		if (user != null && question != null && !validation.hasErrors()) {
+			Answer answer = question.answer(user, content);
+			if (file != null && file.exists()) {
+				user.addFileToEntry(file, answer);
+			}
+			renderJSON("{\"success\": 1, \"id\": " + answer.id + "}");
 		} else {
 			renderJSON("{\"success\": 0}");
 		}
@@ -139,7 +159,7 @@ public class Questions extends Controller {
 				answer.question.setBestAnswer(answer);
 			}
 			Question question = answer.question;
-			render("Questions/get.html", question);
+			render("Questions/question.html", question);
 		}
 	}
 
@@ -152,7 +172,7 @@ public class Questions extends Controller {
 					&& question.canSetBestAnswer()) {
 				question.resetBestAnswer();
 			}
-			render("Questions/get.html", question);
+			render("Questions/question.html", question);
 		}
 	}
 

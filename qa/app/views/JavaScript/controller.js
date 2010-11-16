@@ -1,18 +1,20 @@
-var questionsList = #{jsAction @Questions.home() /}
-var questionsGet = #{jsAction @Questions.question(':id') /}
+var home = #{jsAction @Questions.home() /}
+var getQuestion = #{jsAction @Questions.question(':id') /}
+var getAnswer = #{jsAction @Questions.entry(':id') /}
 var voteUp = #{jsAction @Questions.voteUp(':id') /}
 var voteDown = #{jsAction @Questions.voteDown(':id') /}
 var removeVote = #{jsAction @Questions.removeVote(':id') /}
 var setBestAnswer = #{jsAction @Questions.setBestAnswer(':id') /}
 var resetBestAnswer = #{jsAction @Questions.resetBestAnswer(':id') /}
-var hot = #{jsAction @Questions.hot() /}
-var mine = #{jsAction @Questions.mine() /}
-var active = #{jsAction @Questions.active() /}
-var search = #{jsAction @Questions.search(':string') /}
-var form = #{jsAction @Questions.form(':type') /}
-var add = #{jsAction @Questions.add() /}
+var hotQuestions = #{jsAction @Questions.hot() /}
+var myQuestions = #{jsAction @Questions.mine() /}
+var activeQuestions = #{jsAction @Questions.active() /}
+var searchQuestions = #{jsAction @Questions.search(':string') /}
+var questionForm = #{jsAction @Questions.form(':type') /}
+var addQuestion = #{jsAction @Questions.add() /}
+var answerQuestion = #{jsAction @Questions.answer(':id') /}
+var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}
+
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
 var graphData = #{jsAction @Users.graphData(':id') /}
 var editProfile = #{jsAction @Users.saveProfile(':id', ':entrys[]') /}
-
-var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}
