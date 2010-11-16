@@ -6,7 +6,7 @@
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#!${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
+		<a href="#!${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title.slice(35)}</a>
 	
 #{/if}
 
@@ -14,7 +14,7 @@
 #{elseif _display == "form"}
 
 	<article class="entry ${question?"question":"answer"}">
-	<form method="post" action="@{Questions.answer(_entry.id)}" enctype="multipart/form-data">
+	<form method="post" action="@{Questions.answer(_entry?.id)}" enctype="multipart/form-data">
 	
 		<menu>
 		<li><a href="#" class="up disabled"></a></li>
@@ -74,7 +74,7 @@
 	
 	*{ title }*
 	<h3>
-		${question ? _entry.title : "Answer"}
+		${question ? _entry.title.slice(55) : "Answer"}
 		#{setBestAnswer answer:_entry, user:_user /}
 		<a href="@{Users.profile(_entry.owner.id)}" class="owner">
 			${_entry.owner.name} (${_entry.owner.reputation()})
