@@ -7,7 +7,7 @@
 
 
 %{
-	display = display ? display : questions.get(0)
+	question = display ? display : questions.get(0)
 }%
 
 #{set 'controls'}
@@ -30,12 +30,7 @@
  #{/set}
 
 #{nav}
-	#{list items:questions, as:'question'}
-		#{entry entry:question, user:user, display:'nav', active:question==display /}
-	#{/list}
+	#{include 'Questions/list.html' /}
 #{/nav}
 
-#{entry entry:display, user:user /}
-#{list items:display.answers, as:'entry'}
-	#{entry entry:entry, user:user /}
-#{/list}
+#{include 'Questions/question.html' /}

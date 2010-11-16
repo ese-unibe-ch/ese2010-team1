@@ -4,16 +4,16 @@ $(function() {
 	$('#filter a').click(function() {
 		switch(this.hash) {
 			case "#Mine":
-				$("#nav").load(mine());
+				$("#nav").load(myQuestions());
 				break;
 			case "#Hot":
-				$("#nav").load(hot());
+				$("#nav").load(hotQuestions());
 				break;
 			case "#Active":
-				$("#nav").load(active());
+				$("#nav").load(activeQuestions());
 				break;
 			case "#Search":
-				$("#nav").load(search({string: $("#search input").val()}));
+				$("#nav").load(searchQuestions({string: $("#search input").val()}));
 				$("#search input").focus();
 				break;
 		}
@@ -24,7 +24,7 @@ $(function() {
 	
 	// search questions
 	$("#search input").keyup(function() {
-		$("#nav").load(search({string: this.value}));
+		$("#nav").load(searchQuestions({string: this.value}));
 		$('#filter a').removeClass("active");
 		$('#filter a[href=#Search]').addClass("active");
 	});
@@ -32,7 +32,7 @@ $(function() {
 	// load question
 	$('nav a').livequery('click', function(event) {
 		var a = this;
-		$.get(questionsGet({id: this.hash.substr(1)}), function(data) {
+		$.get(getQuestion({id: this.hash.substr(1)}), function(data) {
 			$('#section').html(data);
 			$('#nav a').removeClass("active");
 			$(a).addClass("active");
@@ -42,7 +42,7 @@ $(function() {
 	
 	// new question
 	$("#new a").click(function() {
-		$.get(form({type: "question"}), function(data) {
+		$.get(questionForm({type: "question"}), function(data) {
 			$("#section").html(data);
 			$("#section input[name=title]").foc();
 			$('#nav a').removeClass("active");
@@ -56,10 +56,37 @@ $(function() {
 				} else if(!content) {
 					$("#section textarea[name=content]").addClass("error");
 				} else {
-					$.post(add(), {title: title, content: content, tags: tags}, function(data) {
+					$.post(addQuestion(), {title: title, content: content, tags: tags}, function(data) {
 						if(data.success == 1) {
-							$("#section").load(questionsGet({id: data.id}));	
+							$("#section").load(getQuestion({id: data.id}));	
 							$("#filter a.active").click();
+						} else {
+							alert("Error");
+						}
+					}, "json");
+				}
+				return false;	
+			});
+		});
+		return false;
+	});
+	
+	// answer
+	$("#section > a").livequery('click', function() {
+		$(this).hide();
+		var id = this.hash.substr(1);
+		$.get(questionForm({type: "answer"}), function(data) {
+			$("#section").append(data);
+			$("#section textarea").foc();
+			$("#section form").submit(function() {
+				var content = $("#section textarea[name=content]").value();
+				$("#section input, #section textarea").removeClass("error");
+				if(!content) {
+					$("#section textarea[name=content]").addClass("error");
+				} else {
+					$.post(answerQuestion({id: id}), {content: content}, function(data) {
+						if(data.success == 1) {
+							$("#section article:last-child").load(getAnswer({id: data.id}));	
 						} else {
 							alert("Error");
 						}

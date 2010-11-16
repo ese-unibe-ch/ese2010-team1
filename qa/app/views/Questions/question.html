@@ -3,4 +3,7 @@
 	#{list items:question.answers, as:'entry'}
 		#{entry entry:entry, user:user /}
 	#{/list}
+	#{if user}
+		<a href="#${question.id}">Antworten</a>
+	#{/if}
 #{/if}
