@@ -5,6 +5,15 @@
 
 <form method="post" action="@{Admin.loadXML()}" accept-charset="utf-8" enctype="multipart/form-data" class="register">
 <h1>Import Database as XML</h1>
+#{ifErrors}
+<ul>
+ #{errors}
+ 	<li>${error}</li>
+ #{/errors}
+</ul>
+#{/ifErrors}
+
+
 <input type="file" name="xmlfile" />
 <input type="submit" value="Importieren" />
 

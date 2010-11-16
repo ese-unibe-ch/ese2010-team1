@@ -91,11 +91,19 @@ public class Admin extends Controller {
 			render(users, userCount, questionCount, answerCount, report);
 		}
 
+		validation.keep();
+
+		render("Admin/xmlImporter.html");
+
 	}
 
 	private static boolean isXMLFile(File xmlfile) {
-		// TODO Auto-generated method stub
-		return true;
+		String s = xmlfile.getName();
+		String extension = s.substring(s.length() - 4).toLowerCase();
+
+		System.out.println(extension);
+
+		return extension.equals(".xml");
 	}
 
 }
