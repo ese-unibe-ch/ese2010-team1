@@ -58,9 +58,9 @@ $(function() {
 				var tags = $("#section input[name=tags]").value();
 				$("#section input, #section textarea").removeClass("error");
 				if(!title) {
-					$("#section input[name=title]").addClass("error");
+					$("#section input[name=title]").addClass("error").focus();
 				} else if(!content) {
-					$("#section textarea[name=content]").addClass("error");
+					$("#section textarea[name=content]").addClass("error").focus();
 				} else {
 					$.post(addQuestion(), {title: title, content: content, tags: tags}, function(data) {
 						if(data.success == 1) {
@@ -88,7 +88,7 @@ $(function() {
 				var content = $("#section textarea[name=content]").value();
 				$("#section input, #section textarea").removeClass("error");
 				if(!content) {
-					$("#section textarea[name=content]").addClass("error");
+					$("#section textarea[name=content]").addClass("error").focus();
 				} else {
 					$.post(answerQuestion({id: id}), {content: content}, function(data) {
 						if(data.success == 1) {
