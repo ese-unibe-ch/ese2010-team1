@@ -35,7 +35,6 @@ $(function() {
 		$("#section").load(getQuestion({id: id[1]}));
 	}
 	
-	
 	// load question
 	$('nav a').livequery('click', function(event) {
 		var a = this;

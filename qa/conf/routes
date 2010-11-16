@@ -3,8 +3,8 @@
 # ~~~~
 
 # Questions
-GET     /                                       Questions.home
-
+GET     /                                       Questions.home			
+GET		/{id}									Questions.question				
 
 GET		/question/{id}							Questions.get
 GET		/answer/{id}							Questions.entry
