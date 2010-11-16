@@ -101,8 +101,6 @@ public class Admin extends Controller {
 		String s = xmlfile.getName();
 		String extension = s.substring(s.length() - 4).toLowerCase();
 
-		System.out.println(extension);
-
 		return extension.equals(".xml");
 	}
 
