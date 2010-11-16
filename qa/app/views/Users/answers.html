@@ -5,10 +5,10 @@ answerList = user.getAnswers();
 }%
 
 #{if answerList.size() > 0}
-<ul>
+<ul id="activity">
 #{list items:answerList, as:'answer'}
 <div class="activity-date">${answer.timestamp.format('MMM')}<br />${answer.timestamp.format('dd')} </div>
-	<div class="rating-box"> Rating:<br /> ${answer.rating()} </div> 
+	<div class="rating-box"> <span class="bigRating">${answer.rating()}</span><br />Score </div> 
 	<a class="activity" href="@{Questions.question(answer.question.id)}#entry{${answer.id}}">answered: ${answer.question.title}</a>
 	<div class="clear"></div> 
 #{/list}

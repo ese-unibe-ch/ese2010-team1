@@ -439,11 +439,17 @@ nav a {
 	}
 	
 	.rating-box {
-		width: 70px;
+		font-size: 12px;
+		line-height: 12px;
+		width: 50px;
 		margin-left: 5px;
 		color: white;
 		background: black;
 		border: 1px solid black;
+	}
+	.bigRating {
+		font-size: 20px;
+		line-height: 22px;
 	}
 	a.activity {
 		display: block;
