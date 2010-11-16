@@ -37,19 +37,6 @@ public class ProfileItem extends Model {
 	}
 
 	/**
-	 * Adds a new entry to the item.
-	 * 
-	 * @param entry
-	 *            the entry
-	 * @return the profile item
-	 */
-	private ProfileItem addEntry(ProfileEntry entry) {
-		entrys.add(entry);
-		this.save();
-		return this;
-	}
-
-	/**
 	 * Find user entry which belongs to the called item.
 	 * 
 	 * @param user
@@ -84,9 +71,9 @@ public class ProfileItem extends Model {
 	 */
 	public ProfileItem editUserEntry(User user, String entry) {
 
-		if (!hasUserEntry(user)) {
+		if (!this.hasUserEntry(user)) {
 			ProfileEntry pentry = new ProfileEntry(this, entry, user).save();
-			this.addEntry(pentry);
+			this.entrys.add(pentry);
 		} else {
 			ProfileEntry userEntry = findUserEntry(user);
 			userEntry.entry = entry;

@@ -424,13 +424,18 @@ nav a {
 		float: left;
 	}
 
-	.activity-box {
+	.activity-box, .rating-box {
 		width: 80px;
 		margin-top: 13px;
+
 		float: left;
 		margin-left: 15px;
 		font-weight: bold;
 
+	}
+	
+	.rating-box {
+		color: white;
 	}
 	a.activity {
 		display: block;

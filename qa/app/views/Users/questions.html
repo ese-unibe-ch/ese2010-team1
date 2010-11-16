@@ -6,9 +6,17 @@ questionList = user.getQuestions();
 
 #{if questionList.size() > 0}
 <h1>Questions</h1>
-<ul>
+<ul id="activities">
 #{list items:questionList, as:'question'}
-<li>Asked ${question.title} (${question.rating()})</li>
+<li>
+
+	<div class="activity-date">${question.timestamp.format('MMM')}<br />${question.timestamp.format('dd')} </div>
+	<div class="rating-box"> Rating: ${question.rating()} </div> 
+	<a class="activity" href="@{Questions.question(question.id)}">${question.title}</a>
+	<div class="clear"></div> 
+
+
+</li>
 #{/list}
 
 </ul>

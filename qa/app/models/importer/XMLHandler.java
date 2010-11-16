@@ -71,7 +71,6 @@ public class XMLHandler extends DefaultHandler {
 		case 1:
 
 			dataMap.clear();
-
 			dataMap.put("id", atts.getValue(0));
 			break;
 		case 2:
