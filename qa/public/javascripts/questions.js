@@ -29,15 +29,21 @@ $(function() {
 		$('#filter a[href=#Search]').addClass("active");
 	});
 	
+	// handle absolut url
+	var id = /#!(\d+)$/.exec(this.location);
+	if(id) {
+		$("#section").load(getQuestion({id: id[1]}));
+	}
+	
+	
 	// load question
 	$('nav a').livequery('click', function(event) {
 		var a = this;
-		$.get(getQuestion({id: this.hash.substr(1)}), function(data) {
+		$.get(getQuestion({id: this.hash.substr(2)}), function(data) {
 			$('#section').html(data);
 			$('#nav a').removeClass("active");
 			$(a).addClass("active");
 		});
-		return false;
 	});
 	
 	// new question

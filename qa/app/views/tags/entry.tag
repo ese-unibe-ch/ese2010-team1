@@ -6,7 +6,7 @@
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
+		<a href="#!${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title}</a>
 	
 #{/if}
 
