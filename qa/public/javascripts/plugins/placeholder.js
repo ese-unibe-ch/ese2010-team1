@@ -15,7 +15,7 @@ $.extend($.fn, {
 $(function() { 
 	$('input[placeholder]').livequery(function() {
 		var placeholder = $(this).attr("placeholder");
-		if($(this).attr("focused") != "on")
+		if($(this).attr("focused") != "on" && $(this).val() == "")
 			$(this).val(placeholder).addClass("placeholder");
 		$(this).focus(function() {
 			if($(this).val() == placeholder)

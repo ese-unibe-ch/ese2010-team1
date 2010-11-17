@@ -11,12 +11,14 @@ var hotQuestions = #{jsAction @Questions.hot() /}
 var myQuestions = #{jsAction @Questions.mine() /}
 var activeQuestions = #{jsAction @Questions.active() /}
 var searchQuestions = #{jsAction @Questions.search(':string') /}
-var questionForm = #{jsAction @Questions.form(':type') /}
+var questionForm = #{jsAction @Questions.form() /}
 var addQuestion = #{jsAction @Questions.add() /}
 var answerQuestion = #{jsAction @Questions.answer(':id') /}
-var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}
 var setNotificationAsRed = #{jsAction @Questions.setNotificationAsRed(':id') /}
+var contentVersion = #{jsAction @Questions.version(':id') /}
 
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
 var graphData = #{jsAction @Users.graphData(':id') /}
 var editProfile = #{jsAction @Users.saveProfile(':id', ':entrys[]') /}
+
+var login = #{jsAction @Secure.login() /}

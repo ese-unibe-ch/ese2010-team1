@@ -10,6 +10,7 @@ import models.Question;
 import models.Search;
 import models.User;
 import models.Vote;
+import models.Entry.ContentState;
 import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -87,8 +88,9 @@ public class Questions extends Controller {
 		render("Questions/list.html", questions);
 	}
 
-	public static void form(String type) {
-		render(type);
+	public static void form(String type, long id) {
+		Entry entry = Entry.findById(id);
+		render(type, entry);
 	}
 
 	public static void entry(long id) {
@@ -126,6 +128,34 @@ public class Questions extends Controller {
 		} else {
 			renderJSON("{\"success\": 0}");
 		}
+	}
+
+	public static void edit(long id, String content, String tags, File file) {
+		User user = (User) User.find("byName", Security.connected()).first();
+		Entry entry = Entry.findById(id);
+		entry.edit(content, user);
+		if (entry instanceof Question) {
+			((Question) entry).removeAllTags();
+			if (!tags.equals("Tags")) {
+				String[] separatedTags = tags.split(", ");
+
+				for (String tag : separatedTags) {
+					((Question) entry).tagItWith(tag);
+				}
+
+			}
+			entry.save();
+		} else if (file != null && file.exists()) {
+			user.addFileToEntry(file, entry);
+		}
+
+		if (entry instanceof Answer) {
+			question(((Answer) entry).question.id);
+		} else {
+			question(entry.id);
+
+		}
+
 	}
 
 	public static void voteUp(long id) {
@@ -216,9 +246,16 @@ public class Questions extends Controller {
 	}
 
 	public static void deleteFileEntry(long id, long qid) {
-
 		FileEntry entry = FileEntry.findById(id);
-		entry.delete();
+		if (entry != null)
+			entry.delete();
+		question(qid);
+	}
 
+	public static void version(long id) {
+		ContentState state = ContentState.findById(id);
+		if (state != null) {
+			renderText(state.content);
+		}
 	}
 }

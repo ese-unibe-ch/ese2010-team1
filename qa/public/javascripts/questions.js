@@ -47,7 +47,7 @@ $(function() {
 	
 	// new question
 	$("a.bottomleft").click(function() {
-		$.get(questionForm({type: "question"}), function(data) {
+		$.get(questionForm(), {type: "question"}, function(data) {
 			$("#section").html(data);
 			$("#section input[name=title]").foc();
 			$('#nav a').removeClass("active");
@@ -66,7 +66,7 @@ $(function() {
 							$("#section").load(getQuestion({id: data.id}));	
 							$("#filter a.active").click();
 						} else {
-							alert("Error");
+							self.location = login();
 						}
 					}, "json");
 				}
@@ -77,7 +77,6 @@ $(function() {
 	});
 	
 	// answer
-	
 	$(".entry.answer form").livequery('submit', function() {
 		var content = $("#section textarea[name=content]").value();
 		$("#section input, #section textarea").removeClass("error");
@@ -93,12 +92,31 @@ $(function() {
 					if(data.success == 1) {
 						$("#section article:last-child").load(getAnswer({id: data.id}));	
 					} else {
-						alert("Error");
+						self.location = login();
 					}
 				}, "json");
 			}
 		}
 		return false;	
+	});
+	
+	// edit
+	$(".edit").livequery('click', function() {
+		var entry = $(this).parents('article');
+		$.get(questionForm(), {id: this.hash.substr(1)}, function(data) {
+			entry.replaceWith(data);
+		});
+	});
+	
+	// versions
+	$('a.versions').livequery('click', function() {
+		$(this).next('div.versions').toggle();
+		return false;
+	});
+	
+	$(".versions a").click(function() {
+		$(this).parents("article").find("div.content").load(contentVersion({id: this.hash.substr(1)}));
+		$(this).parents("div.versions").hide();
 	});
 
 	
@@ -140,17 +158,5 @@ $(function() {
 		$("#section").load(resetBestAnswer({id: this.hash.substr(1)}));
 		return false;
 	});
-	
-		
-	//recommanded Questions
-//	$('#rq').keyup(function(event){
-//		if(this.value.length > 2){
-//		$.get(recommandedQuestions({title: this.value}), function(data){
-//				$('div#recommandedQuestions').html(data)
-//		
-//		});
-//		}
-//		return false;
-//	});
 
 });

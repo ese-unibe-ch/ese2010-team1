@@ -14,7 +14,7 @@
 #{elseif _display == "form"}
 
 	<article class="entry ${question?"question":"answer"}">
-	<form method="post" action="@{Questions.answer(_entry?.id)}" enctype="multipart/form-data">
+	<form method="post" action="#{if _type}@{Questions.answer(_entry?.id)}#{/if}#{else}@{Questions.edit(_entry?.id)}#{/else}" enctype="multipart/form-data">
 	
 		<menu>
 		<li><a href="#" class="up disabled"></a></li>
@@ -24,20 +24,24 @@
 	
 		<h3>
 		#{if question}
-			#{field 'title'}
-				<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
-			#{/field}
+			#{if _type}
+				#{field 'title'}
+					<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
+				#{/field}
+			#{/if}#{else}
+				${_entry?.title}
+			#{/else}
 		#{/if}#{else}
-			New Answer
+			#{if _type}New #{/if}Answer
 		#{/else}
 		</h3>
 		<div>
 		#{field 'content'}
-        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+        	<textarea name="${field.name}" class="${field.errorClass}">#{ifnot _type}${_entry?.content}#{/ifnot}</textarea>
 		#{/field}
 		
 		#{if question}
-			<input type="text" name="tags" placeholder="Tags" />
+			<input type="text" name="tags" placeholder="Tags" value="${_entry?.tagsToString()}" />
 		#{/if}#{else}
 			<input type="file" name ="file" />
 		#{/else}
@@ -85,8 +89,9 @@
 	
 		*{ content }*
 	
+		<div class="content">
 		${_entry.content.nl2br()}
-		
+		</div>
 		
 		*{ tags }*
 		
@@ -98,22 +103,41 @@
 			</div>
 		#{/if}
 		
+		
 		*{ files }*
 		
 		#{elseif _entry.getFiles().size()>0}
 			#{list items:_entry.getFiles(), as:'file'}
-				<a class="file" href="@{Application.getFile(file.id)}">${file.uploadFilename}</a>
-				#{if _user==file.owner}
-					<a href="@{Secured.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
-				#{/if}
+				<span class="file">
+					<a href="@{Application.getFile(file.id)}">${file.uploadFilename}</a>
+					#{if _user==file.owner}
+						<a href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
+					#{/if}
+				</span>
 			#{/list}
 		#{/elseif}
 		
+		
+		*{ controls }*
+		
 		<div class="controls">
-			<a href="#">edit</a>
+			#{if _user == _entry.owner || _user?.isAdmin}
+				<a href="#${_entry.id}" class="edit">edit</a>
+			#{/if}
+			
 			#{secure.check 'isAdmin'}
 		  		<a href="@{Questions.delete(_entry.id)}" title="delete entry">delete</a>
 			#{/secure.check}
+			
+			#{if _entry.states.size() > 1}
+				<a href="#" class="versions">versions</a>
+				<div class="versions">
+					#{list items:_entry.states, as:'state'}
+						<a href="#${state.id}">${state.timestamp.format('dd.MM.yy hh:mm')} ${state.user.name}</a>
+					#{/list}
+				</div>
+				
+			#{/if}
 		</div>
 		
 		<span class="date">
