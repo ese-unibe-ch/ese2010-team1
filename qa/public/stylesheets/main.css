@@ -343,14 +343,16 @@ nav a {
 	}
 	
 	.tags {
-		background: rgba(255,254,255,0.59);
-		width: 80px;
-		height: 20px;
-		margin-top: 5px;
-		margin-right: 5px;
-		float: left;
-		text-align: center;
+		margin: 10px 0;
 	}
+	
+		.tags span {
+			background: rgba(255,254,255,0.59);
+			height: 20px;
+			padding: 3px 7px;
+			font-size: 13px;
+			text-align: center;
+		}
 	
 	/*** controlls ***/
 	.entry .date, .entry .controls {
