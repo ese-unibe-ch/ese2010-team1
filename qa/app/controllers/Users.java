@@ -58,7 +58,7 @@ public class Users extends Controller {
 			@Required(message = "A valid username is required") String username,
 			@Required(message = "A valid e-mail is required") @Email String email,
 			@Required(message = "A password is required") String password,
-			String password2) {
+			String password2) throws Throwable {
 
 		// validate all parameters
 		if (!password.isEmpty()) {
@@ -77,7 +77,7 @@ public class Users extends Controller {
 
 		new User(username, email, password).save();
 
-		Questions.home();
+		Secure.authenticate(username, "", false);
 	}
 
 	public static void saveProfile(long id, String[] profileEntry) {
