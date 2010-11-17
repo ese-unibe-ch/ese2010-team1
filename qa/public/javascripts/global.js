@@ -27,25 +27,6 @@ $(function() {
 			self.location = $(this).find("a").attr("href");
 	});
 
-	
-	// vote down
-	$('a.down').livequery('click', function(event) {
-		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
-			$('div#content').html(data)
-	
-		});
-		return false;
-	});
-	
-	// load profile tabs
-	$('.profileTabs a').click(function() {
-		
-		
-	
-	});
-	
-
-
 
 });
 

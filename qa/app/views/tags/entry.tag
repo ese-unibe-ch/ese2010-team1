@@ -34,6 +34,9 @@
 		</p>
 		<input type="text" name="tags" placeholder="Tags" />
 		
+		<input type="text" id="rq" class="rq" />
+    	<div id="rqs" class="rqs"></div>
+		
 		<input type="submit" value="Post" />
 	#{/form}
 	</article>

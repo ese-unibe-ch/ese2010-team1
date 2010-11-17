@@ -111,9 +111,10 @@ $(function() {
 	});
 	
 		
-	//recommended Questions
-	$("#section input[name=title]").keyup(function(event){
-		
+
+	//	recommanded Questions
+	$('input[name=title]').livequery('keyup', function(event){
+	
 		$.get(recommendedQuestions({title: this.value}), function(data){
 				$('div#rqs').html(data)
 		
