@@ -9,7 +9,7 @@
 	    				<li>
 	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
 	    				<div class="activity-box"> answered </div>
-	    				<a class="activity" href="@{Questions.question(activity.question.id)}#entry${activity.id}">${activity.question.title.slice(70)}</a>
+	    				<a class="activity" href="@{Questions.question(activity.question.id)}#entry${activity.id}">${activity.question.title.trim(35)}</a>
 	    				<div class="clear"></div> 
 	    				</li>
 	    			#{/if}
@@ -17,7 +17,7 @@
 	    				<li>
 	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
 	    				<div class="activity-box"> asked </div> 
-	    				<a class="activity" href="@{Questions.question(activity.id)}">${activity.title.slice(70)}</a>
+	    				<a class="activity" href="@{Questions.question(activity.id)}">${activity.title.trim(35)}</a>
 	    				<div class="clear"></div> 
 	    				</li>
 	    			#{/else}
