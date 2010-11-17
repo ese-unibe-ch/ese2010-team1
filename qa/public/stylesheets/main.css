@@ -61,6 +61,10 @@ input, textarea {
 				left: 0;
 			}
 		
+			.jspHorizontalBar {
+				display: none;
+			}
+		
 		section {
 			width: 100%;
 			background: #803ab4 top left url(../images/retro.jpg);
@@ -345,10 +349,23 @@ nav a {
 		position: relative;
 	}
 	
+		.entry h3 {
+			padding-right: 100px;
+		}
+	
 		.entry h3 a.owner {
 			position: absolute;
 			right: 10px;
+			top: 10px;
 		}
+		
+	.entry .content pre {
+		padding: 5px;
+		background: #fff;
+		overflow: auto;
+		display: block;
+		font-size: 14px;
+	}
 
 	.entry > div, .entry > form > div {
 		margin-top: 5px;
