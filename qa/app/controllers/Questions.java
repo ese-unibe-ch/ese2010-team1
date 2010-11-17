@@ -185,15 +185,18 @@ public class Questions extends Controller {
 		}
 	}
 
-	public static void deleteEntry(long id) {
+	public static void delete(long id) {
 
 		Entry entry = Entry.findById(id);
+		if (entry == null)
+			home();
+
 		entry.delete();
 
-		Question question = entry instanceof Question ? (Question) entry
-				: ((Answer) entry).question;
+		if (entry instanceof Question)
+			home();
 
-		render("Questions/question.html", question);
+		question(((Answer) entry).question.id);
 	}
 
 	public static void deleteFileEntry(long id, long qid) {

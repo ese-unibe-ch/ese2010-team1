@@ -85,7 +85,7 @@
 	
 		*{ content }*
 	
-		<p>${_entry.content.nl2br()}</p>
+		${_entry.content.nl2br()}
 		
 		
 		*{ tags }*
