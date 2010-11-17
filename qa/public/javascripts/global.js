@@ -30,8 +30,17 @@ $(function() {
 	});
 	
 	$('.pulldown li').click(function() {
-		if($(this).find("a").length > 0)
+		if($(this).find("a").length > 0 && !$(this).find("a").hasClass("notification"))
 			self.location = $(this).find("a").attr("href");
+	});
+	
+	
+	$('a.notification').livequery('click', function(event) {
+		var url = $(this).attr('href');
+		$.get(setNotificationAsRed({id: this.hash.substr(1) }), function() {
+			self.location = url;
+		});
+			
 	});
 
 });

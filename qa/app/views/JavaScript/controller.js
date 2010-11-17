@@ -15,6 +15,7 @@ var questionForm = #{jsAction @Questions.form(':type') /}
 var addQuestion = #{jsAction @Questions.add() /}
 var answerQuestion = #{jsAction @Questions.answer(':id') /}
 var recommandedQuestions = #{jsAction @Application.recommandedQuestions(':title') /}
+var setNotificationAsRed = #{jsAction @Questions.setNotificationAsRed(':id') /}
 
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
 var graphData = #{jsAction @Users.graphData(':id') /}

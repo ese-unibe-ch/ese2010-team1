@@ -199,11 +199,26 @@ public class Questions extends Controller {
 		question(((Answer) entry).question.id);
 	}
 
+	public static void setNotificationAsRed(long id) {
+
+		models.Notification.hasBeenRed(id);
+	}
+
+	public static void deleteEntry(long id) {
+
+		Entry entry = Entry.findById(id);
+		entry.delete();
+
+		Question question = entry instanceof Question ? (Question) entry
+				: ((Answer) entry).question;
+
+		render("Questions/question.html", question);
+	}
+
 	public static void deleteFileEntry(long id, long qid) {
 
 		FileEntry entry = FileEntry.findById(id);
 		entry.delete();
 
 	}
-
 }

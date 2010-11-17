@@ -68,9 +68,10 @@
 								#{/else}
 							
 							#{/list}
-							<li> <a href="">Show all</a></li>
+							<li> <a href="@{Users.activities(user.id)}">Show all</a></li>
 							#{else}
 							<li>There were no new notifications!</li>
+							<li> <a href="">Show old notifications</a></li>
 							#{/else}
 						
 	    				#{/pulldown}

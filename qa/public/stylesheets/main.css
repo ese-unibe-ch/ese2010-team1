@@ -512,7 +512,8 @@ nav a {
 		line-height: 25px;	
 	}
 	
-	.statisticsValue {				
+	.statisticsValue {
+		width: 50px;				
 		font-size: 25px;
 		text-align: center;
 				

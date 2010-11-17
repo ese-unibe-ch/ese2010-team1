@@ -29,7 +29,7 @@ GET		/best/reset/{id}						Questions.resetBestAnswer
 # User
 
 GET 	/profile/{id}							Users.profile
-
+GET		/activities/{id}						Users.activities
 # Admin
 GET		/importXML								Admin.xmlImporter
 

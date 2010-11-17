@@ -96,7 +96,7 @@ public class Users extends Controller {
 
 		if (theAction.equals("Activities")) {
 
-			render("Users/activities.html", user);
+			render("Users/profileactivities.html", user);
 
 		} else if (theAction.equals("Questions")) {
 
@@ -116,6 +116,16 @@ public class Users extends Controller {
 
 		}
 
+	}
+
+	public static void activities(long id) {
+
+		User puser = User.findById(id);
+
+		List<models.Notification> notifications = models.Notification.find(
+				"byOwner", puser).fetch();
+
+		render(notifications, puser);
 	}
 
 	/*** AJAX ***/
