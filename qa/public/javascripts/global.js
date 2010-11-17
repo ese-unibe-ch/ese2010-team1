@@ -1,6 +1,4 @@
-$(function() {
-
-	var reinitialise = function() {	
+function reinitialise() {	
 			$('html').height($(window).height()-20);
 			var height = $('body').height() - 70;
 			$('section, nav').height(height);
@@ -13,7 +11,8 @@ $(function() {
 				$('nav').css({width: "360px"});
 			}
 	}
-	
+
+$(function() {
 	
 	$('section').jScrollPane();
 	$('nav').jScrollPane({scrollbarOnLeft: true});

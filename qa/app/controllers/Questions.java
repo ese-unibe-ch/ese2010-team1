@@ -253,6 +253,15 @@ public class Questions extends Controller {
 		question(qid);
 	}
 
+	public static void getFile(long id) {
+
+		FileEntry entry = FileEntry.findById(id);
+
+		File file = new File(entry.getAbsolutePath());
+
+		renderBinary(file, entry.uploadFilename);
+	}
+
 	public static void version(long id) {
 		ContentState state = ContentState.findById(id);
 		if (state != null) {

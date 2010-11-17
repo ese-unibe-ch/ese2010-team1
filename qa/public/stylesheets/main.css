@@ -317,6 +317,8 @@ nav a {
 	.entry .file {
 		display: block;
 		margin-top: 10px;
+		padding-left: 20px;
+		background: url(../images/file.png) left no-repeat;
 	}
 	
 	.file + .file {
@@ -390,6 +392,7 @@ nav a {
 			font-size: 13px;
 			text-align: center;
 		}
+		
 	
 	/*** Controlls ***/
 	.entry .date, .entry .controls {
@@ -402,12 +405,12 @@ nav a {
 		right: 10px;
 	}
 	
-	.entry .controls a, .comment .controls a {
+	.entry .controls a, .comment .controls a, .file a.deleteFile {
 		margin-right: 7px;
 		color: rgba(0,0,0,0.3);
 	}
 	
-	.entry .controls a:hover, .comment .controls a:hover {
+	.entry .controls a:hover, .comment .controls a:hover, .file a.deleteFile:hover {
 		color: #000;
 		text-decoration: none;
 	}
@@ -593,9 +596,9 @@ nav a {
 
 	/*** Admin ***/
 	#userlist {
-		width: 940px;
+		width: 920px;
 		background: rgba(255, 255, 255, 0.3);
-		margin: 10px;
+		margin: 10px auto;
 	}
 	
 	#userlist th {
@@ -627,7 +630,7 @@ nav a {
 		}
 	form div.error {
 		font-size: 16px;
-		color: red;
+		color: #900;
 		margin-bottom: 15px;
 		
 		}

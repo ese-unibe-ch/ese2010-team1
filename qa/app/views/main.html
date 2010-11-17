@@ -61,7 +61,7 @@
 							
 								}%
 								#{if answer}
-									<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}#${notification.id}">Question ${notification.activity}</a></li>
+									<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}">Question ${notification.activity}</a></li>
 								#{/if}
 								#{else}
 									<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question ${notification.activity}</a></li>
@@ -71,7 +71,6 @@
 							<li> <a href="@{Users.activities(user.id)}">Show all</a></li>
 							#{else}
 							<li>There were no new notifications!</li>
-							<li> <a href="">Show old notifications</a></li>
 							#{/else}
 						
 	    				#{/pulldown}

@@ -6,9 +6,17 @@
 #{if notifications.size()>0}
 	<ul id="activities">
 	#{list items:notifications, as:'notification'}
-	
-	<li>	${notification.activity} </li>
-	
+		%{
+			question = notification.entry instanceof models.Question;
+			answer = !question;
+								
+		}%
+		#{if answer}
+			<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}">Question ${notification.activity}</a></li>
+		#{/if}
+		#{else}
+			<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question ${notification.activity}</a></li>
+		#{/else}
 	#{/list}
 	</ul>
 #{/if}

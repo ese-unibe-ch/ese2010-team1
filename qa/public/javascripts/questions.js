@@ -78,8 +78,8 @@ $(function() {
 	});
 	
 	// answer
-	$(".entry.answer form").livequery('submit', function() {
-		var content = $("#section textarea[name=content]").value();
+	$(".entry.answer > form").livequery('submit', function() {
+		var content = $("#section .entry > form textarea[name=content]").value();
 		$("#section input, #section textarea").removeClass("error");
 		if(!content) {
 			$("#section textarea[name=content]").addClass("error").focus();
@@ -118,6 +118,7 @@ $(function() {
 	// write comments
 	$('.entry .showform').livequery('click', function() {
 		$(this).parents('article').find('div.comment.form').show();
+		reinitialise();
 	});
 	
 	// delete comments
