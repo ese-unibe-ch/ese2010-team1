@@ -16,6 +16,7 @@ var addQuestion = #{jsAction @Questions.add() /}
 var answerQuestion = #{jsAction @Questions.answer(':id') /}
 var setNotificationAsRed = #{jsAction @Questions.setNotificationAsRed(':id') /}
 var contentVersion = #{jsAction @Questions.version(':id') /}
+var deleteComment = #{jsAction @Questions.deleteComment(':id') /}
 
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
 var graphData = #{jsAction @Users.graphData(':id') /}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import models.Answer;
+import models.Comment;
 import models.Entry;
 import models.FileEntry;
 import models.Question;
@@ -257,5 +258,30 @@ public class Questions extends Controller {
 		if (state != null) {
 			renderText(state.content);
 		}
+	}
+
+	public static void comment(long id, @Required String content) {
+		User user = User.find("byName", Security.connected()).first();
+		Entry entry = Entry.findById(id);
+
+		if (!validation.hasErrors() && entry != null && user != null) {
+			user.addComment(entry, content);
+
+			if (entry instanceof models.Question)
+				question(id);
+			else
+				question(((Answer) entry).question.id);
+		} else {
+			home();
+		}
+	}
+
+	public static void deleteComment(long id) {
+
+		Comment comment = Comment.findById(id);
+		if (comment != null)
+			comment.delete();
+
+		renderText("");
 	}
 }

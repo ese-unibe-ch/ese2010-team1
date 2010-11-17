@@ -138,6 +138,10 @@
 				</div>
 				
 			#{/if}
+			
+			#{if _user}
+				<a href="#" class="showform">comment</a>
+			#{/if}
 		</div>
 		
 		<span class="date">
@@ -145,6 +149,40 @@
 		</span>
 		
 	</div>
+	
+	*{ comments }*
+	
+	#{if _entry.listComments().size() > 0}
+		#{list items:_entry.listComments(), as:'comment'}
+			<div class="comment">
+				<a href="@{Users.profile(comment.owner.id)}" class="owner">
+					${comment.owner.name} (${comment.owner.reputation()})
+				</a>
+				<p>${comment.content.nl2br()}</p>
+				<div class="controls">
+					#{if _user== comment.owner || _user.isAdmin}
+						<a href="#${comment.id}" class="deleteComment">delete</a>
+					#{/if}
+					#{if _user}
+						<a href="#" class="showform">reply</a>
+					#{/if}
+				</div>
+				
+			 </div>
+		#{/list}
+	#{/if}
+
+	#{if _user}
+	<div class="comment form">
+	#{form @Questions.comment(_entry.id)}
+		#{field 'content'}
+			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		<input type="submit" value="Post" />
+	#{/form}
+	</div>
+	#{/if}
+
 	#{if _display != "innerHTML"}
 		</article>
 	#{/if}

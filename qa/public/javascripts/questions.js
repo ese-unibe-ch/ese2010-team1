@@ -114,6 +114,17 @@ $(function() {
 		return false;
 	});
 	
+	// write comments
+	$('.entry .showform').livequery('click', function() {
+		$(this).parents('article').find('div.comment.form').show();
+	});
+	
+	// delete comments
+	$('.deleteComment').livequery('click', function() {
+		$.get(deleteComment({id: this.hash.substr(1)}));
+		$(this).parents('div.comment').hide();
+	});
+	
 	$(".versions a").click(function() {
 		$(this).parents("article").find("div.content").load(contentVersion({id: this.hash.substr(1)}));
 		$(this).parents("div.versions").hide();

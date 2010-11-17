@@ -373,7 +373,6 @@ nav a {
 	/*** Controlls ***/
 	.entry .date, .entry .controls {
 		position: absolute;
-		color: rgba(0,0,0,0.3);
 		bottom: 3px;
 		font-size: 14px;
 	}
@@ -382,11 +381,12 @@ nav a {
 		right: 10px;
 	}
 	
-	.entry .controls a {
+	.entry .controls a, .comment .controls a {
 		margin-right: 7px;
+		color: rgba(0,0,0,0.3);
 	}
 	
-	.entry .controls a:hover {
+	.entry .controls a:hover, .comment .controls a:hover {
 		color: #000;
 		text-decoration: none;
 	}
@@ -409,6 +409,23 @@ nav a {
 		.entry .versions a:nth-child(2n) {
 			background: #666;
 		}
+		
+	/*** Comments ***/
+	
+	.comment {
+		margin-left: 20px;
+		font-size: 14px;
+	}
+	
+	.comment a.owner {
+		position: absolute;
+		top: 5px;
+		right: 10px;
+	}
+	
+	.comment.form {
+		display: none;
+	}
 
 		
 /*** Profile ***/
