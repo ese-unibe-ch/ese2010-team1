@@ -23,4 +23,10 @@ public class CustomExtensions extends JavaExtensions {
 		return output.toString();
 	}
 
+	public static String trim(String string, int length) {
+		return (length > string.length()) ? string : string.substring(0,
+				length - 3)
+				+ "...";
+	}
+
 }
