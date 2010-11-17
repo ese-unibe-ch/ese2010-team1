@@ -203,11 +203,20 @@ public class Question extends Entry {
 	}
 
 	public String tagsToString() {
-		String tagsAsString = "";
-		for (Tag tag : tags)
-			tagsAsString += tag.toString() + ", ";
-		System.out.println(tagsAsString);
-		return tagsAsString;
+
+		StringBuffer buffer = new StringBuffer();
+		int i = 1;
+		for (Tag tag : tags) {
+
+			buffer.append(tag.name);
+			if (i < tags.size()) {
+				buffer.append(", ");
+			}
+			i++;
+
+		}
+
+		return buffer.toString();
 
 	}
 
