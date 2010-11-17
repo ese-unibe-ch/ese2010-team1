@@ -33,6 +33,13 @@ $(function() {
 		if($(this).find("a").length > 0)
 			self.location = $(this).find("a").attr("href");
 	});
+	
+	
+	$('a.notification').livequery('click', function(event) {
+	
+		$.get(setNotificationAsRed({id: this.hash.substr(1) }));
+			
+	});
 
 });
 

@@ -1,0 +1,27 @@
+	    	#{if user.getActivities(1).size()!=1}
+	    		There were no activities.
+	    	#{/if}
+	    	#{else}
+	    		#{list items:user.getActivities(10), as:'activity'}
+	    			<ul id="activities">
+	    			#{if activity instanceof models.Answer}
+
+	    				<li>
+	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
+	    				<div class="activity-box"> answered </div>
+	    				<a class="activity" href="@{Questions.question(activity.question.id)}#entry${activity.id}">${activity.question.title.trim(35)}</a>
+	    				<div class="clear"></div> 
+	    				</li>
+	    			#{/if}
+	    			#{else}
+	    				<li>
+	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
+	    				<div class="activity-box"> asked </div> 
+	    				<a class="activity" href="@{Questions.question(activity.id)}">${activity.title.trim(35)}</a>
+	    				<div class="clear"></div> 
+	    				</li>
+	    			#{/else}
+	    	
+	    		#{/list}
+	    		</ul>
+	    	#{/else}

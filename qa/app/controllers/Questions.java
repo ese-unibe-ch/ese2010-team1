@@ -184,4 +184,9 @@ public class Questions extends Controller {
 		}
 	}
 
+	public static void setNotificationAsRed(long id) {
+
+		models.Notification.hasBeenRed(id);
+	}
+
 }
