@@ -1,0 +1,71 @@
+#{extends 'main.html' /}
+
+#{set title: puser.name + '\'s Userprofile'  /}
+#{set 'scripts'}
+	#{script 'users.js' /}
+#{/set}
+%{
+
+	if(user && user==puser) {
+		editable = true;
+	}else {
+		editable = false;
+	}
+
+}%
+
+<script type="text/javascript">
+	var userid = ${puser.id};
+</script>
+
+<article class="profileHeader">
+
+	<h3>${puser.name}'s Profile #{if puser==user}<a class="editProfile" href="#edit">edit</a>#{/if}</h3>
+	
+	#{form @Users.saveProfile(puser.id)}
+	<dl>
+		<dt>Registered since:</dt>
+		<dd>${puser.timestamp.format('dd.MM.yyyy')}</dd>
+		<dt>Reputation:</dt>
+		<dd>${puser.reputation()}</dd>
+		#{list items:titles, as:'title'}
+			<dt>${title.title}:</dt>
+			<dd>
+				<span class="profileEntry show">${info.get(title.title)}</span>
+				#{if editable}
+					<input type="text" class="editProfile hidden" name="profileEntry" value="${info.get(title.title)}" />
+				#{/if}
+				&nbsp;
+			</dd>
+		#{/list}
+	</dl>	
+	<input class="editProfile hidden" type="submit"  value="save" />
+	
+	#{/form}
+
+</article>
+
+
+<div class="profileTabs">
+#{tabbar 'profileTabs'}
+		#{tab 'Activities', class:"tab" /}
+		#{tab 'Questions', class:"tab" /}
+		#{tab 'Answers', class:"tab" /}
+		#{tab 'Reputation', class:"tab" /}
+		#{tab 'Statistics', class:"tab" /}
+#{/tabbar}
+</div>
+
+
+<article class="profileContent">
+
+</article>
+
+
+
+
+
+
+
+
+

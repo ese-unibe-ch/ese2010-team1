@@ -1,0 +1,25 @@
+%{
+
+questionList = user.getQuestions(); 
+
+}%
+
+#{if questionList.size() > 0}
+<ul id="activities">
+#{list items:questionList, as:'question'}
+<li>
+
+	<div class="activity-date">${question.timestamp.format('MMM')}<br />${question.timestamp.format('dd')} </div>
+	<div class="rating-box"> <span class="bigRating">${question.rating()}</span><br />Score </div> 
+	<a class="activity" href="@{Questions.question(question.id)}">${question.title.trim(35)}</a>
+	<div class="clear"></div> 
+
+
+</li>
+#{/list}
+
+</ul>
+#{/if}
+#{else}
+<p>There were no questions!</p>
+#{/else}

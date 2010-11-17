@@ -2,34 +2,40 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                                       Application.index
-POST	/										Secured.newQuestion
+# Questions
+GET     /                                       Questions.home
+GET		/q/{id}									Questions.question					
 
-GET		/recent									Application.recentQuestions
+GET		/question/{id}							Questions.get
+GET		/answer/{id}							Questions.entry
 
-GET		/question/{id}							Application.question
-POST	/question/{id}							Secured.newAnswer
+GET		/hot									Questions.hot
+GET		/mine									Questions.mine
+GET		/search/{string}						Question.search
 
-GET 	/version/{id}							Application.version
+GET		/form/{type}							Questions.form
+POST	/add									Question.add
+POST	/answer/{id}							Question.answer
 
-GET		/question/{id}/up						Secured.voteQuestionUp
-GET		/question/{id}/down						Secured.voteQuestionDown
+GET     /recommendedQuestions/{title}			Application.recommendedQuestions
 
-GET		/answer/{question}/{id}/up				Secured.voteAnswerUp
-GET		/answer/{question}/{id}/down			Secured.voteAnswerDown
+GET		/vote/up/{id}							Questions.voteUp
+GET		/vote/down/{id}							Questions.voteDown
+GET 	/vote/remove/{id}						Question.removeVote
+
+GET		/best/set/{id}							Questions.setBestAnswer
+GET		/best/reset/{id}						Questions.resetBestAnswer
+
+# User
+
+GET 	/profile/{id}							Users.profile
+GET		/activities/{id}						Users.activities
 
 
-GET 	/download/{id}							Application.getFile
+# Admin
+GET		/importXML								Admin.xmlImporter
+GET		/userlist								Admin.showUserList
 
-
-GET 	/register								Application.createUser
-POST	/register								Application.addUser
-
-GET		/showProfile/{id}						UserFuncs.showProfile
-GET		/editProfile/{id}						UserFuncs.editProfile
-
-*		/search/{searchString}					Application.search
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
@@ -37,3 +43,6 @@ GET     /public/                                staticDir:public
 # Catch all
 *		/										module:secure
 *       /{controller}/{action}                  {controller}.{action}
+
+# Sadly this route never gets used
+GET		/{id}									Questions.question	

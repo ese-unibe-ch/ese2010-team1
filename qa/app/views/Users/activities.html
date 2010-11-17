@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+
+#{set title: puser.name + '\'s activities'  /}
+
+
+#{if notifications.size()>0}
+	<ul id="activityView">
+	#{list items:notifications, as:'notification'}
+		%{
+			question = notification.entry instanceof models.Question;
+			answer = !question;
+								
+		}%
+		#{if answer}
+			<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}">Question "${notification.entry.question.title.trim(50)}" ${notification.activity}</a></li>
+		#{/if}
+		#{else}
+			<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question "${notification.entry.title.trim(50)}"  ${notification.activity}</a></li>
+		#{/else}
+	#{/list}
+	</ul>
+#{/if}

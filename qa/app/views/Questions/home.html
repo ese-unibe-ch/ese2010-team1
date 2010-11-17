@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+#{set 'scripts'}
+	#{script 'questions.js' /}
+#{/set}
+
+
+%{
+	question = display ? display : questions.get(0)
+}%
+
+#{set 'controls'}
+	<form id="search">
+		<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
+	</form>
+	#{tabbar 'filter'}
+		#{tab 'Hot', selected:true /}
+		#{tab 'Active' /}
+		#{if user}
+			#{tab 'Mine' /}
+		#{/if}
+		#{tab 'Search' /}
+	#{/tabbar}
+ #{/set}
+
+#{nav}
+	#{include 'Questions/list.html' /}
+#{/nav}
+
+#{if user}
+	#{set 'absolute'}
+		<a class="bottomleft" href="#NewQuestion">New Question</a>
+	#{/set}
+#{/if}
+
+#{include 'Questions/question.html' /}

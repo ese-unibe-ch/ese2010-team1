@@ -13,19 +13,35 @@ import play.db.jpa.Model;
 @Entity
 public class FileEntry extends Model {
 
+	/** The filename. */
 	public String uploadFilename;
+	/** The extension. */
 	public String extension;
+	/** The entry. */
 	@ManyToOne
 	public Entry entry;
+	/** The owner. */
 	@ManyToOne
 	public User owner;
-
+	/** The timestamp. */
 	public Date timestamp;
+	/** The picID. */
 	public int picID;
+	/** A picturecounter. */
 	private static int pictureCounter = 1;
-
+	/** The path where the files are stored. */
 	private static String uploadPath = "/public/files/";
 
+	/**
+	 * Instantiates a new FileEntry.
+	 * 
+	 * @param filename
+	 *            the filename
+	 * @param entry
+	 *            the entry
+	 * @param owner
+	 *            the owner
+	 */
 	private FileEntry(String filename, Entry entry, User owner) {
 		this.uploadFilename = filename;
 		this.entry = entry;
@@ -36,6 +52,16 @@ public class FileEntry extends Model {
 
 	}
 
+	/**
+	 * Uploads a new file and creates the right name of it.
+	 * 
+	 * @param input
+	 *            the file
+	 * @param entry
+	 *            the entry
+	 * @param user
+	 *            the owner
+	 */
 	public static FileEntry upload(File input, Entry entry, User user) {
 
 		FileEntry file = new FileEntry(input.getName(), entry, user);
@@ -52,6 +78,12 @@ public class FileEntry extends Model {
 		return file;
 	}
 
+	/**
+	 * Deletes a File.
+	 * 
+	 * @return true if its successfully deleted, false if its note or it didn't
+	 *         even exist.
+	 */
 	public boolean deleteFile() {
 		File file = new File(Play.applicationPath + uploadPath + this.picID
 				+ "." + this.extension);
@@ -63,6 +95,11 @@ public class FileEntry extends Model {
 		return false;
 	}
 
+	/**
+	 * Gets the absolute filename.
+	 * 
+	 * @return absolute filename
+	 */
 	public String absoluteFilename() {
 
 		return this.picID + "." + this.extension;
@@ -73,6 +110,15 @@ public class FileEntry extends Model {
 		return false;
 	}
 
+	/**
+	 * Gets the file extension.
+	 * 
+	 * @param f
+	 *            the string
+	 * @param the
+	 *            file extension
+	 */
+
 	public static String getFileExtension(String f) {
 		String ext = "";
 		int i = f.lastIndexOf('.');
@@ -82,6 +128,11 @@ public class FileEntry extends Model {
 		return ext;
 	}
 
+	/**
+	 * Gets the absolute path.
+	 * 
+	 * @return the absolute path
+	 */
 	public String getAbsolutePath() {
 
 		return Play.applicationPath + uploadPath + this.picID + "."

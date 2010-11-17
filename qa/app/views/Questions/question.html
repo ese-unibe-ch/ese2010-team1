@@ -1,0 +1,9 @@
+#{if question}
+	#{entry entry:question, user:user /}
+	#{list items:question.answers(), as:'entry'}
+		#{entry entry:entry, user:user /}
+	#{/list}
+	#{if user}
+		#{entry entry:question, display:"form", type:"answer" /}
+	#{/if}
+#{/if}

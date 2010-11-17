@@ -1,82 +1,116 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>#{get 'title' /}</title>
+        <title>Knowledge Base - #{get 'title' /}</title>
         <meta charset="utf-8">  
-        #{stylesheet 'main.css' /}
-        
-        #{stylesheet 'jquery-ui-1.8.6.custom.css' /}
-        
-        
-        #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
         
+        #{stylesheet 'reset.css' /}
+        #{stylesheet 'jquery.jscrollpane.css' /}
+        #{stylesheet 'main.css' /}
         
-		#{script 'jquery-1.4.3.js' /}
-		#{script 'jquery-ui-1.8.6.custom.min.js' /}
-        
-        #{script 'flot/jquery.flot.js' /}
-       
-        #{get 'moreScripts' /}
-        
-        <script>
-        	var userCheckURL = "@{Application.userCheck()}";
-        </script>
-        
-        <script src="@{'/public/javascripts/settings.js'}" type="text/javascript"></script>
-	 #{script 'qa.js' /}
-        
-       
-	             
+        <!--[if lt IE 9]>
+			#{script 'html5.js' /}
+		<![endif]-->
+		
+        #{script 'jquery-1.4.2.min.js' /}
+        #{script 'plugins/flot/jquery.flot.js' /}   
+        #{script 'plugins/scrollbar/jquery.mousewheel.js' /}   
+        #{script 'plugins/scrollbar/jquery.jscrollpane.min.js' /}  
+        #{script 'plugins/livequery/jquery.livequery.min.js'/} 
+        #{script 'plugins/placeholder.js'/}
+        <script src="@{JavaScript.controller}"></script> 
+        #{script 'global.js' /}   
+        #{get 'scripts' /}
     </head>
     <body>
-    	<div>
+    	<div id="all">
     		<header>
-    			<a href="@{Application.index}"></a>
-    			
-    			#{form @Application.search()}
-    			<input type="text" id="searchString" name="searchString" style="float: left; margin-right: 5px;" />
-    			<input type="submit" value="Search" style="float: left;" />
-    			
-    			#{/form}
-    			<nav>
-    				<a href="@{Application.index}">Popular Questions</a>
-    				<a href="@{Application.recentQuestions()}">Recent Activity</a>
-    				<span>
-    					#{if user}
-							Hi <a href="@{UserFuncs.showProfile(user.id)}">${user.name}!</a>
+    			<div id="pagecontrols">
+    				<menu class="tabbar">
+						<li>
+						<a href="/">Home</a>
+						</li>
+					</menu>
+    				
+    				#{get 'controls' /}
+    			</div>
+    			<div id="sitecontrols">
+    				
+    				#{if user}
+    					<a href="@{Users.profile(user.id)}">
+    			  			${user.name} (${user.reputation()})
+    					</a>
+    					
+    					%{
+    					
+    					if(user.hasNewNotifications()) {
+    						activity = 'Activity ' +'<span class="newNotifications">&nbsp;' + user.numberOfNewNotifications() + '&nbsp;</span>';
+    					}
+    					else {
+    						activity = 'Activity';
+    					}
+    					
+    					}%
+    					
+	    				#{pulldown label:activity}
+							#{list items:user.getNewNotifications(), as:'notification'}
+								%{
+									question = notification.entry instanceof models.Question;
+									answer = !question;
 							
-							#{if user.hasNewNotifications()}
+								}%
+								#{if answer}
+									<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}">Question ${notification.activity}</a></li>
+								#{/if}
+								#{else}
+									<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question ${notification.activity}</a></li>
+								#{/else}
 							
-							
-							<a href="#" class="pulldown">New Notifications</a>
-							
-							<div class="pulldown">
-							#{list items:user.getNewNotifications(), as: 'notification'}
-							<a href="#">${notification.activity}</a>
 							#{/list}
-							</div>
-							#{/if}
-							
-							#{secure.check 'isAdmin'}
-							<a href="@{Admin.adminPanel()}">Admin Panel</a>
-							#{/secure.check}
-							<a href="@{Secure.logout}">Logout</a>
-						#{/if}
-						#{else}
-							Not logged in
-							<a href="@{Secure.login}">Login</a>
-							<a href="@{Application.createUser}">Register</a>
-						#{/else}	
-    				</span>
-    			</nav>
+							<li> <a href="@{Users.activities(user.id)}">Show all</a></li>
+							#{else}
+							<li>There were no new notifications!</li>
+							#{/else}
+						
+	    				#{/pulldown}
+	    				#{pulldown label:'Account'}
+	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
+	    					<li><a href="/logout">Logout</a></li>
+	    				#{/pulldown}
+	    				#{if user.isAdmin}
+	    					#{pulldown label:'Admin'}
+	    						<li><a href="@{Admin.showUserList}">Userlist</a></li>
+	    						<li><a href="@{Admin.xmlImporter}">XML Importer</a></li>
+	    					#{/pulldown}
+	    				#{/if}
+	    				
+    				#{/if}
+    				#{else}
+    					<div class="login">
+    						<a href="/login">Login</a>
+    					</div>
+    					#{pulldown label:'Register'}
+    						#{form @Users.addUser()}
+	    						<li>Username: <input type="text" name="username" /></li>
+	    						<li>Email: <input type="text" name="email" /></li>
+	    						<li>Password: <input type="password" name="password" /></li>
+	    						<li>Confirm Password: <input type="password" name="password2" /></li>
+	    						<li><input type="submit" value="Register" /> </li>
+	    					#{/form}
+    					#{/pulldown}
+    					
+    				#{/else}
+    			</div>
     		</header>
-    		<article>
-        		#{doLayout /}
-        	</article>
-        	<footer>
-        		A project release sample by ESE Team 1
-        	</footer>
+    		#{get 'nav' /}
+    		<section>
+
+    			<div id="section">
+    				#{doLayout /}
+    			</div>
+        	</section>
+        	#{get 'absolute' /}
         </div>
     </body>
 </html>

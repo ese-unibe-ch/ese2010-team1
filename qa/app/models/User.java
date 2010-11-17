@@ -67,6 +67,8 @@ public class User extends Model {
 	/** The is admin. */
 	public boolean isAdmin = false;
 
+	public long fakeId;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
@@ -153,8 +155,6 @@ public class User extends Model {
 		}
 		data.append(']');
 
-		System.out.println(data.toString());
-
 		return data.toString();
 	}
 
@@ -197,7 +197,7 @@ public class User extends Model {
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Point arg0, Point arg1) {
-			return (int) (((Point) arg0).time - ((Point) arg1).time);
+			return (((Point) arg1).time < ((Point) arg0).time) ? 1 : -1;
 		}
 	}
 
@@ -327,7 +327,12 @@ public class User extends Model {
 
 	public boolean hasNewNotifications() {
 
-		return Notification.count("owner = ? and isNew = ?", this, true) > 0;
+		return this.numberOfNewNotifications() > 0;
+	}
+
+	public long numberOfNewNotifications() {
+
+		return Notification.count("owner = ? and isNew = ?", this, true);
 	}
 
 	public List<Notification> getNotifications(int numberOfNotifications) {
@@ -362,6 +367,11 @@ public class User extends Model {
 		return Answer.count("owner = ?", this);
 	}
 
+	public long getNumberOfComments() {
+
+		return Comment.count("owner = ?", this);
+	}
+
 	/**
 	 * Gets the activities.
 	 * 
@@ -373,6 +383,17 @@ public class User extends Model {
 
 		return Entry.find("owner like ? order by timestamp desc", this).fetch(
 				numberOfActivitys);
+	}
+
+	public List<Entry> getQuestions() {
+
+		return Question.find("owner like ? order by timestamp desc", this)
+				.fetch();
+	}
+
+	public List<Entry> getAnswers() {
+		return Answer.find("owner like ? order by timestamp desc", this)
+				.fetch();
 	}
 
 	public void anonymify() {
@@ -392,6 +413,14 @@ public class User extends Model {
 		this.save();
 
 		return super.delete();
+	}
+
+	public void setNewPassword(String pw) {
+		this.password = encrypt(pw);
+	}
+
+	public List<Question> questions() {
+		return Question.find("byOwner", this).fetch();
 	}
 
 }

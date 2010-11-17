@@ -22,14 +22,25 @@ public class Comment extends Model {
 	/** The timestamp. */
 	public Date timestamp;
 
+	/** The entry. */
+	@ManyToOne
+	public Entry entry;
+
+	/**
+	 * Instantiates a new comment.
+	 * 
+	 * @param owner
+	 *            the owner
+	 * @param entry
+	 *            the entry
+	 * @param content
+	 *            the content
+	 */
 	public Comment(User owner, Entry entry, String content) {
 		this.owner = owner;
 		this.content = content;
 		this.timestamp = new Date();
 		this.entry = entry;
 	}
-
-	@ManyToOne
-	public Entry entry;
 
 }

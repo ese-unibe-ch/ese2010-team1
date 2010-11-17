@@ -1,0 +1,22 @@
+%{
+
+answerList = user.getAnswers(); 
+
+}%
+
+#{if answerList.size() > 0}
+<ul id="activities">
+#{list items:answerList, as:'answer'}
+	<li>
+	<div class="activity-date">${answer.timestamp.format('MMM')}<br />${answer.timestamp.format('dd')} </div>
+	<div class="rating-box"> <span class="bigRating">${answer.rating()}</span><br />Score </div> 
+	<a class="activity" href="@{Questions.question(answer.question.id)}">answered: ${answer.question.title.trim(35)}</a>
+	<div class="clear"></div>
+	</li> 
+#{/list}
+
+</ul>
+#{/if}
+#{else}
+<p>There were no answers!</p>
+#{/else}
