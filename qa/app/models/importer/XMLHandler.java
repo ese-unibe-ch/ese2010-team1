@@ -15,7 +15,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-// TS remove all system.out.println, if it's clear that the importer is working correct.
 public class XMLHandler extends DefaultHandler {
 
 	private static StringBuilder builder;

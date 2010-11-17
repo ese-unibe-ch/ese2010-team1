@@ -111,7 +111,6 @@ public class User extends Model {
 		return reputation;
 	}
 
-	// SM Using JSON Objects from http://www.json.org/java/ might be better
 	/**
 	 * Graph data.
 	 * 

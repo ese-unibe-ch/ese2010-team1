@@ -35,7 +35,6 @@ public class FileEntryTest extends UnitTest {
 		try {
 			testFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -56,7 +55,6 @@ public class FileEntryTest extends UnitTest {
 		try {
 			testFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		User user = new User("test", "test", "test").save();
