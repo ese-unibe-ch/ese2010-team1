@@ -47,7 +47,7 @@ input, textarea {
 	}
 	
 		nav, section {
-			height: 600px;
+			height: 400px;
 			overflow: auto;
 		}
 		
@@ -239,7 +239,7 @@ nav a {
 /*** Entries ***/
 
 .entry {
-	margin: 10px;
+	margin: 10px 10px 15px;
 	overflow: hidden;
 }
 
@@ -328,6 +328,10 @@ nav a {
 		margin-top: 5px;
 	}
 	
+	.entry > div {
+		padding-bottom: 20px;
+	}
+	
 	.tags {
 		background: rgba(255,254,255,0.59);
 		width: 80px;
@@ -338,6 +342,27 @@ nav a {
 		text-align: center;
 	}
 	
+	/*** controlls ***/
+	.entry .date, .entry .controls {
+		position: absolute;
+		bottom: 3px;
+		font-size: 14px;
+	}
+	
+	.entry .date {
+		right: 10px;
+		color: #333;
+	}
+	
+	.entry .controls a {
+		color: rgba(0,0,0,0.3);
+		margin-right: 7px;
+	}
+	
+	.entry .controls a:hover {
+		color: #000;
+		text-decoration: none;
+	}
 
 		
 /*** Profile ***/
