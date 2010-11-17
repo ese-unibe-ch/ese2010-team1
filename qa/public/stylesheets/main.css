@@ -595,17 +595,17 @@ nav a {
 	}
 	
 	/*** Activities ***/
-	#activities {
+	#activityView {
 		width: 940px;
 		margin: 10px auto;
 		background: rgba(255, 255, 255, 0.3);
 	}
 	
-	#activities li {
+	#activityView li {
 		padding: 5px;
 	}
 	
-	#activities li:nth-child(odd) {
+	#activityView li:nth-child(odd) {
 		background: rgba(255, 255, 255, 0.1);
 	}
 

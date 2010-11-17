@@ -4,7 +4,7 @@
 
 
 #{if notifications.size()>0}
-	<ul id="activities">
+	<ul id="activityView">
 	#{list items:notifications, as:'notification'}
 		%{
 			question = notification.entry instanceof models.Question;
