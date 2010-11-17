@@ -110,6 +110,12 @@ input, textarea {
 	input[type=search] {
 		background: #fff url(../images/search.png) right center no-repeat;
 	}
+	
+	.newNotifications {
+		background: grey;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+	}
 
 	
 /*** Sidebar navigation ***/
