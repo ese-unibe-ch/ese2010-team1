@@ -28,9 +28,10 @@
 
 	<h1>Ask Question</h1>
 	#{form @Secured.newQuestion()}
+	
 		#{field 'content'}
 			<input type="text" name="title" id="title" value="Title" />
-				#{relatedQuestion /}
+				
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		<input type="text" name="tags" id="tags" value="Tags" />

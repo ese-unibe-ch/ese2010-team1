@@ -22,6 +22,7 @@ public class Bootstrap extends Job {
 		admin.save();
 		User anonymous = new User("Anonymous", "anonymous@qa.local",
 				"notAllowedToLogIn").save();
+
 		new User("Default", "default", "").save();
 
 	}

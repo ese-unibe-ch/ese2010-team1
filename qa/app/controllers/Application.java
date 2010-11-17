@@ -9,6 +9,7 @@ import models.Comment;
 import models.Entry;
 import models.FileEntry;
 import models.Question;
+import models.RecommendedQuestions;
 import models.Search;
 import models.Tag;
 import models.User;
@@ -170,6 +171,17 @@ public class Application extends Controller {
 			tagList.add(tag.name);
 		}
 		renderJSON(tagList);
+
+	}
+
+	public static void recommendedQuestions(String title) {
+		List<Question> recommendedQuestions = new ArrayList<Question>();
+		RecommendedQuestions rq = new RecommendedQuestions();
+		recommendedQuestions = rq.getRelatedQuestions(title);
+
+		// recommandedQuestions = Question.find("byTitle", title).fetch();
+
+		render(recommendedQuestions);
 
 	}
 
