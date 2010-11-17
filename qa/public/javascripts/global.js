@@ -1,6 +1,7 @@
 $(function() {
 
-	var reinitialise = function() {
+	var reinitialise = function() {	
+			$('html').height($(window).height()-20);
 			var height = $('body').height() - 70;
 			$('section, nav').height(height);
 			if($('.bottomleft').size() >= 1)
