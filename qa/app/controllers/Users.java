@@ -77,7 +77,9 @@ public class Users extends Controller {
 
 		new User(username, email, password).save();
 
-		Secure.authenticate(username, "", false);
+		session.put("username", username);
+
+		Questions.home();
 	}
 
 	public static void saveProfile(long id, String[] profileEntry) {
