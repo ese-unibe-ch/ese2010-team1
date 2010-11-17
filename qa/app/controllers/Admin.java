@@ -27,7 +27,7 @@ public class Admin extends Controller {
 
 	public static void adminPanel() {
 
-		render();
+		showUserlist();
 
 	}
 

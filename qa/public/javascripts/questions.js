@@ -39,6 +39,7 @@ $(function() {
 	$('nav a').livequery('click', function(event) {
 		var a = this;
 		$.get(getQuestion({id: this.hash.substr(2)}), function(data) {
+			$('section').data('jsp').scrollToY(0, false);
 			$('#section').html(data);
 			$('#nav a').removeClass("active");
 			$(a).addClass("active");
