@@ -362,6 +362,11 @@ public class User extends Model {
 		return Answer.count("owner = ?", this);
 	}
 
+	public long getNumberOfComments() {
+
+		return Comment.count("owner = ?", this);
+	}
+
 	/**
 	 * Gets the activities.
 	 * 

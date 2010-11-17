@@ -458,6 +458,20 @@ nav a {
 		float: left;
 		font-weight: bold;
 	}
+	
+	.statisticsBox {
+		background: black;
+		color: white;
+		float: left;
+		width: 200px;
+		text-align: center;
+	
+	}
+	
+	.statisticsValue {
+		float: left;
+		
+	}
 
 		
 	/*** Register ***/

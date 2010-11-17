@@ -9,7 +9,7 @@
 	    				<li>
 	    				<div class="activity-date">${activity.timestamp.format('MMM')}<br />${activity.timestamp.format('dd')} </div>
 	    				<div class="activity-box"> answered </div>
-	    				<a class="activity" href="@{Questions.question(activity.question.id)}#entry${activity.id}">${activity.question.title}</a>
+	    				<a class="activity" href="@{Questions.question(activity.question.id)}#entry${activity.id}">${activity.question.title.split(70)}</a>
 	    				<div class="clear"></div> 
 	    				</li>
 	    			#{/if}
