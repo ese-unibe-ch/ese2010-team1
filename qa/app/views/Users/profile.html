@@ -31,11 +31,9 @@
 		#{list items:titles, as:'title'}
 			<dt>${title.title}:</dt>
 			<dd>
-				#{if title.hasUserEntry(puser)}
-					<span class="profileEntry show">${title.findUserEntry(puser).entry}</span>
-				#{/if}
+				<span class="profileEntry show">${info.get(title.title)}</span>
 				#{if editable}
-					<input type="text" class="editProfile hidden" name="profileEntry" value="${title.findUserEntry(puser)?.entry}" />
+					<input type="text" class="editProfile hidden" name="profileEntry" value="${info.get(title.title)}" />
 				#{/if}
 				&nbsp;
 			</dd>

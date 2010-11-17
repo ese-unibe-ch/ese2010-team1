@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,10 +38,15 @@ public class Users extends Controller {
 	public static void profile(long id) {
 
 		List<ProfileItem> titles = ProfileItem.findAll();
-
 		User puser = User.findById(id);
 
-		render(puser, titles);
+		HashMap<String, String> info = new HashMap();
+		for (ProfileItem title : titles) {
+			info.put(title.title, title.findUserEntry(puser).entry);
+			System.out.println(title.title + ": " + info.get(title.title));
+		}
+
+		render(puser, titles, info);
 	}
 
 	public static void createUser() {
