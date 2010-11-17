@@ -327,7 +327,12 @@ public class User extends Model {
 
 	public boolean hasNewNotifications() {
 
-		return Notification.count("owner = ? and isNew = ?", this, true) > 0;
+		return this.numberOfNewNotifications() > 0;
+	}
+
+	public long numberOfNewNotifications() {
+
+		return Notification.count("owner = ? and isNew = ?", this, true);
 	}
 
 	public List<Notification> getNotifications(int numberOfNotifications) {

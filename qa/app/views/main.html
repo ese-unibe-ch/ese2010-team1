@@ -42,10 +42,33 @@
     			  			${user.name} (${user.reputation()})
     					</a>
     					
-	    				#{pulldown label:'Activity'}
+    					%{
+    					
+    					if(user.hasNewNotifications()) {
+    						activity = 'Activity ' +'<span class="newNotifications">&nbsp;' + user.numberOfNewNotifications() + '&nbsp;</span>';
+    					}
+    					else {
+    						activity = 'Activity';
+    					}
+    					
+    					}%
+    					
+	    				#{pulldown label:activity}
 							#{list items:user.getNewNotifications(), as:'notification'}
-							<li>${notification.activity}</li>
+								%{
+									question = notification.entry instanceof models.Question;
+									answer = !question;
+							
+								}%
+								#{if answer}
+									<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}#${notification.id}">Question ${notification.activity}</a></li>
+								#{/if}
+								#{else}
+									<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question ${notification.activity}</a></li>
+								#{/else}
+							
 							#{/list}
+							<li> <a href="">Show all</a></li>
 							#{else}
 							<li>There were no new notifications!</li>
 							#{/else}
