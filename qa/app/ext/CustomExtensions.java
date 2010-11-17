@@ -24,9 +24,17 @@ public class CustomExtensions extends JavaExtensions {
 	}
 
 	public static String trim(String string, int length) {
-		return (length > string.length()) ? string : string.substring(0,
-				length - 3)
-				+ "...";
+		if (length >= string.length())
+			return string;
+
+		int pos = 0;
+		for (int i = 0; i < length - 3; i++) {
+			if (string.charAt(i) == ' ')
+				pos = i;
+		}
+		return (pos == 0) ? string.substring(0, length - 3) + "..." : string
+				.substring(0, pos)
+				+ " ...";
 	}
 
 }
