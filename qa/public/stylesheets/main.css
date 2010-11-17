@@ -459,18 +459,26 @@ nav a {
 		font-weight: bold;
 	}
 	
-	.statisticsBox {
+	
+	.statisticsBox, .statisticsValue {
+		font-weight: bold;
 		background: black;
 		color: white;
 		float: left;
-		width: 200px;
-		text-align: center;
+		border: 10px solid black;
+		margin-bottom: 10px;
 	
 	}
 	
-	.statisticsValue {
-		float: left;
-		
+	.statisticsBox {		
+		width: 180px;
+		line-height: 25px;	
+	}
+	
+	.statisticsValue {				
+		font-size: 25px;
+		text-align: center;
+				
 	}
 
 		
