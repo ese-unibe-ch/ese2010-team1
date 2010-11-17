@@ -91,9 +91,11 @@
 		*{ tags }*
 		
 		#{if question}
+			<div class="tags">
 			#{list items:_entry.tags , as:'tag'}
-				<div class="tags">${tag.name}</div>
+				<span>${tag.name}</span>
 			#{/list}
+			</div>
 		#{/if}
 		
 		*{ files }*
@@ -109,7 +111,9 @@
 		
 		<div class="controls">
 			<a href="#">edit</a>
-			<a href="#">delete</a>
+			#{secure.check 'isAdmin'}
+		  		<a href="@{Questions.delete(_entry.id)}" title="delete entry">delete</a>
+			#{/secure.check}
 		</div>
 		
 		<span class="date">
