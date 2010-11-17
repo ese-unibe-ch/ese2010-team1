@@ -63,7 +63,7 @@ public class Users extends Controller {
 		// validate all parameters
 		if (!password.isEmpty()) {
 			validation.equals(password, password2).message(
-					"passwords don't match");
+					"Passwords don't match");
 		}
 
 		validation.isTrue(!User.exists(username)).message(

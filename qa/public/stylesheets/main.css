@@ -593,6 +593,21 @@ nav a {
 		text-align: center;
 				
 	}
+	
+	/*** Activities ***/
+	#activities {
+		width: 940px;
+		margin: 10px auto;
+		background: rgba(255, 255, 255, 0.3);
+	}
+	
+	#activities li {
+		padding: 5px;
+	}
+	
+	#activities li:nth-child(odd) {
+		background: rgba(255, 255, 255, 0.1);
+	}
 
 	/*** Admin ***/
 	#userlist {

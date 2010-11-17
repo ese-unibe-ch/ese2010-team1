@@ -31,8 +31,10 @@ GET		/best/reset/{id}						Questions.resetBestAnswer
 GET 	/profile/{id}							Users.profile
 GET		/activities/{id}						Users.activities
 
+
 # Admin
 GET		/importXML								Admin.xmlImporter
+GET		/userlist								Admin.showUserList
 
 
 # Map static resources from the /app/public folder to the /public path
@@ -42,5 +44,5 @@ GET     /public/                                staticDir:public
 *		/										module:secure
 *       /{controller}/{action}                  {controller}.{action}
 
-	
+# Sadly this route never gets used
 GET		/{id}									Questions.question	

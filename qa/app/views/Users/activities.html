@@ -12,10 +12,10 @@
 								
 		}%
 		#{if answer}
-			<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}">Question ${notification.activity}</a></li>
+			<li><a class="notification" href="@{Questions.question(notification.entry.question.id)}">Question "${notification.entry.question.title.trim(50)}" ${notification.activity}</a></li>
 		#{/if}
 		#{else}
-			<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question ${notification.activity}</a></li>
+			<li><a class="notification" href="@{Questions.question(notification.entry.id)}#${notification.id}">Question "${notification.entry.title.trim(50)}"  ${notification.activity}</a></li>
 		#{/else}
 	#{/list}
 	</ul>

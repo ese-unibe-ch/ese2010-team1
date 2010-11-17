@@ -29,6 +29,10 @@ $(function() {
 		$('#filter a[href=#Search]').addClass("active");
 	});
 	
+	$("#search").submit(function() {
+		return false;
+	});
+	
 	// handle absolut url
 	var id = /#!(\d+)$/.exec(self.location);
 	if(id) {
