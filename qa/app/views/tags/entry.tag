@@ -6,7 +6,7 @@
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#!${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title.slice(35)}</a>
+		<a href="#!${_entry.id}"#{if _active} class="active"#{/if}>${_entry.title.trim(35)}</a>
 	
 #{/if}
 
@@ -107,6 +107,10 @@
 			#{/list}
 		#{/elseif}
 		
+		<div class="controls">
+			<a href="#">edit</a>
+			<a href="#">delete</a>
+		</div>
 		
 	</div>
 	#{if _display != "innerHTML"}
