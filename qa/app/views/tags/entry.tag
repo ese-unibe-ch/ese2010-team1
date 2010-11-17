@@ -78,12 +78,13 @@
 	
 	*{ title }*
 	<h3>
-		${question ? _entry.title.slice(55) : "Answer"}
-		#{setBestAnswer answer:_entry, user:_user /}
 		<a href="@{Users.profile(_entry.owner.id)}" class="owner">
 			${_entry.owner.name} (${_entry.owner.reputation()})
 		</a>
-	</h3>
+	
+		${question ? _entry.title.slice(55) : "Answer"}
+		#{setBestAnswer answer:_entry, user:_user /}
+	</h3>	
 	
 	<div>
 	

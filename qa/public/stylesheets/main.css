@@ -352,13 +352,11 @@ nav a {
 	}
 	
 		.entry h3 {
-			padding-right: 100px;
 		}
 	
 		.entry h3 a.owner {
-			position: absolute;
-			right: 10px;
-			top: 10px;
+			float: right;
+			margin-left: 20px;
 		}
 		
 	.entry .content pre {
