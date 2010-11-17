@@ -40,7 +40,7 @@ $(function() {
 		$.get(setNotificationAsRed({id: this.hash.substr(1) }), function() {
 			self.location = url;
 		});
-			
+		return false;
 	});
 
 });
