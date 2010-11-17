@@ -30,7 +30,7 @@ $(function() {
 	});
 	
 	// handle absolut url
-	var id = /#!(\d+)$/.exec(this.location);
+	var id = /#!(\d+)$/.exec(self.location);
 	if(id) {
 		$("#section").load(getQuestion({id: id[1]}));
 	}
@@ -66,6 +66,9 @@ $(function() {
 						if(data.success == 1) {
 							$("#section").load(getQuestion({id: data.id}));	
 							$("#filter a.active").click();
+							var url = /^(.*)#(.*)$/.exec(self.location);
+							url = url ? url[1] : self.location;
+							self.location = url + "#!" + data.id;
 						} else {
 							self.location = login();
 						}
