@@ -40,10 +40,12 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	private List<Comment> comments;
 
+	/** The File entries */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
+	/** The notifications */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
@@ -51,8 +53,10 @@ public abstract class Entry extends Model {
 	/** The timestamp. */
 	public Date timestamp;
 
+	/** The faked id for XML importer */
 	public long fakeId;
 
+	/** The content */
 	@Lob
 	public String content;
 
@@ -113,6 +117,15 @@ public abstract class Entry extends Model {
 		return this.upVotes() - this.downVotes();
 	}
 
+	/**
+	 * Edits an entry's content.
+	 * 
+	 * @param content
+	 *            the new content
+	 * 
+	 * @param user
+	 *            the user who edits the entry
+	 */
 	public void edit(String content, User user) {
 		if (this.states.size() == 0) {
 			ContentState state = new ContentState(this.content, this.owner)
@@ -212,15 +225,26 @@ public abstract class Entry extends Model {
 		return vote;
 	}
 
+	/**
+	 * Gets a list with all comments of this entry.
+	 * 
+	 * @return the list
+	 */
 	public List<Comment> listComments() {
 		List<Comment> list = Comment.find("byEntry", this).fetch();
 		return list;
 	}
 
 	/**
+	 * Adds a comment to this entry
 	 * 
+	 * @param owner
+	 *            the one who comments
 	 * 
+	 * @param content
+	 *            the content of the comment
 	 * 
+	 * @return the comment
 	 */
 	public Comment addComment(User owner, String content) {
 		Comment comment = new Comment(owner, this, content).save();
@@ -233,6 +257,12 @@ public abstract class Entry extends Model {
 		return comment;
 	}
 
+	/**
+	 * Adds a new notification.
+	 * 
+	 * @param activity
+	 *            the activity
+	 */
 	public void addNotification(String activity) {
 
 		Notification notification = new Notification(this.owner, this, activity)
@@ -243,6 +273,17 @@ public abstract class Entry extends Model {
 
 	}
 
+	/**
+	 * Adds a file to this entry
+	 * 
+	 * @param file
+	 *            the file
+	 * 
+	 * @param user
+	 *            the user
+	 * 
+	 * @return the file entry
+	 */
 	public FileEntry addFile(File file, User user) {
 
 		FileEntry entry = FileEntry.upload(file, this, user);
@@ -253,11 +294,19 @@ public abstract class Entry extends Model {
 		return entry;
 	}
 
+	/**
+	 * Gets all file entries of this entry.
+	 * 
+	 * @return the list
+	 */
 	public List<FileEntry> getFiles() {
 
 		return FileEntry.find("byEntry", this).fetch();
 	}
 
+	/**
+	 * Compares two entries by its ratiting.
+	 */
 	@Entity
 	public class ContentState extends Model {
 		@ManyToOne

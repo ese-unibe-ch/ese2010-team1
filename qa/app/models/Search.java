@@ -135,6 +135,13 @@ public class Search {
 
 	}
 
+	/**
+	 * Search all questions with the searchString in it or in its answer.
+	 * 
+	 * @param searchString
+	 *            the search string
+	 * @return the list of questions
+	 */
 	public static List<Question> searchQuestions(String searchString) {
 		List<Question> questions = new ArrayList<Question>();
 		List<Entry> entries = searchEntry(searchString);

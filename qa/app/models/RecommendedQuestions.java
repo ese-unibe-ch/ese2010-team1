@@ -6,6 +6,13 @@ import java.util.StringTokenizer;
 
 public class RecommendedQuestions {
 
+	/**
+	 * Gets all related Questions according to a title.
+	 * 
+	 * @param title
+	 *            the title of a question
+	 * @return a list with all related questions with max. length 10
+	 */
 	public List<Question> getRelatedQuestions(String title) {
 
 		if (title.length() > 2) {
@@ -29,6 +36,13 @@ public class RecommendedQuestions {
 			return null;
 	}
 
+	/**
+	 * Search all questions with the searchTitle in its title.
+	 * 
+	 * @param title
+	 *            the title of a question
+	 * @return list of questions
+	 */
 	public List<Question> searchRelatedByTitle(String title) {
 		List<Question> questions = new ArrayList<Question>();
 		questions = Question.find("byTitleLike", "%" + title + "%").fetch();

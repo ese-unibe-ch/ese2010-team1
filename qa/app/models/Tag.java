@@ -57,11 +57,17 @@ public class Tag extends Model implements Comparable<Tag> {
 	 */
 	public static List<Map> getTagCloud() {
 		List<Map> result = Tag
-				.find("select new map(t.name as tag, count(q.id) as pound) from Question q join p.tags as t group by t.name order by t.name")
+				.find(
+						"select new map(t.name as tag, count(q.id) as pound) from Question q join p.tags as t group by t.name order by t.name")
 				.fetch();
 		return result;
 	}
 
+	/**
+	 * Gets all tags.
+	 * 
+	 * @return all tags
+	 */
 	public static List<Tag> getAllTags() {
 		List<Tag> allTags = new ArrayList();
 		allTags.addAll(Question.<Tag> findAll());
@@ -69,6 +75,11 @@ public class Tag extends Model implements Comparable<Tag> {
 		return allTags;
 	}
 
+	/**
+	 * Change the name of a tag.
+	 * 
+	 * @param new Name
+	 */
 	public void editTag(String newName) {
 		this.name = newName;
 	}

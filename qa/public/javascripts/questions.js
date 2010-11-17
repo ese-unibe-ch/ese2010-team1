@@ -111,15 +111,15 @@ $(function() {
 	});
 	
 		
-	//recommanded Questions
-//	$('#rq').keyup(function(event){
-//		if(this.value.length > 2){
-//		$.get(recommandedQuestions({title: this.value}), function(data){
-//				$('div#recommandedQuestions').html(data)
-//		
-//		});
-//		}
-//		return false;
-//	});
+	//recommended Questions
+	$("#section input[name=title]").keyup(function(event){
+		
+		$.get(recommendedQuestions({title: this.value}), function(data){
+				$('div#rqs').html(data)
+		
+		});
+		
+		return false;
+	});
 
 });

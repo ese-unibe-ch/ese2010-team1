@@ -12,7 +12,7 @@
 
 *{ form representation }*
 #{elseif _display == "form"}
-
+	<div id=rqs>sadasd</div>
 	<article class="entry question">
 	#{form @Questions.add()}
 		<menu>
@@ -22,8 +22,9 @@
 		</menu>
 	
 		<h3>
+		
 		#{field 'title'}
-			<input type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
+			<input id="rq" type="text" name="${field.name}" placeholder="Title" class="${field.errorClass}" />
 		#{/field}
 		</h3>
 		<p>

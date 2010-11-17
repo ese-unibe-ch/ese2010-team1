@@ -44,16 +44,7 @@ $(function() {
 	
 	});
 	
-	//		recommanded Questions
-	$('input.rq').keyup(function(event){
-		
-		$.get(recommendedQuestions({title: this.value}), function(data){
-				$('div#rqs').html(data)
-		
-		});
-		
-		return false;
-	});
+
 
 
 });
