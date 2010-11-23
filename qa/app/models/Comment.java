@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -46,11 +47,12 @@ public class Comment extends Model {
 		this.content = content;
 		this.timestamp = new Date();
 		this.entry = entry;
+		this.fans = new LinkedList<User>();
 	}
 
 	public void like(User user) {
-		assert !fans.contains(user);
-		assert user != this.owner;
+		//assert !fans.contains(user);
+		//assert user != this.owner;
 		this.fans.add(user);
 	}
 	

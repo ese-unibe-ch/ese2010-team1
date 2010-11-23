@@ -167,8 +167,8 @@
 					#{if _user}
 						<a href="#" class="showform">reply</a>
 					#{/if}
-					#{if _user==comment.owner}
-						<a href="@{Users.likeComment(comment.id)}" class="showform">like</a>
+					#{if _user!=comment.owner}
+						<a href="@{Users.likeComment(comment.id)}" class="likeComment">like</a>
 					#{/if}
 					<span class="like">liked by ${comment.fans.size()} people</span>
 				</div>

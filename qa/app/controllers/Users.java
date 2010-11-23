@@ -6,6 +6,7 @@ import java.util.List;
 
 import models.Answer;
 import models.Comment;
+import models.Entry;
 import models.ProfileItem;
 import models.Question;
 import models.User;
@@ -142,14 +143,18 @@ public class Users extends Controller {
 	public static void likeComment(long id){
 		User user = User.find("byName", Security.connected()).first();
 		Comment comment = Comment.findById(id);
-		if (comment != null)
-			comment.like(user);
+		comment.like(user);
 		
 		Question question = comment.entry instanceof Question ? (Question) comment.entry
 				: ((Answer) comment.entry).question;
 		
-		render("Questions/question.html", question);
-		//render();
+		Entry entry = comment.entry;
+		if (entry instanceof models.Question)
+			Questions.question(id);
+		else
+			Questions.question(((Answer) entry).question.id);
+		
+		Questions.question(question.id);
 	}
 
 	/*** AJAX ***/
