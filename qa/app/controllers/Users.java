@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import models.Answer;
+import models.Comment;
 import models.ProfileItem;
+import models.Question;
 import models.User;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -134,6 +137,19 @@ public class Users extends Controller {
 				"byOwner", puser).fetch();
 
 		render(notifications, puser);
+	}
+	
+	public static void likeComment(long id){
+		User user = User.find("byName", Security.connected()).first();
+		Comment comment = Comment.findById(id);
+		if (comment != null)
+			comment.like(user);
+		
+		Question question = comment.entry instanceof Question ? (Question) comment.entry
+				: ((Answer) comment.entry).question;
+		
+		render("Questions/question.html", question);
+		//render();
 	}
 
 	/*** AJAX ***/
