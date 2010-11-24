@@ -55,6 +55,32 @@ $(function() {
 		$.get(questionForm(), {type: "question"}, function(data) {
 			$("#section").html(data);
 			$("#section input[name=title]").foc();
+			
+			var tags;		
+			$.getJSON(tagsList(), function(data) {
+					tags = data;
+			});
+				
+			$('input#tags').autocomplete({
+				minLength: 0,
+				source: function( request, response ) {
+					response( $.ui.autocomplete.filter(
+						tags, extractLast( request.term ) ) );
+				},
+				focus: function() {
+					return false;
+				},
+				select: function( event, ui ) {
+					var terms = split(this.value);
+					terms.pop();
+					terms.push( ui.item.value );
+					terms.push( "" );
+					this.value = terms.join( ", " );
+					return false;
+				}
+			});
+			
+			
 			$('#nav a').removeClass("active");
 			$("#section form").submit(function() {
 				var title = $("#section input[name=title]").value();
@@ -184,30 +210,7 @@ $(function() {
 		 
 
 	
-	var tags;		
-		
-	$.getJSON(tagsList(), function(data) {
-			tags = data;
-	});
-		
-	$('input#tags').autocomplete({
-		minLength: 0,
-		source: function( request, response ) {
-			response( $.ui.autocomplete.filter(
-				tags, extractLast( request.term ) ) );
-		},
-		focus: function() {
-			return false;
-		},
-		select: function( event, ui ) {
-			var terms = split(this.value);
-			terms.pop();
-			terms.push( ui.item.value );
-			terms.push( "" );
-			this.value = terms.join( ", " );
-			return false;
-		}
-	});
+
 
 	
 
