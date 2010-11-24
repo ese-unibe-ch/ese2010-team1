@@ -198,10 +198,18 @@ public class Question extends Entry {
 				|| !this.bestAnswerFreezer.frozen();
 	}
 
+	/**
+	 * Removes all tags.
+	 */
 	public void removeAllTags() {
 		this.tags = new TreeSet<Tag>();
 	}
 
+	/**
+	 * Creates a String with all tags separated with , .
+	 * 
+	 * @return the string
+	 */
 	public String tagsToString() {
 
 		StringBuffer buffer = new StringBuffer();

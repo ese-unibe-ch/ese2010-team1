@@ -48,8 +48,7 @@ public class AnswerTest extends UnitTest {
 
 		assertEquals(answer.content, "an answer");
 
-		Answer answer3 = question2
-				.answer(user2, "I also not really likt it...");
+		question2.answer(user2, "I also not really likt it...");
 
 		assertEquals(3, Answer.count());
 		Answer userAnswer = Answer.find("byOwner", user).first();
@@ -80,7 +79,7 @@ public class AnswerTest extends UnitTest {
 		User user = new User("Jack", "test@mail.com", "password").save();
 		Question question = user.addQuestion("A title", "My first question");
 
-		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "an answer");
 		question.answer(user, "another answer");
 
 		assertEquals(1, Question.count());
@@ -100,7 +99,7 @@ public class AnswerTest extends UnitTest {
 		Question question = user.addQuestion("A title", "My first question");
 		user.addQuestion("Second title", "Second question");
 
-		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "an answer");
 		question.answer(user, "another answer");
 
 		assertEquals(2, User.count());
@@ -124,7 +123,7 @@ public class AnswerTest extends UnitTest {
 		user.addQuestion("Second title", "Second question");
 		question.answer(user2, "blub");
 
-		Answer answer = question.answer(user, "an answer");
+		question.answer(user, "an answer");
 		question.answer(user, "another answer");
 
 		assertEquals(3, User.count());

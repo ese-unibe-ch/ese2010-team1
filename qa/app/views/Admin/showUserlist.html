@@ -2,19 +2,28 @@
 
 #{set title: ' Userlist' /}
 
-<dl>
+<table id="userlist">
+	<tr>
+		<th>Username</th>
+		<th>E-Mail</th>
+		<th></th>
+		<th></th>
+	</tr>
 
-<dt><b style="color: white;">Username</b></dt> <dd><b style="color: white;">E-Mail </b></dd>
-
-#{list items: users, as: 'luser'}
-
-<dt>${luser.name}</dt> 
-<dd>${luser.email}
-#{if luser!=user && !luser.name.equals("Anonym")}<a style="position: absolute; left: 520px;" href="@{Admin.deleteUser(luser.id)}">Delete</a>#{/if}
-#{if !luser.isAdmin && !luser.name.equals("Anonym")}<a style="position: absolute; left: 590px;" href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>#{/if}
-
-</dd>
-
-#{/list}
-
-</dl>
+	#{list items: users, as: 'luser'}
+		<tr>
+			<td>${luser.name}</td> 
+			<td>${luser.email}</td>
+			<td>
+				#{if luser!=user && !luser.name.equals("Anonymous")}
+					<a href="@{Admin.deleteUser(luser.id)}">Delete</a>
+				#{/if}
+			</td>
+			<td>	
+				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
+					<a href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
+				#{/if}
+			</td>
+		</tr>
+	#{/list}
+</table>

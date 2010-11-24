@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+
+#{set title:'Create User' /}
+<div style="text-align: center;">
+
+<div class="centeredBox">
+<h1>Import Database as XML</h1>
+
+
+Number of new users: ${userCount}<br />
+Number of new questions: ${questionCount}<br />
+Number of new answers: ${answerCount}<br />
+<hr />
+Number of users: ${users.size()}<br />
+Number of questions: ${questions.size()}<br />
+Number of answers: ${answers.size()}<br />
+
+Report: <br />
+${report.nl2br()}
+</div>
