@@ -139,21 +139,38 @@ public class Users extends Controller {
 
 		render(notifications, puser);
 	}
-	
-	public static void likeComment(long id){
+
+	public static void likeComment(long id) {
 		User user = User.find("byName", Security.connected()).first();
 		Comment comment = Comment.findById(id);
 		comment.like(user);
-		
+
 		Question question = comment.entry instanceof Question ? (Question) comment.entry
 				: ((Answer) comment.entry).question;
-		
+
 		Entry entry = comment.entry;
 		if (entry instanceof models.Question)
 			Questions.question(id);
 		else
 			Questions.question(((Answer) entry).question.id);
-		
+
+		Questions.question(question.id);
+	}
+
+	public static void unlikeComment(long id) {
+		User user = User.find("byName", Security.connected()).first();
+		Comment comment = Comment.findById(id);
+		comment.unlike(user);
+
+		Question question = comment.entry instanceof Question ? (Question) comment.entry
+				: ((Answer) comment.entry).question;
+
+		Entry entry = comment.entry;
+		if (entry instanceof models.Question)
+			Questions.question(id);
+		else
+			Questions.question(((Answer) entry).question.id);
+
 		Questions.question(question.id);
 	}
 

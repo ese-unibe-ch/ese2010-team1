@@ -51,15 +51,21 @@ public class Comment extends Model {
 	}
 
 	public void like(User user) {
-		//assert !fans.contains(user);
-		//assert user != this.owner;
-		this.fans.add(user);
+		if (!likedBy(user) && user != this.owner) {
+			this.fans.add(user);
+			this.save();
+		}
 	}
-	
-	public void dislike(User user){
-		assert fans.contains(user);
-		assert user != this.owner;
-		this.fans.remove(user);
+
+	public void unlike(User user) {
+		if (likedBy(user)) {
+			this.fans.remove(user);
+			this.save();
+		}
+	}
+
+	public boolean likedBy(User user) {
+		return fans.contains(user);
 	}
 
 }
