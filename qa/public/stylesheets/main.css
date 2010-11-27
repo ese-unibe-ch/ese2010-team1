@@ -133,18 +133,14 @@ nav a {
 	background: #fff url(../images/arrow_right_disabled.png) right center no-repeat;
 }
 
+nav a#newQuestion {
+	font-weight: bold;
+	color: #fff;
+	background: #803ab4 url(../images/arrow_right_white.png) right center no-repeat;
+	}
+
 	nav a.active, nav a:hover {
 		background-image: url(../images/arrow_right.png);
-	}
-	
-	a.bottomleft {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		width: 350px;
-		padding: 5px;
-		color: #fff;
-		background: #888;
 	}
 	
 /*** Pulldown menus ***/

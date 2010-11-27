@@ -16,8 +16,11 @@ public class EntryComperator implements Comparator<Entry> {
 	 * @return 1 if o2 is better, -1 if o1 is better, 0 if they are equal.
 	 */
 	public int compare(Entry o1, Entry o2) {
-
-		if (o2.rating() - o1.rating() > 0) {
+		if (o1 instanceof Answer && ((Answer) o1).isBestAnswer()) {
+			return -1;
+		} else if (o2 instanceof Answer && ((Answer) o2).isBestAnswer()) {
+			return 1;
+		} else if (o2.rating() - o1.rating() > 0) {
 			return 1;
 		} else if (o2.rating() - o1.rating() < 0) {
 			return -1;

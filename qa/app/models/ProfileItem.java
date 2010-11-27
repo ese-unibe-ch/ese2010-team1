@@ -44,8 +44,9 @@ public class ProfileItem extends Model {
 	 * @return the profile entry
 	 */
 	public ProfileEntry findUserEntry(User user) {
-
-		return ProfileEntry.find("byItemAndUser", this, user).first();
+		ProfileEntry entry = ProfileEntry.find("byItemAndUser", this, user)
+				.first();
+		return entry;
 
 	}
 

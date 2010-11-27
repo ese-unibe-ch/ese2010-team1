@@ -35,4 +35,20 @@ public class ProfileTest extends UnitTest {
 		List<ProfileEntry> entrys = ProfileEntry.findAll();
 		assertTrue(entrys.size() > 0);
 	}
+
+	@Test
+	public void setProfilEntrys() {
+
+		User user = new User("testuser", "test@mail.com", "password").save();
+		new ProfileItem("Test1").save();
+		ProfileItem item2 = new ProfileItem("Test2").save();
+
+		assertFalse(item2.hasUserEntry(user));
+		item2.editUserEntry(user, "my entry");
+		assertTrue(item2.hasUserEntry(user));
+		item2.editUserEntry(user, "new entry");
+		assertEquals(1, ProfileEntry.count());
+		assertEquals("new entry", item2.findUserEntry(user).entry);
+
+	}
 }
