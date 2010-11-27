@@ -1,4 +1,4 @@
-package ext;
+package models.extensions;
 
 import play.templates.JavaExtensions;
 
