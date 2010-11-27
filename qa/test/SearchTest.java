@@ -47,4 +47,15 @@ public class SearchTest extends UnitTest {
 		assertEquals(0, searchResults.size());
 	}
 
+	@Test
+	public void searchUserByNameOrEmail() {
+
+		new User("blub", "test@test.com", "test").save();
+		new User("test", "blub@blub.com", "blub").save();
+		assertEquals(2, User.count());
+		List<User> searchResults = Search.searchUsers("test");
+		assertEquals(2, searchResults.size());
+
+	}
+
 }

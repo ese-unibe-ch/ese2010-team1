@@ -158,4 +158,10 @@ public class Search {
 		return questions;
 	}
 
+	public static List<User> searchUsers(String searchString) {
+
+		return User.find("name like ? or email like ?",
+				"%" + searchString + "%", "%" + searchString + "%").fetch();
+	}
+
 }

@@ -25,6 +25,7 @@ public class LikeCommentTest extends UnitTest {
 		User bob = new User("bob", "b@b.com", "pw").save();
 		comment.like(bob);
 		assertEquals(1, comment.fans.size());
+		comment.like(bob);
 		comment.unlike(bob);
 		assertEquals(0, comment.fans.size());
 	}

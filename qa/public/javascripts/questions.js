@@ -51,7 +51,7 @@ $(function() {
 	});
 	
 	// new question
-	$("a.bottomleft").click(function() {
+	$("a#newQuestion").click(function() {
 		$.get(questionForm(), {type: "question"}, function(data) {
 			$("#section").html(data);
 			$("#section input[name=title]").foc();

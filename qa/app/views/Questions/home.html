@@ -25,13 +25,12 @@
  #{/set}
 
 #{nav}
+	#{if user}
+		<a id="newQuestion" href="#NewQuestion">New Question</a>
+	#{/if}
 	#{include 'Questions/list.html' /}
 #{/nav}
 
-#{if user}
-	#{set 'absolute'}
-		<a class="bottomleft" href="#NewQuestion">New Question</a>
-	#{/set}
-#{/if}
+
 
 #{include 'Questions/question.html' /}
