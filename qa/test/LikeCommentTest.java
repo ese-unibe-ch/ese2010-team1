@@ -17,11 +17,12 @@ public class LikeCommentTest extends UnitTest {
 
 	@Test
 	public void shouldOnlyBePossibleToLikeCommentOncePerUser() {
-		User alice = new User("alice", "a@b.com", "pw");
-		Question question = new Question(alice, "TEST?", "test question");
+		User alice = new User("alice", "a@b.com", "pw").save();
+		Question question = new Question(alice, "TEST?", "test question")
+				.save();
 		Comment comment = new Comment(alice, question,
-				"This is a comment to like!");
-		User bob = new User("bob", "b@b.com", "pw");
+				"This is a comment to like!").save();
+		User bob = new User("bob", "b@b.com", "pw").save();
 		comment.like(bob);
 		assertEquals(1, comment.fans.size());
 		comment.unlike(bob);
@@ -30,10 +31,11 @@ public class LikeCommentTest extends UnitTest {
 
 	@Test
 	public void shouldNotBePossibleToLikeOwnComment() {
-		User alice = new User("alice", "a@b.com", "pw");
-		Question question = new Question(alice, "TEST?", "test question");
+		User alice = new User("alice", "a@b.com", "pw").save();
+		Question question = new Question(alice, "TEST?", "test question")
+				.save();
 		Comment comment = new Comment(alice, question,
-				"This is a comment to like!");
+				"This is a comment to like!").save();
 		comment.like(alice);
 		assertEquals(0, comment.fans.size());
 		comment.unlike(alice);
