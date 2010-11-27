@@ -33,4 +33,18 @@ public class SearchTest extends UnitTest {
 
 	}
 
+	@Test
+	public void searchQuestionByTags() {
+
+		User user = new User("test", "test@test.com", "test").save();
+		Question question = new Question(user, "test title", "my content")
+				.save();
+		question.tagItWith("anotherteststring").tagItWith("test").tagItWith(
+				"hello").tagItWith("world");
+		List<Question> searchResults = Search.searchTaggedWith("test");
+		assertEquals(1, searchResults.size());
+		searchResults = Search.searchTaggedWith("blub");
+		assertEquals(0, searchResults.size());
+	}
+
 }
