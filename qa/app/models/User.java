@@ -67,6 +67,8 @@ public class User extends Model {
 	/** The is admin. */
 	public boolean isAdmin = false;
 
+	public int reputation;
+
 	public long fakeId;
 
 	/**
@@ -109,6 +111,13 @@ public class User extends Model {
 		}
 
 		return reputation;
+	}
+
+	public void calcReputation() {
+
+		reputation = this.reputation();
+		this.save();
+
 	}
 
 	// SM Using JSON Objects from http://www.json.org/java/ might be better

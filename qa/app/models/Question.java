@@ -158,7 +158,8 @@ public class Question extends Entry {
 	 */
 	public static List<Question> findTaggedWith(String tag) {
 		return Question
-				.find("select distinct q from Question q join q.tags as t where t.name = ?",
+				.find(
+						"select distinct q from Question q join q.tags as t where t.name = ?",
 						tag).fetch();
 	}
 
@@ -175,6 +176,7 @@ public class Question extends Entry {
 		} else if (answer.canBeBestAnswer()) {
 			this.bestAnswerFreezer = new TimeFreezer(1 * 60).save();
 			this.bestAnswer = answer;
+			owner.calcReputation();
 		}
 		this.save();
 	}
