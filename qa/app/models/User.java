@@ -93,9 +93,8 @@ public class User extends Model {
 		this.reputation = 0;
 	}
 
-	// SM cache reputation for faster access
 	/**
-	 * Reputation.
+	 * Find the Reputation value.
 	 * 
 	 * @return the reputation
 	 */
@@ -113,6 +112,9 @@ public class User extends Model {
 		return reputation;
 	}
 
+	/**
+	 * Calculate the actual reputation value and save it to the database.
+	 */
 	public void calcReputation() {
 
 		this.reputation = reputation();
@@ -122,11 +124,36 @@ public class User extends Model {
 
 	// SM Using JSON Objects from http://www.json.org/java/ might be better
 	/**
-	 * Graph data.
+	 * Creates Graph data in JSON format.
 	 * 
 	 * @return graph data as JSON string
 	 */
 	public String graphData() {
+
+		List<Point> points = fetchGraphData();
+
+		int reputation = 0;
+		StringBuffer data = new StringBuffer("[");
+		Iterator<Point> it = points.iterator();
+		while (it.hasNext()) {
+			Point pt = it.next();
+			reputation += pt.change;
+			data.append("{\"time\": " + pt.time + ", \"value\": " + reputation
+					+ "}");
+			if (it.hasNext())
+				data.append(',');
+		}
+		data.append(']');
+
+		return data.toString();
+	}
+
+	/**
+	 * Fetch graph data.
+	 * 
+	 * @return the sorted (by timestamp) list of graph points
+	 */
+	private List<Point> fetchGraphData() {
 
 		ArrayList points = new ArrayList();
 
@@ -151,20 +178,8 @@ public class User extends Model {
 
 		Collections.sort(points, new PointComparator());
 
-		int reputation = 0;
-		StringBuffer data = new StringBuffer("[");
-		Iterator<Point> it = points.iterator();
-		while (it.hasNext()) {
-			Point pt = it.next();
-			reputation += pt.change;
-			data.append("{\"time\": " + pt.time + ", \"value\": " + reputation
-					+ "}");
-			if (it.hasNext())
-				data.append(',');
-		}
-		data.append(']');
+		return points;
 
-		return data.toString();
 	}
 
 	/**
@@ -206,7 +221,7 @@ public class User extends Model {
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Point arg0, Point arg1) {
-			return (((Point) arg1).time < ((Point) arg0).time) ? 1 : -1;
+			return (arg1.time < arg0.time) ? 1 : -1;
 		}
 	}
 
