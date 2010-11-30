@@ -11,6 +11,7 @@ var hotQuestions = #{jsAction @Questions.hot() /}
 var myQuestions = #{jsAction @Questions.mine() /}
 var activeQuestions = #{jsAction @Questions.active() /}
 var searchQuestions = #{jsAction @Questions.search(':string') /}
+var searchUsers = #{jsAction @Questions.searchUsers(':string') /}
 var questionForm = #{jsAction @Questions.form() /}
 var addQuestion = #{jsAction @Questions.add() /}
 var answerQuestion = #{jsAction @Questions.answer(':id') /}

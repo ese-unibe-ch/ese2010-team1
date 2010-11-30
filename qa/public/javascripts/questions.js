@@ -24,7 +24,8 @@ $(function() {
 	
 	// search questions
 	$("#search input").keyup(function() {
-		$("#nav").load(searchQuestions({string: this.value}));
+		var action = userSearch ? searchUsers({string: this.value}) : searchQuestions({string: this.value});
+		$("#nav").load(action);
 		$('#filter a').removeClass("active");
 		$('#filter a[href=#Search]').addClass("active");
 	});
@@ -42,12 +43,24 @@ $(function() {
 	// load question
 	$('nav a').livequery('click', function(event) {
 		var a = this;
-		$.get(getQuestion({id: this.hash.substr(2)}), function(data) {
-			$('section').data('jsp').scrollToY(0, false);
-			$('#section').html(data);
-			$('#nav a').removeClass("active");
-			$(a).addClass("active");
-		});
+		switch(this.id) {
+		case "searchMode":
+			userSearch = this.hash == "#usersearch";
+			$("#search input").keyup();
+		
+		case "newQuestion":
+			return false;
+			break;
+			
+		default:
+			if(this.hash)
+			$.get(getQuestion({id: this.hash.substr(2)}), function(data) {
+				$('section').data('jsp').scrollToY(0, false);
+				$('#section').html(data);
+				$('#nav a').removeClass("active");
+				$(a).addClass("active");
+			});
+		}
 	});
 	
 	// new question
@@ -216,6 +229,7 @@ $(function() {
 
 });
 
+var userSearch = false;
 
 function split( val ) {
 	return val.split( /,\s*/ );
