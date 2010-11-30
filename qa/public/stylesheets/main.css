@@ -634,7 +634,7 @@ nav a {
 
 		
 	/*** Register ***/
-	form.register, div.centeredBox {
+	form.register, div.centeredBox, div#loginform {
 		font-size: 14px;
 		border-radius: 5px; 
 		-moz-border-radius: 5px; 
@@ -652,3 +652,61 @@ nav a {
 		margin-bottom: 15px;
 		
 		}
+		
+	#username-field {
+    margin-top: 10px !important;
+}
+
+	#username-field label, #password-field label {
+	    display: block;
+	    width: 100px;
+	    float: left;
+	    text-align: right;
+	    margin-right: 5px;
+	    margin-bottom: 5px;
+	    color: #000;
+	    font-size: 15px;
+	}
+	
+	#username-field input {
+	    width: 200px;
+	    font-size: 13px;
+	    margin-bottom: 5px;
+	}
+	
+	#password-field input {
+	    width: 200px;
+	    font-size: 13px;
+	    margin-bottom: 5px;
+	}
+	
+	#remember-field input {
+	    margin-left: 105px;
+	}
+	
+	#remember-field {
+	    font-size: 12px;
+	    color: #000;
+	}
+	
+	#signin-field input {
+    	margin-left: 100px;
+    	margin-top: 10px;
+	}
+
+	#loginform .error, #loginform .success  {
+	    color: #fff;
+	    font-size: 12px;
+	    text-align: center;
+	    margin-bottom: 10px;
+	    padding: 5px;
+	}
+	
+	#loginform .error {
+	    background: #c00 !important;
+	}
+	
+	#loginform .success {
+	    background: #008800 !important;
+	}
+

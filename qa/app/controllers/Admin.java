@@ -34,7 +34,6 @@ public class Admin extends Controller {
 	public static void showUserlist() {
 
 		List<User> users = User.findAll();
-
 		render(users);
 
 	}
