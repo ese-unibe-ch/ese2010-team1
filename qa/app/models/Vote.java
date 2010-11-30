@@ -45,6 +45,7 @@ public class Vote extends Model {
 		this.entry = entry;
 		this.freezer = new TimeFreezer(60 * 2).save();
 		owner.addVote(this);
+		entry.owner.calcReputation();
 	}
 
 	/**

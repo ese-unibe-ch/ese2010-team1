@@ -145,7 +145,9 @@ public abstract class Entry extends Model {
 	 * @return the {@link Vote}
 	 */
 	public Vote voteUp(User user) {
-		return this.vote(user, true);
+		Vote vote = this.vote(user, true);
+		this.owner.calcReputation();
+		return vote;
 	}
 
 	/**
@@ -156,7 +158,9 @@ public abstract class Entry extends Model {
 	 * @return the {@link Vote}
 	 */
 	public Vote voteDown(User user) {
-		return this.vote(user, false);
+		Vote vote = this.vote(user, false);
+		this.owner.calcReputation();
+		return vote;
 	}
 
 	/**

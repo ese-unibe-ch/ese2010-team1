@@ -79,7 +79,7 @@
 	*{ title }*
 	<h3>
 		<a href="@{Users.profile(_entry.owner.id)}" class="owner">
-			${_entry.owner.name} (${_entry.owner.reputation()})
+			${_entry.owner.name} (${_entry.owner.reputation})
 		</a>
 	
 		${question ? _entry.title.slice(55) : "Answer"}
@@ -157,7 +157,7 @@
 		#{list items:_entry.listComments(), as:'comment'}
 			<div class="comment">
 				<a href="@{Users.profile(comment.owner.id)}" class="owner">
-					${comment.owner.name} (${comment.owner.reputation()})
+					${comment.owner.name} (${comment.owner.reputation})
 				</a>
 				<p>${comment.content.nl2br()}</p>
 				<div class="controls">
