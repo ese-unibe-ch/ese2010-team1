@@ -317,6 +317,12 @@ nav a {
 	
 	.entry input[type=submit] {
 		width: 70px;
+		float: left;
+	}
+	
+	.entry .cancel {
+		margin: 5px  0 0 75px;
+		display: block;
 	}
 	
 	.entry textarea {
@@ -354,6 +360,7 @@ nav a {
 	/*** Content ***/
 	
 	.entry > div, .entry h3, .entry > form > div {
+		overflow: hidden;
 		padding: 10px;
 		margin-right: 30px;
 		background: rgba(255,254,255,0.59);

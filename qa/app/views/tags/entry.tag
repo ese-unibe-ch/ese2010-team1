@@ -47,6 +47,9 @@
 		#{/else}
 		
 		<input type="submit" value="Post" />
+		#{if _entry && !_type}
+			<a class="cancel" href="#${_entry.id}">cancel</a>
+		#{/if}
 		</div>
 	</form>
 	</article>
