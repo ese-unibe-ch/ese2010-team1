@@ -90,6 +90,7 @@ public class User extends Model {
 		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
+		this.reputation = 0;
 	}
 
 	// SM cache reputation for faster access
@@ -100,8 +101,8 @@ public class User extends Model {
 	 */
 	public int reputation() {
 		int reputation = 0;
-
-		Iterator<Entry> it = this.entrys.iterator();
+		List<Entry> entrys = Entry.find("byOwner", this).fetch();
+		Iterator<Entry> it = entrys.iterator();
 		while (it.hasNext()) {
 			Entry entry = it.next();
 			reputation += entry.rating();
@@ -115,7 +116,8 @@ public class User extends Model {
 
 	public void calcReputation() {
 
-		reputation = this.reputation();
+		this.reputation = reputation();
+		System.out.println(this.reputation);
 		this.save();
 
 	}
