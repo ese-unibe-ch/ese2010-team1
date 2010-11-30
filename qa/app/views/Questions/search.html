@@ -1,0 +1,14 @@
+#{if questions}
+	<a id="searchMode" href="#usersearch" class="info" title="Search for users">Are you looking for users?</a>
+	
+	%{ noinfo = true }%
+	#{include "Questions/list.html" /}
+#{/if}
+
+#{else}
+	<a id="searchMode" href="#questionsearch" class="info" title="Search for questions">Are you looking for questions?</a>
+	
+	#{list items:users, as:'user'}
+		<a href="@{Users.profile(user.id)}">${user.name}</a>
+	#{/list}
+#{/else}

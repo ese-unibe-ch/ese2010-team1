@@ -88,7 +88,12 @@ public class Questions extends Controller {
 
 	public static void search(String string) {
 		List<Question> questions = Search.searchQuestions(string);
-		render("Questions/list.html", questions);
+		render(questions);
+	}
+
+	public static void searchUsers(String string) {
+		List<User> users = Search.searchUsers(string);
+		render("Questions/search.html", users);
 	}
 
 	public static void form(String type, long id) {
