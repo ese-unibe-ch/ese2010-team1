@@ -69,6 +69,7 @@ public class Admin extends Controller {
 		int userCount = 0;
 		int questionCount = 0;
 		int answerCount = 0;
+		long parseTime = 0;
 		String report = "";
 
 		validation.isTrue(isXMLFile(xmlfile)).message(
@@ -78,6 +79,7 @@ public class Admin extends Controller {
 			try {
 				XMLImporter importer = new XMLImporter(xmlfile);
 				XMLHandler handler = importer.getHandler();
+				parseTime = importer.getParseTime();
 				userCount = handler.getUserCount();
 				questionCount = handler.getQuestionCount();
 				answerCount = handler.getAnswerCount();
@@ -92,7 +94,7 @@ public class Admin extends Controller {
 			List<Answer> answers = Answer.findAll();
 
 			render(users, questions, answers, userCount, questionCount,
-					answerCount, report);
+					answerCount, parseTime, report);
 		}
 
 		validation.keep();

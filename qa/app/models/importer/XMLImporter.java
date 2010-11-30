@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 public class XMLImporter {
 
 	private XMLHandler handler;
+	private long parseTime = 0;
 
 	public XMLImporter(File file) throws SAXException, IOException,
 			ParserConfigurationException {
@@ -30,12 +31,18 @@ public class XMLImporter {
 		handler = new XMLHandler();
 
 		// Finally, tell the parser to parse the input and notify the handler
+		long startTime = System.currentTimeMillis();
 		saxParser.parse(input, handler);
+		this.parseTime = (System.currentTimeMillis() - startTime) / 1000;
 	}
 
 	public XMLHandler getHandler() {
 
 		return handler;
+	}
+
+	public long getParseTime() {
+		return this.parseTime;
 	}
 
 }
