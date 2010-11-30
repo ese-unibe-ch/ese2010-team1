@@ -117,6 +117,11 @@ $(function() {
 		});
 	});
 	
+	// cancel edit
+	$(".cancel").livequery('click', function() {
+		$(this).parents('article').load(getAnswer({id: this.hash.substr(1)}));	
+	});
+	
 	// versions
 	$('a.versions').livequery('click', function() {
 		$(this).next('div.versions').toggle();
