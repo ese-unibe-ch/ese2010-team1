@@ -78,6 +78,10 @@ input, textarea {
    				box-shadow:inset 10px 0px 50px -10px #000;
 				padding-left: 10px;
 			}
+			
+		#authenticityToken {
+			display: none;
+		}
 
 	
 /*** Top Navigation ***/	
