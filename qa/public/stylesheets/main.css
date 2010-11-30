@@ -133,11 +133,20 @@ nav a {
 	background: #fff url(../images/arrow_right_disabled.png) right center no-repeat;
 }
 
-nav a#newQuestion {
-	font-weight: bold;
-	color: #fff;
-	background: #803ab4 url(../images/arrow_right_white.png) right center no-repeat;
+	#topaction {
+		position: absolute;
+		top: 30px;
+		left: 0;	
+		width: 350px;	
 	}
+	
+		#topaction a {
+			padding: 5px;
+			display: block;
+			color: #fff;
+			background: #888;
+			width: 350px;
+		}
 
 	nav a.active, nav a:hover {
 		background-image: url(../images/arrow_right.png);

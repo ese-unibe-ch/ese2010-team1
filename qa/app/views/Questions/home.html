@@ -28,6 +28,14 @@
 	#{include 'Questions/list.html' /}
 #{/nav}
 
+	
+#{set 'topaction'} 	 
+	<div id="topaction">
+		#{if user}	
+			<a class="topaction" href="#newQuestion">New Question</a> 	
+		#{/if}
+	</div>
+#{/set} 	
 
 
 #{include 'Questions/question.html' /}

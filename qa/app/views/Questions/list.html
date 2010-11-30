@@ -1,6 +1,3 @@
-#{if !noinfo && user}
-	<a class="info" id="newQuestion" href="#NewQuestion">New Question</a>
-#{/if}
 #{list items:questions, as:'entry'}
 	#{entry entry:entry, user:user, display:'nav', active:question==entry /}
 #{/list}

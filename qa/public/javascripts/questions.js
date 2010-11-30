@@ -5,15 +5,19 @@ $(function() {
 		switch(this.hash) {
 			case "#Mine":
 				$("#nav").load(myQuestions());
+				newQuestionLink();
 				break;
 			case "#Hot":
 				$("#nav").load(hotQuestions());
+				newQuestionLink();
 				break;
 			case "#Active":
 				$("#nav").load(activeQuestions());
+				newQuestionLink();
 				break;
 			case "#Search":
 				$("#nav").load(searchQuestions({string: $("#search input").val()}));
+				searchModeLink();
 				$("#search input").focus();
 				break;
 		}
@@ -22,9 +26,34 @@ $(function() {
 		return false;
 	});
 	
+	// search mode
+	newQuestionContent = $("#topaction").html();
+	$("#topaction a").livequery("click", function() {
+		switch(this.hash) {
+		case "#usersearch":
+			userSearch = true;
+			break;
+			
+		case "#questionsearch":
+			userSearch = false;
+			break;
+			
+		case "#newQuestion":
+			newQuestion();
+			
+		default:
+			return false;
+		}
+		
+		$("#search input").keyup();
+		searchModeLink();
+		return false;
+	});
+	
 	// search questions
 	$("#search input").keyup(function() {
 		var action = userSearch ? searchUsers({string: this.value}) : searchQuestions({string: this.value});
+		searchModeLink();
 		$("#nav").load(action);
 		$('#filter a').removeClass("active");
 		$('#filter a[href=#Search]').addClass("active");
@@ -43,84 +72,17 @@ $(function() {
 	// load question
 	$('nav a').livequery('click', function(event) {
 		var a = this;
-		switch(this.id) {
-		case "searchMode":
-			userSearch = this.hash == "#usersearch";
-			$("#search input").keyup();
-		
-		case "newQuestion":
-			return false;
-			break;
-			
-		default:
-			if(this.hash)
-			$.get(getQuestion({id: this.hash.substr(2)}), function(data) {
-				$('section').data('jsp').scrollToY(0, false);
-				$('#section').html(data);
-				$('#nav a').removeClass("active");
-				$(a).addClass("active");
-			});
-		}
+		$.get(getQuestion({id: this.hash.substr(2)}), function(data) {
+			$('section').data('jsp').scrollToY(0, false);
+			$('#section').html(data);
+			$('#nav a').removeClass("active");
+			$(a).addClass("active");
+		});
 	});
 	
 	// new question
-	$("a#newQuestion").click(function() {
-		$.get(questionForm(), {type: "question"}, function(data) {
-			$("#section").html(data);
-			$("#section input[name=title]").foc();
-			
-			var tags;		
-			$.getJSON(tagsList(), function(data) {
-					tags = data;
-			});
-				
-			$('input#tags').autocomplete({
-				minLength: 0,
-				source: function( request, response ) {
-					response( $.ui.autocomplete.filter(
-						tags, extractLast( request.term ) ) );
-				},
-				focus: function() {
-					return false;
-				},
-				select: function( event, ui ) {
-					var terms = split(this.value);
-					terms.pop();
-					terms.push( ui.item.value );
-					terms.push( "" );
-					this.value = terms.join( ", " );
-					return false;
-				}
-			});
-			
-			
-			$('#nav a').removeClass("active");
-			$("#section form").submit(function() {
-				var title = $("#section input[name=title]").value();
-				var content = $("#section textarea[name=content]").value();
-				var tags = $("#section input[name=tags]").value();
-				$("#section input, #section textarea").removeClass("error");
-				if(!title) {
-					$("#section input[name=title]").addClass("error").focus();
-				} else if(!content) {
-					$("#section textarea[name=content]").addClass("error").focus();
-				} else {
-					$.post(addQuestion(), {title: title, content: content, tags: tags}, function(data) {
-						if(data.success == 1) {
-							$("#section").load(getQuestion({id: data.id}));	
-							$("#filter a.active").click();
-							var url = /^(.*)#(.*)$/.exec(self.location);
-							url = url ? url[1] : self.location;
-							self.location = url + "#!" + data.id;
-						} else {
-							self.location = login();
-						}
-					}, "json");
-				}
-				return false;	
-			});
-		});
-		return false;
+	$("#topaction a[href=#newQuestion]").livequery('click', function() {
+		
 	});
 	
 	// answer
@@ -230,10 +192,83 @@ $(function() {
 });
 
 var userSearch = false;
+var newQuestionContent = "";
+
+function searchModeLink() {
+	if(userSearch) {
+		$("#topaction").html('<a href="#questionsearch">Are you looking for questions?</a>');
+	} else {
+		$("#topaction").html('<a href="#usersearch">Are you looking for users?</a>');
+	}
+	reinitialise();
+}
+
+function newQuestionLink() {
+	$("#topaction").html(newQuestionContent);
+	reinitialise();
+}
 
 function split( val ) {
 	return val.split( /,\s*/ );
 }
 function extractLast( term ) {
 	return split( term ).pop();
+}
+
+function newQuestion() {
+	$.get(questionForm(), {type: "question"}, function(data) {
+			$("#section").html(data);
+			$("#section input[name=title]").foc();
+			
+			var tags;		
+			$.getJSON(tagsList(), function(data) {
+					tags = data;
+			});
+				
+			$('input#tags').autocomplete({
+				minLength: 0,
+				source: function( request, response ) {
+					response( $.ui.autocomplete.filter(
+						tags, extractLast( request.term ) ) );
+				},
+				focus: function() {
+					return false;
+				},
+				select: function( event, ui ) {
+					var terms = split(this.value);
+					terms.pop();
+					terms.push( ui.item.value );
+					terms.push( "" );
+					this.value = terms.join( ", " );
+					return false;
+				}
+			});
+			
+			
+			$('#nav a').removeClass("active");
+			$("#section form").submit(function() {
+				var title = $("#section input[name=title]").value();
+				var content = $("#section textarea[name=content]").value();
+				var tags = $("#section input[name=tags]").value();
+				$("#section input, #section textarea").removeClass("error");
+				if(!title) {
+					$("#section input[name=title]").addClass("error").focus();
+				} else if(!content) {
+					$("#section textarea[name=content]").addClass("error").focus();
+				} else {
+					$.post(addQuestion(), {title: title, content: content, tags: tags}, function(data) {
+						if(data.success == 1) {
+							$("#section").load(getQuestion({id: data.id}));	
+							$("#filter a.active").click();
+							var url = /^(.*)#(.*)$/.exec(self.location);
+							url = url ? url[1] : self.location;
+							self.location = url + "#!" + data.id;
+						} else {
+							self.location = login();
+						}
+					}, "json");
+				}
+				return false;	
+			});
+		});
 }
