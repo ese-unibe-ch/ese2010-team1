@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import models.Answer;
 import models.Comment;
@@ -87,7 +88,7 @@ public class Questions extends Controller {
 	}
 
 	public static void search(String string) {
-		List<Question> questions = Search.searchQuestions(string);
+		Set<Question> questions = Search.searchQuestions(string);
 		render(questions);
 	}
 

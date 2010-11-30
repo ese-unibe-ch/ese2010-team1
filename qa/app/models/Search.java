@@ -2,7 +2,9 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The Class Search.
@@ -43,19 +45,13 @@ public class Search {
 	 */
 
 	// TS if possible try to get the list with jpa query
-	public static List<Question> searchTaggedWith(String searchString) {
+	public static Set<Question> searchTaggedWith(String searchString) {
 		List<Tag> matchingTags = Tag.find("byNameLike",
 				"%" + searchString + "%").fetch();
 
-		List<Question> result = new ArrayList<Question>();
+		Set<Question> result = new HashSet<Question>();
 		for (Tag tag : matchingTags) {
-			for (Question question : Question.findTaggedWith(tag.name)) {
-
-				if (!result.contains(question)) {
-					result.add(question);
-
-				}
-			}
+			result.addAll(Question.findTaggedWith(tag.name));
 		}
 
 		return result;
@@ -116,20 +112,15 @@ public class Search {
 	 */
 	public static List<Entry> searchEntry(String searchString) {
 
-		List<Entry> foundEntrys = new ArrayList<Entry>();
-		List<Entry> results = new ArrayList<Entry>();
+		Set<Entry> foundEntrys = new HashSet<Entry>();
 
 		foundEntrys.addAll(searchTitle(searchString));
 		foundEntrys.addAll(searchContent(searchString));
 		foundEntrys.addAll(searchTaggedWith(searchString));
 		foundEntrys.addAll(searchEntrysWithFilename(searchString));
 
-		for (Entry entry : foundEntrys) {
-
-			if (!results.contains(entry)) {
-				results.add(entry);
-			}
-		}
+		List<Entry> results = new ArrayList<Entry>();
+		results.addAll(foundEntrys);
 
 		return sortByRating(results);
 
@@ -142,8 +133,8 @@ public class Search {
 	 *            the search string
 	 * @return the list of questions
 	 */
-	public static List<Question> searchQuestions(String searchString) {
-		List<Question> questions = new ArrayList<Question>();
+	public static Set<Question> searchQuestions(String searchString) {
+		Set<Question> questions = new HashSet<Question>();
 		List<Entry> entries = searchEntry(searchString);
 		for (Entry entry : entries) {
 			Question question;
@@ -152,8 +143,7 @@ public class Search {
 			} else {
 				question = (Question) entry;
 			}
-			if (!questions.contains(question))
-				questions.add(question);
+			questions.add(question);
 		}
 		return questions;
 	}
