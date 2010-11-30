@@ -176,7 +176,7 @@ public class Question extends Entry {
 		} else if (answer.canBeBestAnswer()) {
 			this.bestAnswerFreezer = new TimeFreezer(1 * 60).save();
 			this.bestAnswer = answer;
-			owner.calcReputation();
+			answer.owner.calcReputation();
 		}
 		this.save();
 	}
@@ -186,7 +186,9 @@ public class Question extends Entry {
 	 */
 	public void resetBestAnswer() {
 		if (this.canSetBestAnswer()) {
+			User user = this.bestAnswer.owner;
 			this.setBestAnswer(null);
+			user.calcReputation();
 		}
 	}
 
