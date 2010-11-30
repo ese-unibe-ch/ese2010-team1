@@ -101,8 +101,7 @@ public class User extends Model {
 	 */
 	public int reputation() {
 		int reputation = 0;
-		List<Entry> entrys = Entry.find("byOwner", this).fetch();
-		Iterator<Entry> it = entrys.iterator();
+		Iterator<Entry> it = this.entrys.iterator();
 		while (it.hasNext()) {
 			Entry entry = it.next();
 			reputation += entry.rating();
@@ -117,7 +116,6 @@ public class User extends Model {
 	public void calcReputation() {
 
 		this.reputation = reputation();
-		System.out.println(this.reputation);
 		this.save();
 
 	}
