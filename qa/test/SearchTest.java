@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Set;
 
 import models.Entry;
 import models.Question;
@@ -41,7 +42,7 @@ public class SearchTest extends UnitTest {
 				.save();
 		question.tagItWith("anotherteststring").tagItWith("test").tagItWith(
 				"hello").tagItWith("world");
-		List<Question> searchResults = Search.searchTaggedWith("test");
+		Set<Question> searchResults = Search.searchTaggedWith("test");
 		assertEquals(1, searchResults.size());
 		searchResults = Search.searchTaggedWith("blub");
 		assertEquals(0, searchResults.size());
