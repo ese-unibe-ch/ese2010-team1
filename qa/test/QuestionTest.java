@@ -1,6 +1,7 @@
 import java.util.List;
 
 import models.Question;
+import models.Tag;
 import models.User;
 
 import org.junit.Before;
@@ -75,6 +76,21 @@ public class QuestionTest extends UnitTest {
 
 		assertEquals(1, User.count());
 		assertEquals(2, Question.count());
+
+	}
+
+	@Test
+	public void tagQuestions() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		question.tagItWith("Hello").tagItWith("World");
+		assertEquals(2, Tag.count());
+		assertEquals("Hello, World", question.tagsToString());
+
+		assertEquals(2, question.tags.size());
+		question.removeAllTags();
+		assertEquals(0, question.tags.size());
 
 	}
 

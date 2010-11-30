@@ -193,6 +193,8 @@ public class Questions extends Controller {
 			entry.removeVote((Vote) Vote.find("byOwnerAndEntry", user, entry)
 					.first());
 		}
+		user.calcReputation();
+		user.save();
 		render("Questions/entry.html", entry);
 	}
 
@@ -226,10 +228,13 @@ public class Questions extends Controller {
 	public static void delete(long id) {
 
 		Entry entry = Entry.findById(id);
+		User owner = entry.owner;
 		if (entry == null)
 			home();
 
 		entry.delete();
+		owner.calcReputation();
+		owner.save();
 
 		if (entry instanceof Question)
 			home();
@@ -245,8 +250,10 @@ public class Questions extends Controller {
 	public static void deleteEntry(long id) {
 
 		Entry entry = Entry.findById(id);
+		User owner = entry.owner;
 		entry.delete();
-
+		owner.calcReputation();
+		owner.save();
 		Question question = entry instanceof Question ? (Question) entry
 				: ((Answer) entry).question;
 

@@ -67,6 +67,8 @@ public class User extends Model {
 	/** The is admin. */
 	public boolean isAdmin = false;
 
+	public int reputation;
+
 	public long fakeId;
 
 	/**
@@ -88,6 +90,7 @@ public class User extends Model {
 		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
+		this.reputation = 0;
 	}
 
 	// SM cache reputation for faster access
@@ -98,7 +101,6 @@ public class User extends Model {
 	 */
 	public int reputation() {
 		int reputation = 0;
-
 		Iterator<Entry> it = this.entrys.iterator();
 		while (it.hasNext()) {
 			Entry entry = it.next();
@@ -109,6 +111,13 @@ public class User extends Model {
 		}
 
 		return reputation;
+	}
+
+	public void calcReputation() {
+
+		this.reputation = reputation();
+		this.save();
+
 	}
 
 	// SM Using JSON Objects from http://www.json.org/java/ might be better
