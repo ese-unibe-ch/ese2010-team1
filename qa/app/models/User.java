@@ -122,7 +122,6 @@ public class User extends Model {
 
 	}
 
-	// SM Using JSON Objects from http://www.json.org/java/ might be better
 	/**
 	 * Creates Graph data in JSON format.
 	 * 
