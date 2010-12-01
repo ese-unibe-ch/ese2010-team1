@@ -80,10 +80,6 @@ $(function() {
 		});
 	});
 	
-	// new question
-	$("#topaction a[href=#newQuestion]").livequery('click', function() {
-		
-	});
 	
 	// answer
 	$(".entry.answer > form").livequery('submit', function() {
@@ -97,7 +93,7 @@ $(function() {
 			if($("#section input[type=file]").value() != "") {
 				return true;
 			} else {
-				$.post(answerQuestion({id: id}), {content: content}, function(data) {
+				$.post(answerQuestion({id: id}), {content: content, authenticityToken: token()}, function(data) {
 					if(data.success == 1) {
 						$("#section article:last-child").load(getAnswer({id: data.id}));	
 					} else {
@@ -136,7 +132,7 @@ $(function() {
 	
 	// delete comments
 	$('.deleteComment').livequery('click', function() {
-		$.get(deleteComment({id: this.hash.substr(1)}));
+		$.get(deleteComment({id: this.hash.substr(1), authenticityToken: token()}));
 		$(this).parents('div.comment').hide();
 	});
 	
@@ -149,7 +145,7 @@ $(function() {
 	// vote up
 	$('a.up').livequery('click', function(event) {
 		var entry = $(this).parents("article");
-		$.get(voteUp({id: this.hash.substr(1)}), function(data) {
+		$.get(voteUp({id: this.hash.substr(1)}), noData(), function(data) {
 			entry.html(data);
 		});
 		return false;
@@ -158,7 +154,7 @@ $(function() {
 	// vote down
 	$('a.down').livequery('click', function(event) {
 		var entry = $(this).parents("article");
-		$.get(voteDown({id: this.hash.substr(1)}), function(data) {
+		$.get(voteDown({id: this.hash.substr(1)}), noData(), function(data) {
 			entry.html(data);
 		});
 		return false;
@@ -167,7 +163,7 @@ $(function() {
 	// remove vote
 	$('a.delete').livequery('click', function(event) {
 		var entry = $(this).parents("article");
-		$.get(removeVote({id: this.hash.substr(1)}), function(data) {
+		$.get(removeVote({id: this.hash.substr(1)}), noData(), function(data) {
 			entry.html(data);
 		});
 		return false;
@@ -175,13 +171,13 @@ $(function() {
 	
 	// set best answer
 	$('.set.bestAnswer').livequery('click', function(event) {
-		$("#section").load(setBestAnswer({id: this.hash.substr(1)}));
+		$("#section").load(setBestAnswer({id: this.hash.substr(1)}), noData());
 		return false;
 	});
 	
 	// reset best answer
 	$('.reset.bestAnswer').livequery('click', function(event) {
-		$("#section").load(resetBestAnswer({id: this.hash.substr(1)}));
+		$("#section").load(resetBestAnswer({id: this.hash.substr(1)}), noData());
 		return false;
 	});
 	

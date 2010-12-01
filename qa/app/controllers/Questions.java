@@ -109,6 +109,8 @@ public class Questions extends Controller {
 
 	public static void add(@Required String title, @Required String content,
 			String tags) {
+		checkAuthenticity();
+
 		User user = User.find("byName", Security.connected()).first();
 		if (user != null && !validation.hasErrors()) {
 			Question question = user.addQuestion(title, content);
@@ -125,6 +127,8 @@ public class Questions extends Controller {
 	}
 
 	public static void answer(long id, @Required String content, File file) {
+		checkAuthenticity();
+
 		User user = User.find("byName", Security.connected()).first();
 		Question question = Question.findById(id);
 		if (user != null && question != null && !validation.hasErrors()) {
@@ -140,6 +144,8 @@ public class Questions extends Controller {
 	}
 
 	public static void edit(long id, String content, String tags, File file) {
+		checkAuthenticity();
+
 		User user = (User) User.find("byName", Security.connected()).first();
 		Entry entry = Entry.findById(id);
 		entry.edit(content, user);
@@ -168,6 +174,8 @@ public class Questions extends Controller {
 	}
 
 	public static void voteUp(long id) {
+		checkAuthenticity();
+
 		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
 		if (entry != null && user != null) {
@@ -178,6 +186,8 @@ public class Questions extends Controller {
 	}
 
 	public static void voteDown(long id) {
+		checkAuthenticity();
+
 		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
 		if (entry != null && user != null) {
@@ -188,6 +198,8 @@ public class Questions extends Controller {
 	}
 
 	public static void removeVote(long id) {
+		checkAuthenticity();
+
 		User user = User.find("byName", Security.connected()).first();
 		Entry entry = Entry.findById(id);
 		if (entry != null && user != null) {
@@ -200,6 +212,8 @@ public class Questions extends Controller {
 	}
 
 	public static void setBestAnswer(long id) {
+		checkAuthenticity();
+
 		Answer answer = Answer.<Answer> findById(id);
 		if (answer == null) {
 			badRequest();
@@ -214,6 +228,8 @@ public class Questions extends Controller {
 	}
 
 	public static void resetBestAnswer(long id) {
+		checkAuthenticity();
+
 		Question question = Question.<Question> findById(id);
 		if (question == null) {
 			badRequest();
@@ -227,6 +243,7 @@ public class Questions extends Controller {
 	}
 
 	public static void delete(long id) {
+		checkAuthenticity();
 
 		Entry entry = Entry.findById(id);
 		User owner = entry.owner;
@@ -244,11 +261,13 @@ public class Questions extends Controller {
 	}
 
 	public static void setNotificationAsRed(long id) {
+		checkAuthenticity();
 
 		models.Notification.hasBeenRed(id);
 	}
 
 	public static void deleteEntry(long id) {
+		checkAuthenticity();
 
 		Entry entry = Entry.findById(id);
 		User owner = entry.owner;
@@ -262,6 +281,8 @@ public class Questions extends Controller {
 	}
 
 	public static void deleteFileEntry(long id, long qid) {
+		checkAuthenticity();
+
 		FileEntry entry = FileEntry.findById(id);
 		if (entry != null)
 			entry.delete();
@@ -285,6 +306,8 @@ public class Questions extends Controller {
 	}
 
 	public static void comment(long id, @Required String content) {
+		checkAuthenticity();
+
 		User user = User.find("byName", Security.connected()).first();
 		Entry entry = Entry.findById(id);
 
@@ -301,6 +324,7 @@ public class Questions extends Controller {
 	}
 
 	public static void deleteComment(long id) {
+		checkAuthenticity();
 
 		Comment comment = Comment.findById(id);
 		if (comment != null)

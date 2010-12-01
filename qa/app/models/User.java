@@ -93,7 +93,6 @@ public class User extends Model {
 		this.reputation = 0;
 	}
 
-	// SM cache reputation for faster access
 	/**
 	 * Reputation.
 	 * 

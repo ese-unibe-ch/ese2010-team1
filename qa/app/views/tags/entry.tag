@@ -51,6 +51,7 @@
 			<a class="cancel" href="#${_entry.id}">cancel</a>
 		#{/if}
 		</div>
+		#{token /}
 	</form>
 	</article>
 
@@ -191,6 +192,7 @@
 			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		<input type="submit" value="Post" />
+		#{token /}
 	#{/form}
 	</div>
 	#{/if}

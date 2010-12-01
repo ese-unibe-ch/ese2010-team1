@@ -15,6 +15,14 @@ function reinitialise() {
 	}
 }
 
+function token() {
+	return $("#authenticityToken input").val();
+}
+
+function noData() {
+	return {authenticityToken: token()};
+}
+
 $(function() {
 	
 	$('section').jScrollPane();
