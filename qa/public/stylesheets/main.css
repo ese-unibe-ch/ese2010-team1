@@ -1,7 +1,7 @@
 /*** Global Structure ***/
 
 body, html {
-	background: #dedede;
+	background: #000;
 	font-size: 16px;
 	font-family: Calibri, Helvetica, Arial, sans-serif;
 	height: 100%;
@@ -42,7 +42,9 @@ input, textarea {
 
 	header {
 		height: 30px;
-		background: #501e73 url(../images/header.jpg);
+		background: #501e73;
+		background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#999));
+		background: -moz-linear-gradient(top,  #ddd,  #999);
 		position: relative;
 	}
 	
@@ -53,8 +55,11 @@ input, textarea {
 		
 		nav {
 			width: 360px;
-			background: #6e6e6e;
+			background: #fff;
 			float: left;
+			-webkit-box-shadow:inset 0 10px 15px -10px #000;
+			-moz-box-shadow: inset 0 10px 15px -10px #000;
+   			box-shadow: inset 0 10px 15px -10px #000;
 		}
 			
 			nav .jspVerticalBar {
@@ -67,15 +72,15 @@ input, textarea {
 		
 		section {
 			width: 100%;
-			background: #803ab4 top left url(../images/retro.jpg);
+			background: #777 top left url(../images/texture.png);
 			float: right;
 		}
 		
 			nav + section {
 				width: 590px;	
-   				-webkit-box-shadow:inset 10px 0px 50px -10px #000;
-   				-moz-box-shadow:inset 60px 0px 30px -60px #000;
-   				box-shadow:inset 10px 0px 50px -10px #000;
+   				-webkit-box-shadow: inset 10px 12px 15px -10px #000;
+   				-moz-box-shadow: inset 10px 12px 15px -10px #000;
+   				box-shadow: inset 10px 12px 15px -10px #000;
 				padding-left: 10px;
 			}
 			
@@ -134,7 +139,7 @@ nav a {
 	padding: 10px 25px 10px 10px;
 	text-decoration: none;
 	color: #803ab4;
-	background: #fff url(../images/arrow_right_disabled.png) right center no-repeat;
+	background: rgba(200, 200, 200, 0.8) url(../images/arrow_right_disabled.png) right center no-repeat;
 }
 
 	#topaction {
@@ -166,7 +171,6 @@ nav a {
 	.pulldown a, .login a {
 		padding: 2px;
 		font-size: 0.8em;
-		background: url(../images/header_inv.jpg);
 		border-radius: 5px;
 		-moz-border-radius: 5px;
 		color: #fff;
@@ -228,7 +232,6 @@ nav a {
 	.tabbar li {
 		float: left;
 		padding: 3px 10px;
-		background: url(../images/header_inv.jpg);
 	}
 	
 	.tabbar li:first-child {
@@ -258,6 +261,15 @@ nav a {
 			text-decoration: underline;
 		}
 	
+	
+	
+.pulldown a, .login a, .tabbar li {
+	background: -webkit-gradient(linear, left bottom, left top, from(#555), to(#888));
+	background: -moz-linear-gradient(bottom,  #444,  #777);
+	/*-webkit-box-shadow: inset 0 0 5px 0 #555;
+	/*-moz-box-shadow: inset 10px 12px 15px -10px #000;
+	box-shadow: inset 10px 12px 15px -10px #000;*/
+}
 	
 /*** Entries ***/
 
