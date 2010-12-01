@@ -73,6 +73,9 @@ input, textarea {
 		section {
 			width: 100%;
 			background: #777 top left url(../images/texture.png);
+			-webkit-box-shadow: inset 0 12px 15px -10px #000;
+   			-moz-box-shadow: inset 0 12px 15px -10px #000;
+   			box-shadow: inset 0 12px 15px -10px #000;
 			float: right;
 		}
 		
@@ -231,7 +234,7 @@ nav a {
 
 	.tabbar li {
 		float: left;
-		padding: 3px 10px;
+		padding: 1px 10px 5px;
 	}
 	
 	.tabbar li:first-child {
