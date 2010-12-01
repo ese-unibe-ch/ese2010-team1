@@ -21,30 +21,35 @@ User(simon):
     password: e579c4fea528a36862a0a5352587a30d58da532f
     email: simon@example.com
     isAdmin: false
+    isActive: true
     timestamp: 2010-10-20
 User(tobias):
     name: Tobias
     password: e579c4fea528a36862a0a5352587a30d58da532f
     email: tobias@example.com
     isAdmin: false
+    isActive: true
     timestamp: 2010-10-20
 User(thomas):
     name: Thomas
     password: e579c4fea528a36862a0a5352587a30d58da532f
     email: thomas@example.com
     isAdmin: false
+    isActive: true
     timestamp: 2010-10-20
 User(oliver):
     name: Oliver
     password: e579c4fea528a36862a0a5352587a30d58da532f
     email: oliver@example.com
     isAdmin: false
+    isActive: true
     timestamp: 2010-10-20
 User(mark):
     name: Mark
     password: e579c4fea528a36862a0a5352587a30d58da532f
     email: mark@example.com
     isAdmin: false
+    isActive: true
     timestamp: 2010-10-20
     
 # Questions
