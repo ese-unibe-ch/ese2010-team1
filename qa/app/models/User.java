@@ -451,4 +451,10 @@ public class User extends Model {
 		return Question.find("byOwner", this).fetch();
 	}
 
+	public void activate() {
+		this.isActive = true;
+		this.activationToken.delete();
+		this.activationToken = null;
+	}
+
 }

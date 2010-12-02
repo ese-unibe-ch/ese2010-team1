@@ -20,7 +20,6 @@ public class UserActivation extends Model {
 
 		this.user = user;
 		this.activationToken = encrypt(user.name + user.email + user.id);
-		System.out.println(this.activationToken);
 	}
 
 	private static String encrypt(String string) {

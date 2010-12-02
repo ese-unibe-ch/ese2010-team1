@@ -10,6 +10,7 @@ import models.Entry;
 import models.ProfileItem;
 import models.Question;
 import models.User;
+import models.UserActivation;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -84,6 +85,21 @@ public class Users extends Controller {
 		session.put("username", username);
 
 		Questions.home();
+	}
+
+	public static void activateUser(long id, String securityToken) {
+
+		User user = User.findById(id);
+		UserActivation activationToken = user.activationToken;
+		if (activationToken.activationToken != null
+				&& securityToken.equals(activationToken.activationToken)) {
+			user.activate();
+			// TS insert error messages
+		} else {
+			// TS error message
+		}
+
+		render(user);
 	}
 
 	public static void saveProfile(long id, String[] profileEntry) {
