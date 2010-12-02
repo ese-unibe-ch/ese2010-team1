@@ -9,14 +9,14 @@ import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
 
 @Entity
-public class UserActivation extends Model {
+public class ActivationToken extends Model {
 
 	@ManyToOne
 	public User user;
 
 	public String activationToken;
 
-	public UserActivation(User user) {
+	public ActivationToken(User user) {
 
 		this.user = user;
 		this.activationToken = encrypt(user.name + user.email + user.id);

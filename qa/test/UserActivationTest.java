@@ -1,5 +1,5 @@
 import models.User;
-import models.UserActivation;
+import models.ActivationToken;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class UserActivationTest extends UnitTest {
 	public void generateUserActivation() {
 
 		User user = new User("Test", "test@test.com", "test").save();
-		UserActivation activationToken = new UserActivation(user);
+		ActivationToken activationToken = new ActivationToken(user);
 		assertNotNull(activationToken);
 		assertNotNull(activationToken.activationToken);
 

@@ -46,7 +46,7 @@ public class User extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
 
-	public UserActivation activationToken;
+	public ActivationToken activationToken;
 
 	/** The name. */
 	@Required
@@ -69,7 +69,7 @@ public class User extends Model {
 	/** The is admin. */
 	public boolean isAdmin = false;
 
-	public boolean isActive = false;
+	public boolean isActive;
 
 	public int reputation;
 
@@ -95,7 +95,27 @@ public class User extends Model {
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
 		this.reputation = 0;
-		this.activationToken = new UserActivation(this);
+		this.isActive = false;
+	}
+
+	public ActivationToken generateActivationToken() {
+		if (this.activationToken != null) {
+			this.deleteActivationToken();
+		}
+		this.activationToken = new ActivationToken(this).save();
+		this.save();
+		return this.activationToken;
+	}
+
+	public void activate() {
+		this.isActive = true;
+		this.deleteActivationToken();
+	}
+
+	private void deleteActivationToken() {
+		this.activationToken = null;
+		this.save();
+		System.out.println(ActivationToken.count());
 	}
 
 	/**
@@ -449,12 +469,6 @@ public class User extends Model {
 
 	public List<Question> questions() {
 		return Question.find("byOwner", this).fetch();
-	}
-
-	public void activate() {
-		this.isActive = true;
-		this.activationToken.delete();
-		this.activationToken = null;
 	}
 
 }

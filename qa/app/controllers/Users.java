@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import models.ActivationToken;
 import models.Answer;
 import models.Comment;
 import models.Entry;
 import models.ProfileItem;
 import models.Question;
 import models.User;
-import models.UserActivation;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -80,9 +80,11 @@ public class Users extends Controller {
 			Users.createUser();
 		}
 
-		new User(username, email, password).save();
-
-		session.put("username", username);
+		User user = new User(username, email, password).save();
+		user.generateActivationToken();
+		Mails mailer = new Mails();
+		mailer.activationMail(user);
+		// session.put("username", username);
 
 		Questions.home();
 	}
@@ -90,13 +92,16 @@ public class Users extends Controller {
 	public static void activateUser(long id, String securityToken) {
 
 		User user = User.findById(id);
-		UserActivation activationToken = user.activationToken;
-		if (activationToken.activationToken != null
+		ActivationToken activationToken = user.activationToken;
+		if (activationToken != null
 				&& securityToken.equals(activationToken.activationToken)) {
 			user.activate();
+			user.save();
+			flash.put("message", "Sucessfully activated");
 			// TS insert error messages
 		} else {
 			// TS error message
+			flash.put("message", "Activation went wrong!");
 		}
 
 		render(user);
