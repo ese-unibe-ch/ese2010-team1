@@ -49,7 +49,6 @@ public class Users extends Controller {
 			if (title.hasUserEntry(puser))
 				info.put(title.title, title.findUserEntry(puser).entry);
 		}
-
 		render(puser, titles, info);
 	}
 
@@ -98,6 +97,7 @@ public class Users extends Controller {
 			pentry.editUserEntry(user, newEntry);
 
 		}
+		user.calcReputation();
 
 		profile(id);
 

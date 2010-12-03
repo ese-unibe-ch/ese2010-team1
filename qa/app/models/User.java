@@ -109,6 +109,15 @@ public class User extends Model {
 				reputation += bestAnswerReputation;
 		}
 
+		List<ProfileItem> profileItems = ProfileItem.findAll();
+		for (ProfileItem item : profileItems) {
+			ProfileEntry ent = item.findUserEntry(this);
+			if (ent != null) {
+				if (!ent.entry.equals(""))
+					reputation++;
+			}
+		}
+
 		return reputation;
 	}
 
