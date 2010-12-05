@@ -24,6 +24,12 @@ $(function() {
 	$(window).resize(reinitialise);
 	$(window).ajaxComplete(reinitialise);
 	
+	$('#topaction a').livequery(function() {
+		$('nav').addClass('noshadow');
+	}, function() {
+		$('nav').removeClass('noshadow');
+	});
+	
 	// pulldown menus
 	$('.pulldown > a').click(function() {
 		$(this).next().toggle();
