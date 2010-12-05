@@ -12,6 +12,9 @@ function reinitialise() {
 		$('nav').data('jsp').reinitialise();
 		$('section').css({width: "600px"});
 		$('nav').css({width: "360px"});
+		if($('nav .jspVerticalBar').length >= 1){
+			$('nav .jspPane').css({'margin-left': '15px'}).width($('nav .jspPane').width()+9);
+		}
 	}
 }
 
@@ -32,8 +35,8 @@ $(function() {
 	
 	// pulldown menus
 	$('.pulldown > a').click(function() {
-		$(this).next().toggle();
-		$('.pulldown > a').not(this).next().hide();
+		$(this).toggleClass('active').next().toggle();
+		$('.pulldown > a').not(this).removeClass('active').next().hide();
 		return false;
 	});
 	

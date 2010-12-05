@@ -21,8 +21,8 @@ $(function() {
 				$("#search input").focus();
 				break;
 		}
-		$('#filter a').removeClass("active");
-		$(this).addClass("active");
+		$('#filter li').removeClass("active");
+		$(this).parent().addClass("active");
 		return false;
 	});
 	
@@ -86,7 +86,7 @@ $(function() {
 	});
 	
 	// answer
-	$(".entry.answer > form").livequery('submit', function() {
+	$(".new.entry.answer > form").livequery('submit', function() {
 		var content = $("#section .entry > form textarea[name=content]").value();
 		$("#section input, #section textarea").removeClass("error");
 		if(!content) {
