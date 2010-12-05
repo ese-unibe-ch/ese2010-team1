@@ -113,8 +113,7 @@ public class User extends Model {
 		for (ProfileItem item : profileItems) {
 			ProfileEntry ent = item.findUserEntry(this);
 			if (ent != null) {
-				if (!ent.entry.equals(""))
-					reputation++;
+				reputation++;
 			}
 		}
 
@@ -129,6 +128,15 @@ public class User extends Model {
 		this.reputation = reputation();
 		this.save();
 
+	}
+
+	public boolean isProfileFilledUp() {
+		List<ProfileItem> items = ProfileItem.findAll();
+		for (ProfileItem item : items) {
+			if (item.findUserEntry(this) == null)
+				return false;
+		}
+		return true;
 	}
 
 	/**
