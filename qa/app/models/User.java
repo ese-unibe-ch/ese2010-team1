@@ -13,7 +13,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
@@ -46,9 +45,6 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
-
-	@OneToOne
-	public ActivationToken activationToken;
 
 	/** The name. */
 	@Required
@@ -101,23 +97,26 @@ public class User extends Model {
 	}
 
 	public ActivationToken generateActivationToken() {
-		if (this.activationToken != null) {
-			this.deleteActivationToken();
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token != null) {
+			token.delete();
 		}
-		this.activationToken = new ActivationToken(this).save();
-		this.save();
-		return this.activationToken;
+		token = new ActivationToken(this).save();
+		return token;
 	}
 
 	public void activate() {
 		this.isActive = true;
-		this.deleteActivationToken();
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		token.delete();
 	}
 
-	private void deleteActivationToken() {
-		this.activationToken = null;
-		this.save();
-		System.out.println(ActivationToken.count());
+	public String getActivationToken() {
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token == null)
+			return null;
+		else
+			return token.activationToken;
 	}
 
 	/**

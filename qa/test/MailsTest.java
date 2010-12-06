@@ -20,6 +20,7 @@ public class MailsTest extends UnitTest {
 
 		User user = new User("Tobias", "schmid.tobias@bluewin.ch", "secret")
 				.save();
+		user.generateActivationToken();
 
 		Mails mailer = new Mails();
 

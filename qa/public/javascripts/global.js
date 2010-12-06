@@ -47,6 +47,10 @@ $(function() {
 	
 	
 	// registration validation
+	
+	var validEmail = false;
+	var validUsername = false;
+	var validPW = false;
 	$('input#registrationSubmit').hide();
 	
 	$('input#registrationEmail').keyup(function(){
@@ -55,15 +59,58 @@ $(function() {
 			
 			if (isValidEmailAddress(email)) {
 				$('input#registrationEmail').addClass("valid").removeClass("invalid");
+				validEmail = true;
 			}
 			else {
 				$('input#registrationEmail').addClass("invalid").removeClass("valid");
+				validEmail = false;
 			}
 		}
 		else {
 			$('input#registrationEmail').removeClass("valid").removeClass("invalid");
-		}
-		
+			validEmail = false;
+		}		
+	});
+	
+	$('input#registrationUser').keyup(function() {	
+	      var username = $('input#registrationUser').val();
+	      if(username!=0) {
+	       
+	         jQuery.getJSON(checkUserExists({name: username}), function(data) {
+	           if(!data) {
+	             $('input#registrationUser').addClass("valid").removeClass("invalid");
+	             validUser = true;
+	           }
+	           else{
+	             $('input#registrationUser').addClass("invalid").removeClass("valid"); 
+	             validUser = false;
+	           }	         
+	         }); 
+	      }
+	      else {
+	       $('input#registrationUser').removeClass("valid").removeClass("invalid");
+	       validUser = false;
+	      }	
+	});
+	
+	$('input#registrationPw2').keyup(function() {
+	   var password = $('input#registrationPw').val();
+	   var password2 = $('input#registrationPw2').val();
+	   if(password!=0 && password2!=0 && password == password2) {
+	       validPW = true;	     
+	   }
+	   else{
+	       validPW = false;
+	   }
+	});
+	
+	$('div.pulldown input').keyup(function(){
+	   if(validEmail && validUser && validPW) {
+	     $('input#registrationSubmit').show();  
+	   }
+	   else {
+	     $('input#registrationSubmit').hide();
+	   }
 	});
 
 
@@ -74,8 +121,8 @@ function isValidEmailAddress(emailAddress) {
 	return pattern.test(emailAddress);
 }
 
-function isValidPW(password, password2){
-	var pattern = new RegExp(/^[A-Za-z0-9!@#$%^&*()_]{6,20}$/);
-	return pattern.test(password) && password == password2;
+function isValidPW(password){
+	var pattern = new RegExp(/^[A-Za-z0-9!@#$%^&*()_]{4,20}$/);
+	return pattern.test(password);
 }
 

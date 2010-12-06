@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import models.ActivationToken;
 import models.Answer;
 import models.Comment;
 import models.Entry;
@@ -92,9 +91,8 @@ public class Users extends Controller {
 	public static void activateUser(long id, String securityToken) {
 
 		User user = User.findById(id);
-		ActivationToken activationToken = user.activationToken;
-		if (activationToken != null
-				&& securityToken.equals(activationToken.activationToken)) {
+		String activationToken = user.getActivationToken();
+		if (activationToken != null && securityToken.equals(activationToken)) {
 			user.activate();
 			user.save();
 			flash.put("message", "Sucessfully activated");
@@ -203,6 +201,13 @@ public class Users extends Controller {
 			renderText(puser.graphData());
 		else
 			renderText("[]");
+	}
+
+	public static void checkUserExists(String username) {
+
+		List<User> user = User.find("byName", username).fetch();
+		renderJSON(user.size() > 0);
+
 	}
 
 }
