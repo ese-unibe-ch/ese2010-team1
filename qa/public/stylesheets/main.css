@@ -1,7 +1,7 @@
 /*** Global Structure ***/
 
 body, html {
-	background: #000;
+	background: #222;
 	font-size: 16px;
 	font-family: Calibri, Helvetica, Arial, sans-serif;
 	height: 100%;
@@ -174,7 +174,7 @@ nav a {
 	margin: 10px;
 	padding: 10px 25px 10px 10px;
 	text-decoration: none;
-	color: #803ab4;
+	color: #000;
 	background: rgba(200, 200, 200, 0.8) url(../images/arrow_right_disabled.png) right center no-repeat;
 }
 
@@ -505,6 +505,8 @@ nav a {
 	.comment {
 		margin-left: 20px;
 		font-size: 14px;
+		overflow: hidden;
+		padding-bottom: 7px!important;
 	}
 	
 	.comment a.owner {
