@@ -85,7 +85,7 @@ public class Users extends Controller {
 		mailer.activationMail(user);
 		// session.put("username", username);
 
-		Questions.home();
+		render();
 	}
 
 	public static void activateUser(long id, String securityToken) {
@@ -94,7 +94,6 @@ public class Users extends Controller {
 		String activationToken = user.getActivationToken();
 		if (activationToken != null && securityToken.equals(activationToken)) {
 			user.activate();
-			user.save();
 			flash.put("message", "Sucessfully activated");
 			// TS insert error messages
 		} else {

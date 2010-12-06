@@ -109,6 +109,7 @@ public class User extends Model {
 		this.isActive = true;
 		ActivationToken token = ActivationToken.find("byUser", this).first();
 		token.delete();
+		this.save();
 	}
 
 	public String getActivationToken() {
