@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
@@ -46,6 +47,7 @@ public class User extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
 
+	@OneToOne
 	public ActivationToken activationToken;
 
 	/** The name. */

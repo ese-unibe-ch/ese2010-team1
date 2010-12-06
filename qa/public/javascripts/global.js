@@ -44,7 +44,38 @@ $(function() {
 		});
 		return false;
 	});
+	
+	
+	// registration validation
+	$('input#registrationSubmit').hide();
+	
+	$('input#registrationEmail').keyup(function(){
+		var email = $('input#registrationEmail').val();
+		if (email != 0) {
+			
+			if (isValidEmailAddress(email)) {
+				$('input#registrationEmail').addClass("valid").removeClass("invalid");
+			}
+			else {
+				$('input#registrationEmail').addClass("invalid").removeClass("valid");
+			}
+		}
+		else {
+			$('input#registrationEmail').removeClass("valid").removeClass("invalid");
+		}
+		
+	});
 
 
 });
+
+function isValidEmailAddress(emailAddress) {
+	var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+	return pattern.test(emailAddress);
+}
+
+function isValidPW(password, password2){
+	var pattern = new RegExp(/^[A-Za-z0-9!@#$%^&*()_]{6,20}$/);
+	return pattern.test(password) && password == password2;
+}
 
