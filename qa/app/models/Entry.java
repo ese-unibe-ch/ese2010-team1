@@ -199,7 +199,7 @@ public abstract class Entry extends Model {
 	 */
 	public boolean canVote(User user) {
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
-		return user != this.owner
+		return user != this.owner && user.reputation >= ProfileItem.count()
 				&& (alreadyVoted == null || !alreadyVoted.frozen());
 	}
 
