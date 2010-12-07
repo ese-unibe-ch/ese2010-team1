@@ -30,6 +30,7 @@ GET		/best/reset/{id}						Questions.resetBestAnswer
 
 GET 	/profile/{id}							Users.profile
 GET		/activities/{id}						Users.activities
+GET		/activate/{id}/{securityToken}			Users.activateUser
 
 
 # Admin

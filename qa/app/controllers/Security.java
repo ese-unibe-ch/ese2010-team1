@@ -14,7 +14,8 @@ public class Security extends Secure.Security {
 	 * @return true, if successful
 	 */
 	static boolean authenticate(String username, String password) {
-		if (User.connect(username, password) != null)
+		User user = User.connect(username, password);
+		if (user != null && user.isActive)
 			return true;
 		else
 			return false;

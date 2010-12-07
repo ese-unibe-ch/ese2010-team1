@@ -731,3 +731,9 @@ nav a {
 	    background: #008800 !important;
 	}
 
+.valid {
+	border: 2px solid green;	
+}
+.invalid {
+	border: 2px solid red;
+}

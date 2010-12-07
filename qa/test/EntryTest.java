@@ -4,6 +4,7 @@ import models.Entry;
 import models.Question;
 import models.Search;
 import models.User;
+import models.Vote;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,30 @@ public class EntryTest extends UnitTest {
 
 		List<Entry> searchResult3 = Search.searchContent("blub");
 		assertEquals(0, searchResult3.size());
+
+	}
+
+	@Test
+	public void shouldEditContent() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("title", "oldContent");
+		question.edit("newContent", user);
+		assertEquals("newContent", question.content);
+
+	}
+
+	@Test
+	public void shouldRemoveVote() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("John", "john@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		assertEquals(0, Vote.count());
+		Vote vote = question.voteDown(user2);
+		assertEquals(1, Vote.count());
+		question.removeVote(vote);
+		assertEquals(0, Vote.count());
 
 	}
 }
