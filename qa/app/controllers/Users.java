@@ -83,25 +83,23 @@ public class Users extends Controller {
 		user.generateActivationToken();
 		Mails mailer = new Mails();
 		mailer.activationMail(user);
-		// session.put("username", username);
 
 		render();
 	}
 
 	public static void activateUser(long id, String securityToken) {
 
-		User user = User.findById(id);
-		String activationToken = user.getActivationToken();
+		User auser = User.findById(id);
+		String activationToken = auser.getActivationToken();
 		if (activationToken != null && securityToken.equals(activationToken)) {
-			user.activate();
+			auser.activate();
 			flash.put("message", "Sucessfully activated");
-			// TS insert error messages
+			session.put("username", auser.name);
 		} else {
-			// TS error message
 			flash.put("message", "Activation went wrong!");
 		}
 
-		render(user);
+		render(auser);
 	}
 
 	public static void saveProfile(long id, String[] profileEntry) {
