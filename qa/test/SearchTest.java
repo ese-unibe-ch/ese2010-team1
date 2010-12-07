@@ -42,8 +42,8 @@ public class SearchTest extends UnitTest {
 		User user = new User("test", "test@test.com", "test").save();
 		Question question = new Question(user, "test title", "my content")
 				.save();
-		question.tagItWith("anotherteststring").tagItWith("test")
-				.tagItWith("hello").tagItWith("world");
+		question.tagItWith("anotherteststring").tagItWith("test").tagItWith(
+				"hello").tagItWith("world");
 		Set<Question> searchResults = Search.searchTaggedWith("test");
 		assertEquals(1, searchResults.size());
 		searchResults = Search.searchTaggedWith("blub");
@@ -112,8 +112,8 @@ public class SearchTest extends UnitTest {
 		question4.voteUp(user2);
 		question4.voteUp(user3);
 		question4.voteUp(user4);
-		System.out.println(question2.title);
-		System.out.println(Search.searchEntry("Craft").toString());
+		assertEquals(4, Question.count());
+		assertEquals(1, Search.searchTitle("Craft").size());
 		assertEquals(Search.searchEntry("Craft").get(0), question2);
 		assertEquals(Search.searchEntry("Craft").get(1), answer);
 		assertEquals(Search.searchEntry("Rose").get(0), question4);
