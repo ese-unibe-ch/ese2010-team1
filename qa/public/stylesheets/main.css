@@ -48,6 +48,10 @@ input, textarea {
 		position: relative;
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
+		-webkit-border-top-left-radius: 5px;
+		-webkit-border-top-right-radius: 5px;
+		-moz-border-radius-topleft: 5px;
+		-moz-border-radius-topright: 5px;
 	}
 	
 		nav, section {
@@ -306,7 +310,7 @@ nav a {
 
 	.pulldown a.active, .tabbar li.active {
 		background: -webkit-gradient(linear, left bottom, left top, from(#333), to(#666));
-		background: -moz-linear-gradient(bottom,  #444,  #777);
+		background: -moz-linear-gradient(bottom,  #333,  #666);
 	}
 	
 /*** Entries ***/
