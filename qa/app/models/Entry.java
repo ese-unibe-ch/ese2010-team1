@@ -38,7 +38,7 @@ public abstract class Entry extends Model {
 	/** The Comments */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Comment> comments;
+	public List<Comment> comments;
 
 	/** The File entries */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
@@ -76,6 +76,7 @@ public abstract class Entry extends Model {
 		this.comments = new ArrayList<Comment>();
 		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
+		this.states = new ArrayList<ContentState>();
 
 	}
 

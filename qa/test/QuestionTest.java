@@ -1,5 +1,6 @@
 import java.util.List;
 
+import models.Answer;
 import models.Question;
 import models.Tag;
 import models.User;
@@ -94,4 +95,39 @@ public class QuestionTest extends UnitTest {
 
 	}
 
+	@Test
+	public void shouldReturnListOfRecentQuestions() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("Bob", "test2@mail.com", "password2").save();
+		User user3 = new User("Fritz", "test3@mail.com", "password3").save();
+		User user4 = new User("Helmut", "test4@mail.com", "password4").save();
+		Question question1 = user.addQuestion("title", "dummy content");
+		Question question2 = user.addQuestion("title2", "dummy content2");
+		Question question3 = user.addQuestion("title3", "dummy content3");
+		Question question4 = user.addQuestion("title4", "dummy content4");
+		Question question5 = user.addQuestion("title5", "dummy content5");
+		question1.answer(user2, "hackhack");
+		List<Question> recentQuestions = Question.recentQuestions();
+		assertEquals(recentQuestions.get(0), question1);
+		assertEquals(recentQuestions.get(1), question5);
+		assertEquals(recentQuestions.get(2), question4);
+		assertEquals(recentQuestions.get(3), question3);
+		assertEquals(recentQuestions.get(4), question2);
+
+	}
+
+	@Test
+	public void setsAndRemoveBestAnswerIfPossible() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("Bob", "test2@mail.com", "password2").save();
+		Question question = user.addQuestion("title", "dummy content");
+		Answer answer = question.answer(user2, "thisShouldWork");
+		question.setBestAnswer(answer);
+		assertEquals(question.bestAnswer, answer);
+		question.resetBestAnswer();
+		assertEquals(question.bestAnswer, null);
+
+	}
 }
