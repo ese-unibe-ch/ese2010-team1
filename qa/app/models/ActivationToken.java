@@ -2,7 +2,6 @@ package models;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -12,7 +11,6 @@ import play.db.jpa.Model;
 @Entity
 public class ActivationToken extends Model {
 
-	private static int RANDOM_INTERVALL = 1000000000;
 	@OneToOne
 	public User user;
 
@@ -20,11 +18,9 @@ public class ActivationToken extends Model {
 
 	public ActivationToken(User user) {
 
-		Random rand = new Random();
-
 		this.user = user;
 		this.activationToken = encrypt(user.name + user.email + user.id
-				+ rand.nextInt(RANDOM_INTERVALL));
+				+ System.currentTimeMillis());
 	}
 
 	private static String encrypt(String string) {
