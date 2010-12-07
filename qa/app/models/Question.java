@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import models.helper.EntryComperator;
+import models.helper.TimeFreezer;
+
 /**
  * A {@link Entry} containing a question as <code>content</code> and.
  * 

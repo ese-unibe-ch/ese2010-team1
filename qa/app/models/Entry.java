@@ -19,16 +19,12 @@ import play.db.jpa.Model;
  */
 
 @Entity
-public abstract class Entry extends Model {
+public abstract class Entry extends MajorEntry {
 
 	/** The content. */
 	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE,
 			CascadeType.REFRESH })
 	public List<ContentState> states;
-
-	/** The owner. */
-	@ManyToOne
-	public User owner;
 
 	/** The votes. */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
@@ -50,16 +46,6 @@ public abstract class Entry extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
 
-	/** The timestamp. */
-	public Date timestamp;
-
-	/** The faked id for XML importer */
-	public long fakeId;
-
-	/** The content */
-	@Lob
-	public String content;
-
 	/**
 	 * Create an <code>Entry</code>.
 	 * 
@@ -69,9 +55,7 @@ public abstract class Entry extends Model {
 	 *            the content of the <code>Entry</code>
 	 */
 	public Entry(User owner, String content) {
-		this.owner = owner;
-		this.content = content;
-		this.timestamp = new Date();
+		super(owner, content);
 		this.votes = new ArrayList<Vote>();
 		this.comments = new ArrayList<Comment>();
 		this.files = new ArrayList<FileEntry>();

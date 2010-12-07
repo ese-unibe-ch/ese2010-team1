@@ -1,6 +1,9 @@
-package models;
+package models.helper;
 
 import java.util.Comparator;
+
+import models.Answer;
+import models.Entry;
 
 public class EntryComperator implements Comparator<Entry> {
 

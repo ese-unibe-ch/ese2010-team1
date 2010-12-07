@@ -28,11 +28,7 @@ public class User extends Model {
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Entry> entrys;
-
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Comment> comments;
+	public List<MajorEntry> entrys;
 
 	/** The votes. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
@@ -87,7 +83,7 @@ public class User extends Model {
 		this.name = name;
 		this.email = email;
 		this.password = encrypt(password);
-		this.entrys = new ArrayList<Entry>();
+		this.entrys = new ArrayList<MajorEntry>();
 		this.votes = new ArrayList<Vote>();
 		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
@@ -127,9 +123,9 @@ public class User extends Model {
 	 */
 	public int reputation() {
 		int reputation = 0;
-		Iterator<Entry> it = this.entrys.iterator();
+		Iterator<MajorEntry> it = this.entrys.iterator();
 		while (it.hasNext()) {
-			Entry entry = it.next();
+			MajorEntry entry = it.next();
 			reputation += entry.rating();
 			if (entry instanceof models.Answer
 					&& ((Answer) entry).isBestAnswer())
@@ -203,19 +199,21 @@ public class User extends Model {
 		points.add(new Point(this.timestamp, 0));
 		points.add(new Point(new Date(), 0));
 
-		Iterator<Entry> en = this.entrys.iterator();
+		Iterator<MajorEntry> en = this.entrys.iterator();
 		while (en.hasNext()) {
-			Entry entry = en.next();
+			MajorEntry entry = en.next();
 			if (entry instanceof Answer && ((Answer) entry).isBestAnswer()) {
 				points.add(new Point(
 						((Answer) entry).question.bestAnswerFreezer.timestamp,
 						bestAnswerReputation));
 			}
-
-			Iterator<Vote> vt = entry.votes.iterator();
-			while (vt.hasNext()) {
-				Vote vote = vt.next();
-				points.add(new Point(vote.freezer.timestamp, vote.up ? 1 : -1));
+			if (entry instanceof Entry) {
+				Iterator<Vote> vt = ((Entry) entry).votes.iterator();
+				while (vt.hasNext()) {
+					Vote vote = vt.next();
+					points.add(new Point(vote.freezer.timestamp, vote.up ? 1
+							: -1));
+				}
 			}
 		}
 
@@ -363,7 +361,7 @@ public class User extends Model {
 
 	public User addComment(Entry entry, String content) {
 		Comment comment = entry.addComment(this, content);
-		this.comments.add(comment);
+		this.entrys.add(comment);
 		this.save();
 		return this;
 
@@ -465,7 +463,7 @@ public class User extends Model {
 
 	public void anonymify() {
 		User anonym = User.find("byName", "Anonym").first();
-		for (Entry entry : entrys) {
+		for (MajorEntry entry : entrys) {
 			entry.owner = anonym;
 			entry.save();
 		}
