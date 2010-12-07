@@ -4,34 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import models.MajorEntry;
-import play.db.jpa.Model;
 
-@Entity
-public class FraudPointController extends Model {
+public class FraudPointController {
 	private final static long expiration = 24 * 60 * 60 * 1000;
 
 	private static FraudPointController instance;
 
-	@OneToOne
 	private Date lastRun;
 
-	@OneToMany
 	private List<FraudPoint> fraudPoints;
 
-	@OneToMany
 	private List<FraudPointRule> rules;
 
 	public static FraudPointController getInstance() {
 		if (instance == null) {
-			instance = FraudPointController.all().first();
-			if (instance == null) {
-				instance = new FraudPointController().save();
-			}
+			instance = new FraudPointController();
 		}
 		return instance;
 	}
@@ -39,11 +27,11 @@ public class FraudPointController extends Model {
 	public static void addPoint(FraudPoint point) {
 		point.save();
 		getInstance().fraudPoints.add(point);
-		getInstance().save();
 	}
 
-	private FraudPointController() {
+	public FraudPointController() {
 		lastRun = new Date(0);
+		fraudPoints = new ArrayList();
 		// SM can't find an appropriate pattern.
 		rules = new ArrayList();
 		rules.add(new TestRule());

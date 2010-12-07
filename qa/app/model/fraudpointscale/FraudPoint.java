@@ -15,6 +15,4 @@ public class FraudPoint extends Model {
 
 	public Date timestamp;
 
-	@ManyToOne
-	public FraudPointRule rule;
 }

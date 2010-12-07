@@ -23,8 +23,8 @@ public class FraudPointScaleTest extends UnitTest {
 	public void testRule() {
 		User user = new User("Jack", "test@mail.com", "password").save();
 		Question question = user.addQuestion("A title", "My first question");
-
 		TestRule rule = new TestRule();
+
 		rule.check(question);
 
 		assertEquals(1, FraudPoint.count());
