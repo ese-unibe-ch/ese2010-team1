@@ -95,7 +95,7 @@ public class Search {
 	 *            the entrys
 	 * @return the list
 	 */
-	private static List<Entry> sortByRating(List<Entry> entrys) {
+	public static List<Entry> sortByRating(List<Entry> entrys) {
 		EntryComperator comp = new EntryComperator();
 		Collections.sort(entrys, comp);
 
