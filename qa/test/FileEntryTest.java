@@ -50,7 +50,7 @@ public class FileEntryTest extends UnitTest {
 	}
 
 	@Test
-	public void deleteUploadeFile() {
+	public void deleteUploadedFile() {
 
 		File testFile = new File(Play.applicationPath
 				+ "/public/files/test.txt");
@@ -63,7 +63,7 @@ public class FileEntryTest extends UnitTest {
 		User user = new User("test", "test", "test").save();
 		FileEntry file = FileEntry.upload(testFile, null, user);
 
-		FileEntry entry = FileEntry.find("byContent1", "test.txt").first();
+		FileEntry entry = FileEntry.find("byContent", "test.txt").first();
 		assertNotNull(entry);
 		assertEquals(file.owner, user);
 
