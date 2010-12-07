@@ -1,12 +1,11 @@
 package model.fraudpointscale;
 
+import javax.persistence.Entity;
+
 import models.MajorEntry;
 import play.db.jpa.Model;
 
-public abstract class FraudPointRule extends Model {
-	public FraudPointRule() {
-		this.save();
-	}
-
-	public abstract void check(MajorEntry entry);
+@Entity
+abstract class FraudPointRule extends Model {
+	abstract void check(MajorEntry entry);
 }

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import models.MajorEntry;
 import play.db.jpa.Model;
 
+@Entity
 public class FraudPointController extends Model {
 	private final static long expiration = 24 * 60 * 60 * 1000;
 
@@ -32,6 +34,12 @@ public class FraudPointController extends Model {
 			}
 		}
 		return instance;
+	}
+
+	public static void addPoint(FraudPoint point) {
+		point.save();
+		getInstance().fraudPoints.add(point);
+		getInstance().save();
 	}
 
 	private FraudPointController() {
@@ -64,11 +72,5 @@ public class FraudPointController extends Model {
 				point.delete();
 			}
 		}
-	}
-
-	public static void addPoint(FraudPoint point) {
-		point.save();
-		getInstance().fraudPoints.add(point);
-		getInstance().save();
 	}
 }
