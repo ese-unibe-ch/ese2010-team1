@@ -67,6 +67,8 @@ public class User extends Model {
 	/** The is admin. */
 	public boolean isAdmin = false;
 
+	public boolean isActive;
+
 	public int reputation;
 
 	public long fakeId;
@@ -91,6 +93,31 @@ public class User extends Model {
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
 		this.reputation = 0;
+		this.isActive = false;
+	}
+
+	public ActivationToken generateActivationToken() {
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token != null) {
+			token.delete();
+		}
+		token = new ActivationToken(this).save();
+		return token;
+	}
+
+	public void activate() {
+		this.isActive = true;
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		token.delete();
+		this.save();
+	}
+
+	public String getActivationToken() {
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token == null)
+			return null;
+		else
+			return token.activationToken;
 	}
 
 	/**
@@ -109,6 +136,14 @@ public class User extends Model {
 				reputation += bestAnswerReputation;
 		}
 
+		List<ProfileItem> profileItems = ProfileItem.findAll();
+		for (ProfileItem item : profileItems) {
+			ProfileEntry ent = item.findUserEntry(this);
+			if (ent != null) {
+				reputation++;
+			}
+		}
+
 		return reputation;
 	}
 
@@ -120,6 +155,15 @@ public class User extends Model {
 		this.reputation = reputation();
 		this.save();
 
+	}
+
+	public boolean isProfileFilledUp() {
+		List<ProfileItem> items = ProfileItem.findAll();
+		for (ProfileItem item : items) {
+			if (item.findUserEntry(this) == null)
+				return false;
+		}
+		return true;
 	}
 
 	/**

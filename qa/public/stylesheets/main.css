@@ -569,6 +569,16 @@ nav a {
 		
 	
 	}
+	
+	#profileTipp	{
+		background-color: white;
+	    width: 100px;
+	    position: absolute;
+	    right: 25px;
+	    top: 60px;
+	    padding: 5px;
+	
+	}
 	.profileTabs a.tab {
 		width: 150px;
 		line-height: 20px;
@@ -775,3 +785,9 @@ nav a {
 	    background: #008800 !important;
 	}
 
+.valid {
+	border: 2px solid green;	
+}
+.invalid {
+	border: 2px solid red;
+}
