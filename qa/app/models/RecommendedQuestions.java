@@ -1,7 +1,9 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class RecommendedQuestions {
@@ -13,11 +15,10 @@ public class RecommendedQuestions {
 	 *            the title of a question
 	 * @return a list with all related questions with max. length 10
 	 */
-	public List<Question> getRelatedQuestions(String title) {
+	public Set<Question> getRelatedQuestions(String title) {
 
 		if (title.length() > 2) {
-			List<Question> relatedQuestions = new ArrayList<Question>();
-			List<Question> recommendedQuestions = new ArrayList<Question>();
+			Set<Question> relatedQuestions = new HashSet<Question>();
 			title = title.toLowerCase();
 			StringTokenizer tokenizer = new StringTokenizer(title, " ", false);
 
@@ -27,11 +28,8 @@ public class RecommendedQuestions {
 					relatedQuestions.addAll(searchRelatedByTitle(token));
 				}
 			}
-			for (Question q : relatedQuestions) {
-				if (!recommendedQuestions.contains(q))
-					recommendedQuestions.add(q);
-			}
-			return recommendedQuestions;
+
+			return relatedQuestions;
 		} else
 			return null;
 	}
