@@ -113,7 +113,7 @@
 		#{elseif _entry.getFiles().size()>0}
 			#{list items:_entry.getFiles(), as:'file'}
 				<span class="file">
-					<a href="@{Questions.getFile(file.id)}">${file.uploadFilename}</a>
+					<a href="@{Questions.getFile(file.id)}">${file.getFilename()}</a>
 					#{if _user==file.owner}
 						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
 					#{/if}
