@@ -34,9 +34,6 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<FileEntry> files;
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
@@ -85,7 +82,6 @@ public class User extends Model {
 		this.password = encrypt(password);
 		this.entrys = new ArrayList<MajorEntry>();
 		this.votes = new ArrayList<Vote>();
-		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
 		this.reputation = 0;
@@ -370,7 +366,7 @@ public class User extends Model {
 	public User addFileToEntry(File file, Entry entry) {
 
 		FileEntry fileEntry = entry.addFile(file, this);
-		this.files.add(fileEntry);
+		this.entrys.add(fileEntry);
 
 		this.save();
 		return this;

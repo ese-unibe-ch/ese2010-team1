@@ -274,7 +274,7 @@ public class Questions extends Controller {
 
 		File file = new File(entry.getAbsolutePath());
 
-		renderBinary(file, entry.uploadFilename);
+		renderBinary(file, entry.getFilename());
 	}
 
 	public static void version(long id) {
