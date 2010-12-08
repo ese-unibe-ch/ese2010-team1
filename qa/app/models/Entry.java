@@ -173,6 +173,7 @@ public abstract class Entry extends Model {
 	public void removeVote(Vote vote) {
 		if (vote != null && !vote.frozen()) {
 			vote.delete();
+			this.owner.calcReputation();
 		}
 	}
 

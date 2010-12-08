@@ -154,10 +154,11 @@ public class Questions extends Controller {
 				}
 
 			}
-			entry.save();
 		} else if (file != null && file.exists()) {
 			user.addFileToEntry(file, entry);
 		}
+
+		entry.save();
 
 		if (entry instanceof Answer) {
 			question(((Answer) entry).question.id);
