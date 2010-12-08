@@ -1,5 +1,5 @@
-import models.Question;
-import models.User;
+import java.util.Date;
+
 import models.fraudpointscale.FraudPoint;
 import models.fraudpointscale.FraudPointController;
 import models.fraudpointscale.TestRule;
@@ -21,12 +21,11 @@ public class FraudPointScaleTest extends UnitTest {
 
 	@Test
 	public void testRule() {
-		User user = new User("Jack", "test@mail.com", "password").save();
-		Question question = user.addQuestion("A title", "My first question");
-
 		controller.run();
-
 		assertEquals(1, FraudPoint.count());
+		FraudPoint point = (FraudPoint) FraudPoint.all().first();
+		assertEquals(TestRule.class, point.rule);
+		assertFalse(point.timestamp.after(new Date()));
 	}
 
 }

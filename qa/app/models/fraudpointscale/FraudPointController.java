@@ -32,7 +32,7 @@ public class FraudPointController {
 		ServiceLoader<FraudPointRule> rules = ServiceLoader
 				.load(FraudPointRule.class);
 		for (FraudPointRule rule : rules) {
-			rule.check();
+			rule.checkSince(lastRun);
 		}
 	}
 

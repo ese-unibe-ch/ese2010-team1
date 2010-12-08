@@ -1,9 +1,11 @@
 package models.fraudpointscale;
 
-public class TestRule implements FraudPointRule {
+import java.util.Date;
 
-	public void check() {
-		new FraudPoint(null).save();
+public class TestRule extends FraudPointRule {
+
+	public void checkSince(Date lastCheck) {
+		addPoint(null);
 	}
 
 }

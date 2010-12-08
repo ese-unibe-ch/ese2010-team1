@@ -1,5 +1,13 @@
 package models.fraudpointscale;
 
-interface FraudPointRule {
-	public void check();
+import java.util.Date;
+
+import models.User;
+
+abstract class FraudPointRule {
+	public abstract void checkSince(Date lastCheck);
+
+	protected void addPoint(User user) {
+		new FraudPoint(user, this.getClass()).save();
+	}
 }

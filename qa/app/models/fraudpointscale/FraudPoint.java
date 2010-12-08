@@ -10,12 +10,16 @@ import play.db.jpa.Model;
 
 @Entity
 public class FraudPoint extends Model {
-	public FraudPoint(User user) {
+	public FraudPoint(User user, Class<? extends FraudPointRule> rule) {
 		this.user = user;
+		this.rule = rule;
+		this.timestamp = new Date();
 	}
 
 	@ManyToOne
 	public User user;
+
+	public Class<? extends FraudPointRule> rule;
 
 	public Date timestamp;
 
