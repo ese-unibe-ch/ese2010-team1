@@ -544,6 +544,8 @@ nav a {
 	.profileTabs .tab {
 		border-bottom-left-radius:0!important;
 		border-bottom-right-radius:0!important;
+		border-top-right-radius:5px;
+		border-top-left-radius:5px;
 	}
 	
 .profileContent {
