@@ -252,7 +252,7 @@ public class Questions extends Controller {
 
 	public static void setNotificationAsRed(long id) {
 
-		models.Notification.hasBeenRed(id);
+		models.Notification.hasBeenRead(id);
 	}
 
 	public static void deleteEntry(long id) {

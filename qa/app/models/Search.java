@@ -11,7 +11,6 @@ import java.util.Set;
  */
 public class Search {
 
-	// TS Replace whitespace by percent symbol to get more hits
 	/**
 	 * Search the titles for the searchString.
 	 * 
@@ -46,7 +45,6 @@ public class Search {
 	 * @return the list
 	 */
 
-	// TS if possible try to get the list with jpa query
 	public static Set<Question> searchTaggedWith(String searchString) {
 		List<Tag> matchingTags = Tag.find("byNameLike",
 				"%" + searchString.toLowerCase() + "%").fetch();

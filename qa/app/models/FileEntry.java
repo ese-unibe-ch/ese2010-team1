@@ -10,6 +10,10 @@ import play.Play;
 import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
 
+/**
+ * The Class FileEntry saves the information of uploaded file. The uploaded file
+ * will be renamed after the upload.
+ */
 @Entity
 public class FileEntry extends Model {
 
@@ -104,11 +108,6 @@ public class FileEntry extends Model {
 		return this.picID + "." + this.extension;
 	}
 
-	public static boolean deleteFile(FileEntry file) {
-
-		return false;
-	}
-
 	/**
 	 * Gets the file extension.
 	 * 
@@ -139,6 +138,11 @@ public class FileEntry extends Model {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see play.db.jpa.JPASupport#delete()
+	 */
 	@Override
 	public <T extends JPASupport> T delete() {
 

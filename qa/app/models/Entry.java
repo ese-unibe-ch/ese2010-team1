@@ -311,7 +311,7 @@ public abstract class Entry extends Model {
 	}
 
 	/**
-	 * Compares two entries by its ratiting.
+	 * Compares two entries by its rating.
 	 */
 	@Entity
 	public class ContentState extends Model {
