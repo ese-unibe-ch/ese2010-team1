@@ -259,6 +259,10 @@ nav a {
 			border-bottom-right-radius: 5px;
 			-moz-border-radius-bottomright: 5px;
 		}
+		
+		.pulldown input {
+			display: block;	
+		}
 
 
 /*** Tab bars ***/
