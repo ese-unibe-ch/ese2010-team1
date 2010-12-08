@@ -57,6 +57,12 @@ public class Comment extends Model {
 		}
 	}
 
+	/**
+	 * Unlike the given comment.
+	 * 
+	 * @param user
+	 *            the user
+	 */
 	public void unlike(User user) {
 		if (likedBy(user)) {
 			this.fans.remove(user);
@@ -64,6 +70,13 @@ public class Comment extends Model {
 		}
 	}
 
+	/**
+	 * Returns whether the comment is liked by the given user.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return true, if successful
+	 */
 	public boolean likedBy(User user) {
 		return fans.contains(user);
 	}

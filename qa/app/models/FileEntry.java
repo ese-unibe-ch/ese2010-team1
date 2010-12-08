@@ -89,7 +89,6 @@ public class FileEntry extends Model {
 				+ "." + this.extension);
 		if (file.exists()) {
 			return file.delete();
-
 		}
 
 		return false;
