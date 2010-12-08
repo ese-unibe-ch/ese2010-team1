@@ -269,8 +269,6 @@ nav a {
 
 .tabbar {
 	overflow: hidden;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
 }
 
 	.tabbar li {
@@ -541,6 +539,11 @@ nav a {
 .profileTabs {
 	margin: 15px;
 	margin-bottom: 0px;
+}
+
+	.profileTabs .tab {
+		border-bottom-left-radius:0!important;
+		border-bottom-right-radius:0!important;
 	}
 	
 .profileContent {
