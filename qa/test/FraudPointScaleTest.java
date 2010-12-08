@@ -22,8 +22,9 @@ public class FraudPointScaleTest extends UnitTest {
 	@Test
 	public void testRule() {
 		controller.run();
-		assertEquals(1, FraudPoint.count());
-		FraudPoint point = (FraudPoint) FraudPoint.all().first();
+		assertEquals(1, FraudPoint.count("rule = ?", TestRule.class));
+		FraudPoint point = (FraudPoint) FraudPoint.find("byRule",
+				TestRule.class).first();
 		assertEquals(TestRule.class, point.rule);
 		assertFalse(point.timestamp.after(new Date()));
 	}
