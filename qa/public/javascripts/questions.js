@@ -184,9 +184,7 @@ $(function() {
 		$("#section").load(resetBestAnswer({id: this.hash.substr(1)}));
 		return false;
 	});
-	
-	
-	
+
 		 
 
 	

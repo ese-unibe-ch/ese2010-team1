@@ -7,6 +7,7 @@ import java.util.List;
 import models.Answer;
 import models.Comment;
 import models.Entry;
+import models.MajorEntry;
 import models.ProfileItem;
 import models.Question;
 import models.User;
@@ -188,6 +189,14 @@ public class Users extends Controller {
 			Questions.question(((Answer) entry).question.id);
 
 		Questions.question(question.id);
+	}
+
+	public static void report(long id) {
+		MajorEntry entry = MajorEntry.findById(id);
+		User user = User.find("byName", Security.connected()).first();
+		entry.report(user);
+
+		Questions.home();
 	}
 
 	/*** AJAX ***/

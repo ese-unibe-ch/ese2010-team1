@@ -129,6 +129,10 @@
 				<a href="#${_entry.id}" class="edit">edit</a>
 			#{/if}
 			
+			#{if _user != _entry.owner && !_entry.isReportedFrom(_user)}
+				<a href="@{Users.report(_entry.id)}" class="report">report</a>
+			#{/if}
+			
 			#{secure.check 'isAdmin'}
 		  		<a href="@{Questions.delete(_entry.id)}" title="delete entry">delete</a>
 			#{/secure.check}
