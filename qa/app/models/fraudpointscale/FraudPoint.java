@@ -1,4 +1,4 @@
-package model.fraudpointscale;
+package models.fraudpointscale;
 
 import java.util.Date;
 
@@ -10,6 +10,10 @@ import play.db.jpa.Model;
 
 @Entity
 public class FraudPoint extends Model {
+	public FraudPoint(User user) {
+		this.user = user;
+	}
+
 	@ManyToOne
 	public User user;
 

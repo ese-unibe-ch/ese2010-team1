@@ -1,6 +1,6 @@
 package jobs;
 
-import model.fraudpointscale.FraudPointController;
+import models.fraudpointscale.FraudPointController;
 import play.jobs.Every;
 import play.jobs.Job;
 

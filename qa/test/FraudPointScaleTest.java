@@ -1,8 +1,8 @@
-import model.fraudpointscale.FraudPoint;
-import model.fraudpointscale.FraudPointController;
-import model.fraudpointscale.TestRule;
 import models.Question;
 import models.User;
+import models.fraudpointscale.FraudPoint;
+import models.fraudpointscale.FraudPointController;
+import models.fraudpointscale.TestRule;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +23,8 @@ public class FraudPointScaleTest extends UnitTest {
 	public void testRule() {
 		User user = new User("Jack", "test@mail.com", "password").save();
 		Question question = user.addQuestion("A title", "My first question");
-		TestRule rule = new TestRule();
 
-		rule.check(question);
+		controller.run();
 
 		assertEquals(1, FraudPoint.count());
 	}
