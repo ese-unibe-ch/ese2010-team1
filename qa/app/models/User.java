@@ -128,6 +128,12 @@ public class User extends Model {
 	 * @return the reputation
 	 */
 	public int reputation() {
+
+		return profileReputation() + entryReputation();
+	}
+
+	public int entryReputation() {
+
 		int reputation = 0;
 		Iterator<Entry> it = this.entrys.iterator();
 		while (it.hasNext()) {
@@ -137,7 +143,12 @@ public class User extends Model {
 					&& ((Answer) entry).isBestAnswer())
 				reputation += bestAnswerReputation;
 		}
+		return reputation;
+	}
 
+	public int profileReputation() {
+
+		int reputation = 0;
 		List<ProfileItem> profileItems = ProfileItem.findAll();
 		for (ProfileItem item : profileItems) {
 			ProfileEntry ent = item.findUserEntry(this);
