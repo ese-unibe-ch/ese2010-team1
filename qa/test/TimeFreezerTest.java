@@ -1,6 +1,6 @@
 import java.util.Date;
 
-import models.TimeFreezer;
+import models.helper.TimeFreezer;
 
 import org.junit.Test;
 
