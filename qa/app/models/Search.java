@@ -11,7 +11,6 @@ import java.util.Set;
  */
 public class Search {
 
-	// TS Replace whitespace by percent symbol to get more hits
 	/**
 	 * Search the titles for the searchString.
 	 * 
@@ -20,7 +19,8 @@ public class Search {
 	 * @return the list
 	 */
 	public static List<Entry> searchTitle(String searchString) {
-		return Question.find("byTitleLike", "%" + searchString + "%").fetch();
+		return Question.find("byTitleLike",
+				"%" + searchString.toLowerCase() + "%").fetch();
 	}
 
 	/**
@@ -32,7 +32,8 @@ public class Search {
 	 */
 	public static List<Entry> searchContent(String searchString) {
 
-		return Entry.find("byContentLike", "%" + searchString + "%").fetch();
+		return Entry.find("byContentLike",
+				"%" + searchString.toLowerCase() + "%").fetch();
 
 	}
 
@@ -44,10 +45,9 @@ public class Search {
 	 * @return the list
 	 */
 
-	// TS if possible try to get the list with jpa query
 	public static Set<Question> searchTaggedWith(String searchString) {
 		List<Tag> matchingTags = Tag.find("byNameLike",
-				"%" + searchString + "%").fetch();
+				"%" + searchString.toLowerCase() + "%").fetch();
 
 		Set<Question> result = new HashSet<Question>();
 		for (Tag tag : matchingTags) {
@@ -66,8 +66,8 @@ public class Search {
 	 */
 	public static List<FileEntry> searchFilename(String searchString) {
 
-		return FileEntry.find("byUploadFilenameLike", "%" + searchString + "%")
-				.fetch();
+		return FileEntry.find("byUploadFilenameLike",
+				"%" + searchString.toLowerCase() + "%").fetch();
 	}
 
 	/**
@@ -151,7 +151,8 @@ public class Search {
 	public static List<User> searchUsers(String searchString) {
 
 		return User.find("name like ? or email like ?",
-				"%" + searchString + "%", "%" + searchString + "%").fetch();
+				"%" + searchString.toLowerCase() + "%",
+				"%" + searchString.toLowerCase() + "%").fetch();
 	}
 
 }

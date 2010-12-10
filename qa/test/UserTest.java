@@ -105,4 +105,16 @@ public class UserTest extends UnitTest {
 		assertEquals(0, user2.reputation);
 
 	}
+
+	@Test
+	public void generateActivationToken() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		assertNull(user.getActivationToken());
+		user.generateActivationToken();
+		assertNotNull(user.getActivationToken());
+		String token = user.getActivationToken();
+		user.generateActivationToken();
+		assertFalse(token.equals(user.getActivationToken()));
+	}
 }

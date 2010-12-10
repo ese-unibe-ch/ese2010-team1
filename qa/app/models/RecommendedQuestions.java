@@ -8,6 +8,10 @@ import java.util.StringTokenizer;
 
 public class RecommendedQuestions {
 
+	private static int MIN_TITLE_LENGTH = 2;
+	private static int MIN_TOKEN_LENGTH = 2;
+	private static int MIN_RELATED_QUESTION = 10;
+
 	/**
 	 * Gets all related Questions according to a title.
 	 * 
@@ -17,14 +21,15 @@ public class RecommendedQuestions {
 	 */
 	public Set<Question> getRelatedQuestions(String title) {
 
-		if (title.length() > 2) {
+		if (title.length() > MIN_TITLE_LENGTH) {
 			Set<Question> relatedQuestions = new HashSet<Question>();
 			title = title.toLowerCase();
 			StringTokenizer tokenizer = new StringTokenizer(title, " ", false);
 
-			while (relatedQuestions.size() <= 10 && tokenizer.hasMoreTokens()) {
+			while (relatedQuestions.size() <= MIN_RELATED_QUESTION
+					&& tokenizer.hasMoreTokens()) {
 				String token = tokenizer.nextToken();
-				if (token.length() > 2) {
+				if (token.length() > MIN_TOKEN_LENGTH) {
 					relatedQuestions.addAll(searchRelatedByTitle(token));
 				}
 			}

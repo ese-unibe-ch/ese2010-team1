@@ -173,6 +173,7 @@ public abstract class Entry extends Model {
 	public void removeVote(Vote vote) {
 		if (vote != null && !vote.frozen()) {
 			vote.delete();
+			this.owner.calcReputation();
 		}
 	}
 
@@ -199,7 +200,7 @@ public abstract class Entry extends Model {
 	 */
 	public boolean canVote(User user) {
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
-		return user != this.owner
+		return user != this.owner && user.reputation >= ProfileItem.count()
 				&& (alreadyVoted == null || !alreadyVoted.frozen());
 	}
 
@@ -310,7 +311,7 @@ public abstract class Entry extends Model {
 	}
 
 	/**
-	 * Compares two entries by its ratiting.
+	 * Compares two entries by its rating.
 	 */
 	@Entity
 	public class ContentState extends Model {

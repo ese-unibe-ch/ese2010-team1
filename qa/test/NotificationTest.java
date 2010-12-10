@@ -54,7 +54,7 @@ public class NotificationTest extends UnitTest {
 		assertEquals(2, user.getNewNotifications().size());
 
 		Notification notification = user.getNewNotifications().get(0);
-		Notification.hasBeenRed(notification.id);
+		Notification.hasBeenRead(notification.id);
 
 		assertEquals(1, user.getNewNotifications().size());
 

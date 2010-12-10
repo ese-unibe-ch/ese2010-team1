@@ -1,7 +1,5 @@
 $(function() {
-// profile options
-	
-	$('a.tab[href=#Activities]').addClass("active");
+// profile options	
 	
 	$('a.editProfile').livequery('click', function(event) {
 		var a = $('input.editProfile');
@@ -19,13 +17,18 @@ $(function() {
 //			alert("a post  call");
 //		});
 //	});
+	
+	// Load Default Tab
+	$('li.tab a[href=#Activities]').addClass("active");
+	
+	$('article.profileContent').load(profileGet({id: userid, theAction: "Activities"}));
 
 
-	$('a.tab').livequery('click', function(event) {
+	$('li.tab a').livequery('click', function(event) {
 		var a = this;
 		$.get(profileGet({id: userid, theAction: this.hash.substr(1)}), function(data) {			
 			$('article.profileContent').html(data);
-			$('a.tab').removeClass("active");
+			$('li.tab a').removeClass("active");
 			$(a).addClass("active");
 			
 			if(a.hash.substr(1)=="Reputation") {
@@ -35,9 +38,7 @@ $(function() {
 		return false;
 	});
 	
-
 	
-	$('article.profileContent').load(profileGet({id: userid, theAction: "Activities"}));
 
 
 

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import play.db.jpa.Model;
 
 /**
- * The TimeFreezer.
+ * The TimeFreezer is used to set time limits on votes and bestAnswers.
  */
 @Entity
 public class TimeFreezer extends Model {

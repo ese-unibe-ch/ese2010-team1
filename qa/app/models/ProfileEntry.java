@@ -21,6 +21,7 @@ public class ProfileEntry extends Model {
 	public ProfileItem item;
 
 	/** The user. */
+	@ManyToOne
 	public User user;
 
 	/**
