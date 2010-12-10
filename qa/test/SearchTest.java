@@ -122,4 +122,19 @@ public class SearchTest extends UnitTest {
 
 	}
 
+	/*
+	 * @Test public void shouldFindFileEntryByString() {
+	 * 
+	 * File testFile = new File(Play.applicationPath + "/tmp/uploads/test.txt");
+	 * try { testFile.createNewFile(); } catch (IOException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); }
+	 * 
+	 * assertNotNull(testFile); FileEntry file = FileEntry.upload(testFile,
+	 * null, null);
+	 * 
+	 * assertEquals(Search.searchFilename("testFile").get(0), file);
+	 * 
+	 * }
+	 */
+
 }
