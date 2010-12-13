@@ -10,6 +10,7 @@ import models.User;
 public class VoteUpSameUserRule extends FraudPointRule {
 
 	private Date checkDate;
+	private static int MIN_USER_VOTES = 2;
 
 	@Override
 	public void checkSince(Date lastCheck) {
@@ -20,13 +21,16 @@ public class VoteUpSameUserRule extends FraudPointRule {
 
 	private List<User> findPotentialCheaters() {
 
-		List<Entry> entriesWithNewVotes = Entry.find(
-				"select entry e, vote v, e.votes = v and votes.timestamp >= ?",
-				checkDate).fetch();
-
 		List<User> userList = new ArrayList<User>();
 
 		return null;
 	}
 
+	public List<Entry> findEntrysWithNewVotes() {
+
+		return Entry
+				.find(
+						"select entry e, vote v, count(e.owner) > 2 and e.votes = v and votes.timestamp >= ?",
+						checkDate).fetch();
+	}
 }
