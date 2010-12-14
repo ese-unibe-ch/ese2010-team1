@@ -19,7 +19,7 @@ public class ReportRule extends FraudPointRule {
 		List<Report> reports = Report.findAll();
 		reports = deleteOld(reports, lastCheck);
 		for (Report report : reports) {
-			new FraudPoint(report.reporter, this.getClass());
+			new FraudPoint(report.entry.owner, this.getClass()).save();
 		}
 	}
 
