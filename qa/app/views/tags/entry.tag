@@ -129,8 +129,16 @@
 				<a href="#${_entry.id}" class="edit">edit</a>
 			#{/if}
 			
-			#{if _user != _entry.owner && !_entry.isReportedFrom(_user)}
-				<a href="@{Users.report(_entry.id)}" class="report">report</a>
+			#{if _user != _entry.owner && !_entry.isReportedFrom(_user) && _user}
+				<a href="#" class="reportButton">report</a>
+				
+				<div class="report">
+					#{report entry:_entry /}
+				</div>
+			#{/if}
+			
+			#{if _entry.isReported() && _user}
+				<span class="attention" title="This entry is reported as suspicious from ${_entry.reports.size()} users!"></span>
 			#{/if}
 			
 			#{secure.check 'isAdmin'}
@@ -146,6 +154,7 @@
 				</div>
 				
 			#{/if}
+
 			
 			#{if _user}
 				<a href="#" class="showform">comment</a>
@@ -173,6 +182,16 @@
 					#{/if}
 					#{if _user}
 						<a href="#" class="showform">reply</a>
+					#{/if}
+					#{if _user != comment.owner && !comment.isReportedFrom(_user) && _user}
+						<a href="#" class="reportButton">report</a>
+				
+						<div class="report">
+							#{report entry:comment /}
+						</div>
+					#{/if}
+					#{if comment.isReported() && _user}
+						<span class="attention" title="This entry is reported as suspicious from ${_entry.reports.size()} users!"></span>
 					#{/if}
 					#{if _user!=comment.owner}
 						#{if comment.likedBy(_user)}

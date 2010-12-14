@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import models.helper.Utils;
@@ -37,6 +40,9 @@ public class User extends Model {
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
+
+	@ManyToMany(mappedBy = "fans")
+	public Set<Comment> likedComments = new HashSet<Comment>();
 
 	/** The name. */
 	@Required

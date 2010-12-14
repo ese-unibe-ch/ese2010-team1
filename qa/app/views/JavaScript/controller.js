@@ -19,7 +19,6 @@ var setNotificationAsRed = #{jsAction @Questions.setNotificationAsRed(':id') /}
 var contentVersion = #{jsAction @Questions.version(':id') /}
 var deleteComment = #{jsAction @Questions.deleteComment(':id') /}
 var checkUserExists = #{jsAction @Users.checkUserExists(':name') /}
-var report = #{jsAction @Questions.report(':id') /}
 
 var tagsList = #{jsAction @Questions.getTagList() /};
 

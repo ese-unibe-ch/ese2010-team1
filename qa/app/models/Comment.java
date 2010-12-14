@@ -1,8 +1,9 @@
 package models;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -14,8 +15,8 @@ public class Comment extends MajorEntry {
 	@ManyToOne
 	public Entry entry;
 
-	@ManyToMany
-	public List<User> fans;
+	@ManyToMany(cascade = CascadeType.ALL)
+	public Set<User> fans;
 
 	/**
 	 * Instantiates a new comment.
@@ -30,12 +31,14 @@ public class Comment extends MajorEntry {
 	public Comment(User owner, Entry entry, String content) {
 		super(owner, content);
 		this.entry = entry;
-		this.fans = new LinkedList<User>();
+		this.fans = new HashSet<User>();
 	}
 
 	public void like(User user) {
 		if (!likedBy(user) && user != this.owner) {
 			this.fans.add(user);
+			user.likedComments.add(this);
+			user.save();
 			this.save();
 		}
 	}
@@ -49,6 +52,8 @@ public class Comment extends MajorEntry {
 	public void unlike(User user) {
 		if (likedBy(user)) {
 			this.fans.remove(user);
+			user.likedComments.remove(this);
+			user.save();
 			this.save();
 		}
 	}
