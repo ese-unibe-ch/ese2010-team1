@@ -52,11 +52,12 @@ $(function() {
 	
 	// search questions
 	$("#search input").keyup(function() {
+		if(this.value.length < 3) return;
 		var action = userSearch ? searchUsers({string: this.value}) : searchQuestions({string: this.value});
 		searchModeLink();
 		$("#nav").load(action);
-		$('#filter a').removeClass("active");
-		$('#filter a[href=#Search]').addClass("active");
+		$('#filter li').removeClass("active");
+		$('#filter a[href=#Search]').parent().addClass("active");
 	});
 	
 	$("#search").submit(function() {

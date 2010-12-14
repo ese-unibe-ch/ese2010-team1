@@ -30,7 +30,8 @@ $(function() {
 	$('#topaction a').livequery(function() {
 		$('nav').addClass('noshadow');
 	}, function() {
-		$('nav').removeClass('noshadow');
+		if($('#topaction a').count() == 0)
+			$('nav').removeClass('noshadow');
 	});
 	
 	// pulldown menus
