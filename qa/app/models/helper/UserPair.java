@@ -22,6 +22,7 @@ public class UserPair {
 	 *            the author
 	 */
 	public UserPair(User voter, User author) {
+		assert voter != author;
 		this.voter = voter;
 		this.author = author;
 	}

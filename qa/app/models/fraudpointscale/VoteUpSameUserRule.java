@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import models.Entry;
 import models.User;
 import models.Vote;
 import models.helper.UserPair;
@@ -32,9 +31,12 @@ public class VoteUpSameUserRule extends FraudPointRule {
 
 		this.checkDate = lastCheck;
 
-	}
+		for (User user : this.findPotentialCheaters()) {
 
-	// TS for the moment it's a bad algorithm o(n^2) in worst case
+			addPoint(user);
+		}
+
+	}
 
 	/**
 	 * Find potential cheaters.
@@ -49,6 +51,7 @@ public class VoteUpSameUserRule extends FraudPointRule {
 
 		Map<UserPair, Integer> relationMap = new HashMap<UserPair, Integer>();
 
+		// Find number of same relations
 		for (Vote v : newVotes) {
 
 			UserPair pair = new UserPair(v.owner, v.entry.owner);
@@ -61,7 +64,7 @@ public class VoteUpSameUserRule extends FraudPointRule {
 			}
 
 		}
-
+		// search relations with more than the user votes threshold value
 		for (Map.Entry<UserPair, Integer> e : relationMap.entrySet()) {
 
 			if (e.getValue() >= USER_VOTES_THRESHOLD) {
@@ -71,18 +74,6 @@ public class VoteUpSameUserRule extends FraudPointRule {
 		}
 
 		return potentialCheater;
-	}
-
-	/**
-	 * Find entrys with new votes.
-	 * 
-	 * @return the list
-	 */
-	public List<Entry> findEntrysWithNewVotes() {
-
-		return Entry.find(
-				"select entry e, vote v, e.votes = v and v.timestamp >= ?",
-				checkDate).fetch();
 	}
 
 }
