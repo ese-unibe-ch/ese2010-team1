@@ -20,7 +20,7 @@ public class VoteUpSameUserRuleTest extends UnitTest {
 	}
 
 	@Test
-	public void findEntriesWithNewVotes() {
+	public void findPotentialCheaters() {
 
 		Date timeBefore = new Date();
 		User user = new User("User", "bla@bla.com", "bla").save();
@@ -29,16 +29,17 @@ public class VoteUpSameUserRuleTest extends UnitTest {
 
 		Question question = user.addQuestion("test", "blub");
 		question.voteDown(user3);
-		Answer answer = question.answer(user2, "bla");
+		question.voteUp(user2);
+		Answer answer = question.answer(user, "bla");
 		answer.voteDown(user3);
+		answer.voteUp(user2);
 
 		VoteUpSameUserRule rule = new VoteUpSameUserRule();
 		rule.checkSince(timeBefore);
 
-		assertEquals(2, rule.findEntrysWithNewVotes().size());
-		VoteUpSameUserRule rule2 = new VoteUpSameUserRule();
-		rule2.checkSince(new Date());
-		assertEquals(0, rule2.findEntrysWithNewVotes());
+		assertEquals(2, rule.findPotentialCheaters().size());
+		// assertEquals(user3, rule.findPotentialCheaters().get(0));
+		// assertEquals(user2, rule.findPotentialCheaters().get(1));
 
 	}
 }

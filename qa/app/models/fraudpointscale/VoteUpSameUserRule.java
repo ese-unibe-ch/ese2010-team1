@@ -10,11 +10,23 @@ import models.Entry;
 import models.User;
 import models.Vote;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VoteUpSameUserRule.
+ */
 public class VoteUpSameUserRule extends FraudPointRule {
 
+	/** The check date. */
 	private Date checkDate;
+
+	/** The maximum limit a user can vote without being a cheater. */
 	private static int USER_VOTES_THRESHOLD = 2;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see models.fraudpointscale.FraudPointRule#checkSince(java.util.Date)
+	 */
 	@Override
 	public void checkSince(Date lastCheck) {
 
@@ -24,10 +36,16 @@ public class VoteUpSameUserRule extends FraudPointRule {
 
 	// TS for the moment it's a bad algorithm o(n^2) in worst case
 
+	/**
+	 * Find potential cheaters.
+	 * 
+	 * @return the list
+	 */
 	public List<User> findPotentialCheaters() {
 
 		List<User> potentialCheater = new ArrayList<User>();
-		List<Vote> newVotes = Vote.find("timestamp >= ?", checkDate).fetch();
+		List<Vote> newVotes = Vote.find("freezer.timestamp >= ?", checkDate)
+				.fetch();
 
 		Map<UserPair, Integer> relationMap = new HashMap<UserPair, Integer>();
 
@@ -55,28 +73,67 @@ public class VoteUpSameUserRule extends FraudPointRule {
 		return potentialCheater;
 	}
 
+	/**
+	 * Find entrys with new votes.
+	 * 
+	 * @return the list
+	 */
 	public List<Entry> findEntrysWithNewVotes() {
 
-		return Entry
-				.find(
-						"select entry e, vote v, count(e.owner) > 2 and e.votes = v and votes.timestamp >= ?",
-						checkDate).fetch();
+		return Entry.find(
+				"select entry e, vote v, e.votes = v and v.timestamp >= ?",
+				checkDate).fetch();
 	}
 
+	/**
+	 * The Class UserPair.
+	 */
 	public class UserPair {
 
+		/** The voter. */
 		public User voter;
+
+		/** The author. */
 		public User author;
 
+		/**
+		 * Instantiates a new user pair.
+		 * 
+		 * @param voter
+		 *            the voter
+		 * @param author
+		 *            the author
+		 */
 		public UserPair(User voter, User author) {
 			this.voter = voter;
 			this.author = author;
 		}
 
-		public boolean equals(UserPair o1, UserPair o2) {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object o1) {
 
-			return o1.voter == o2.voter && o1.author == o2.author;
+			return ((UserPair) o1).voter == this.voter
+					&& ((UserPair) o1).author == this.author;
 
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			int hash = 0;
+			hash ^= voter.hashCode();
+			hash ^= author.hashCode();
+
+			return hash;
 		}
 
 	}
