@@ -68,7 +68,7 @@ public class Search {
 	 */
 	public static List<FileEntry> searchFilename(String searchString) {
 
-		return FileEntry.find("byUploadFilenameLike",
+		return FileEntry.find("byContentLike",
 				"%" + searchString.toLowerCase() + "%").fetch();
 	}
 

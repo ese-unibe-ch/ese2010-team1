@@ -34,7 +34,7 @@ public class NoSimilarContentRuleTest extends UnitTest {
 		NoSimilarContentRule rule = new NoSimilarContentRule();
 		rule.checkSince(timeBefore);
 
-		assertEquals(3, rule.findPotentialCheaters().size());
+		assertEquals(1, rule.findPotentialCheaters().size());
 
 	}
 }
