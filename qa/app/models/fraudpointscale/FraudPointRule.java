@@ -14,7 +14,7 @@ import models.User;
  * 
  */
 
-abstract class FraudPointRule {
+public abstract class FraudPointRule {
 	public abstract void checkSince(Date lastCheck);
 
 	protected void addPoint(User user) {
