@@ -106,4 +106,8 @@ public class Admin extends Controller {
 		return extension.equals(".xml");
 	}
 
+	public static void activateUser() {
+
+	}
+
 }
