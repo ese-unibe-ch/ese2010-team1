@@ -2,6 +2,7 @@ import java.util.Date;
 
 import models.fraudpointscale.FraudPoint;
 import models.fraudpointscale.FraudPointController;
+import models.fraudpointscale.NoSimilarContentRule;
 import models.fraudpointscale.TestRule;
 
 import org.junit.Before;
@@ -28,5 +29,6 @@ public class FraudPointScaleTest extends UnitTest {
 		assertEquals(TestRule.class, point.rule);
 		assertFalse(point.timestamp.after(new Date()));
 	}
+
 
 }

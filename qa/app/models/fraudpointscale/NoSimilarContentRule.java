@@ -23,7 +23,7 @@ public class NoSimilarContentRule extends FraudPointRule {
 
 	}
 
-	private List<User> findPotentialCheaters() {
+	public List<User> findPotentialCheaters() {
 
 		List<User> potentialCheater = new ArrayList<User>();
 		List<MajorEntry> entryWithSimilarContent = (List<MajorEntry>) MajorEntry
