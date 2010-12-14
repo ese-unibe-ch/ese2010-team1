@@ -106,8 +106,11 @@ public class Admin extends Controller {
 		return extension.equals(".xml");
 	}
 
-	public static void activateUser() {
-
+	public static void toggleActivateUser(long id) {
+		User user = User.findById(id);
+		user.isActivated = !user.isActivated;
+		user.save();
+		Admin.showUserlist();
 	}
 
 }

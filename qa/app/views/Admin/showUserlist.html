@@ -6,7 +6,7 @@
 	<tr>
 		<th>Username</th>
 		<th>E-Mail</th>
-		<th>Active</th>
+		<th style="text-align: center;">Active</th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -17,25 +17,27 @@
 		<tr>
 			<td>${luser.name}</td> 
 			<td>${luser.email}</td>
+			<td style="text-align: center;">
+				#{if luser.isActivated}
+				*
+				#{/if}
+			</td>
 			<td>
 				#{if luser!=user && !luser.name.equals("Anonymous")}
 					<a href="@{Admin.deleteUser(luser.id)}">Delete</a>
 				#{/if}
 			</td>
-			<td>
-				#{if luser.isActivated}
-				*
-				#{/if}
-			</td>
+			
 			<td>	
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
 					<a href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
 				#{/if}
 			</td>
-				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-				<a href="@{Admin.activateUser}"></a>
-				#{/if}
 			<td>
+				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
+				<a href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "unactivate" : "activate"}</a>
+				#{/if}
+		
 			</td>
 			<td style="text-align: center;">
 			${luser.fraudPointScore()}
