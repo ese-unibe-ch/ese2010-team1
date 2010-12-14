@@ -20,7 +20,7 @@ public class NoSimilarContentRuleTest extends UnitTest {
 	}
 
 	@Test
-	public void findPotentialCheaters() {
+	public void shouldFindPotentialCheaters() {
 
 		Date timeBefore = new Date();
 		User user = new User("User", "bla@bla.com", "bla").save();
@@ -35,6 +35,19 @@ public class NoSimilarContentRuleTest extends UnitTest {
 		rule.checkSince(timeBefore);
 
 		assertEquals(1, rule.findPotentialCheaters().size());
+
+		Question question20 = user2.addQuestion("test", "fraudContent");
+		rule.checkSince(timeBefore);
+
+		assertEquals(2, rule.findPotentialCheaters().size());
+
+		timeBefore = new Date();
+
+		question20.content = "fraudContent";
+
+		rule.checkSince(timeBefore);
+
+		assertEquals(0, rule.findPotentialCheaters().size());
 
 	}
 }
