@@ -1,8 +1,6 @@
 package models;
 
 import java.io.File;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import models.fraudpointscale.FraudPoint;
+import models.helper.Utils;
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
@@ -58,13 +57,16 @@ public class User extends Model {
 	/** The Constant bestAnswerReputation. */
 	public static final int bestAnswerReputation = 50;
 
-	/** The is admin. */
+	/** The is admin flag. */
 	public boolean isAdmin = false;
 
-	public boolean isActive;
+	/** The is activated flag. */
+	public boolean isActivated;
 
+	/** The cached reputation score. */
 	public int reputation;
 
+	/** The fake id used for the XML importer. */
 	public long fakeId;
 
 	/**
@@ -80,13 +82,15 @@ public class User extends Model {
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
-		this.password = encrypt(password);
+		this.password = Utils.encryptStringToSHA1(password);
+		// this.entrys = new ArrayList<Entry>();
+		// this.password = encrypt(password);
 		this.entrys = new ArrayList<MajorEntry>();
 		this.votes = new ArrayList<Vote>();
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
 		this.reputation = 0;
-		this.isActive = false;
+		this.isActivated = false;
 	}
 
 	public ActivationToken generateActivationToken() {
@@ -99,7 +103,7 @@ public class User extends Model {
 	}
 
 	public void activate() {
-		this.isActive = true;
+		this.isActivated = true;
 		ActivationToken token = ActivationToken.find("byUser", this).first();
 		token.delete();
 		this.save();
@@ -119,6 +123,12 @@ public class User extends Model {
 	 * @return the reputation
 	 */
 	public int reputation() {
+
+		return profileReputation() + entryReputation();
+	}
+
+	public int entryReputation() {
+
 		int reputation = 0;
 		Iterator<MajorEntry> it = this.entrys.iterator();
 		while (it.hasNext()) {
@@ -128,7 +138,12 @@ public class User extends Model {
 					&& ((Answer) entry).isBestAnswer())
 				reputation += bestAnswerReputation;
 		}
+		return reputation;
+	}
 
+	public int profileReputation() {
+
+		int reputation = 0;
 		List<ProfileItem> profileItems = ProfileItem.findAll();
 		for (ProfileItem item : profileItems) {
 			ProfileEntry ent = item.findUserEntry(this);
@@ -276,7 +291,9 @@ public class User extends Model {
 
 		User loginUser = User.find("byName", username).first();
 
-		if (loginUser != null && loginUser.password.equals(encrypt(password)))
+		if (loginUser != null
+				&& loginUser.password.equals(Utils
+						.encryptStringToSHA1(password)))
 			return loginUser;
 		else
 			return null;
@@ -293,24 +310,6 @@ public class User extends Model {
 	public static boolean exists(String username) {
 
 		return User.find("byName", username).first() != null;
-	}
-
-	/**
-	 * Encrypt.
-	 * 
-	 * @param password
-	 *            the password
-	 * @return the encrypted password
-	 */
-	private static String encrypt(String password) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			md.update(password.getBytes());
-			return new BigInteger(1, md.digest(password.getBytes()))
-					.toString(16);
-		} catch (Exception e) {
-			return password;
-		}
 	}
 
 	/**
@@ -477,8 +476,8 @@ public class User extends Model {
 		return super.delete();
 	}
 
-	public void setNewPassword(String pw) {
-		this.password = encrypt(pw);
+	public void setNewPassword(String password) {
+		this.password = Utils.encryptStringToSHA1(password);
 	}
 
 	public List<Question> questions() {

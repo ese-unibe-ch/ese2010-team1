@@ -10,6 +10,7 @@ public class Mails extends Mailer {
 		setSubject("Welcome %s", user.name);
 		addRecipient(user.email);
 		setFrom("Knowledge Base <qa@qa.local>");
+
 		send(user);
 
 	}

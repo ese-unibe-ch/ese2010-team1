@@ -9,6 +9,7 @@ import models.Answer;
 import models.Comment;
 import models.Entry;
 import models.FileEntry;
+import models.ProfileItem;
 import models.Question;
 import models.Search;
 import models.Tag;
@@ -153,10 +154,11 @@ public class Questions extends Controller {
 				}
 
 			}
-			entry.save();
 		} else if (file != null && file.exists()) {
 			user.addFileToEntry(file, entry);
 		}
+
+		entry.save();
 
 		if (entry instanceof Answer) {
 			question(((Answer) entry).question.id);
@@ -170,9 +172,12 @@ public class Questions extends Controller {
 	public static void voteUp(long id) {
 		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
+
+		if (user.reputation >= ProfileItem.count()){
 		if (entry != null && user != null) {
 			entry.voteUp(user);
 			entry.save();
+		}
 		}
 		render("Questions/entry.html", entry);
 	}
@@ -180,9 +185,11 @@ public class Questions extends Controller {
 	public static void voteDown(long id) {
 		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
-		if (entry != null && user != null) {
-			entry.voteDown(user);
-			entry.save();
+		if (user.reputation >= ProfileItem.count()) {
+			if (entry != null && user != null) {
+				entry.voteDown(user);
+				entry.save();
+			}
 		}
 		render("Questions/entry.html", entry);
 	}
@@ -245,7 +252,7 @@ public class Questions extends Controller {
 
 	public static void setNotificationAsRed(long id) {
 
-		models.Notification.hasBeenRed(id);
+		models.Notification.hasBeenRead(id);
 	}
 
 	public static void deleteEntry(long id) {
