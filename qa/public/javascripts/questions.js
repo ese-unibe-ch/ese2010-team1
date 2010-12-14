@@ -185,14 +185,24 @@ $(function() {
 		return false;
 	});
 	
+	// report
+//	$('.reportButton').click(function() {
+//		$(this).siblings("div.report").toggle();
+//	});
 	
+	$('a.reportButton').livequery('click', function() {
+		$(this).next('div.report').toggle();
+		return false;
+	});
 	
-		 
+	$('#dontReport').livequery('click', function() {
+		$(this).parents('div.report').hide();
+		return false;
+	});
+	
 
 	
 
-
-	
 
 });
 
