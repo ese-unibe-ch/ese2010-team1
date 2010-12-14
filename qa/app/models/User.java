@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import models.fraudpointscale.FraudPoint;
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
@@ -482,6 +483,11 @@ public class User extends Model {
 
 	public List<Question> questions() {
 		return Question.find("byOwner", this).fetch();
+	}
+
+	public long fraudPointScore() {
+		return FraudPoint.count("user = ?", this);
+
 	}
 
 }

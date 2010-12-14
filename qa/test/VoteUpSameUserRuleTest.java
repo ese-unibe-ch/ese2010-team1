@@ -3,6 +3,7 @@ import java.util.Date;
 import models.Answer;
 import models.Question;
 import models.User;
+import models.fraudpointscale.FraudPoint;
 import models.fraudpointscale.VoteUpSameUserRule;
 
 import org.junit.Before;
@@ -38,8 +39,7 @@ public class VoteUpSameUserRuleTest extends UnitTest {
 		rule.checkSince(timeBefore);
 
 		assertEquals(2, rule.findPotentialCheaters().size());
-		// assertEquals(user3, rule.findPotentialCheaters().get(0));
-		// assertEquals(user2, rule.findPotentialCheaters().get(1));
+		assertEquals(2, FraudPoint.count());
 
 	}
 }
