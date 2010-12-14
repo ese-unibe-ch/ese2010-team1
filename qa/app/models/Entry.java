@@ -60,6 +60,8 @@ public abstract class Entry extends Model {
 	@Lob
 	public String content;
 
+	public long rating;
+
 	/**
 	 * Create an <code>Entry</code>.
 	 * 
@@ -77,6 +79,7 @@ public abstract class Entry extends Model {
 		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
 		this.states = new ArrayList<ContentState>();
+		this.rating = 0;
 
 	}
 
@@ -116,6 +119,12 @@ public abstract class Entry extends Model {
 	 */
 	public long rating() {
 		return this.upVotes() - this.downVotes();
+	}
+
+	public void calcRating() {
+
+		this.rating = this.upVotes() - this.downVotes();
+		this.save();
 	}
 
 	/**
@@ -228,6 +237,7 @@ public abstract class Entry extends Model {
 
 		Vote vote = new Vote(user, this, up).save();
 		this.votes.add(vote);
+		this.calcRating();
 		return vote;
 	}
 

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Set;
 
 import models.Answer;
 import models.Question;
@@ -108,13 +109,12 @@ public class QuestionTest extends UnitTest {
 		Question question4 = user.addQuestion("title4", "dummy content4");
 		Question question5 = user.addQuestion("title5", "dummy content5");
 		question1.answer(user2, "hackhack");
-		List<Question> recentQuestions = Question.recentQuestions();
-		assertEquals(recentQuestions.get(0), question1);
-		assertEquals(recentQuestions.get(1), question5);
-		assertEquals(recentQuestions.get(2), question4);
-		assertEquals(recentQuestions.get(3), question3);
-		assertEquals(recentQuestions.get(4), question2);
-
+		Set<Question> recentQuestions = Question.recentQuestions();
+		assertTrue(recentQuestions.contains(question1));
+		assertTrue(recentQuestions.contains(question2));
+		assertTrue(recentQuestions.contains(question3));
+		assertTrue(recentQuestions.contains(question4));
+		assertTrue(recentQuestions.contains(question5));
 	}
 
 	@Test
