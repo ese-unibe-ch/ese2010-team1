@@ -29,8 +29,7 @@ public class FraudPointController {
 	}
 
 	private void applyRules() {
-		ServiceLoader<FraudPointRule> rules = ServiceLoader
-				.load(FraudPointRule.class);
+		List<FraudPointRule> rules = RuleLoader.getRuleInstances();
 		for (FraudPointRule rule : rules) {
 			rule.checkSince(lastRun);
 		}
