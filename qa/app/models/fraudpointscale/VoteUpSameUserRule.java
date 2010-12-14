@@ -9,8 +9,8 @@ import java.util.Map;
 import models.Entry;
 import models.User;
 import models.Vote;
+import models.helper.UserPair;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VoteUpSameUserRule.
  */
@@ -85,56 +85,4 @@ public class VoteUpSameUserRule extends FraudPointRule {
 				checkDate).fetch();
 	}
 
-	/**
-	 * The Class UserPair.
-	 */
-	public class UserPair {
-
-		/** The voter. */
-		public User voter;
-
-		/** The author. */
-		public User author;
-
-		/**
-		 * Instantiates a new user pair.
-		 * 
-		 * @param voter
-		 *            the voter
-		 * @param author
-		 *            the author
-		 */
-		public UserPair(User voter, User author) {
-			this.voter = voter;
-			this.author = author;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Object#equals(java.lang.Object)
-		 */
-		@Override
-		public boolean equals(Object o1) {
-
-			return ((UserPair) o1).voter == this.voter
-					&& ((UserPair) o1).author == this.author;
-
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Object#hashCode()
-		 */
-		@Override
-		public int hashCode() {
-			int hash = 0;
-			hash ^= voter.hashCode();
-			hash ^= author.hashCode();
-
-			return hash;
-		}
-
-	}
 }
