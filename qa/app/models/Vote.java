@@ -16,6 +16,8 @@ import play.db.jpa.Model;
 @Entity
 public class Vote extends Model {
 
+	private static int FREEZE_TIME_SECONDS = 60 * 2;
+
 	/** The state of the vote. */
 	public boolean up;
 
@@ -45,7 +47,7 @@ public class Vote extends Model {
 		this.owner = owner;
 		this.up = up;
 		this.entry = entry;
-		this.freezer = new TimeFreezer(60 * 2).save();
+		this.freezer = new TimeFreezer(FREEZE_TIME_SECONDS).save();
 		owner.addVote(this);
 		entry.owner.calcReputation();
 	}

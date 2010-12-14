@@ -8,6 +8,10 @@ import javax.persistence.ManyToOne;
 import play.Play;
 import play.db.jpa.JPASupport;
 
+/**
+ * The Class FileEntry saves the information of uploaded file. The uploaded file
+ * will be renamed after the upload.
+ */
 @Entity
 public class FileEntry extends MajorEntry {
 	/** The extension. */
@@ -77,7 +81,6 @@ public class FileEntry extends MajorEntry {
 				+ "." + this.extension);
 		if (file.exists()) {
 			return file.delete();
-
 		}
 
 		return false;
@@ -91,11 +94,6 @@ public class FileEntry extends MajorEntry {
 	public String absoluteFilename() {
 
 		return this.picID + "." + this.extension;
-	}
-
-	public static boolean deleteFile(FileEntry file) {
-
-		return false;
 	}
 
 	/**
@@ -128,6 +126,11 @@ public class FileEntry extends MajorEntry {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see play.db.jpa.JPASupport#delete()
+	 */
 	@Override
 	public <T extends JPASupport> T delete() {
 

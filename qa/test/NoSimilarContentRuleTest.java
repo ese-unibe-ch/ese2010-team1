@@ -3,8 +3,7 @@ import java.util.Date;
 import models.Answer;
 import models.Question;
 import models.User;
-import models.fraudpointscale.FraudPoint;
-import models.fraudpointscale.VoteUpSameUserRule;
+import models.fraudpointscale.NoSimilarContentRule;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import org.junit.Test;
 import play.test.Fixtures;
 import play.test.UnitTest;
 
-public class VoteUpSameUserRuleTest extends UnitTest {
+public class NoSimilarContentRuleTest extends UnitTest {
 
 	@Before
 	public void setup() {
@@ -28,18 +27,14 @@ public class VoteUpSameUserRuleTest extends UnitTest {
 		User user2 = new User("User2", "check@check.com", "bla").save();
 		User user3 = new User("User3", "check@blub.com", "bla").save();
 
-		Question question = user.addQuestion("test", "blub");
-		question.voteDown(user3);
-		question.voteUp(user2);
-		Answer answer = question.answer(user, "bla");
-		answer.voteDown(user3);
-		answer.voteUp(user2);
+		Question question = user.addQuestion("test", "fraudContent");
+		Question question2 = user.addQuestion("test2", "fraudContent");
+		Answer answer = question.answer(user, "fraudContent");
 
-		VoteUpSameUserRule rule = new VoteUpSameUserRule();
+		NoSimilarContentRule rule = new NoSimilarContentRule();
 		rule.checkSince(timeBefore);
 
-		assertEquals(2, rule.findPotentialCheaters().size());
-		assertEquals(2, FraudPoint.count());
+		assertEquals(3, rule.findPotentialCheaters().size());
 
 	}
 }

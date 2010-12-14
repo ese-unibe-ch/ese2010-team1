@@ -13,7 +13,7 @@
 *{ form representation }*
 #{elseif _display == "form"}
 
-	<article class="entry ${question?"question":"answer"}">
+	<article class="#{if _type}new #{/if}entry ${question?"question":"answer"}">
 	<form method="post" action="#{if _type}@{Questions.answer(_entry?.id)}#{/if}#{else}@{Questions.edit(_entry?.id)}#{/else}" enctype="multipart/form-data">
 	
 		<menu>

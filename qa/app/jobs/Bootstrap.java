@@ -13,6 +13,7 @@ public class Bootstrap extends Job {
 
 			User admin = new User("Admin", "admin@root.local", "secret");
 			admin.isAdmin = true;
+			admin.isActivated = true;
 			admin.save();
 			new User("Anonymous", "anonymous@qa.local", "notAllowedToLogIn")
 					.save();

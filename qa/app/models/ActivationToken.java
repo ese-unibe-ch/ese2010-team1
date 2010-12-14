@@ -1,36 +1,35 @@
 package models;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
+import models.helper.Utils;
 import play.db.jpa.Model;
 
+/**
+ * The Class ActivationToken.
+ */
 @Entity
 public class ActivationToken extends Model {
 
+	/** The user. */
 	@OneToOne
 	public User user;
 
+	/** The activation token. */
 	public String activationToken;
 
+	/**
+	 * Instantiates a new activation token.
+	 * 
+	 * @param user
+	 *            the user
+	 */
 	public ActivationToken(User user) {
 
 		this.user = user;
-		this.activationToken = encrypt(user.name + user.email + user.id
-				+ System.currentTimeMillis());
-	}
-
-	private static String encrypt(String string) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			md.update(string.getBytes());
-			return new BigInteger(1, md.digest(string.getBytes())).toString(16);
-		} catch (Exception e) {
-			return string;
-		}
+		this.activationToken = Utils.encryptStringToSHA1(user.name + user.email
+				+ user.id + System.currentTimeMillis());
 	}
 
 }

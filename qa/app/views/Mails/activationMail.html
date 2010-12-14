@@ -3,6 +3,6 @@
 		<h1>Hello ${user.name}</h1>
 		
 		Welcome to the Knowledge Base Community, to activate your user account you have to click on the following link.
-		<a href="@{Users.activateUser(user.id,user.getActivationToken())}">Activate account</a>
+		<a href="@@{Users.activateUser(user.id,user.getActivationToken())}">Activate account</a>
 	</body>
 </html>
