@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import models.helper.EntryComperator;
+
 /**
  * The Class Search.
  */

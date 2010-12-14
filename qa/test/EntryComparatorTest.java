@@ -1,7 +1,7 @@
 import models.Answer;
-import models.EntryComperator;
 import models.Question;
 import models.User;
+import models.helper.EntryComperator;
 
 import org.junit.Before;
 import org.junit.Test;

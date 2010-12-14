@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import models.helper.TimeFreezer;
+
 import play.db.jpa.Model;
 
 /**
