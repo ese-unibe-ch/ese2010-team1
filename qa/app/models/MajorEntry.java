@@ -20,9 +20,6 @@ public abstract class MajorEntry extends Model {
 	/** The faked id for XML importer */
 	public long fakeId;
 
-	/** The time when it's reported. */
-	public Date reportTime = null;
-
 	/** The content */
 	@Lob
 	public String content;
@@ -42,8 +39,10 @@ public abstract class MajorEntry extends Model {
 	}
 
 	public void report(User user) {
-		this.reports.add((Report) new Report(user, this).save());
-		this.save();
+		if (user != this.owner) {
+			this.reports.add((Report) new Report(user, this).save());
+			this.save();
+		}
 	}
 
 	public boolean isReportedFrom(User user) {
