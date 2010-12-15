@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -113,19 +114,18 @@ public class Question extends Entry {
 	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static List<Question> recentQuestions() {
+	public static Set<Question> recentQuestions() {
 		List<Entry> entrys = Entry.find("order by timestamp desc").fetch();
-		List<Question> list = new ArrayList();
+		Set<Question> set = new HashSet<Question>();
 		for (Entry entry : entrys) {
 			Question question = (entry instanceof Question) ? (Question) entry
 					: ((Answer) entry).question;
-			if (!list.contains(question)) {
-				list.add(question);
-				if (list.size() == recentQuestionCount)
-					break;
-			}
+			set.add(question);
+			if (set.size() > recentQuestionCount)
+				break;
+
 		}
-		return list;
+		return set;
 	}
 
 	/**

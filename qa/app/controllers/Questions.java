@@ -74,7 +74,7 @@ public class Questions extends Controller {
 	}
 
 	public static void active() {
-		List<Question> questions = Question.recentQuestions();
+		Set<Question> questions = Question.recentQuestions();
 		render("Questions/list.html", questions);
 	}
 
