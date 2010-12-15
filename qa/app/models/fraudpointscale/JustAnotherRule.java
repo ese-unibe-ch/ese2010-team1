@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import models.FileEntry;
 import models.MajorEntry;
 import models.User;
 
@@ -31,7 +32,8 @@ public class JustAnotherRule extends FraudPointRule {
 
 		for (MajorEntry e : changedEntries) {
 
-			if (e.content.length() < MINIMAL_CONTENT_LENGTH)
+			if (e.content.length() < MINIMAL_CONTENT_LENGTH
+					&& !(e instanceof FileEntry))
 				potentialCheaters.add(e.owner);
 
 		}
