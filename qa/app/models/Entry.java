@@ -167,6 +167,7 @@ public abstract class Entry extends MajorEntry {
 		if (vote != null && !vote.frozen()) {
 			vote.delete();
 			this.owner.calcReputation();
+			this.calcRating();
 		}
 	}
 

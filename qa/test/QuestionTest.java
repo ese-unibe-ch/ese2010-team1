@@ -39,8 +39,8 @@ public class QuestionTest extends UnitTest {
 		// check search by owner
 		List<Question> questions = Question.find("byOwner", user).fetch();
 		assertEquals(2, questions.size());
-		assertNotNull(Question.questions());
-		assertEquals(2, Question.questions().size());
+		assertNotNull(Question.questions(0));
+		assertEquals(2, Question.questions(0).size());
 
 		// check answers
 		assertNotNull(question.answers());

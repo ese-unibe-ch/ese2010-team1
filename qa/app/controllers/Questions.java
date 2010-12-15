@@ -25,6 +25,8 @@ import play.mvc.Controller;
  */
 public class Questions extends Controller {
 
+	private static int NUMBER_OF_LOADED_QUESTIONS = 20;
+
 	/**
 	 * Sets the connected user.
 	 */
@@ -43,13 +45,15 @@ public class Questions extends Controller {
 	 */
 
 	public static void home() {
-		List<Question> questions = Question.questions();
+		List<Question> questions = Question
+				.questions(NUMBER_OF_LOADED_QUESTIONS);
 		render(questions);
 	}
 
 	public static void question(long id) {
 		Question display = Question.findById(id);
-		List<Question> questions = Question.questions();
+		List<Question> questions = Question
+				.questions(NUMBER_OF_LOADED_QUESTIONS);
 		render("Questions/home.html", questions, display);
 	}
 
@@ -69,7 +73,8 @@ public class Questions extends Controller {
 	}
 
 	public static void hot() {
-		List<Question> questions = Question.questions();
+		List<Question> questions = Question
+				.questions(NUMBER_OF_LOADED_QUESTIONS);
 		render("Questions/list.html", questions);
 	}
 

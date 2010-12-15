@@ -101,11 +101,13 @@ public class Question extends Entry {
 	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static List<Question> questions() {
-		List<Question> list = new ArrayList();
-		list.addAll(Question.<Question> findAll());
-		Collections.sort(list, new EntryComperator());
-		return list;
+	public static List<Question> questions(int numberOfQuestions) {
+
+		if (numberOfQuestions == 0)
+			return Question.find("order by rating DESC").fetch();
+		else
+			return Question.find("order by rating DESC").fetch(
+					numberOfQuestions);
 	}
 
 	/**
