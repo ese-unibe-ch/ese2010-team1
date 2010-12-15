@@ -2,7 +2,6 @@ package models.fraudpointscale;
 
 import java.util.Date;
 import java.util.List;
-import java.util.ServiceLoader;
 
 public class FraudPointController {
 	private final static long expiration = 24 * 60 * 60 * 1000;
@@ -37,11 +36,6 @@ public class FraudPointController {
 
 	public void cleanOldPoints() {
 		Date expired = new Date(new Date().getTime() - expiration);
-		List<FraudPoint> fraudPoints = FraudPoint.all().fetch();
-		for (FraudPoint point : fraudPoints) {
-			if (point.timestamp.before(expired)) {
-				point.delete();
-			}
-		}
+		FraudPoint.delete("timestamp < ?", expired);
 	}
 }
