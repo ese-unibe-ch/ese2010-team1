@@ -133,7 +133,7 @@
 				<a href="#" class="reportButton">report</a>
 				
 				<div class="report">
-					#{report entry:_entry /}
+					#{report entry:_entry, isComment:'false'/}
 				</div>
 			#{/if}
 			
@@ -187,7 +187,7 @@
 						<a href="#" class="reportButton">report</a>
 				
 						<div class="report">
-							#{report entry:comment /}
+							#{report entry:comment, isComment:'true'/}
 						</div>
 					#{/if}
 					#{if comment.isReported() && _user}
@@ -195,9 +195,9 @@
 					#{/if}
 					#{if _user!=comment.owner}
 						#{if comment.likedBy(_user)}
-						<a href="@{Users.unlikeComment(comment.id)}" class="likeComment">unlike</a>
+						<a href="#${comment.id}" id="unlike" class="likeComment">unlike</a>
 						#{/if}#{else}
-						<a href="@{Users.likeComment(comment.id)}" class="likeComment">like</a>
+						<a href="#${comment.id}" id="like" class="likeComment">like</a>
 						#{/else}
 					#{/if}
 					<span class="like">liked by ${comment.fans.size()} people</span>

@@ -7,9 +7,7 @@ import java.util.List;
 import models.Answer;
 import models.Comment;
 import models.Entry;
-import models.MajorEntry;
 import models.ProfileItem;
-import models.Question;
 import models.User;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -162,16 +160,15 @@ public class Users extends Controller {
 		Comment comment = Comment.findById(id);
 		comment.like(user);
 
-		Question question = comment.entry instanceof Question ? (Question) comment.entry
-				: ((Answer) comment.entry).question;
-
 		Entry entry = comment.entry;
 		if (entry instanceof models.Question)
-			Questions.question(id);
-		else
-			Questions.question(((Answer) entry).question.id);
+			render("Questions/entry.html", entry);
+		else {
+			Answer answer = (Answer) entry;
+			entry = answer;
+			render("Questions/entry.html", entry);
+		}
 
-		Questions.question(question.id);
 	}
 
 	public static void unlikeComment(long id) {
@@ -179,24 +176,14 @@ public class Users extends Controller {
 		Comment comment = Comment.findById(id);
 		comment.unlike(user);
 
-		Question question = comment.entry instanceof Question ? (Question) comment.entry
-				: ((Answer) comment.entry).question;
-
 		Entry entry = comment.entry;
 		if (entry instanceof models.Question)
-			Questions.question(id);
-		else
-			Questions.question(((Answer) entry).question.id);
-
-		Questions.question(question.id);
-	}
-
-	public static void report(long id) {
-		MajorEntry entry = MajorEntry.findById(id);
-		User user = User.find("byName", Security.connected()).first();
-		entry.report(user);
-
-		Questions.home();
+			render("Questions/entry.html", entry);
+		else {
+			Answer answer = (Answer) entry;
+			entry = answer;
+			render("Questions/entry.html", entry);
+		}
 	}
 
 	/*** AJAX ***/

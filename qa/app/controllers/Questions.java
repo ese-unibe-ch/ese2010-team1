@@ -9,6 +9,7 @@ import models.Answer;
 import models.Comment;
 import models.Entry;
 import models.FileEntry;
+import models.MajorEntry;
 import models.ProfileItem;
 import models.Question;
 import models.Search;
@@ -326,6 +327,18 @@ public class Questions extends Controller {
 		}
 		renderJSON(tagList);
 
+	}
+
+	public static void report(long id) {
+		MajorEntry entry = MajorEntry.findById(id);
+		User user = User.find("byName", Security.connected()).first();
+		entry.report(user);
+		if (entry instanceof Comment) {
+			Comment comment = (Comment) entry;
+			entry = comment.entry;
+		}
+
+		render("Questions/entry.html", entry);
 	}
 
 }
