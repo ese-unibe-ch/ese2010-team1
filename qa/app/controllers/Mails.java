@@ -15,4 +15,14 @@ public class Mails extends Mailer {
 
 	}
 
+	public static void deactivationMail(User user) {
+
+		setSubject("Hello %s your account has been deactivated by an admin",
+				user.name);
+		addRecipient(user.email);
+		setFrom("Knowledge Base <qa@qa.local>");
+		send(user);
+
+	}
+
 }
