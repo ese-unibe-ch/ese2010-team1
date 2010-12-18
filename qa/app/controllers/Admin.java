@@ -110,6 +110,9 @@ public class Admin extends Controller {
 		User user = User.findById(id);
 		user.isActivated = !user.isActivated;
 		user.save();
+		if (!user.isActivated) {
+			Mails.deactivationMail(user);
+		}
 		Admin.showUserlist();
 	}
 
