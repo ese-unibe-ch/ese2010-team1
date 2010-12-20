@@ -3,7 +3,7 @@ import java.util.Date;
 import models.Question;
 import models.User;
 import models.fraudpointscale.FraudPoint;
-import models.fraudpointscale.JustAnotherRule;
+import models.fraudpointscale.MinimalContentLengthRule;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class JustAnotherRuleTest extends UnitTest {
 		Question question = user.addQuestion("blub", "blub");
 		question.answer(user2, "john");
 
-		JustAnotherRule rule = new JustAnotherRule();
+		MinimalContentLengthRule rule = new MinimalContentLengthRule();
 
 		rule.checkSince(timebefore);
 
