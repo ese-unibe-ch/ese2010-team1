@@ -30,7 +30,7 @@ $(function() {
 	$('#topaction a').livequery(function() {
 		$('nav').addClass('noshadow');
 	}, function() {
-		if($('#topaction a').count() == 0)
+		if($('#topaction a').size() == 0)
 			$('nav').removeClass('noshadow');
 	});
 	

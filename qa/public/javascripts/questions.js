@@ -1,30 +1,12 @@
 $(function() {
 
-	// filter questions
-	$('#filter a').click(function() {
-		switch(this.hash) {
-			case "#Mine":
-				$("#nav").load(myQuestions());
-				newQuestionLink();
-				break;
-			case "#Hot":
-				$("#nav").load(hotQuestions());
-				newQuestionLink();
-				break;
-			case "#Active":
-				$("#nav").load(activeQuestions());
-				newQuestionLink();
-				break;
-			case "#Search":
-				$("#nav").load(searchQuestions({string: $("#search input").val()}));
-				searchModeLink();
-				$("#search input").focus();
-				break;
-		}
-		$('#filter li').removeClass("active");
-		$(this).parent().addClass("active");
-		return false;
+	$('nav').bind('jsp-scroll-y', function(event, scrollPositionY, isAtTop, isAtBottom){
+		if(isAtBottom)
+			loadMore();
 	});
+
+	// filter questions
+	$('#filter a').click(changeFilterMode);
 	
 	// search mode
 	newQuestionContent = $("#topaction").html();
@@ -52,15 +34,12 @@ $(function() {
 	
 	// search questions
 	$("#search input").keyup(function() {
-		if(this.value.length < 3) return;
-		var action = userSearch ? searchUsers({string: this.value}) : searchQuestions({string: this.value});
-		searchModeLink();
-		$("#nav").load(action);
-		$('#filter li').removeClass("active");
-		$('#filter a[href=#Search]').parent().addClass("active");
+		if(this.value.length >= 3)
+			search();
 	});
 	
 	$("#search").submit(function() {
+		search();
 		return false;
 	});
 	
@@ -220,10 +199,6 @@ $(function() {
 		});
 		return false;
 	});
-	
-
-	
-
 
 });
 
@@ -242,6 +217,84 @@ function searchModeLink() {
 function newQuestionLink() {
 	$("#topaction").html(newQuestionContent);
 	reinitialise();
+}
+
+var filterMode = "#Hot";
+var lastQuestion = false;
+var loading = false;
+var page = 2;
+var loaderID = 1;
+
+function changeFilterMode() {
+	filterMode = this.hash;
+	page = 1;
+	lastQuestion = false;
+	loading = false;
+	loadMore(true);
+	$('#filter li').removeClass("active");
+	$(this).parent().addClass("active");
+	return false;
+}
+
+function loadMore(replace) {
+	if(loading || lastQuestion)
+		return;
+		
+	var url;
+	
+	switch(filterMode) {
+		case "#Mine":
+			url = myQuestions({page: page});
+			break;
+		case "#Hot":
+			url = hotQuestions({page: page});
+			break;
+		case "#Active":
+			url = activeQuestions({page: page});
+			break;
+		case "#Search":
+			var string = $("#search input").first().val();
+			url = userSearch ? searchUsers({string: string, page: page}) : searchQuestions({string: string, page: page});
+			break;
+	}
+	
+	if(replace) {
+		if(filterMode == "#Search") {
+			searchModeLink();
+			$('#filter li').removeClass("active");
+			$('#filter a[href=#Search]').parent().addClass("active");
+			$("#search input").focus();
+		} else {
+			newQuestionLink();
+		}
+	}
+	
+	loaderID++;	
+	var id = loaderID;
+	loading = true;
+	
+	$.get(url, function(data) {
+		if(id != loaderID)
+			return;
+		if(replace) {
+			var itemCount = 0;
+			$("#nav").html(data);
+		} else {
+			var itemCount = $("#nav a").length;
+			$("#nav").append(data)
+		}
+		page++;
+		if($("#nav a").length - itemCount < 20)
+			lastQuestion = true;
+		loading = false;
+	});
+}
+
+function search(string) {
+	filterMode = "#Search";
+	lastQuestion = false;
+	page = 1;
+	loadMore(true);
 }
 
 function split( val ) {

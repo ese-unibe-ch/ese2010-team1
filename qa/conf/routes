@@ -9,9 +9,10 @@ GET		/q/{id}									Questions.question
 GET		/question/{id}							Questions.get
 GET		/answer/{id}							Questions.entry
 
-GET		/hot									Questions.hot
-GET		/mine									Questions.mine
-GET		/search/{string}						Question.search
+GET		/hot/{page}								Questions.hot
+GET 	/active/{page}							Questions.active
+GET		/mine/{page}							Questions.mine
+GET		/search/{page}/{string}					Question.search
 
 GET		/form/{type}							Questions.form
 POST	/add									Question.add

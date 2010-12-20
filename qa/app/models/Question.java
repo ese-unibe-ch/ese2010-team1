@@ -25,9 +25,6 @@ import models.helper.TimeFreezer;
 @Entity
 public class Question extends Entry {
 
-	/** The Constant recentQuestionCount. */
-	private static final int recentQuestionCount = 10;
-
 	/** The title. */
 	public String title;
 
@@ -99,14 +96,16 @@ public class Question extends Entry {
 	 * Get a {@link Collection} of all <code>Questions</code> sorted by creation
 	 * time.
 	 * 
+	 * @param page
+	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static List<Question> questions(int numberOfQuestions) {
+	public static List<Question> questions(int numberOfQuestions, int page) {
 
 		if (numberOfQuestions == 0)
 			return Question.find("order by rating DESC").fetch();
 		else
-			return Question.find("order by rating DESC").fetch(
+			return Question.find("order by rating DESC").fetch(page,
 					numberOfQuestions);
 	}
 
@@ -116,14 +115,14 @@ public class Question extends Entry {
 	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static Set<Question> recentQuestions() {
+	public static Set<Question> recentQuestions(int count) {
 		List<Entry> entrys = Entry.find("order by timestamp desc").fetch();
 		Set<Question> set = new HashSet<Question>();
 		for (Entry entry : entrys) {
 			Question question = (entry instanceof Question) ? (Question) entry
 					: ((Answer) entry).question;
 			set.add(question);
-			if (set.size() > recentQuestionCount)
+			if (count > 0 && set.size() > count)
 				break;
 
 		}

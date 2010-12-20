@@ -39,8 +39,8 @@ public class QuestionTest extends UnitTest {
 		// check search by owner
 		List<Question> questions = Question.find("byOwner", user).fetch();
 		assertEquals(2, questions.size());
-		assertNotNull(Question.questions(0));
-		assertEquals(2, Question.questions(0).size());
+		assertNotNull(Question.questions(0, 1));
+		assertEquals(2, Question.questions(0, 1).size());
 
 		// check answers
 		assertNotNull(question.answers());
@@ -109,7 +109,7 @@ public class QuestionTest extends UnitTest {
 		Question question4 = user.addQuestion("title4", "dummy content4");
 		Question question5 = user.addQuestion("title5", "dummy content5");
 		question1.answer(user2, "hackhack");
-		Set<Question> recentQuestions = Question.recentQuestions();
+		Set<Question> recentQuestions = Question.recentQuestions(0);
 		assertTrue(recentQuestions.contains(question1));
 		assertTrue(recentQuestions.contains(question2));
 		assertTrue(recentQuestions.contains(question3));
