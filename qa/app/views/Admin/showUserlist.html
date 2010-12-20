@@ -45,3 +45,14 @@
 		</tr>
 	#{/list}
 </table>
+<div style="text-align: center;">
+#{list items: pageList, as: 'i'}
+	#{if i == page}
+		<span class="page active">${i}</span>
+	#{/if}
+	#{else}
+		<a href="@{Admin.showUserList(i)}"><span class="page">${i}</span></a>
+	#{/else}
+#{/list}
+</div>
+

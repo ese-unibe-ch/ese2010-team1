@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
@@ -17,6 +18,8 @@ import play.mvc.With;
 @With(Secure.class)
 public class Admin extends Controller {
 
+	public static final int NUMBER_OF_USERS_PER_PAGE = 20;
+
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
@@ -27,14 +30,25 @@ public class Admin extends Controller {
 
 	public static void adminPanel() {
 
-		showUserlist();
+		showUserlist(1);
 
 	}
 
-	public static void showUserlist() {
-
-		List<User> users = User.findAll();
-		render(users);
+	public static void showUserlist(int page) {
+		if (page < 0) {
+			page = 1;
+		}
+		int pages = (int) Math.ceil((double) User.count()
+				/ (double) NUMBER_OF_USERS_PER_PAGE);
+		int fetchFrom = (page - 1) * NUMBER_OF_USERS_PER_PAGE;
+		List<User> users = User.all().from(fetchFrom).fetch(
+				NUMBER_OF_USERS_PER_PAGE);
+		// TS Ugly but no idea how to do that in play templates w/o a for loop
+		List<Integer> pageList = new ArrayList<Integer>();
+		for (int i = 1; i <= pages; i++) {
+			pageList.add(i);
+		}
+		render(users, pageList, page);
 
 	}
 
@@ -42,7 +56,7 @@ public class Admin extends Controller {
 
 		User user = User.findById(id);
 		user.delete();
-		Admin.showUserlist();
+		Admin.showUserlist(1);
 	}
 
 	public static void toggleAdminState(long id) {
@@ -51,7 +65,7 @@ public class Admin extends Controller {
 		user.isAdmin = !user.isAdmin;
 		user.save();
 
-		Admin.showUserlist();
+		Admin.showUserlist(1);
 
 	}
 
@@ -113,7 +127,7 @@ public class Admin extends Controller {
 		if (!user.isActivated) {
 			Mails.deactivationMail(user);
 		}
-		Admin.showUserlist();
+		Admin.showUserlist(1);
 	}
 
 }
