@@ -113,18 +113,29 @@ public class Question extends Entry {
 	 * Get a {@link Collection} of all <code>Questions</code> sorted by last
 	 * activity.
 	 * 
+	 * @param page
+	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static Set<Question> recentQuestions(int count) {
+	public static Set<Question> recentQuestions(int count, int page) {
 		List<Entry> entrys = Entry.find("order by timestamp desc").fetch();
+		Set<Question> skip = new HashSet<Question>();
 		Set<Question> set = new HashSet<Question>();
+		boolean skipped = page == 1;
 		for (Entry entry : entrys) {
 			Question question = (entry instanceof Question) ? (Question) entry
 					: ((Answer) entry).question;
-			set.add(question);
-			if (count > 0 && set.size() > count)
-				break;
 
+			if (skipped && !skip.contains(question))
+				set.add(question);
+
+			skip.add(question);
+
+			if (!skipped && skip.size() == count * (page - 1)) {
+				skipped = true;
+			} else if (set.size() >= count) {
+				break;
+			}
 		}
 		return set;
 	}

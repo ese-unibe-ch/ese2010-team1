@@ -80,8 +80,8 @@ public class Questions extends Controller {
 	}
 
 	public static void active(int page) {
-		Set<Question> questions = Question
-				.recentQuestions(NUMBER_OF_LOADED_QUESTIONS);
+		Set<Question> questions = Question.recentQuestions(
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render("Questions/list.html", questions);
 	}
 
