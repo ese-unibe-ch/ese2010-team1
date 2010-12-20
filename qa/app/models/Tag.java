@@ -23,10 +23,11 @@ public class Tag extends Model implements Comparable<Tag> {
 		this.name = name;
 	}
 
-	public String toString() {
-		return name;
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	public int compareTo(Tag otherTag) {
 		return name.compareTo(otherTag.name);
 	}

@@ -18,7 +18,7 @@ import play.mvc.With;
 @With(Secure.class)
 public class Admin extends Controller {
 
-	public static final int NUMBER_OF_USERS_PER_PAGE = 20;
+	public static final int NUMBER_OF_USERS_PER_PAGE = 35;
 
 	@Before
 	static void setConnectedUser() {
@@ -35,7 +35,7 @@ public class Admin extends Controller {
 	}
 
 	public static void showUserlist(int page) {
-		if (page < 0) {
+		if (page <= 0) {
 			page = 1;
 		}
 		int pages = (int) Math.ceil((double) User.count()

@@ -28,6 +28,7 @@ public abstract class MajorEntry extends Model {
 	@ManyToOne
 	public User owner;
 
+	/** The related spam reports. */
 	@OneToMany
 	public Set<Report> reports;
 
@@ -38,6 +39,12 @@ public abstract class MajorEntry extends Model {
 		this.reports = new HashSet<Report>();
 	}
 
+	/**
+	 * Reports entry as spam.
+	 * 
+	 * @param user
+	 *            the reporting user
+	 */
 	public void report(User user) {
 		if (user != this.owner) {
 			this.reports.add((Report) new Report(user, this).save());
@@ -45,14 +52,33 @@ public abstract class MajorEntry extends Model {
 		}
 	}
 
+	/**
+	 * Checks if is already reported from.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return true, if is reported from
+	 */
 	public boolean isReportedFrom(User user) {
 		return !Report.find("byReporterAndEntry", user, this).fetch().isEmpty();
 	}
 
+	/**
+	 * Checks if the entry is already reported.
+	 * 
+	 * @return true, if is reported
+	 */
 	public boolean isReported() {
 		return !reports.isEmpty();
 	}
 
-	abstract public long rating();
+	/**
+	 * Sets the rating value of a given entry.
+	 * 
+	 * @return the long
+	 */
+	public long rating() {
+		return 0;
+	}
 
 }

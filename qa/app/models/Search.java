@@ -9,7 +9,7 @@ import java.util.Set;
 import models.helper.EntryComperator;
 
 /**
- * The Class Search.
+ * The Class Search is responsible for searching in different fields of entries.
  */
 public class Search {
 
@@ -150,6 +150,13 @@ public class Search {
 		return questions;
 	}
 
+	/**
+	 * Search users by name or email.
+	 * 
+	 * @param searchString
+	 *            the search string
+	 * @return the list of matching users
+	 */
 	public static List<User> searchUsers(String searchString) {
 
 		return User.find("name like ? or email like ?",

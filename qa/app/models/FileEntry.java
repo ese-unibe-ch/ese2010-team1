@@ -9,14 +9,14 @@ import play.Play;
 import play.db.jpa.JPASupport;
 
 /**
- * The Class FileEntry saves the information of uploaded file. The uploaded file
- * will be renamed after the upload.
+ * The Class FileEntry saves the information of uploaded files. The uploaded
+ * file will be renamed after the upload.
  */
 @Entity
 public class FileEntry extends MajorEntry {
-	/** The extension. */
+	/** The file extension. */
 	public String extension;
-	/** The entry. */
+	/** The related entry. */
 	@ManyToOne
 	public Entry entry;
 	/** The picID. */
@@ -126,6 +126,15 @@ public class FileEntry extends MajorEntry {
 
 	}
 
+	/**
+	 * Returns the original filename of the uploaded file.
+	 * 
+	 * @return the filename
+	 */
+	public String getFilename() {
+		return content;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -138,14 +147,6 @@ public class FileEntry extends MajorEntry {
 
 		return super.delete();
 
-	}
-
-	public long rating() {
-		return 0;
-	}
-
-	public String getFilename() {
-		return content;
 	}
 
 }

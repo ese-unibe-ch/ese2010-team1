@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+// TODO Remove, or not?
 public class RecommendedQuestions {
 
 	private static int MIN_TITLE_LENGTH = 2;

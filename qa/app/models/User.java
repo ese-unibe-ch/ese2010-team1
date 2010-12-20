@@ -22,7 +22,7 @@ import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
 
 /**
- * The Class User.
+ * The Class User contains every data about a given user.
  */
 @Entity
 public class User extends Model {
@@ -38,10 +38,12 @@ public class User extends Model {
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
+	/** The notifications. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
 
+	/** The liked comments. */
 	@ManyToMany(mappedBy = "fans")
 	public Set<Comment> likedComments = new HashSet<Comment>();
 
@@ -49,7 +51,7 @@ public class User extends Model {
 	@Required
 	public String name;
 
-	/** The password. */
+	/** The (encrypted) password. */
 	@Required
 	public String password;
 
@@ -57,7 +59,7 @@ public class User extends Model {
 	@Required
 	public String email;
 
-	/** The timestamp. */
+	/** The timestamp of the registration. */
 	public Date timestamp;
 
 	/** The Constant bestAnswerReputation. */
@@ -97,6 +99,11 @@ public class User extends Model {
 		this.isActivated = false;
 	}
 
+	/**
+	 * Generate activation token.
+	 * 
+	 * @return the activation token
+	 */
 	public ActivationToken generateActivationToken() {
 		ActivationToken token = ActivationToken.find("byUser", this).first();
 		if (token != null) {
@@ -106,6 +113,9 @@ public class User extends Model {
 		return token;
 	}
 
+	/**
+	 * Grants user login rights.
+	 */
 	public void activate() {
 		this.isActivated = true;
 		ActivationToken token = ActivationToken.find("byUser", this).first();
@@ -113,6 +123,11 @@ public class User extends Model {
 		this.save();
 	}
 
+	/**
+	 * Gets the activation token.
+	 * 
+	 * @return the activation token
+	 */
 	public String getActivationToken() {
 		ActivationToken token = ActivationToken.find("byUser", this).first();
 		if (token == null)
@@ -131,6 +146,11 @@ public class User extends Model {
 		return profileReputation() + entryReputation();
 	}
 
+	/**
+	 * Calculates the reputation earned with entries.
+	 * 
+	 * @return the int
+	 */
 	public int entryReputation() {
 
 		int reputation = 0;
@@ -145,6 +165,11 @@ public class User extends Model {
 		return reputation;
 	}
 
+	/**
+	 * Calculates the reputation earned with profile informations.
+	 * 
+	 * @return the int
+	 */
 	public int profileReputation() {
 
 		int reputation = 0;
@@ -169,6 +194,11 @@ public class User extends Model {
 
 	}
 
+	/**
+	 * Checks if is profile filled up.
+	 * 
+	 * @return true, if is profile filled up
+	 */
 	public boolean isProfileFilledUp() {
 		List<ProfileItem> items = ProfileItem.findAll();
 		for (ProfileItem item : items) {
@@ -359,6 +389,15 @@ public class User extends Model {
 		return this;
 	}
 
+	/**
+	 * Adds the comment.
+	 * 
+	 * @param entry
+	 *            the entry
+	 * @param content
+	 *            the content
+	 * @return the user
+	 */
 	public User addComment(Entry entry, String content) {
 		Comment comment = entry.addComment(this, content);
 		this.entrys.add(comment);
@@ -367,6 +406,15 @@ public class User extends Model {
 
 	}
 
+	/**
+	 * Adds the file to entry.
+	 * 
+	 * @param file
+	 *            the file
+	 * @param entry
+	 *            the entry
+	 * @return the user
+	 */
 	public User addFileToEntry(File file, Entry entry) {
 
 		FileEntry fileEntry = entry.addFile(file, this);
@@ -376,6 +424,13 @@ public class User extends Model {
 		return this;
 	}
 
+	/**
+	 * Adds the notification.
+	 * 
+	 * @param notification
+	 *            the notification
+	 * @return the user
+	 */
 	public User addNotification(Notification notification) {
 
 		this.notifications.add(notification);
@@ -383,6 +438,11 @@ public class User extends Model {
 		return this;
 	}
 
+	/**
+	 * Gets the new notifications.
+	 * 
+	 * @return the new notifications
+	 */
 	public List<Notification> getNewNotifications() {
 
 		return Notification.find(
@@ -390,16 +450,33 @@ public class User extends Model {
 				.fetch();
 	}
 
+	/**
+	 * Checks for new notifications.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean hasNewNotifications() {
 
 		return this.numberOfNewNotifications() > 0;
 	}
 
+	/**
+	 * Number of new notifications.
+	 * 
+	 * @return the long
+	 */
 	public long numberOfNewNotifications() {
 
 		return Notification.count("owner = ? and isNew = ?", this, true);
 	}
 
+	/**
+	 * Gets the notifications.
+	 * 
+	 * @param numberOfNotifications
+	 *            the number of notifications
+	 * @return the notifications
+	 */
 	public List<Notification> getNotifications(int numberOfNotifications) {
 
 		return Notification.find("byOwner", this).fetch(numberOfNotifications);
@@ -432,6 +509,11 @@ public class User extends Model {
 		return Answer.count("owner = ?", this);
 	}
 
+	/**
+	 * Gets the number of comments.
+	 * 
+	 * @return the number of comments
+	 */
 	public long getNumberOfComments() {
 
 		return Comment.count("owner = ?", this);
@@ -450,17 +532,30 @@ public class User extends Model {
 				numberOfActivitys);
 	}
 
+	/**
+	 * Gets the questions.
+	 * 
+	 * @return the questions
+	 */
 	public List<Entry> getQuestions() {
 
 		return Question.find("owner like ? order by timestamp desc", this)
 				.fetch();
 	}
 
+	/**
+	 * Gets the answers.
+	 * 
+	 * @return the answers
+	 */
 	public List<Entry> getAnswers() {
 		return Answer.find("owner like ? order by timestamp desc", this)
 				.fetch();
 	}
 
+	/**
+	 * Anonymify entries. Used before a user gets deleted.
+	 */
 	public void anonymify() {
 		User anonym = User.find("byName", "Anonym").first();
 		for (MajorEntry entry : entrys) {
@@ -471,6 +566,11 @@ public class User extends Model {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see play.db.jpa.JPASupport#delete()
+	 */
 	@Override
 	public <T extends JPASupport> T delete() {
 		anonymify();
@@ -480,14 +580,30 @@ public class User extends Model {
 		return super.delete();
 	}
 
+	/**
+	 * Sets the new password.
+	 * 
+	 * @param password
+	 *            the new new password
+	 */
 	public void setNewPassword(String password) {
 		this.password = Utils.encryptStringToSHA1(password);
 	}
 
+	/**
+	 * Questions.
+	 * 
+	 * @return the list
+	 */
 	public List<Question> questions() {
 		return Question.find("byOwner", this).fetch();
 	}
 
+	/**
+	 * Fraud point score.
+	 * 
+	 * @return the long
+	 */
 	public long fraudPointScore() {
 		return FraudPoint.count("user = ?", this);
 

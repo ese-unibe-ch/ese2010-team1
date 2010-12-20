@@ -6,6 +6,7 @@ import java.util.List;
 import models.MajorEntry;
 import models.User;
 
+// SM please describe by @TS
 public class UserEntryFrequency {
 
 	private static final int minEntries = 10;

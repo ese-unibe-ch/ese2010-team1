@@ -11,10 +11,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Comment extends MajorEntry {
 
-	/** The entry. */
+	/** The related entry. */
 	@ManyToOne
 	public Entry entry;
 
+	/** The set of users which like the comment. */
 	@ManyToMany(cascade = CascadeType.ALL)
 	public Set<User> fans;
 
@@ -34,6 +35,12 @@ public class Comment extends MajorEntry {
 		this.fans = new HashSet<User>();
 	}
 
+	/**
+	 * Given user likes the comment.
+	 * 
+	 * @param user
+	 *            the user
+	 */
 	public void like(User user) {
 		if (!likedBy(user) && user != this.owner) {
 			this.fans.add(user);
@@ -67,10 +74,6 @@ public class Comment extends MajorEntry {
 	 */
 	public boolean likedBy(User user) {
 		return fans.contains(user);
-	}
-
-	public long rating() {
-		return 0;
 	}
 
 }

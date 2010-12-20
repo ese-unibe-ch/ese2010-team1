@@ -8,10 +8,19 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 // SM needs refactoring
 
+/**
+ * The Class RuleLoader.
+ */
 public class RuleLoader {
 
+	/**
+	 * Gets the rule instances.
+	 *
+	 * @return the rule instances
+	 */
 	public static List<FraudPointRule> getRuleInstances() {
 		List<Class<? extends FraudPointRule>> rules = getRules();
 		List<FraudPointRule> instances = new ArrayList();
@@ -25,6 +34,11 @@ public class RuleLoader {
 		return instances;
 	}
 	
+	/**
+	 * Gets the rules.
+	 *
+	 * @return the rules
+	 */
 	public static List<Class<? extends FraudPointRule>> getRules() {
 		List<Class> classes = getClasses("models.fraudpointscale");
 		List<Class<? extends FraudPointRule>> rules = new ArrayList();
@@ -35,6 +49,13 @@ public class RuleLoader {
 		return rules;
 	}
 
+	/**
+	 * Extends class.
+	 *
+	 * @param c the c
+	 * @param superC the super c
+	 * @return true, if successful
+	 */
 	private static boolean extendsClass(Class c, Class superC) {
 		if (Modifier.isAbstract(c.getModifiers()))
 			return false;
@@ -49,13 +70,9 @@ public class RuleLoader {
 	/**
 	 * Scans all classes accessible from the context class loader which belong
 	 * to the given package and subpackages.
-	 * 
-	 * @param packageName
-	 *            The base package
+	 *
+	 * @param packageName The base package
 	 * @return The classes
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 * @throws IOException
 	 */
 	private static List<Class> getClasses(String packageName) {
 		ClassLoader classLoader = Thread.currentThread()
@@ -82,13 +99,10 @@ public class RuleLoader {
 	/**
 	 * Recursive method used to find all classes in a given directory and
 	 * subdirs.
-	 * 
-	 * @param directory
-	 *            The base directory
-	 * @param packageName
-	 *            The package name for classes found inside the base directory
+	 *
+	 * @param directory The base directory
+	 * @param packageName The package name for classes found inside the base directory
 	 * @return The classes
-	 * @throws ClassNotFoundException
 	 */
 	private static List<Class> findClasses(File directory, String packageName) {
 		List<Class> classes = new ArrayList<Class>();
