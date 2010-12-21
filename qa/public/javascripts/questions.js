@@ -1,30 +1,12 @@
 $(function() {
 
-	// filter questions
-	$('#filter a').click(function() {
-		switch(this.hash) {
-			case "#Mine":
-				$("#nav").load(myQuestions());
-				newQuestionLink();
-				break;
-			case "#Hot":
-				$("#nav").load(hotQuestions());
-				newQuestionLink();
-				break;
-			case "#Active":
-				$("#nav").load(activeQuestions());
-				newQuestionLink();
-				break;
-			case "#Search":
-				$("#nav").load(searchQuestions({string: $("#search input").val()}));
-				searchModeLink();
-				$("#search input").focus();
-				break;
-		}
-		$('#filter a').removeClass("active");
-		$(this).addClass("active");
-		return false;
+	$('nav').bind('jsp-scroll-y', function(event, scrollPositionY, isAtTop, isAtBottom){
+		if(isAtBottom)
+			loadMore();
 	});
+
+	// filter questions
+	$('#filter a').click(changeFilterMode);
 	
 	// search mode
 	newQuestionContent = $("#topaction").html();
@@ -52,14 +34,12 @@ $(function() {
 	
 	// search questions
 	$("#search input").keyup(function() {
-		var action = userSearch ? searchUsers({string: this.value}) : searchQuestions({string: this.value});
-		searchModeLink();
-		$("#nav").load(action);
-		$('#filter a').removeClass("active");
-		$('#filter a[href=#Search]').addClass("active");
+		if(this.value.length >= 3)
+			search();
 	});
 	
 	$("#search").submit(function() {
+		search();
 		return false;
 	});
 	
@@ -82,7 +62,7 @@ $(function() {
 	
 	
 	// answer
-	$(".entry.answer > form").livequery('submit', function() {
+	$(".new.entry.answer > form").livequery('submit', function() {
 		var content = $("#section .entry > form textarea[name=content]").value();
 		$("#section input, #section textarea").removeClass("error");
 		if(!content) {
@@ -128,6 +108,12 @@ $(function() {
 	$('.entry .showform').livequery('click', function() {
 		$(this).parents('article').find('div.comment.form').show();
 		reinitialise();
+	});
+	
+	// submit comments
+	$('.entry div.comment.form form').livequery("submit", function() {
+		$(this).parents("article").load(comment({id: $(this).find("input[name=id]").val(), content: $(this).find("textarea[name=content]").val()}));
+		return false;
 	});
 	
 	// delete comments
@@ -181,14 +167,40 @@ $(function() {
 		return false;
 	});
 	
+	// report
+	$('#report').livequery('click', function(event) {
+		var entry = $(this).parents("article");
+		$.get(report({id: this.hash.substr(1)}), function(data) {
+			entry.html(data);
+		});
+		return false;
+	});
 	
+	$('a.reportButton').livequery('click', function() {
+		$(this).next('div.report').toggle();
+		return false;
+	});
 	
-		 
-
+	$('#dontReport').livequery('click', function() {
+		$(this).parents('div.report').hide();
+		return false;
+	});
 	
-
-
-	
+	// like
+	$('#like').livequery('click', function(event) {
+		var entry = $(this).parents("article");
+		$.get(like({id: this.hash.substr(1)}), function(data) {
+			entry.html(data);
+		});
+		return false;
+	});
+	$('#unlike').livequery('click', function(event) {
+		var entry = $(this).parents("article");
+		$.get(unlike({id: this.hash.substr(1)}), function(data) {
+			entry.html(data);
+		});
+		return false;
+	});
 
 });
 
@@ -207,6 +219,109 @@ function searchModeLink() {
 function newQuestionLink() {
 	$("#topaction").html(newQuestionContent);
 	reinitialise();
+}
+
+var filterMode = "#Hot";
+var lastQuestion = false;
+var loading = false;
+var page = 2;
+var loaderID = 1;
+
+function changeFilterMode() {
+	if(this.hash == "#Search") {
+		$("#search input").focus();
+		search();
+	} else {
+		filterMode = this.hash;
+		page = 1;
+		lastQuestion = false;
+		loading = false;
+		loadMore(true);
+		$('#filter li').removeClass("active");
+		$(this).parent().addClass("active");
+	}
+	return false;
+}
+
+function loadMore(replace) {
+	if(loading || lastQuestion)
+		return;
+		
+	var url;
+	
+	switch(filterMode) {
+		case "#Mine":
+			url = myQuestions({page: page});
+			break;
+		case "#Hot":
+			url = hotQuestions({page: page});
+			break;
+		case "#Active":
+			url = activeQuestions({page: page});
+			break;
+		case "#Search":
+			var string = $("#search input").first().val();
+			url = userSearch ? searchUsers({string: string, page: page}) : searchQuestions({string: string, page: page});
+			break;
+	}
+	
+	if(replace) {
+		if(filterMode == "#Search") {
+			searchModeLink();
+		} else {
+			newQuestionLink();
+		}
+		$('#nav').empty("");
+	}
+	
+	$('#nav').append('<div class="loader"></div>');
+	reinitialise();
+	
+	loaderID++;	
+	var id = loaderID;
+	loading = true;
+	
+	$.get(url, function(data) {
+		if(id != loaderID)
+			return;
+		if(replace) {
+			var itemCount = 0;
+			$("#nav").html(data);
+			$("nav").data('jsp').scrollToY(0,false);
+		} else {
+			var itemCount = $("#nav a").length;
+			$("nav .loader").detach();
+			$("#nav").append(data);
+		}
+		page++;
+		if($("#nav a").length - itemCount < NUMBER_OF_LOADED_QUESTIONS)
+			lastQuestion = true;
+		loading = false;
+		
+		if($("#nav a").length == 0) {
+			$("#nav").html('<span class="info">No entries found.</span>');
+		}
+	});
+}
+
+function search() {
+	filterMode = "#Search";
+	lastQuestion = false;
+	page = 1;
+	$('#filter li').removeClass("active");
+	$('#filter a[href=#Search]').parent().addClass("active");
+	var string = $("#search input").val();
+	if(string.length < 3) {
+		if(string.length == 0) {
+			$("#nav").html('<span class="info arrow">Type in your search term.</span>');
+		} else {
+			$("#nav").html('<span class="info">Your search term is too short.</span>');
+		}
+		$("#topaction").empty();
+		reinitialise();
+	} else {
+		loadMore(true);
+	}
 }
 
 function split( val ) {

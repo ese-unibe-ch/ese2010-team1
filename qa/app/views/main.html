@@ -94,11 +94,11 @@
     					</div>
     					#{pulldown label:'Register'}
     						#{form @Users.addUser()}
-	    						<li>Username: <input type="text" name="username" /></li>
-	    						<li>Email: <input type="text" name="email" /></li>
-	    						<li>Password: <input type="password" name="password" /></li>
-	    						<li>Confirm Password: <input type="password" name="password2" /></li>
-	    						<li><input type="submit" value="Register" /> </li>
+	    						<li>Username: <input id="registrationUser" type="text" name="username" /></li>
+	    						<li>Email: <input id="registrationEmail" type="text" name="email" /></li>
+	    						<li>Password: <input id="registrationPw" type="password" name="password" /></li>
+	    						<li>Confirm Password: <input id="registrationPw2" type="password" name="password2" /></li>
+	    						<li><input id="registrationSubmit" type="submit" value="Register" /> </li>
 	    					#{/form}
     					#{/pulldown}
     					

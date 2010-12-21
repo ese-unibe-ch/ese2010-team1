@@ -15,21 +15,38 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-// TS remove all system.out.println, if it's clear that the importer is working correct.
+/**
+ * The Class XMLHandler defines the rules how to treat qa xml files.
+ */
 public class XMLHandler extends DefaultHandler {
 
+	/** The builder. */
 	private static StringBuilder builder;
+
+	/** The report. */
 	private StringBuilder report;
 
+	/** The level in the xml tree. */
 	private int level = -1;
 
+	/** The number of inserted users. */
 	private int userCount = 0;
+
+	/** The question count. */
 	private int questionCount = 0;
+
+	/** The answer count. */
 	private int answerCount = 0;
 
+	/** The data map. */
 	private static Map<String, String> dataMap;
+
+	/** The tag list. */
 	private static List<String> tagList;
 
+	/**
+	 * Instantiates a new xML handler.
+	 */
 	public XMLHandler() {
 		this.dataMap = new HashMap<String, String>();
 		this.tagList = new ArrayList<String>();
@@ -38,6 +55,15 @@ public class XMLHandler extends DefaultHandler {
 
 	/**
 	 * This method is called when a new element begins.
+	 * 
+	 * @param uri
+	 *            the uri
+	 * @param localName
+	 *            the local name
+	 * @param qName
+	 *            the q name
+	 * @param atts
+	 *            the atts
 	 */
 	public void startElement(String uri, String localName, String qName,
 			Attributes atts) {
@@ -50,6 +76,13 @@ public class XMLHandler extends DefaultHandler {
 	/**
 	 * This method is called when the parser encounters plain text (not XML
 	 * elements). This method stores the text in the StringBuilder
+	 * 
+	 * @param ch
+	 *            the ch
+	 * @param start
+	 *            the start
+	 * @param length
+	 *            the length
 	 */
 	public void characters(char[] ch, int start, int length) {
 
@@ -58,6 +91,13 @@ public class XMLHandler extends DefaultHandler {
 
 	/**
 	 * This method is called when an element is closed.
+	 * 
+	 * @param uri
+	 *            the uri
+	 * @param localName
+	 *            the local name
+	 * @param qName
+	 *            the q name
 	 */
 	public void endElement(String uri, String localName, String qName) {
 		level--;
@@ -65,6 +105,14 @@ public class XMLHandler extends DefaultHandler {
 
 	}
 
+	/**
+	 * Check start element and save the informations for the different cases.
+	 * 
+	 * @param qName
+	 *            the q name
+	 * @param atts
+	 *            the atts
+	 */
 	private void checkStartElement(String qName, Attributes atts) {
 		switch (level) {
 
@@ -85,6 +133,12 @@ public class XMLHandler extends DefaultHandler {
 		}
 	}
 
+	/**
+	 * Check end element and process gathered data for the different cases.
+	 * 
+	 * @param qName
+	 *            the q name
+	 */
 	private void checkEndElement(String qName) {
 
 		switch (level) {
@@ -120,6 +174,9 @@ public class XMLHandler extends DefaultHandler {
 
 	}
 
+	/**
+	 * Creates a new user.
+	 */
 	private void createUser() {
 
 		User userExists = User.find("byFakeId",
@@ -133,6 +190,7 @@ public class XMLHandler extends DefaultHandler {
 			user.fakeId = Long.parseLong(dataMap.get("id"));
 			user.isAdmin = Boolean.parseBoolean(dataMap.get("ismoderator"));
 			user.save();
+			user.activate();
 			userCount++;
 		} else {
 
@@ -142,6 +200,9 @@ public class XMLHandler extends DefaultHandler {
 
 	}
 
+	/**
+	 * Creates a new question.
+	 */
 	private void createQuestion() {
 
 		User owner = User.find("byFakeId",
@@ -176,6 +237,9 @@ public class XMLHandler extends DefaultHandler {
 
 	}
 
+	/**
+	 * Creates a new answer.
+	 */
 	private void createAnswer() {
 
 		User owner = User.find("byFakeId",
@@ -212,6 +276,13 @@ public class XMLHandler extends DefaultHandler {
 
 	}
 
+	/**
+	 * Removes the cdata container from a given string.
+	 * 
+	 * @param s
+	 *            the input string
+	 * @return the cleaned string
+	 */
 	private String removeCDATAContainer(String s) {
 
 		s = s.replaceAll("\\<!\\[CDATA\\[", "");
@@ -220,39 +291,77 @@ public class XMLHandler extends DefaultHandler {
 		return s;
 	}
 
+	/**
+	 * Getter methods for the import report.
+	 * 
+	 * @return the user count
+	 */
+
 	public int getUserCount() {
 
 		return this.userCount;
 	}
 
+	/**
+	 * Gets the question count.
+	 * 
+	 * @return the question count
+	 */
 	public int getQuestionCount() {
 
 		return this.questionCount;
 	}
 
+	/**
+	 * Gets the answer count.
+	 * 
+	 * @return the answer count
+	 */
 	public int getAnswerCount() {
 
 		return this.answerCount;
 	}
 
+	/**
+	 * Gets the report.
+	 * 
+	 * @return the report
+	 */
 	public String getReport() {
 
 		return this.report.toString();
 	}
 
-	/** This method is called when warnings occur */
+	/**
+	 * This method is called when warnings occur.
+	 * 
+	 * @param exception
+	 *            the exception
+	 */
 	public void warning(SAXParseException exception) {
 		System.err.println("WARNING: line " + exception.getLineNumber() + ": "
 				+ exception.getMessage());
 	}
 
-	/** This method is called when errors occur */
+	/**
+	 * This method is called when errors occur.
+	 * 
+	 * @param exception
+	 *            the exception
+	 */
 	public void error(SAXParseException exception) {
 		System.err.println("ERROR: line " + exception.getLineNumber() + ": "
 				+ exception.getMessage());
 	}
 
-	/** This method is called when non-recoverable errors occur. */
+	/**
+	 * This method is called when non-recoverable errors occur.
+	 * 
+	 * @param exception
+	 *            the exception
+	 * @throws SAXException
+	 *             the sAX exception
+	 */
 	public void fatalError(SAXParseException exception) throws SAXException {
 		System.err.println("FATAL: line " + exception.getLineNumber() + ": "
 				+ exception.getMessage());

@@ -13,7 +13,7 @@
 *{ form representation }*
 #{elseif _display == "form"}
 
-	<article class="entry ${question?"question":"answer"}">
+	<article class="#{if _type}new #{/if}entry ${question?"question":"answer"}">
 	<form method="post" action="#{if _type}@{Questions.answer(_entry?.id)}#{/if}#{else}@{Questions.edit(_entry?.id)}#{/else}" enctype="multipart/form-data">
 	
 		<menu>
@@ -114,7 +114,7 @@
 		#{elseif _entry.getFiles().size()>0}
 			#{list items:_entry.getFiles(), as:'file'}
 				<span class="file">
-					<a href="@{Questions.getFile(file.id)}">${file.uploadFilename}</a>
+					<a href="@{Questions.getFile(file.id)}">${file.getFilename()}</a>
 					#{if _user==file.owner}
 						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
 					#{/if}
@@ -130,6 +130,18 @@
 				<a href="#${_entry.id}" class="edit">edit</a>
 			#{/if}
 			
+			#{if _user != _entry.owner && !_entry.isReportedFrom(_user) && _user}
+				<a href="#" class="reportButton">report</a>
+				
+				<div class="report">
+					#{report entry:_entry, isComment:'false'/}
+				</div>
+			#{/if}
+			
+			#{if _entry.isReported() && _user}
+				<span class="attention" title="This entry is reported as suspicious from ${_entry.reports.size()} users!"></span>
+			#{/if}
+			
 			#{secure.check 'isAdmin'}
 		  		<a href="@{Questions.delete(_entry.id)}" title="delete entry">delete</a>
 			#{/secure.check}
@@ -143,6 +155,7 @@
 				</div>
 				
 			#{/if}
+
 			
 			#{if _user}
 				<a href="#" class="showform">comment</a>
@@ -171,11 +184,21 @@
 					#{if _user}
 						<a href="#" class="showform">reply</a>
 					#{/if}
+					#{if _user != comment.owner && !comment.isReportedFrom(_user) && _user}
+						<a href="#" class="reportButton">report</a>
+				
+						<div class="report">
+							#{report entry:comment, isComment:'true'/}
+						</div>
+					#{/if}
+					#{if comment.isReported() && _user}
+						<span class="attention" title="This entry is reported as suspicious from ${_entry.reports.size()} users!"></span>
+					#{/if}
 					#{if _user!=comment.owner}
 						#{if comment.likedBy(_user)}
-						<a href="@{Users.unlikeComment(comment.id)}" class="likeComment">unlike</a>
+						<a href="#${comment.id}" id="unlike" class="likeComment">unlike</a>
 						#{/if}#{else}
-						<a href="@{Users.likeComment(comment.id)}" class="likeComment">like</a>
+						<a href="#${comment.id}" id="like" class="likeComment">like</a>
 						#{/else}
 					#{/if}
 					<span class="like">liked by ${comment.fans.size()} people</span>
@@ -191,6 +214,7 @@
 		#{field 'content'}
 			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
+		<input type="hidden" name="id" value="${_entry.id}" />
 		<input type="submit" value="Post" />
 		#{token /}
 	#{/form}

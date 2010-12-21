@@ -1,11 +1,15 @@
-package models;
+package models.helper;
 
 import java.util.Comparator;
+
+import models.Answer;
+import models.Entry;
 
 public class EntryComperator implements Comparator<Entry> {
 
 	/**
-	 * Compares two entries by its rating.
+	 * Compares two entries by its rating, best answer is always higher than the
+	 * rating.
 	 * 
 	 * @param o1
 	 *            first entry

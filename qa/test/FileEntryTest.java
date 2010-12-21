@@ -31,12 +31,13 @@ public class FileEntryTest extends UnitTest {
 	@Test
 	public void UploadFileTest() {
 
-		File testFile = new File(Play.applicationPath + "/tmp/uploads/test.txt");
+		File testFile = new File(Play.applicationPath
+				+ "/public/files/test.txt");
 		try {
 			testFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			assertTrue(false);
 		}
 
 		assertNotNull(testFile);
@@ -49,21 +50,20 @@ public class FileEntryTest extends UnitTest {
 	}
 
 	@Test
-	public void deleteUploadeFile() {
+	public void deleteUploadedFile() {
 
 		File testFile = new File(Play.applicationPath
 				+ "/public/files/test.txt");
 		try {
 			testFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			assertTrue(false);
 		}
 		User user = new User("test", "test", "test").save();
 		FileEntry file = FileEntry.upload(testFile, null, user);
 
-		FileEntry entry = FileEntry.find("byUploadFilename", "test.txt")
-				.first();
+		FileEntry entry = FileEntry.find("byContent", "test.txt").first();
 		assertNotNull(entry);
 		assertEquals(file.owner, user);
 

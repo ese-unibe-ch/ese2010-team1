@@ -1,29 +1,70 @@
 #{extends 'main.html' /}
 
+#{script 'admin.js' /}
+
 #{set title: ' Userlist' /}
+
+
+	<form method="post" action="" accept-charset="utf-8" enctype="multipart/form-data" id="deactivationComment" class="hidden centeredBox">
+		<h1>Deactivate user</h1>
+		<textarea name="deactivationReason"></textarea><br />
+		
+		<input type="submit" value="Deactivate" />
+		<a class="cancel" href="#">cancel</a>
+	</form>
+
+
 
 <table id="userlist">
 	<tr>
 		<th>Username</th>
 		<th>E-Mail</th>
+		<th style="text-align: center;">Active</th>
 		<th></th>
 		<th></th>
+		<th></th>
+		<th style="text-align: center;">FraudScore</th>
 	</tr>
 
 	#{list items: users, as: 'luser'}
 		<tr>
 			<td>${luser.name}</td> 
 			<td>${luser.email}</td>
-			<td>
-				#{if luser!=user && !luser.name.equals("Anonymous")}
-					<a href="@{Admin.deleteUser(luser.id)}">Delete</a>
+			<td style="text-align: center;">
+				#{if luser.isActivated}
+				*
 				#{/if}
 			</td>
+			<td>
+				#{if luser!=user && !luser.name.equals("Anonymous")}
+					<a class="confirm" href="@{Admin.deleteUser(luser.id)}">Delete</a>
+				#{/if}
+			</td>
+			
 			<td>	
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-					<a href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
+					<a class="confirm" href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
 				#{/if}
+			</td>
+			<td>
+				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
+				<a class="activateUser" href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "deactivate" : "activate"}</a>
+				#{/if}
+		
+			</td>
+			<td style="text-align: center;">
+			${luser.fraudPointScore()}
 			</td>
 		</tr>
 	#{/list}
 </table>
+<div style="text-align: center;">
+#{list items: pageList, as: 'i'}
+	#{if i == page}
+		<span class="page active">${i}</span>
+	#{/if}
+	#{else}
+		<a href="@{Admin.showUserList(i)}"><span class="page">${i}</span></a>
+	#{/else}
+#{/list}
+</div>

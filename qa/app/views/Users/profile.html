@@ -42,8 +42,12 @@
 	<input class="editProfile hidden" type="submit"  value="save" />
 	
 	#{/form}
+	#{if editable && !puser.isProfileFilledUp()}
+		<div class="tipps" id="profileTipp"><b>Hint:</b> Complete your profile to get reputation. </div>
+	#{/if}
 
 </article>
+
 
 
 <div class="profileTabs">

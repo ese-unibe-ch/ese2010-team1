@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import models.Answer;
@@ -13,57 +14,104 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+/**
+ * The Class Admin contains all the admin controller methods.
+ */
 @Check("isAdmin")
 @With(Secure.class)
 public class Admin extends Controller {
 
+	/** The Constant NUMBER_OF_USERS_PER_PAGE. */
+	public static final int NUMBER_OF_USERS_PER_PAGE = 35;
+
+	/**
+	 * Sets the connected user.
+	 */
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
 			User user = User.find("byName", Security.connected()).first();
 			renderArgs.put("user", user);
 		}
+
 	}
 
+	/**
+	 * Admin panel.
+	 */
 	public static void adminPanel() {
 
-		showUserlist();
+		showUserlist(1);
 
 	}
 
-	public static void showUserlist() {
-
-		List<User> users = User.findAll();
-		render(users);
+	/**
+	 * Show userlist.
+	 * 
+	 * @param page
+	 *            the page
+	 */
+	public static void showUserlist(int page) {
+		if (page <= 0) {
+			page = 1;
+		}
+		int pages = (int) Math.ceil((double) User.count()
+				/ (double) NUMBER_OF_USERS_PER_PAGE);
+		int fetchFrom = (page - 1) * NUMBER_OF_USERS_PER_PAGE;
+		List<User> users = User.all().from(fetchFrom).fetch(
+				NUMBER_OF_USERS_PER_PAGE);
+		// TS Ugly but no idea how to do that in play templates w/o a for loop
+		List<Integer> pageList = new ArrayList<Integer>();
+		for (int i = 1; i <= pages; i++) {
+			pageList.add(i);
+		}
+		render(users, pageList, page);
 
 	}
 
+	/**
+	 * Delete user.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 	public static void deleteUser(long id) {
 
 		User user = User.findById(id);
 		user.delete();
-		Admin.showUserlist();
+		Admin.showUserlist(1);
 	}
 
+	/**
+	 * Toggle admin state.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 	public static void toggleAdminState(long id) {
 		User user = User.findById(id);
 
-		if (user.isAdmin)
-			user.isAdmin = false;
-		else
-			user.isAdmin = true;
-
+		user.isAdmin = !user.isAdmin;
 		user.save();
 
-		Admin.showUserlist();
+		Admin.showUserlist(1);
 
 	}
 
+	/**
+	 * Xml importer.
+	 */
 	public static void xmlImporter() {
 
 		render();
 	}
 
+	/**
+	 * Load xml.
+	 * 
+	 * @param xmlfile
+	 *            the xmlfile
+	 */
 	public static void loadXML(@Required File xmlfile) {
 
 		int userCount = 0;
@@ -103,11 +151,34 @@ public class Admin extends Controller {
 
 	}
 
+	/**
+	 * Checks if is xML file.
+	 * 
+	 * @param xmlfile
+	 *            the xmlfile
+	 * @return true, if is xML file
+	 */
 	private static boolean isXMLFile(File xmlfile) {
 		String s = xmlfile.getName();
 		String extension = s.substring(s.length() - 4).toLowerCase();
 
 		return extension.equals(".xml");
+	}
+
+	/**
+	 * Toggle activate user.
+	 * 
+	 * @param id
+	 *            the id
+	 */
+	public static void toggleActivateUser(long id, String deactivationReason) {
+		User user = User.findById(id);
+		user.isActivated = !user.isActivated;
+		user.save();
+		if (!user.isActivated) {
+			Mails.deactivationMail(user, deactivationReason);
+		}
+		Admin.showUserlist(1);
 	}
 
 }

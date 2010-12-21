@@ -8,7 +8,6 @@ import models.Answer;
 import models.Comment;
 import models.Entry;
 import models.ProfileItem;
-import models.Question;
 import models.User;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -49,7 +48,6 @@ public class Users extends Controller {
 			if (title.hasUserEntry(puser))
 				info.put(title.title, title.findUserEntry(puser).entry);
 		}
-
 		render(puser, titles, info);
 	}
 
@@ -79,11 +77,27 @@ public class Users extends Controller {
 			Users.createUser();
 		}
 
-		new User(username, email, password).save();
+		User user = new User(username, email, password).save();
+		user.generateActivationToken();
+		Mails mailer = new Mails();
+		mailer.activationMail(user);
 
-		session.put("username", username);
+		render();
+	}
 
-		Questions.home();
+	public static void activateUser(long id, String securityToken) {
+
+		User auser = User.findById(id);
+		String activationToken = auser.getActivationToken();
+		if (activationToken != null && securityToken.equals(activationToken)) {
+			auser.activate();
+			flash.put("message", "Sucessfully activated");
+			session.put("username", auser.name);
+		} else {
+			flash.put("message", "Activation went wrong!");
+		}
+
+		render(auser);
 	}
 
 	public static void saveProfile(long id, String[] profileEntry) {
@@ -98,6 +112,7 @@ public class Users extends Controller {
 			pentry.editUserEntry(user, newEntry);
 
 		}
+		user.calcReputation();
 
 		profile(id);
 
@@ -145,16 +160,15 @@ public class Users extends Controller {
 		Comment comment = Comment.findById(id);
 		comment.like(user);
 
-		Question question = comment.entry instanceof Question ? (Question) comment.entry
-				: ((Answer) comment.entry).question;
-
 		Entry entry = comment.entry;
 		if (entry instanceof models.Question)
-			Questions.question(id);
-		else
-			Questions.question(((Answer) entry).question.id);
+			render("Questions/entry.html", entry);
+		else {
+			Answer answer = (Answer) entry;
+			entry = answer;
+			render("Questions/entry.html", entry);
+		}
 
-		Questions.question(question.id);
 	}
 
 	public static void unlikeComment(long id) {
@@ -162,16 +176,14 @@ public class Users extends Controller {
 		Comment comment = Comment.findById(id);
 		comment.unlike(user);
 
-		Question question = comment.entry instanceof Question ? (Question) comment.entry
-				: ((Answer) comment.entry).question;
-
 		Entry entry = comment.entry;
 		if (entry instanceof models.Question)
-			Questions.question(id);
-		else
-			Questions.question(((Answer) entry).question.id);
-
-		Questions.question(question.id);
+			render("Questions/entry.html", entry);
+		else {
+			Answer answer = (Answer) entry;
+			entry = answer;
+			render("Questions/entry.html", entry);
+		}
 	}
 
 	/*** AJAX ***/
@@ -182,6 +194,13 @@ public class Users extends Controller {
 			renderText(puser.graphData());
 		else
 			renderText("[]");
+	}
+
+	public static void checkUserExists(String username) {
+
+		List<User> user = User.find("byName", username).fetch();
+		renderJSON(user.size() > 0);
+
 	}
 
 }

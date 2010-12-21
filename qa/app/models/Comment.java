@@ -1,36 +1,23 @@
 package models;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import play.db.jpa.Model;
-
 @Entity
-public class Comment extends Model {
+public class Comment extends MajorEntry {
 
-	/** The content. */
-	@Lob
-	public String content;
-
-	/** The owner. */
-	@ManyToOne
-	public User owner;
-
-	/** The timestamp. */
-	public Date timestamp;
-
-	/** The entry. */
+	/** The related entry. */
 	@ManyToOne
 	public Entry entry;
 
-	@ManyToMany
-	public List<User> fans;
+	/** The set of users which like the comment. */
+	@ManyToMany(cascade = CascadeType.ALL)
+	public Set<User> fans;
 
 	/**
 	 * Instantiates a new comment.
@@ -43,27 +30,48 @@ public class Comment extends Model {
 	 *            the content
 	 */
 	public Comment(User owner, Entry entry, String content) {
-		this.owner = owner;
-		this.content = content;
-		this.timestamp = new Date();
+		super(owner, content);
 		this.entry = entry;
-		this.fans = new LinkedList<User>();
+		this.fans = new HashSet<User>();
 	}
 
+	/**
+	 * Given user likes the comment.
+	 * 
+	 * @param user
+	 *            the user
+	 */
 	public void like(User user) {
 		if (!likedBy(user) && user != this.owner) {
 			this.fans.add(user);
+			user.likedComments.add(this);
+			user.save();
 			this.save();
 		}
 	}
 
+	/**
+	 * Unlike the given comment.
+	 * 
+	 * @param user
+	 *            the user
+	 */
 	public void unlike(User user) {
 		if (likedBy(user)) {
 			this.fans.remove(user);
+			user.likedComments.remove(this);
+			user.save();
 			this.save();
 		}
 	}
 
+	/**
+	 * Returns whether the comment is liked by the given user.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return true, if successful
+	 */
 	public boolean likedBy(User user) {
 		return fans.contains(user);
 	}

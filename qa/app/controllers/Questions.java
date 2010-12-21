@@ -9,6 +9,8 @@ import models.Answer;
 import models.Comment;
 import models.Entry;
 import models.FileEntry;
+import models.MajorEntry;
+import models.ProfileItem;
 import models.Question;
 import models.Search;
 import models.Tag;
@@ -23,6 +25,8 @@ import play.mvc.Controller;
  * View questions.
  */
 public class Questions extends Controller {
+
+	public static final int NUMBER_OF_LOADED_QUESTIONS = 20;
 
 	/**
 	 * Sets the connected user.
@@ -42,13 +46,15 @@ public class Questions extends Controller {
 	 */
 
 	public static void home() {
-		List<Question> questions = Question.questions();
+		List<Question> questions = Question.questions(
+				NUMBER_OF_LOADED_QUESTIONS, 1);
 		render(questions);
 	}
 
 	public static void question(long id) {
 		Question display = Question.findById(id);
-		List<Question> questions = Question.questions();
+		List<Question> questions = Question.questions(
+				NUMBER_OF_LOADED_QUESTIONS, 1);
 		render("Questions/home.html", questions, display);
 	}
 
@@ -67,28 +73,32 @@ public class Questions extends Controller {
 		}
 	}
 
-	public static void hot() {
-		List<Question> questions = Question.questions();
+	public static void hot(int page) {
+		List<Question> questions = Question.questions(
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render("Questions/list.html", questions);
 	}
 
-	public static void active() {
-		List<Question> questions = Question.recentQuestions();
+	public static void active(int page) {
+		Set<Question> questions = Question.recentQuestions(
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render("Questions/list.html", questions);
 	}
 
-	public static void mine() {
+	public static void mine(int page) {
 		if (!Security.isConnected()) {
 			badRequest();
 		} else {
 			List<Question> questions = ((User) User.find("byName",
-					Security.connected()).first()).questions();
+					Security.connected()).first()).questions(
+					NUMBER_OF_LOADED_QUESTIONS, page);
 			render("Questions/list.html", questions);
 		}
 	}
 
-	public static void search(String string) {
-		Set<Question> questions = Search.searchQuestions(string);
+	public static void search(String string, int page) {
+		Set<Question> questions = Search.searchQuestions(string,
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render(questions);
 	}
 
@@ -159,10 +169,11 @@ public class Questions extends Controller {
 				}
 
 			}
-			entry.save();
 		} else if (file != null && file.exists()) {
 			user.addFileToEntry(file, entry);
 		}
+
+		entry.save();
 
 		if (entry instanceof Answer) {
 			question(((Answer) entry).question.id);
@@ -178,9 +189,12 @@ public class Questions extends Controller {
 
 		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
-		if (entry != null && user != null) {
-			entry.voteUp(user);
-			entry.save();
+
+		if (user.reputation >= ProfileItem.count()) {
+			if (entry != null && user != null) {
+				entry.voteUp(user);
+				entry.save();
+			}
 		}
 		render("Questions/entry.html", entry);
 	}
@@ -190,9 +204,11 @@ public class Questions extends Controller {
 
 		Entry entry = Entry.<Entry> findById(id);
 		User user = User.find("byName", Security.connected()).first();
-		if (entry != null && user != null) {
-			entry.voteDown(user);
-			entry.save();
+		if (user.reputation >= ProfileItem.count()) {
+			if (entry != null && user != null) {
+				entry.voteDown(user);
+				entry.save();
+			}
 		}
 		render("Questions/entry.html", entry);
 	}
@@ -263,7 +279,7 @@ public class Questions extends Controller {
 	public static void setNotificationAsRed(long id) {
 		checkAuthenticity();
 
-		models.Notification.hasBeenRed(id);
+		models.Notification.hasBeenRead(id);
 	}
 
 	public static void deleteEntry(long id) {
@@ -295,7 +311,7 @@ public class Questions extends Controller {
 
 		File file = new File(entry.getAbsolutePath());
 
-		renderBinary(file, entry.uploadFilename);
+		renderBinary(file, entry.getFilename());
 	}
 
 	public static void version(long id) {
@@ -313,14 +329,9 @@ public class Questions extends Controller {
 
 		if (!validation.hasErrors() && entry != null && user != null) {
 			user.addComment(entry, content);
-
-			if (entry instanceof models.Question)
-				question(id);
-			else
-				question(((Answer) entry).question.id);
-		} else {
-			home();
 		}
+
+		render("Questions/entry.html", entry);
 	}
 
 	public static void deleteComment(long id) {
@@ -344,4 +355,17 @@ public class Questions extends Controller {
 		renderJSON(tagList);
 
 	}
+
+	public static void report(long id) {
+		MajorEntry entry = MajorEntry.findById(id);
+		User user = User.find("byName", Security.connected()).first();
+		entry.report(user);
+		if (entry instanceof Comment) {
+			Comment comment = (Comment) entry;
+			entry = comment.entry;
+		}
+
+		render("Questions/entry.html", entry);
+	}
+
 }

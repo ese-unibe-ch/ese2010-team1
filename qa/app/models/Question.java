@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -13,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import models.helper.EntryComperator;
+import models.helper.TimeFreezer;
+
 /**
  * A {@link Entry} containing a question as <code>content</code> and.
  * 
@@ -20,9 +24,6 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Question extends Entry {
-
-	/** The Constant recentQuestionCount. */
-	private static final int recentQuestionCount = 10;
 
 	/** The title. */
 	public String title;
@@ -95,34 +96,48 @@ public class Question extends Entry {
 	 * Get a {@link Collection} of all <code>Questions</code> sorted by creation
 	 * time.
 	 * 
+	 * @param page
+	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static List<Question> questions() {
-		List<Question> list = new ArrayList();
-		list.addAll(Question.<Question> findAll());
-		Collections.sort(list, new EntryComperator());
-		return list;
+	public static List<Question> questions(int numberOfQuestions, int page) {
+
+		if (numberOfQuestions == 0)
+			return Question.find("order by rating DESC").fetch();
+		else
+			return Question.find("order by rating DESC").fetch(page,
+					numberOfQuestions);
 	}
 
 	/**
 	 * Get a {@link Collection} of all <code>Questions</code> sorted by last
 	 * activity.
 	 * 
+	 * @param page
+	 * 
 	 * @return all <code>Questions</code>
 	 */
-	public static List<Question> recentQuestions() {
+	public static Set<Question> recentQuestions(int count, int page) {
 		List<Entry> entrys = Entry.find("order by timestamp desc").fetch();
-		List<Question> list = new ArrayList();
+		Set<Question> skip = new HashSet<Question>();
+		Set<Question> set = new HashSet<Question>();
+		boolean skipped = page == 1;
 		for (Entry entry : entrys) {
 			Question question = (entry instanceof Question) ? (Question) entry
 					: ((Answer) entry).question;
-			if (!list.contains(question)) {
-				list.add(question);
-				if (list.size() == recentQuestionCount)
-					break;
+
+			if (skipped && !skip.contains(question))
+				set.add(question);
+
+			skip.add(question);
+
+			if (!skipped && skip.size() == count * (page - 1)) {
+				skipped = true;
+			} else if (set.size() >= count) {
+				break;
 			}
 		}
-		return list;
+		return set;
 	}
 
 	/**

@@ -48,12 +48,12 @@ public class Notification extends Model {
 	}
 
 	/**
-	 * Sets the notification isNew false.
+	 * Sets the notification as red.
 	 * 
 	 * @param id
 	 *            id of the notification
 	 */
-	public static void hasBeenRed(long id) {
+	public static void hasBeenRead(long id) {
 		Notification notification = Notification.findById(id);
 		notification.isNew = false;
 		notification.save();

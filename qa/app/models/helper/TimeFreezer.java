@@ -1,4 +1,4 @@
-package models;
+package models.helper;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import play.db.jpa.Model;
 
 /**
- * The TimeFreezer.
+ * The TimeFreezer is used to set time limits on votes and bestAnswers.
  */
 @Entity
 public class TimeFreezer extends Model {
@@ -30,7 +30,7 @@ public class TimeFreezer extends Model {
 	}
 
 	/**
-	 * Frozen.
+	 * Frozen, if an action isn't changeable.
 	 * 
 	 * @return true, if successful
 	 */

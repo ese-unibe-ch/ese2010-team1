@@ -1,0 +1,4 @@
+Hello ${user.name}
+		
+Welcome to the Knowledge Base Community, to activate your user account you have to click on the following link.
+@@{Users.activateUser(user.id,user.getActivationToken())}

@@ -1,8 +1,10 @@
 #{extends 'main.html' /}
 
-#{set title:'Create User' /}
+#{set title:'Registration' /}
 <div style="text-align: center;">
-<form method="post" action="@{Users.addUser()}" accept-charset="utf-8" enctype="application/x-www-form-urlencoded" class="register">
+<form method="post" action="@{Users.addUser()}" accept-charset="utf-8" enctype="application/x-www-form-urlencoded" class="register centeredBox">
+
+<h1>Register</h1>
 
 #{ifErrors}
 <div class="error">
