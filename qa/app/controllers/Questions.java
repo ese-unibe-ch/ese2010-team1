@@ -96,7 +96,8 @@ public class Questions extends Controller {
 	}
 
 	public static void search(String string, int page) {
-		Set<Question> questions = Search.searchQuestions(string);
+		Set<Question> questions = Search.searchQuestions(string,
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render(questions);
 	}
 
