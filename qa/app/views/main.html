@@ -55,6 +55,10 @@
     					
     					}%
     					
+    					#{pulldown label:'Account'}
+                            <li><a href="@{Users.profile(user.id)}">My Profile</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        #{/pulldown}    					
 	    				#{pulldown label:activity}
 							#{list items:user.getNewNotifications(), as:'notification'}
 								%{
@@ -75,10 +79,6 @@
 							<li>There were no new notifications!</li>
 							#{/else}
 						
-	    				#{/pulldown}
-	    				#{pulldown label:'Account'}
-	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
-	    					<li><a href="/logout">Logout</a></li>
 	    				#{/pulldown}
 	    				#{if user.isAdmin}
 	    					#{pulldown label:'Admin'}
