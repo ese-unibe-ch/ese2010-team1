@@ -306,14 +306,9 @@ public class Questions extends Controller {
 
 		if (!validation.hasErrors() && entry != null && user != null) {
 			user.addComment(entry, content);
-
-			if (entry instanceof models.Question)
-				question(id);
-			else
-				question(((Answer) entry).question.id);
-		} else {
-			home();
 		}
+
+		render("Questions/entry.html", entry);
 	}
 
 	public static void deleteComment(long id) {

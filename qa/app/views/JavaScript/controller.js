@@ -22,6 +22,7 @@ var checkUserExists = #{jsAction @Users.checkUserExists(':name') /}
 var report = #{jsAction @Questions.report(':id') /}
 var like = #{jsAction @Users.likeComment(':id') /}
 var unlike = #{jsAction @Users.unlikeComment(':id') /}
+var comment = #{jsAction @Questions.comment(':id', ':content') /}
 
 var tagsList = #{jsAction @Questions.getTagList() /};
 
