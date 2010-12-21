@@ -57,4 +57,9 @@ public class CustomExtensions extends JavaExtensions {
 				+ " ...";
 	}
 
+	public static String simpleHTML(String string) {
+		string = string.replaceAll("<script>.*</script>", "");
+		return string;
+	}
+
 }

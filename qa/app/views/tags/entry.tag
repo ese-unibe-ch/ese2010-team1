@@ -95,7 +95,7 @@
 		*{ content }*
 	
 		<div class="content">
-		${_entry.content.nl2br()}
+		${_entry.content.simpleHTML()}
 		</div>
 		
 		*{ tags }*
