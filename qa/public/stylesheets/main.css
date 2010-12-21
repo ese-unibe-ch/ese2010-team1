@@ -339,11 +339,10 @@ nav .info.arrow {
 	position: absolute;
 	top: 150px;
 	width: 384px; 
-	padding: 30px 5px 0; 
+	padding: 30px 5px 5px; 
 	text-align: left; 
 	background: #fff; 
 	margin-left: 30%;
-	min-height: 200px;
 	
 	-webkit-box-shadow: 0 0 15px 5px rgba(0,0,0,0.4);
    	-moz-box-shadow: 0 0 15px #000;
@@ -353,7 +352,7 @@ nav .info.arrow {
 	.centeredBox .scroll {
 		margin: 0;
 		padding: 0;
-		height: 200px;
+		min-height: 200px;
 		overflow: auto;
 	}
 
