@@ -47,8 +47,7 @@ public class ReportRule extends FraudPointRule {
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Posting entries reported as spam by other users";
 	}
 
 }

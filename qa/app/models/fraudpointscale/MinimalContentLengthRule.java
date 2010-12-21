@@ -43,8 +43,8 @@ public class MinimalContentLengthRule extends FraudPointRule {
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Posting entries with content length smaller than"
+				+ MINIMAL_CONTENT_LENGTH + "characters";
 	}
 
 }

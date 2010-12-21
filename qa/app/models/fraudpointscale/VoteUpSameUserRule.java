@@ -10,7 +10,6 @@ import models.User;
 import models.Vote;
 import models.helper.UserPair;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class VoteUpSameUserRule.
  */
@@ -79,8 +78,7 @@ public class VoteUpSameUserRule extends FraudPointRule {
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Vote up/down multiple times the same user";
 	}
 
 }

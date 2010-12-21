@@ -38,8 +38,8 @@ public class ImplausibleFrequenceyRule extends FraudPointRule {
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return "Posting entries with to implausible frequencey";
 	}
 
 }
