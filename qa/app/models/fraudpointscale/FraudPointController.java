@@ -1,7 +1,10 @@
 package models.fraudpointscale;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -17,6 +20,12 @@ public class FraudPointController {
 
 	/** The last run. */
 	private Date lastRun;
+
+	/** The rules. */
+	private List<FraudPointRule> rules;
+
+	/** The rule description. */
+	private Map<Class<? extends FraudPointRule>, String> ruleDescription;
 
 	/**
 	 * Gets the single instance of FraudPointController.
@@ -34,7 +43,11 @@ public class FraudPointController {
 	 * Instantiates a new fraud point controller.
 	 */
 	public FraudPointController() {
-		lastRun = new Date(0);
+		this.lastRun = new Date(0);
+		this.rules = new ArrayList<FraudPointRule>();
+		this.ruleDescription = new HashMap<Class<? extends FraudPointRule>, String>();
+		this.loadRules();
+
 	}
 
 	/**
@@ -50,7 +63,9 @@ public class FraudPointController {
 	 * Apply rules.
 	 */
 	private void applyRules() {
-		List<FraudPointRule> rules = RuleLoader.getRuleInstances();
+		if (rules.isEmpty())
+			this.loadRules();
+
 		for (FraudPointRule rule : rules) {
 			rule.checkSince(lastRun);
 		}
@@ -62,5 +77,30 @@ public class FraudPointController {
 	public void cleanOldPoints() {
 		Date expired = new Date(new Date().getTime() - expiration);
 		FraudPoint.delete("timestamp < ?", expired);
+	}
+
+	/**
+	 * Load all fraud point rules in the controller.
+	 */
+	public void loadRules() {
+		this.rules.clear();
+		this.ruleDescription.clear();
+		this.rules = RuleLoader.getRuleInstances();
+		for (FraudPointRule p : rules) {
+			ruleDescription.put(p.getClass(), p.description());
+		}
+
+	}
+
+	/**
+	 * Gets the description for a given fraud point rule.
+	 * 
+	 * @param c
+	 *            the given class
+	 * @return the description
+	 */
+	public String getDescription(Class<? extends FraudPointRule> c) {
+
+		return ruleDescription.get(c);
 	}
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 // SM needs refactoring
 
 /**
@@ -18,13 +17,13 @@ public class RuleLoader {
 
 	/**
 	 * Gets the rule instances.
-	 *
+	 * 
 	 * @return the rule instances
 	 */
 	public static List<FraudPointRule> getRuleInstances() {
 		List<Class<? extends FraudPointRule>> rules = getRules();
 		List<FraudPointRule> instances = new ArrayList();
-		for(Class<? extends FraudPointRule> rule : rules) {
+		for (Class<? extends FraudPointRule> rule : rules) {
 			try {
 				instances.add(rule.newInstance());
 			} catch (Exception e) {
@@ -33,10 +32,10 @@ public class RuleLoader {
 		}
 		return instances;
 	}
-	
+
 	/**
 	 * Gets the rules.
-	 *
+	 * 
 	 * @return the rules
 	 */
 	public static List<Class<? extends FraudPointRule>> getRules() {
@@ -51,9 +50,11 @@ public class RuleLoader {
 
 	/**
 	 * Extends class.
-	 *
-	 * @param c the c
-	 * @param superC the super c
+	 * 
+	 * @param c
+	 *            the c
+	 * @param superC
+	 *            the super c
 	 * @return true, if successful
 	 */
 	private static boolean extendsClass(Class c, Class superC) {
@@ -70,8 +71,9 @@ public class RuleLoader {
 	/**
 	 * Scans all classes accessible from the context class loader which belong
 	 * to the given package and subpackages.
-	 *
-	 * @param packageName The base package
+	 * 
+	 * @param packageName
+	 *            The base package
 	 * @return The classes
 	 */
 	private static List<Class> getClasses(String packageName) {
@@ -99,9 +101,11 @@ public class RuleLoader {
 	/**
 	 * Recursive method used to find all classes in a given directory and
 	 * subdirs.
-	 *
-	 * @param directory The base directory
-	 * @param packageName The package name for classes found inside the base directory
+	 * 
+	 * @param directory
+	 *            The base directory
+	 * @param packageName
+	 *            The package name for classes found inside the base directory
 	 * @return The classes
 	 */
 	private static List<Class> findClasses(File directory, String packageName) {
