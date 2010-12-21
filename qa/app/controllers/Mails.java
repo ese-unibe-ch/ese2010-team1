@@ -9,7 +9,7 @@ public class Mails extends Mailer {
 
 		setSubject("Welcome %s", user.name);
 		addRecipient(user.email);
-		setFrom("Knowledge Base <qa@qa.local>");
+		setFrom("Knowledge Base <ese-team1@iam.unibe.ch>");
 
 		send(user);
 
@@ -20,7 +20,7 @@ public class Mails extends Mailer {
 		setSubject("Hello %s your account has been deactivated by an admin",
 				user.name);
 		addRecipient(user.email);
-		setFrom("Knowledge Base <qa@qa.local>");
+		setFrom("Knowledge Base <ese-team1@iam.unibe.ch>");
 		send(user, deactivationReason);
 
 	}
