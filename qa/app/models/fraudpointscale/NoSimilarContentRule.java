@@ -55,8 +55,6 @@ public class NoSimilarContentRule extends FraudPointRule {
 
 	@Override
 	public String description() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Posting multiple entries with similar content";
 	}
-
 }
