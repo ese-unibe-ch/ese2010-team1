@@ -17,7 +17,7 @@ $(function() {
   });
   
    $('a.confirm').click(function(){
-     confirm("Are you sure?");      
+     return confirm("Are you sure?");      
    });
   
 });
