@@ -829,6 +829,7 @@ nav a {
   display: none; 
 }
 
+/*
 form#deactivationComment {
     position: absolute;
     z-index: 99;
@@ -842,7 +843,7 @@ form#deactivationComment {
     margin-top: 150px; 
     margin-left: 30%;  
 }
-
+*/
 div#backgroundOverlay {
   top: 0;
   left 0;
