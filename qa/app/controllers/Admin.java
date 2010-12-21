@@ -33,6 +33,7 @@ public class Admin extends Controller {
 			User user = User.find("byName", Security.connected()).first();
 			renderArgs.put("user", user);
 		}
+
 	}
 
 	/**
@@ -170,12 +171,12 @@ public class Admin extends Controller {
 	 * @param id
 	 *            the id
 	 */
-	public static void toggleActivateUser(long id) {
+	public static void toggleActivateUser(long id, String deactivationReason) {
 		User user = User.findById(id);
 		user.isActivated = !user.isActivated;
 		user.save();
 		if (!user.isActivated) {
-			Mails.deactivationMail(user);
+			Mails.deactivationMail(user, deactivationReason);
 		}
 		Admin.showUserlist(1);
 	}
