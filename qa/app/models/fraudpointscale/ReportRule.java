@@ -14,8 +14,9 @@ public class ReportRule extends FraudPointRule {
 	/**
 	 * Checks if there are any new reports since the lastCheck and if so it
 	 * creates new FraudePoints for them.
-	 *
-	 * @param lastCheck the last check
+	 * 
+	 * @param lastCheck
+	 *            the last check
 	 */
 	@Override
 	public void checkSince(Date lastCheck) {
@@ -28,9 +29,11 @@ public class ReportRule extends FraudPointRule {
 
 	/**
 	 * Deletes the MajorEntry which are too old out of a List.
-	 *
-	 * @param reports the reports
-	 * @param date the Date
+	 * 
+	 * @param reports
+	 *            the reports
+	 * @param date
+	 *            the Date
 	 * @return the up-to-date list
 	 */
 	public List<Report> deleteOld(List<Report> reports, Date date) {
@@ -40,6 +43,12 @@ public class ReportRule extends FraudPointRule {
 		}
 		return reports;
 
+	}
+
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
