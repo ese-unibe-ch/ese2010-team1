@@ -41,4 +41,10 @@ public class MinimalContentLengthRule extends FraudPointRule {
 		return potentialCheaters;
 	}
 
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

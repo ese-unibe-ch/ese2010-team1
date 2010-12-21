@@ -12,5 +12,8 @@ $(function() {
     $("#backgroundOverlay").detach();
   });
   
+   $('a.confirm').click(function(){
+     confirm("Are you sure?");      
+   });
   
 });

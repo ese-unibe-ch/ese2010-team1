@@ -77,4 +77,10 @@ public class VoteUpSameUserRule extends FraudPointRule {
 		return potentialCheater;
 	}
 
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

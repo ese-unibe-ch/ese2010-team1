@@ -16,7 +16,9 @@ public class NoSimilarContentRule extends FraudPointRule {
 	/** The check date. */
 	private Date checkDate;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see models.fraudpointscale.FraudPointRule#checkSince(java.util.Date)
 	 */
 	@Override
@@ -33,7 +35,7 @@ public class NoSimilarContentRule extends FraudPointRule {
 
 	/**
 	 * Find potential cheaters.
-	 *
+	 * 
 	 * @return the list
 	 */
 	public List<User> findPotentialCheaters() {
@@ -49,6 +51,12 @@ public class NoSimilarContentRule extends FraudPointRule {
 				potentialCheater.add(entry.owner);
 		}
 		return potentialCheater;
+	}
+
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

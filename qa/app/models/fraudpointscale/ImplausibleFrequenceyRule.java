@@ -13,7 +13,9 @@ import models.helper.UserEntryFrequency;
  */
 public class ImplausibleFrequenceyRule extends FraudPointRule {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see models.fraudpointscale.FraudPointRule#checkSince(java.util.Date)
 	 */
 	@Override
@@ -32,6 +34,12 @@ public class ImplausibleFrequenceyRule extends FraudPointRule {
 			if (userFreq.suspicious())
 				addPoint(userFreq.user());
 		}
+	}
+
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
