@@ -109,7 +109,8 @@ public class User extends Model {
 	public void activate() {
 		this.isActivated = true;
 		ActivationToken token = ActivationToken.find("byUser", this).first();
-		token.delete();
+		if (token != null)
+			token.delete();
 		this.save();
 	}
 
@@ -484,8 +485,8 @@ public class User extends Model {
 		this.password = Utils.encryptStringToSHA1(password);
 	}
 
-	public List<Question> questions() {
-		return Question.find("byOwner", this).fetch();
+	public List<Question> questions(int count, int page) {
+		return Question.find("byOwner", this).fetch(page, count);
 	}
 
 	public long fraudPointScore() {

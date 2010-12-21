@@ -4,6 +4,14 @@ import play.templates.JavaExtensions;
 
 public class CustomExtensions extends JavaExtensions {
 
+	/**
+	 * Slice long words in a String.
+	 * 
+	 * @param string
+	 * @param length
+	 *            maximum length of words
+	 * @return string with sliced words
+	 */
 	public static String slice(String string, int length) {
 		StringBuffer output = new StringBuffer();
 		int counter = 0;
@@ -23,6 +31,14 @@ public class CustomExtensions extends JavaExtensions {
 		return output.toString();
 	}
 
+	/**
+	 * Shorten a String.
+	 * 
+	 * @param string
+	 * @param length
+	 *            maximum length
+	 * @return shortened string
+	 */
 	public static String trim(String string, int length) {
 		if (length >= string.length())
 			return string;

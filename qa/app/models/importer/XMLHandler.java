@@ -133,6 +133,7 @@ public class XMLHandler extends DefaultHandler {
 			user.fakeId = Long.parseLong(dataMap.get("id"));
 			user.isAdmin = Boolean.parseBoolean(dataMap.get("ismoderator"));
 			user.save();
+			user.activate();
 			userCount++;
 		} else {
 

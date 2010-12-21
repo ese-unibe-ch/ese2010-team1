@@ -295,6 +295,10 @@ function loadMore(replace) {
 		if($("#nav a").length - itemCount < NUMBER_OF_LOADED_QUESTIONS)
 			lastQuestion = true;
 		loading = false;
+		
+		if($("#nav a").length == 0) {
+			$("#nav").html('<span class="info">No entries found.</span>');
+		}
 	});
 }
 
@@ -306,7 +310,11 @@ function search() {
 	$('#filter a[href=#Search]').parent().addClass("active");
 	var string = $("#search input").val();
 	if(string.length < 3) {
-		$("#nav").html('<span class="info">Your search term is too short.</span>');
+		if(string.length == 0) {
+			$("#nav").html('<span class="info arrow">Type in your search term.</span>');
+		} else {
+			$("#nav").html('<span class="info">Your search term is too short.</span>');
+		}
 		$("#topaction").empty();
 		reinitialise();
 	} else {

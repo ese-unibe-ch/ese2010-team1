@@ -90,7 +90,8 @@ public class Questions extends Controller {
 			badRequest();
 		} else {
 			List<Question> questions = ((User) User.find("byName",
-					Security.connected()).first()).questions();
+					Security.connected()).first()).questions(
+					NUMBER_OF_LOADED_QUESTIONS, page);
 			render("Questions/list.html", questions);
 		}
 	}
