@@ -333,6 +333,34 @@ nav .info.arrow {
 		background: -moz-linear-gradient(bottom,  #333,  #666);
 	}
 	
+/*** Centred Boxes ***/
+.centeredBox {
+	font-size: 14px;
+	position: absolute;
+	top: 150px;
+	width: 384px; 
+	padding: 30px 5px 0; 
+	text-align: left; 
+	background: #fff; 
+	margin-left: 30%;
+	min-height: 200px;
+	
+	-webkit-box-shadow: 0 0 15px 5px rgba(0,0,0,0.4);
+   	-moz-box-shadow: 0 0 15px #000;
+   	box-shadow: 0 0 15px 15px #000;
+}
+
+.centeredBox h1 {
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#999));
+	background: -moz-linear-gradient(top,  #ddd,  #999);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 384px; 
+	padding: 5px;
+	text-align:	center;
+}
+	
 /*** Entries ***/
 
 .entry {
@@ -763,18 +791,7 @@ nav .info.arrow {
 
 		
 	/*** Register ***/
-	form.register, div.centeredBox, div#loginform {
-		font-size: 14px;
-		border-radius: 5px; 
-		-moz-border-radius: 5px; 
-		width: 40%; 
-		padding: 5px; 
-		text-align: left; 
-		background: grey; 
-		margin-top: 150px; 
-		margin-left: 30%;
-		
-		}
+	
 	form div.error {
 		font-size: 16px;
 		color: #900;
