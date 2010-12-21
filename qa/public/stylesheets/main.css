@@ -536,8 +536,11 @@ nav .loader {
 	.comment {
 		margin-left: 20px;
 		font-size: 14px;
-	/***overflow: hidden;  
-		padding-bottom: 7px!important;  für was isch das?***/
+	}
+	
+	.comment.form {
+		overflow: hidden;  
+		padding-bottom: 7px!important;
 	}
 	
 	.comment a.owner {
