@@ -267,7 +267,11 @@ function loadMore(replace) {
 		} else {
 			newQuestionLink();
 		}
+		$('#nav').empty("");
 	}
+	
+	$('#nav').append('<div class="loader"></div>');
+	reinitialise();
 	
 	loaderID++;	
 	var id = loaderID;
@@ -279,12 +283,14 @@ function loadMore(replace) {
 		if(replace) {
 			var itemCount = 0;
 			$("#nav").html(data);
+			$("nav").data('jsp').scrollToY(0,false);
 		} else {
 			var itemCount = $("#nav a").length;
-			$("#nav").append(data)
+			$("nav .loader").detach();
+			$("#nav").append(data);
 		}
 		page++;
-		if($("#nav a").length - itemCount < 20)
+		if($("#nav a").length - itemCount < NUMBER_OF_LOADED_QUESTIONS)
 			lastQuestion = true;
 		loading = false;
 	});

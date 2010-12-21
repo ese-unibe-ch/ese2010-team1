@@ -26,7 +26,7 @@ import play.mvc.Controller;
  */
 public class Questions extends Controller {
 
-	private static final int NUMBER_OF_LOADED_QUESTIONS = 20;
+	public static final int NUMBER_OF_LOADED_QUESTIONS = 20;
 
 	/**
 	 * Sets the connected user.

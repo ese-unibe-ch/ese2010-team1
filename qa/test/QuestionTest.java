@@ -109,7 +109,7 @@ public class QuestionTest extends UnitTest {
 		Question question4 = user.addQuestion("title4", "dummy content4");
 		Question question5 = user.addQuestion("title5", "dummy content5");
 		question1.answer(user2, "hackhack");
-		Set<Question> recentQuestions = Question.recentQuestions(0);
+		Set<Question> recentQuestions = Question.recentQuestions(0, 1);
 		assertTrue(recentQuestions.contains(question1));
 		assertTrue(recentQuestions.contains(question2));
 		assertTrue(recentQuestions.contains(question3));

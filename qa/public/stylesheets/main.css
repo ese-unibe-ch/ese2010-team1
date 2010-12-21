@@ -201,6 +201,11 @@ nav a {
 		background-image: url(../images/arrow_right.png);
 	}
 	
+nav .loader {
+	background: url(../images/loader.gif) center no-repeat;
+	height: 32px;
+}
+	
 /*** Pulldown menus ***/
 
 .pulldown, .login {
@@ -532,7 +537,7 @@ nav a {
 		margin-left: 20px;
 		font-size: 14px;
 	/***overflow: hidden;  
-		padding-bottom: 7px!important;  für was isch das?***/
+		padding-bottom: 7px!important;  fÃ¼r was isch das?***/
 	}
 	
 	.comment a.owner {
