@@ -205,6 +205,13 @@ nav .loader {
 	background: url(../images/loader.gif) center no-repeat;
 	height: 32px;
 }
+
+nav .info {
+	display: block;
+	text-align: center;
+	color: #ff4c4c;
+	padding-top: 20px;
+}
 	
 /*** Pulldown menus ***/
 

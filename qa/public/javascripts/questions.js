@@ -226,13 +226,18 @@ var page = 2;
 var loaderID = 1;
 
 function changeFilterMode() {
-	filterMode = this.hash;
-	page = 1;
-	lastQuestion = false;
-	loading = false;
-	loadMore(true);
-	$('#filter li').removeClass("active");
-	$(this).parent().addClass("active");
+	if(this.hash == "#Search") {
+		$("#search input").focus();
+		search();
+	} else {
+		filterMode = this.hash;
+		page = 1;
+		lastQuestion = false;
+		loading = false;
+		loadMore(true);
+		$('#filter li').removeClass("active");
+		$(this).parent().addClass("active");
+	}
 	return false;
 }
 
@@ -261,9 +266,6 @@ function loadMore(replace) {
 	if(replace) {
 		if(filterMode == "#Search") {
 			searchModeLink();
-			$('#filter li').removeClass("active");
-			$('#filter a[href=#Search]').parent().addClass("active");
-			$("#search input").focus();
 		} else {
 			newQuestionLink();
 		}
@@ -296,11 +298,20 @@ function loadMore(replace) {
 	});
 }
 
-function search(string) {
+function search() {
 	filterMode = "#Search";
 	lastQuestion = false;
 	page = 1;
-	loadMore(true);
+	$('#filter li').removeClass("active");
+	$('#filter a[href=#Search]').parent().addClass("active");
+	var string = $("#search input").val();
+	if(string.length < 3) {
+		$("#nav").html('<span class="info">Your search term is too short.</span>');
+		$("#topaction").empty();
+		reinitialise();
+	} else {
+		loadMore(true);
+	}
 }
 
 function split( val ) {
