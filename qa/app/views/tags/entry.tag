@@ -213,6 +213,7 @@
 		#{field 'content'}
 			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
+		<input type="hidden" name="id" value="${_entry.id}" />
 		<input type="submit" value="Post" />
 	#{/form}
 	</div>

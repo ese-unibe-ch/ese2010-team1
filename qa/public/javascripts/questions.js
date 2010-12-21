@@ -114,6 +114,12 @@ $(function() {
 		reinitialise();
 	});
 	
+	// submit comments
+	$('.entry div.comment.form form').livequery("submit", function() {
+		$(this).parents("article").load(comment({id: $(this).find("input[name=id]").val(), content: $(this).find("textarea[name=content]").val()}));
+		return false;
+	});
+	
 	// delete comments
 	$('.deleteComment').livequery('click', function() {
 		$.get(deleteComment({id: this.hash.substr(1)}));
