@@ -7,6 +7,7 @@ import play.mvc.Controller;
  */
 public class JavaScript extends Controller {
 	public static void controller() {
-		render("JavaScript/controller.js");
+		int n = Questions.NUMBER_OF_LOADED_QUESTIONS;
+		render("JavaScript/controller.js", n);
 	}
 }

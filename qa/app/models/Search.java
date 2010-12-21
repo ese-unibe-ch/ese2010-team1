@@ -133,11 +133,21 @@ public class Search {
 	 * 
 	 * @param searchString
 	 *            the search string
+	 * @param page
+	 * @param count
 	 * @return the list of questions
 	 */
-	public static Set<Question> searchQuestions(String searchString) {
+	public static Set<Question> searchQuestions(String searchString, int count,
+			int page) {
 		Set<Question> questions = new HashSet<Question>();
+		Set<Question> skip = new HashSet<Question>();
+
+		if (searchString.length() < 3)
+			return questions;
+
+		boolean skipped = page == 1;
 		List<Entry> entries = searchEntry(searchString);
+
 		for (Entry entry : entries) {
 			Question question;
 			if (entry instanceof Answer) {
@@ -145,7 +155,17 @@ public class Search {
 			} else {
 				question = (Question) entry;
 			}
-			questions.add(question);
+
+			if (!skip.contains(question))
+				questions.add(question);
+			skip.add(question);
+
+			if (!skipped && questions.size() == count * (page - 1)) {
+				questions.clear();
+				skipped = true;
+			} else if (skipped && questions.size() == count) {
+				break;
+			}
 		}
 		return questions;
 	}

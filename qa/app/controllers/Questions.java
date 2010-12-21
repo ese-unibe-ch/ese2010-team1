@@ -26,7 +26,7 @@ import play.mvc.Controller;
  */
 public class Questions extends Controller {
 
-	private static final int NUMBER_OF_LOADED_QUESTIONS = 20;
+	public static final int NUMBER_OF_LOADED_QUESTIONS = 20;
 
 	/**
 	 * Sets the connected user.
@@ -80,8 +80,8 @@ public class Questions extends Controller {
 	}
 
 	public static void active(int page) {
-		Set<Question> questions = Question
-				.recentQuestions(NUMBER_OF_LOADED_QUESTIONS);
+		Set<Question> questions = Question.recentQuestions(
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render("Questions/list.html", questions);
 	}
 
@@ -90,13 +90,15 @@ public class Questions extends Controller {
 			badRequest();
 		} else {
 			List<Question> questions = ((User) User.find("byName",
-					Security.connected()).first()).questions();
+					Security.connected()).first()).questions(
+					NUMBER_OF_LOADED_QUESTIONS, page);
 			render("Questions/list.html", questions);
 		}
 	}
 
 	public static void search(String string, int page) {
-		Set<Question> questions = Search.searchQuestions(string);
+		Set<Question> questions = Search.searchQuestions(string,
+				NUMBER_OF_LOADED_QUESTIONS, page);
 		render(questions);
 	}
 

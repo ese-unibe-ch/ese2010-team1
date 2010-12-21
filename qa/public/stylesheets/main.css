@@ -119,6 +119,7 @@ input, textarea {
 .jspDrag {
 	background: rgba(70, 70, 70, 0.7);
 	border-radius: 5px;
+	-moz-border-radius: 5px;
 	width: 10px;
 	margin: 0 3px;
 }
@@ -200,6 +201,24 @@ nav a {
 	nav a.active, nav a:hover {
 		background-image: url(../images/arrow_right.png);
 	}
+	
+nav .loader {
+	background: url(../images/loader.gif) center no-repeat;
+	height: 32px;
+}
+
+nav .info {
+	display: block;
+	text-align: center;
+	color: #909090;
+	padding-top: 20px;
+}
+
+nav .info.arrow {
+	padding-top: 50px;
+	width: 260px;
+	background: url(../images/searcharrow.png) center 10px no-repeat;
+}
 	
 /*** Pulldown menus ***/
 
@@ -314,6 +333,40 @@ nav a {
 		background: -webkit-gradient(linear, left bottom, left top, from(#333), to(#666));
 		background: -moz-linear-gradient(bottom,  #333,  #666);
 	}
+	
+/*** Centred Boxes ***/
+.centeredBox {
+	font-size: 14px;
+	position: absolute;
+	top: 150px;
+	width: 384px; 
+	padding: 30px 5px 5px; 
+	text-align: left; 
+	background: #fff; 
+	margin-left: 30%;
+	
+	-webkit-box-shadow: 0 0 15px 5px rgba(0,0,0,0.4);
+   	-moz-box-shadow: 0 0 15px #000;
+   	box-shadow: 0 0 15px 15px #000;
+}
+
+	.centeredBox .scroll {
+		margin: 0;
+		padding: 0;
+		min-height: 200px;
+		overflow: auto;
+	}
+
+.centeredBox h1 {
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#999));
+	background: -moz-linear-gradient(top,  #ddd,  #999);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 384px; 
+	padding: 5px;
+	text-align:	center;
+}
 	
 /*** Entries ***/
 
@@ -531,8 +584,11 @@ nav a {
 	.comment {
 		margin-left: 20px;
 		font-size: 14px;
-	/***overflow: hidden;  
-		padding-bottom: 7px!important;  f�r was isch das?***/
+	}
+	
+	.comment.form {
+		overflow: hidden;  
+		padding-bottom: 7px!important;
 	}
 	
 	.comment a.owner {
@@ -742,18 +798,7 @@ nav a {
 
 		
 	/*** Register ***/
-	form.register, div.centeredBox, div#loginform {
-		font-size: 14px;
-		border-radius: 5px; 
-		-moz-border-radius: 5px; 
-		width: 40%; 
-		padding: 5px; 
-		text-align: left; 
-		background: grey; 
-		margin-top: 150px; 
-		margin-left: 30%;
-		
-		}
+	
 	form div.error {
 		font-size: 16px;
 		color: #900;

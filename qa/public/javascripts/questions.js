@@ -226,13 +226,18 @@ var page = 2;
 var loaderID = 1;
 
 function changeFilterMode() {
-	filterMode = this.hash;
-	page = 1;
-	lastQuestion = false;
-	loading = false;
-	loadMore(true);
-	$('#filter li').removeClass("active");
-	$(this).parent().addClass("active");
+	if(this.hash == "#Search") {
+		$("#search input").focus();
+		search();
+	} else {
+		filterMode = this.hash;
+		page = 1;
+		lastQuestion = false;
+		loading = false;
+		loadMore(true);
+		$('#filter li').removeClass("active");
+		$(this).parent().addClass("active");
+	}
 	return false;
 }
 
@@ -261,13 +266,14 @@ function loadMore(replace) {
 	if(replace) {
 		if(filterMode == "#Search") {
 			searchModeLink();
-			$('#filter li').removeClass("active");
-			$('#filter a[href=#Search]').parent().addClass("active");
-			$("#search input").focus();
 		} else {
 			newQuestionLink();
 		}
+		$('#nav').empty("");
 	}
+	
+	$('#nav').append('<div class="loader"></div>');
+	reinitialise();
 	
 	loaderID++;	
 	var id = loaderID;
@@ -279,22 +285,41 @@ function loadMore(replace) {
 		if(replace) {
 			var itemCount = 0;
 			$("#nav").html(data);
+			$("nav").data('jsp').scrollToY(0,false);
 		} else {
 			var itemCount = $("#nav a").length;
-			$("#nav").append(data)
+			$("nav .loader").detach();
+			$("#nav").append(data);
 		}
 		page++;
-		if($("#nav a").length - itemCount < 20)
+		if($("#nav a").length - itemCount < NUMBER_OF_LOADED_QUESTIONS)
 			lastQuestion = true;
 		loading = false;
+		
+		if($("#nav a").length == 0) {
+			$("#nav").html('<span class="info">No entries found.</span>');
+		}
 	});
 }
 
-function search(string) {
+function search() {
 	filterMode = "#Search";
 	lastQuestion = false;
 	page = 1;
-	loadMore(true);
+	$('#filter li').removeClass("active");
+	$('#filter a[href=#Search]').parent().addClass("active");
+	var string = $("#search input").val();
+	if(string.length < 3) {
+		if(string.length == 0) {
+			$("#nav").html('<span class="info arrow">Type in your search term.</span>');
+		} else {
+			$("#nav").html('<span class="info">Your search term is too short.</span>');
+		}
+		$("#topaction").empty();
+		reinitialise();
+	} else {
+		loadMore(true);
+	}
 }
 
 function split( val ) {
