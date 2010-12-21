@@ -1,6 +1,19 @@
 #{extends 'main.html' /}
 
+#{script 'admin.js' /}
+
 #{set title: ' Userlist' /}
+
+
+	<form method="post" action="" accept-charset="utf-8" enctype="multipart/form-data" id="deactivationComment" class="hidden">
+		<h1>Deactivate user</h1>
+		<textarea name="deactivationReason"></textarea><br />
+		
+		<input type="submit" value="Deactivate" />
+		<a class="cancel" href="#">cancel</a>
+	</form>
+
+
 
 <table id="userlist">
 	<tr>
@@ -35,7 +48,7 @@
 			</td>
 			<td>
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-				<a href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "unactivate" : "activate"}</a>
+				<a class="activateUser" href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "deactivate" : "activate"}</a>
 				#{/if}
 		
 			</td>
@@ -45,3 +58,13 @@
 		</tr>
 	#{/list}
 </table>
+<div style="text-align: center;">
+#{list items: pageList, as: 'i'}
+	#{if i == page}
+		<span class="page active">${i}</span>
+	#{/if}
+	#{else}
+		<a href="@{Admin.showUserList(i)}"><span class="page">${i}</span></a>
+	#{/else}
+#{/list}
+</div>

@@ -30,7 +30,7 @@ public class TimeFreezer extends Model {
 	}
 
 	/**
-	 * Frozen.
+	 * Frozen, if an action isn't changeable.
 	 * 
 	 * @return true, if successful
 	 */

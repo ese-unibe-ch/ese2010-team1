@@ -862,3 +862,33 @@ nav .info.arrow {
 .invalid {
 	border: 2px solid red;
 }
+
+.hidden {
+  display: none; 
+}
+
+form#deactivationComment {
+    position: absolute;
+    z-index: 99;
+    font-size: 14px;
+    border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    width: 40%; 
+    padding: 5px; 
+    text-align: left; 
+    background: grey; 
+    margin-top: 150px; 
+    margin-left: 30%;  
+}
+
+div#backgroundOverlay {
+  top: 0;
+  left 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 90;
+  background-color: black;
+  opacity: 0.5;
+  
+}

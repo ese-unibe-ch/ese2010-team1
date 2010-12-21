@@ -5,14 +5,17 @@ import java.util.List;
 
 import models.Report;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReportRule.
+ */
 public class ReportRule extends FraudPointRule {
 
 	/**
 	 * Checks if there are any new reports since the lastCheck and if so it
-	 * creates new FraudePoints for them
-	 * 
-	 * @param the
-	 *            lastCheck Date
+	 * creates new FraudePoints for them.
+	 *
+	 * @param lastCheck the last check
 	 */
 	@Override
 	public void checkSince(Date lastCheck) {
@@ -25,11 +28,9 @@ public class ReportRule extends FraudPointRule {
 
 	/**
 	 * Deletes the MajorEntry which are too old out of a List.
-	 * 
-	 * @param entrys
-	 *            the complete List
-	 * @param date
-	 *            the Date
+	 *
+	 * @param reports the reports
+	 * @param date the Date
 	 * @return the up-to-date list
 	 */
 	public List<Report> deleteOld(List<Report> reports, Date date) {

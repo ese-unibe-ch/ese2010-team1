@@ -7,7 +7,7 @@ import models.helper.Utils;
 import play.db.jpa.Model;
 
 /**
- * The Class ActivationToken.
+ * The Class ActivationToken contains an activation token for every new user.
  */
 @Entity
 public class ActivationToken extends Model {
@@ -20,7 +20,7 @@ public class ActivationToken extends Model {
 	public String activationToken;
 
 	/**
-	 * Instantiates a new activation token.
+	 * Instantiates a new activation token and generates a token of user data.
 	 * 
 	 * @param user
 	 *            the user

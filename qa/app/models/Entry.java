@@ -21,27 +21,27 @@ import play.db.jpa.Model;
 @Entity
 public abstract class Entry extends MajorEntry {
 
-	/** The content. */
+	/** The different content states / versions. */
 	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE,
 			CascadeType.REFRESH })
 	public List<ContentState> states;
 
-	/** The votes. */
+	/** The related user votes. */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
-	/** The Comments */
+	/** The related Comments */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Comment> comments;
 
-	/** The File entries */
+	/** The related files */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
-	/** The notifications */
+	/** The generated notifications */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
@@ -101,8 +101,9 @@ public abstract class Entry extends MajorEntry {
 	 * 
 	 * @return rating as an <code>Integer</code>
 	 */
+	@Override
 	public long rating() {
-		return this.upVotes() - this.downVotes();
+		return this.rating;
 	}
 
 	public void calcRating() {

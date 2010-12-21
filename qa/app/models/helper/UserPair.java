@@ -3,7 +3,8 @@ package models.helper;
 import models.User;
 
 /**
- * The Class UserPair.
+ * The Class UserPair generates a relation between authors and voters of
+ * entries.
  */
 public class UserPair {
 

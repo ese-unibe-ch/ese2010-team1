@@ -5,7 +5,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import models.helper.TimeFreezer;
-
 import play.db.jpa.Model;
 
 /**
@@ -16,6 +15,7 @@ import play.db.jpa.Model;
 @Entity
 public class Vote extends Model {
 
+	/** The time a user can change the vote in seconds. */
 	private static int FREEZE_TIME_SECONDS = 60 * 2;
 
 	/** The state of the vote. */
@@ -29,7 +29,7 @@ public class Vote extends Model {
 	@ManyToOne
 	public User owner;
 
-	/** The freezer. */
+	/** The time freezer. */
 	@OneToOne
 	public TimeFreezer freezer;
 

@@ -7,8 +7,15 @@ import java.util.List;
 import models.MajorEntry;
 import models.helper.UserEntryFrequency;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ImplausibleFrequenceyRule.
+ */
 public class ImplausibleFrequenceyRule extends FraudPointRule {
 
+	/* (non-Javadoc)
+	 * @see models.fraudpointscale.FraudPointRule#checkSince(java.util.Date)
+	 */
 	@Override
 	public void checkSince(Date lastCheck) {
 		List<MajorEntry> entries = MajorEntry.find(

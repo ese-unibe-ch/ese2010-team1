@@ -10,6 +10,7 @@ import models.User;
 import models.Vote;
 import models.helper.UserPair;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class VoteUpSameUserRule.
  */

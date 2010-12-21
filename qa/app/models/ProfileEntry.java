@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
 
 /**
- * The Class ProfileEntry declares the Database model for all profile entrys.
+ * The Class ProfileEntry declares the Database model for all profile entries.
  */
 @Entity
 public class ProfileEntry extends Model {

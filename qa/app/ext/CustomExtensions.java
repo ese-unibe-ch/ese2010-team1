@@ -2,6 +2,9 @@ package ext;
 
 import play.templates.JavaExtensions;
 
+/**
+ * The Class CustomExtensions contains special methods used in the templates.
+ */
 public class CustomExtensions extends JavaExtensions {
 
 	/**
@@ -32,12 +35,13 @@ public class CustomExtensions extends JavaExtensions {
 	}
 
 	/**
-	 * Shorten a String.
+	 * Trims a given string to a given length and adds three dots.
 	 * 
 	 * @param string
+	 *            the given string
 	 * @param length
-	 *            maximum length
-	 * @return shortened string
+	 *            the new lenghth of the string
+	 * @return the trimmed string
 	 */
 	public static String trim(String string, int length) {
 		if (length >= string.length())

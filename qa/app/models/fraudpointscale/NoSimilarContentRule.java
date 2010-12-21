@@ -7,10 +7,18 @@ import java.util.List;
 import models.MajorEntry;
 import models.User;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NoSimilarContentRule.
+ */
 public class NoSimilarContentRule extends FraudPointRule {
 
+	/** The check date. */
 	private Date checkDate;
 
+	/* (non-Javadoc)
+	 * @see models.fraudpointscale.FraudPointRule#checkSince(java.util.Date)
+	 */
 	@Override
 	public void checkSince(Date lastCheck) {
 
@@ -23,6 +31,11 @@ public class NoSimilarContentRule extends FraudPointRule {
 
 	}
 
+	/**
+	 * Find potential cheaters.
+	 *
+	 * @return the list
+	 */
 	public List<User> findPotentialCheaters() {
 
 		List<User> potentialCheater = new ArrayList<User>();
