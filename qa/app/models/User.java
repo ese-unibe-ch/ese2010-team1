@@ -594,10 +594,13 @@ public class User extends Model {
 	/**
 	 * Questions.
 	 * 
+	 * @param page
+	 * @param count
+	 * 
 	 * @return the list
 	 */
-	public List<Question> questions() {
-		return Question.find("byOwner", this).fetch();
+	public List<Question> questions(int count, int page) {
+		return Question.find("byOwner", this).fetch(page, count);
 	}
 
 	/**

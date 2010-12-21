@@ -350,6 +350,13 @@ nav .info.arrow {
    	box-shadow: 0 0 15px 15px #000;
 }
 
+	.centeredBox .scroll {
+		margin: 0;
+		padding: 0;
+		height: 200px;
+		overflow: auto;
+	}
+
 .centeredBox h1 {
 	background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#999));
 	background: -moz-linear-gradient(top,  #ddd,  #999);
