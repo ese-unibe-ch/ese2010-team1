@@ -37,13 +37,13 @@
 			</td>
 			<td>
 				#{if luser!=user && !luser.name.equals("Anonymous")}
-					<a href="@{Admin.deleteUser(luser.id)}">Delete</a>
+					<a class="confirm" href="@{Admin.deleteUser(luser.id)}">Delete</a>
 				#{/if}
 			</td>
 			
 			<td>	
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-					<a href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
+					<a class="confirm" href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
 				#{/if}
 			</td>
 			<td>
