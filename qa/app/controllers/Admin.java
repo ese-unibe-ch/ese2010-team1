@@ -14,12 +14,19 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+/**
+ * The Class Admin contains all the admin controller methods.
+ */
 @Check("isAdmin")
 @With(Secure.class)
 public class Admin extends Controller {
 
+	/** The Constant NUMBER_OF_USERS_PER_PAGE. */
 	public static final int NUMBER_OF_USERS_PER_PAGE = 35;
 
+	/**
+	 * Sets the connected user.
+	 */
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
@@ -28,12 +35,21 @@ public class Admin extends Controller {
 		}
 	}
 
+	/**
+	 * Admin panel.
+	 */
 	public static void adminPanel() {
 
 		showUserlist(1);
 
 	}
 
+	/**
+	 * Show userlist.
+	 * 
+	 * @param page
+	 *            the page
+	 */
 	public static void showUserlist(int page) {
 		if (page <= 0) {
 			page = 1;
@@ -52,6 +68,12 @@ public class Admin extends Controller {
 
 	}
 
+	/**
+	 * Delete user.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 	public static void deleteUser(long id) {
 
 		User user = User.findById(id);
@@ -59,6 +81,12 @@ public class Admin extends Controller {
 		Admin.showUserlist(1);
 	}
 
+	/**
+	 * Toggle admin state.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 	public static void toggleAdminState(long id) {
 		User user = User.findById(id);
 
@@ -69,11 +97,20 @@ public class Admin extends Controller {
 
 	}
 
+	/**
+	 * Xml importer.
+	 */
 	public static void xmlImporter() {
 
 		render();
 	}
 
+	/**
+	 * Load xml.
+	 * 
+	 * @param xmlfile
+	 *            the xmlfile
+	 */
 	public static void loadXML(@Required File xmlfile) {
 
 		int userCount = 0;
@@ -113,6 +150,13 @@ public class Admin extends Controller {
 
 	}
 
+	/**
+	 * Checks if is xML file.
+	 * 
+	 * @param xmlfile
+	 *            the xmlfile
+	 * @return true, if is xML file
+	 */
 	private static boolean isXMLFile(File xmlfile) {
 		String s = xmlfile.getName();
 		String extension = s.substring(s.length() - 4).toLowerCase();
@@ -120,6 +164,12 @@ public class Admin extends Controller {
 		return extension.equals(".xml");
 	}
 
+	/**
+	 * Toggle activate user.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 	public static void toggleActivateUser(long id) {
 		User user = User.findById(id);
 		user.isActivated = !user.isActivated;
