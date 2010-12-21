@@ -33,3 +33,5 @@ var editProfile = #{jsAction @Users.saveProfile(':id', ':entrys[]') /}
 var login = #{jsAction @Secure.login() /}
 
 var NUMBER_OF_LOADED_QUESTIONS = ${n};
+
+var token = "${session.current().getAuthenticityToken()}";

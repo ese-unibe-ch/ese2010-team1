@@ -70,10 +70,10 @@ $(function() {
 		} else {
 			var id = $('.entry.question').attr('id').substr(5);
 			
-			if($("#section input[type=file]").value() != "") {
+			if($("#section input[type=file]").val() != "") {
 				return true;
 			} else {
-				$.post(answerQuestion({id: id}), {content: content, authenticityToken: token()}, function(data) {
+				$.post(answerQuestion({id: id}), {content: content, authenticityToken: token}, function(data) {
 					if(data.success == 1) {
 						$("#section article:last-child").load(getAnswer({id: data.id}));	
 					} else {
@@ -112,13 +112,13 @@ $(function() {
 	
 	// submit comments
 	$('.entry div.comment.form form').livequery("submit", function() {
-		$(this).parents("article").load(comment({id: $(this).find("input[name=id]").val(), content: $(this).find("textarea[name=content]").val()}));
+		$(this).parents("article").load(comment({id: $(this).find("input[name=id]").val(), content: $(this).find("textarea[name=content]").val()}), {authenticityToken: token});
 		return false;
 	});
 	
 	// delete comments
 	$('.deleteComment').livequery('click', function() {
-		$.get(deleteComment({id: this.hash.substr(1), authenticityToken: token()}));
+		$.get(deleteComment({id: this.hash.substr(1), authenticityToken: token}));
 		$(this).parents('div.comment').hide();
 	});
 	
@@ -372,7 +372,7 @@ function newQuestion() {
 				} else if(!content) {
 					$("#section textarea[name=content]").addClass("error").focus();
 				} else {
-					$.post(addQuestion(), {title: title, content: content, tags: tags}, function(data) {
+					$.post(addQuestion(), {title: title, content: content, tags: tags, authenticityToken: token}, function(data) {
 						if(data.success == 1) {
 							$("#section").load(getQuestion({id: data.id}));	
 							$("#filter a.active").click();

@@ -181,7 +181,6 @@ public class Questions extends Controller {
 			question(entry.id);
 
 		}
-
 	}
 
 	public static void voteUp(long id) {

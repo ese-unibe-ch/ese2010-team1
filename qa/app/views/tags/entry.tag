@@ -116,7 +116,7 @@
 				<span class="file">
 					<a href="@{Questions.getFile(file.id)}">${file.getFilename()}</a>
 					#{if _user==file.owner}
-						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
+						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}&authenticityToken=${session.current().getAuthenticityToken()}">x</a>
 					#{/if}
 				</span>
 			#{/list}
@@ -143,7 +143,7 @@
 			#{/if}
 			
 			#{secure.check 'isAdmin'}
-		  		<a href="@{Questions.delete(_entry.id)}" title="delete entry">delete</a>
+		  		<a href="@{Questions.delete(_entry.id)}&authenticityToken=${session.current().getAuthenticityToken()}" title="delete entry">delete</a>
 			#{/secure.check}
 			
 			#{if _entry.states.size() > 1}

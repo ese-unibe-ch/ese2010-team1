@@ -24,8 +24,8 @@ GET		/vote/up/{id}							Questions.voteUp
 GET		/vote/down/{id}							Questions.voteDown
 GET 	/vote/remove/{id}						Question.removeVote
 
-GET		/best/set/{id}							Questions.setBestAnswer
-GET		/best/reset/{id}						Questions.resetBestAnswer
+POST	/best/set/{id}							Questions.setBestAnswer
+POST	/best/reset/{id}						Questions.resetBestAnswer
 
 # User
 

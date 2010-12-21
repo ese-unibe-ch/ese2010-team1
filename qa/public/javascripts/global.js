@@ -18,12 +18,8 @@ function reinitialise() {
 	}
 }
 
-function token() {
-	return $("#authenticityToken input").val();
-}
-
 function noData() {
-	return {authenticityToken: token()};
+	return {authenticityToken: token};
 }
 
 $(function() {
