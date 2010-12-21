@@ -5,7 +5,6 @@ import java.util.List;
 
 import models.Report;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ReportRule.
  */
