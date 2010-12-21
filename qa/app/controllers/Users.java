@@ -101,6 +101,7 @@ public class Users extends Controller {
 	}
 
 	public static void saveProfile(long id, String[] profileEntry) {
+		checkAuthenticity();
 
 		User user = User.findById(id);
 		List<ProfileItem> titles = ProfileItem.findAll();

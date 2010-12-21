@@ -40,7 +40,7 @@
 		#{/list}
 	</dl>	
 	<input class="editProfile hidden" type="submit"  value="save" />
-	
+	#{token /}
 	#{/form}
 	#{if editable && !puser.isProfileFilledUp()}
 		<div class="tipps" id="profileTipp"><b>Hint:</b> Complete your profile to get reputation. </div>
