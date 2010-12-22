@@ -63,9 +63,10 @@ public class CustomExtensions extends JavaExtensions {
 	}
 
 	public static String simpleHTML(String string) {
-		string = string.replaceAll(
-				"<(((/\\w*[^\\w\\s>])|([^/]\\w*[^\\w\\s>]))[^>]*)(\\s?/)?>",
-				"&lt;$1&gt;");
+		string = string
+				.replaceAll(
+						"<(((/\\w*[^\\w\\s>])|([^/]\\w*[^\\w\\s>]))[^>]*[^/])(\\s?/)?>",
+						"&lt;$1&gt;");
 		string = string
 				.replaceAll(
 						"<([^\">]+)( [^>\"]*\"[^>\"]*\")*(( (href|src)=\"[^\"]+\")*)( [^>\"]*\"[^>\"]*\")*(\\s?/)?>",

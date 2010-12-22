@@ -21,7 +21,7 @@ var contentVersion = #{jsAction @Questions.version(':id') /}
 var report = #{jsAction @Questions.report(':id') /}
 var like = #{jsAction @Questions.likeComment(':id') /}
 var unlike = #{jsAction @Questions.unlikeComment(':id') /}
-var comment = #{jsAction @Questions.comment(':id', ':content') /}
+var comment = #{jsAction @Questions.comment(':id') /}
 var deleteComment = #{jsAction @Questions.deleteComment(':id') /}
 var tagsList = #{jsAction @Questions.getTagList() /};
 
