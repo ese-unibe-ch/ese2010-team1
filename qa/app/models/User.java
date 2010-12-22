@@ -248,7 +248,7 @@ public class User extends Model {
 
 		ArrayList points = new ArrayList();
 
-		points.add(new Point(this.timestamp, 0));
+		points.add(new Point(this.timestamp, profileReputation()));
 		points.add(new Point(new Date(), 0));
 
 		Iterator<MajorEntry> en = this.entrys.iterator();
