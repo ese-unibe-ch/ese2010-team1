@@ -42,6 +42,9 @@
 #{if questions.size()>0}
     #{include 'Questions/question.html' /}
 #{/if}
-#{else}
+#{elseif user}
     #{entry display:"form", type:"question" /}
+#{/elseif}
+#{else}
+
 #{/else}
