@@ -375,7 +375,9 @@ function newQuestion() {
 					$.post(addQuestion(), {title: title, content: content, tags: tags, authenticityToken: token}, function(data) {
 						if(data.success == 1) {
 							$("#section").load(getQuestion({id: data.id}));	
-							$("#filter a.active").click();
+							page = 1;
+							lastQuestion = false;
+							loadMore(true);
 							var url = /^(.*)#(.*)$/.exec(self.location);
 							url = url ? url[1] : self.location;
 							self.location = url + "#!" + data.id;
