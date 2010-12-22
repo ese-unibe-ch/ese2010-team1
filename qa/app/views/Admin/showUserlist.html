@@ -39,18 +39,25 @@
 			</td>
 			<td>
 				#{if luser!=user && !luser.name.equals("Anonymous")}
-					<a class="confirm" href="@{Admin.deleteUser(luser.id)}">Delete</a>
+					<a class="confirm" href="@{Admin.deleteUser(luser.id)}"><img src="@{'/public/images/deleteuser.png'}" alt="Delete" title="Delete" /></a>
 				#{/if}
 			</td>
 			
 			<td>	
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-					<a class="confirm" href="@{Admin.toggleAdminState(luser.id, page)}">Set Admin</a>
+					<a class="confirm" href="@{Admin.toggleAdminState(luser.id, page)}"><img src="@{'/public/images/admin.png'}" alt="Set Admin" title="Set Admin" /></a>
 				#{/if}
 			</td>
 			<td>
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-				<a class="activateUser" id="${luser.id}" href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "deactivate" : "activate"}</a>
+				<a class="activateUser" id="${luser.id}" href="@{Admin.ToggleActivateUser(luser.id)}">
+				#{if luser.isActivated}
+				    <img src="@{'/public/images/activated.png'}" alt="activated" title="activated" />
+				#{/if}
+				#{else}
+				    <img src="@{'/public/images/deactivated.png'}" alt="activated" title="deactivated" />
+				#{/else}
+				</a>
 				#{/if}
 		
 			</td>
