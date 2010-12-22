@@ -133,7 +133,7 @@ public class Question extends Entry {
 
 			if (!skipped && skip.size() == count * (page - 1)) {
 				skipped = true;
-			} else if (set.size() >= count) {
+			} else if (count > 0 && set.size() >= count) {
 				break;
 			}
 		}
