@@ -52,10 +52,10 @@
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
 				<a class="activateUser" id="${luser.id}" href="@{Admin.ToggleActivateUser(luser.id)}">
 				#{if luser.isActivated}
-				    <img src="@{'/public/images/activated.png'}" alt="activated" title="activated" />
+				    <img src="@{'/public/images/activated.png'}" alt="deactivate" title="deactivate"  />
 				#{/if}
 				#{else}
-				    <img src="@{'/public/images/deactivated.png'}" alt="activated" title="deactivated" />
+				    <img src="@{'/public/images/deactivated.png'}" alt="activate" title="activate" />
 				#{/else}
 				</a>
 				#{/if}

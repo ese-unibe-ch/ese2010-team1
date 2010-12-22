@@ -6,7 +6,7 @@ $(function() {
      $('section').append("<div id=\"backgroundOverlay\">&nbsp;</div>");
      var action = $(this).attr("href");
      var userid = $(this).attr("id");
-     var text = $(this).text();
+     var text = $(this).find('img').attr("alt");
      $('form#deactivationComment').attr("action", action)
      if(text=="deactivate") {
        jQuery.get(getFraudPointViolations({id: userid}),function(data){
