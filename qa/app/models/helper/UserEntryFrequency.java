@@ -59,7 +59,7 @@ public class UserEntryFrequency {
 		if (entries.size() < minEntries)
 			return 0;
 		if (entries.size() > maxEntries)
-			return 10;
+			return 20;
 
 		int shortCount = 0;
 		int normalCount = 0;
