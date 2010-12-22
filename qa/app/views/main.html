@@ -41,7 +41,7 @@
     				
     				#{if user}
     					<a href="@{Users.profile(user.id)}">
-    			  			${user.name} (${user.reputation})
+    			  			${user.name} <span class="rep">${user.reputation}</span>
     					</a>
     					
     					%{
