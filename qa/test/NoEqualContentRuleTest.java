@@ -3,7 +3,7 @@ import java.util.Date;
 import models.Answer;
 import models.Question;
 import models.User;
-import models.fraudpointscale.NoSimilarContentRule;
+import models.fraudpointscale.NoEqualContentRule;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import play.test.Fixtures;
 import play.test.UnitTest;
 
-public class NoSimilarContentRuleTest extends UnitTest {
+public class NoEqualContentRuleTest extends UnitTest {
 
 	@Before
 	public void setup() {
@@ -31,7 +31,7 @@ public class NoSimilarContentRuleTest extends UnitTest {
 		Question question2 = user.addQuestion("test2", "fraudContent");
 		Answer answer = question.answer(user, "fraudContent");
 
-		NoSimilarContentRule rule = new NoSimilarContentRule();
+		NoEqualContentRule rule = new NoEqualContentRule();
 		rule.checkSince(timeBefore);
 
 		assertEquals(1, rule.findPotentialCheaters().size());

@@ -30,7 +30,7 @@
 
 	#{list items: users, as: 'luser'}
 		<tr>
-			<td>${luser.name}</td> 
+			<td><a href="@{Users.profile(luser.id)}">${luser.name}</a></td> 
 			<td>${luser.email}</td>
 			<td style="text-align: center;">
 				#{if luser.isActivated}
