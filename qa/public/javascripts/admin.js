@@ -5,13 +5,16 @@ $(function() {
      $('form#deactivationComment').removeClass("hidden");
      $('section').append("<div id=\"backgroundOverlay\">&nbsp;</div>");
      var action = $(this).attr("href");
-     var userid = $(this).attr("rel");
+     var userid = $(this).attr("id");
+     var text = $(this).text();
      $('form#deactivationComment').attr("action", action)
-     jQuery.get(getFraudPointViolations({id: userid}),function(data){
-        var content = "You have violated the following rules:\n";
-        content += data;
-        $('textarea[name="deactivationReason"]').val(content);  
-     });
+     if(text=="deactivate") {
+       jQuery.get(getFraudPointViolations({id: userid}),function(data){
+          var content = "You have violated the following rules:\n";
+          content += data;
+          $('textarea[name="deactivationReason"]').val(content);  
+       });
+     }
      
      return false;
   });

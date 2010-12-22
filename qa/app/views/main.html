@@ -82,7 +82,7 @@
 	    				#{/pulldown}
 	    				#{if user.isAdmin}
 	    					#{pulldown label:'Admin'}
-	    						<li><a href="@{Admin.showUserList}">Userlist</a></li>
+	    						<li><a href="@{Admin.showUserList(1)}">Userlist</a></li>
 	    						<li><a href="@{Admin.xmlImporter}">XML Importer</a></li>
 	    					#{/pulldown}
 	    				#{/if}

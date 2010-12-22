@@ -10,8 +10,8 @@
 		<h1>User message</h1>
 		Write a message for the user.
 		<textarea name="deactivationReason"></textarea><br />
-		
-		<input type="submit" value="Deactivate" />
+		<input type="hidden" name="page" value="${page}" />
+		<input type="submit" value="Confirm &amp; Send" />
 		<a class="cancel" href="#">cancel</a>
 	</form>
 
@@ -45,12 +45,12 @@
 			
 			<td>	
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-					<a class="confirm" href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
+					<a class="confirm" href="@{Admin.toggleAdminState(luser.id, page)}">Set Admin</a>
 				#{/if}
 			</td>
 			<td>
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-				<a class="activateUser" rel="${luser.id}" href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "deactivate" : "activate"}</a>
+				<a class="activateUser" id="${luser.id}" href="@{Admin.ToggleActivateUser(luser.id)}">${luser.isActivated ? "deactivate" : "activate"}</a>
 				#{/if}
 		
 			</td>

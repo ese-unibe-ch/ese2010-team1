@@ -183,10 +183,11 @@ public class XMLHandler extends DefaultHandler {
 				Long.parseLong(dataMap.get("id"))).first();
 		// check if userid is already in the database
 		if (userExists == null) {
-
+			String email = dataMap.get("email");
+			email.replaceAll("\\s", "");
 			// create user and set attributes
-			User user = new User(dataMap.get("displayname"), dataMap
-					.get("email"), dataMap.get("password"));
+			User user = new User(dataMap.get("displayname"), email, dataMap
+					.get("password"));
 			user.fakeId = Long.parseLong(dataMap.get("id"));
 			user.isAdmin = Boolean.parseBoolean(dataMap.get("ismoderator"));
 			user.save();
