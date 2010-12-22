@@ -21,7 +21,6 @@ import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
 
-// TODO: Auto-generated Javadoc
 /**
  * View questions.
  */
