@@ -6,7 +6,7 @@
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#!${_entry.id}"#{if _active} class="active"#{/if} title="${_entry.title}">${_entry.title.trim(35)}</a>
+		<a href="#!${_entry.id}"#{if _active} class="active"#{/if} title="${_entry.title.escape()}">${_entry.title.trim(35).escape()}</a>
 	
 #{/if}
 
@@ -103,7 +103,7 @@
 		#{if question}
 			<div class="tags">
 			#{list items:_entry.tags , as:'tag'}
-				<span>${tag.name}</span>
+				<span>${tag.name.escape()}</span>
 			#{/list}
 			</div>
 		#{/if}
@@ -114,7 +114,7 @@
 		#{elseif _entry.getFiles().size()>0}
 			#{list items:_entry.getFiles(), as:'file'}
 				<span class="file">
-					<a href="@{Questions.getFile(file.id)}">${file.getFilename()}</a>
+					<a href="@{Questions.getFile(file.id)}">${file.getFilename().escape()}</a>
 					#{if _user==file.owner}
 						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}&authenticityToken=${session.current().getAuthenticityToken()}">x</a>
 					#{/if}
@@ -174,9 +174,9 @@
 		#{list items:_entry.listComments(), as:'comment'}
 			<div class="comment">
 				<a href="@{Users.profile(comment.owner.id)}" class="owner">
-					${comment.owner.name} (${comment.owner.reputation})
+					${comment.owner.name.escape()} (${comment.owner.reputation})
 				</a>
-				<p>${comment.content.nl2br()}</p>
+				<p>${comment.content.simpleHTML()}</p>
 				<div class="controls">
 					#{if _user== comment.owner || _user?.isAdmin}
 						<a href="#${comment.id}" class="deleteComment">delete</a>
