@@ -78,6 +78,9 @@ public class User extends Model {
 	/** The fake id used for the XML importer. */
 	public long fakeId;
 
+	/** The cached number of fraudPoints. **/
+	public int fraudPoints;
+
 	/**
 	 * Creates a <code>User</code> with a given name.
 	 * 
@@ -98,6 +101,7 @@ public class User extends Model {
 		this.timestamp = new Date();
 		this.reputation = 0;
 		this.isActivated = false;
+		this.fraudPoints = 0;
 	}
 
 	/**
