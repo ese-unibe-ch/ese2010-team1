@@ -7,7 +7,9 @@
 
 
 %{
-	question = display ? display : questions.get(0)
+    if(questions.size()>0) {
+	   question = display ? display : questions.get(0)
+	}
 }%
 
 #{set 'controls'}
@@ -37,5 +39,9 @@
 	</div>
 #{/set} 	
 
-
-#{include 'Questions/question.html' /}
+#{if questions.size()>0}
+    #{include 'Questions/question.html' /}
+#{/if}
+#{else}
+    #{entry display:"form", type:"question" /}
+#{/else}

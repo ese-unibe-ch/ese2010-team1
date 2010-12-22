@@ -1,3 +1,4 @@
+# ProfileItems
 ProfileItem(website):
     title: Website
 ProfileItem(location):
@@ -6,101 +7,21 @@ ProfileItem(age):
     title: Age
 ProfileItem(aboutme):
     title: About Me
-    
-# tags
-Tag(java):
-     name: Java
-Tag(world):
-     name: World
-Tag(test):
-     name: Test
 
 # Users
-User(simon):
-    name: Simon
+User(admin):
+    name: Admin
     password: e579c4fea528a36862a0a5352587a30d58da532f
-    email: simon@example.com
-    isAdmin: false
+    email: ese-team1@iam.unibe.ch
+    isAdmin: true
     isActivated: true
     timestamp: 2010-10-20
-User(tobias):
-    name: Tobias
+User(anonymous):
+    name: Anonymous
     password: e579c4fea528a36862a0a5352587a30d58da532f
-    email: tobias@example.com
+    email: ese-team1@iam.unibe.ch
     isAdmin: false
-    isActivated: true
+    isActivated: false
     timestamp: 2010-10-20
-User(thomas):
-    name: Thomas
-    password: e579c4fea528a36862a0a5352587a30d58da532f
-    email: thomas@example.com
-    isAdmin: false
-    isActivated: true
-    timestamp: 2010-10-20
-User(oliver):
-    name: Oliver
-    password: e579c4fea528a36862a0a5352587a30d58da532f
-    email: oliver@example.com
-    isAdmin: false
-    isActivated: true
-    timestamp: 2010-10-20
-User(mark):
-    name: Mark
-    password: e579c4fea528a36862a0a5352587a30d58da532f
-    email: mark@example.com
-    isAdmin: false
-    isActivated: true
-    timestamp: 2010-10-20
-    
-# Questions
-Question(q1):
-    owner: simon
-    title: What's about life, the universe and everything?
-    content:   > 
-        For a long time I've been trying to get the answer to the ultimate question of life, the universe, and everything.
-        Can you help me?
-    timestamp: 2010-10-20
-    tags:
-     - world
-     - java
-     - test
-Question(q2):
-    owner: tobias
-    title: second
-    content: another dummy content
-    timestamp: 2010-10-22
-    tags:
-     - world
-Question(q3):
-    owner: oliver
-    title: third?
-    content: lorem ipsum
-    timestamp: 2010-10-25
-    tags: 
-     - test
 
-# Answers
-Answer(a1):
-    owner: tobias
-    content: I think the problem, to be quite honest with you, is that you've never actually known what the question is.
-    timestamp: 2010-10-27
-    isBestAnswer: false
-    question: q1    
-Answer(a2):
-    owner: mark
-    content: It's very simple, the answer is 42.
-    timestamp: 2010-10-25
-    isBestAnswer: false
-    question: q1    
-Answer(a3):
-    owner: thomas
-    content: bla bla bla
-    timestamp: 2010-10-27
-    isBestAnswer: false
-    question: q2
-Answer(a4):
-    owner: simon
-    content: i'm absolute sure about that!
-    timestamp: 2010-10-26
-    isBestAnswer: false
-    question: q3
+ 

@@ -618,6 +618,11 @@ public class User extends Model {
 
 	}
 
+	/**
+	 * Finds all fraud point rules which were violated.
+	 * 
+	 * @return the string
+	 */
 	public String fraudPointViolations() {
 
 		FraudPointController controller = FraudPointController.getInstance();

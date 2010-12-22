@@ -7,7 +7,6 @@ import java.util.List;
 import models.MajorEntry;
 import models.helper.UserEntryFrequency;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ImplausibleFrequenceyRule.
  */
