@@ -2,6 +2,9 @@ package controllers;
 
 import models.User;
 
+/**
+ * The Class Security.
+ */
 public class Security extends Secure.Security {
 
 	/**
@@ -28,6 +31,13 @@ public class Security extends Secure.Security {
 		Questions.home();
 	}
 
+	/**
+	 * Check the user rights.
+	 * 
+	 * @param profile
+	 *            the profile
+	 * @return true, if successful
+	 */
 	static boolean check(String profile) {
 		if ("isAdmin".equals(profile)) {
 			return User.find("byName", connected()).<User> first().isAdmin;

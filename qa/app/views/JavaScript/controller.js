@@ -17,25 +17,27 @@ var addQuestion = #{jsAction @Questions.add() /}
 var answerQuestion = #{jsAction @Questions.answer(':id') /}
 var setNotificationAsRed = #{jsAction @Questions.setNotificationAsRed(':id') /}
 var contentVersion = #{jsAction @Questions.version(':id') /}
-var deleteComment = #{jsAction @Questions.deleteComment(':id') /}
-var checkUserExists = #{jsAction @Users.checkUserExists(':name') /}
-var report = #{jsAction @Questions.report(':id') /}
-var like = #{jsAction @Users.likeComment(':id') /}
-var unlike = #{jsAction @Users.unlikeComment(':id') /}
-var comment = #{jsAction @Questions.comment(':id', ':content') /}
 
+var report = #{jsAction @Questions.report(':id') /}
+var like = #{jsAction @Questions.likeComment(':id') /}
+var unlike = #{jsAction @Questions.unlikeComment(':id') /}
+var comment = #{jsAction @Questions.comment(':id', ':content') /}
+var deleteComment = #{jsAction @Questions.deleteComment(':id') /}
 var tagsList = #{jsAction @Questions.getTagList() /};
 
 var profileGet = #{jsAction @Users.get(':id', ':theAction') /}
 var graphData = #{jsAction @Users.graphData(':id') /}
 var editProfile = #{jsAction @Users.saveProfile(':id', ':entrys[]') /}
+var checkUserExists = #{jsAction @Users.checkUserExists(':name') /}
 
 var login = #{jsAction @Secure.login() /}
+
+var getFraudPointViolations = #{jsAction @Admin.getFraudPointViolations(':id') /}
 
 var NUMBER_OF_LOADED_QUESTIONS = ${n};
 
 var token = "${session.current().getAuthenticityToken()}";
 
-var getFraudPointViolations = #{jsAction @Admin.getFraudPointViolations(':id') /}
+
 
 
