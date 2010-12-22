@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import models.Answer;
-import models.Comment;
-import models.Entry;
 import models.ProfileItem;
 import models.User;
 import play.data.validation.Email;
@@ -30,7 +27,12 @@ public class Users extends Controller {
 		}
 	}
 
-	/*** VIEWS ***/
+	/**
+	 * * VIEWS **.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 
 	/**
 	 * Shows the user profile for the given user id.
@@ -51,11 +53,28 @@ public class Users extends Controller {
 		render(puser, titles, info);
 	}
 
+	/**
+	 * Creates the user.
+	 */
 	public static void createUser() {
 
 		render();
 	}
 
+	/**
+	 * Adds the user to the database.
+	 * 
+	 * @param username
+	 *            the username
+	 * @param email
+	 *            the email
+	 * @param password
+	 *            the password
+	 * @param password2
+	 *            the password2
+	 * @throws Throwable
+	 *             the throwable
+	 */
 	public static void addUser(
 			@Required(message = "A valid username is required") String username,
 			@Required(message = "A valid e-mail is required") @Email String email,
@@ -85,6 +104,14 @@ public class Users extends Controller {
 		render();
 	}
 
+	/**
+	 * Activate user.
+	 * 
+	 * @param id
+	 *            the id
+	 * @param securityToken
+	 *            the security token
+	 */
 	public static void activateUser(long id, String securityToken) {
 
 		User auser = User.findById(id);
@@ -100,6 +127,14 @@ public class Users extends Controller {
 		render(auser);
 	}
 
+	/**
+	 * Save profile information.
+	 * 
+	 * @param id
+	 *            the id
+	 * @param profileEntry
+	 *            the profile entry
+	 */
 	public static void saveProfile(long id, String[] profileEntry) {
 		checkAuthenticity();
 
@@ -119,6 +154,14 @@ public class Users extends Controller {
 
 	}
 
+	/**
+	 * Gets the user profile data.
+	 * 
+	 * @param id
+	 *            the id
+	 * @param theAction
+	 *            the the action
+	 */
 	public static void get(long id, String theAction) {
 		User user = User.findById(id);
 
@@ -146,6 +189,12 @@ public class Users extends Controller {
 
 	}
 
+	/**
+	 * Returns all activities.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 	public static void activities(long id) {
 
 		User puser = User.findById(id);
@@ -156,38 +205,12 @@ public class Users extends Controller {
 		render(notifications, puser);
 	}
 
-	public static void likeComment(long id) {
-		User user = User.find("byName", Security.connected()).first();
-		Comment comment = Comment.findById(id);
-		comment.like(user);
-
-		Entry entry = comment.entry;
-		if (entry instanceof models.Question)
-			render("Questions/entry.html", entry);
-		else {
-			Answer answer = (Answer) entry;
-			entry = answer;
-			render("Questions/entry.html", entry);
-		}
-
-	}
-
-	public static void unlikeComment(long id) {
-		User user = User.find("byName", Security.connected()).first();
-		Comment comment = Comment.findById(id);
-		comment.unlike(user);
-
-		Entry entry = comment.entry;
-		if (entry instanceof models.Question)
-			render("Questions/entry.html", entry);
-		else {
-			Answer answer = (Answer) entry;
-			entry = answer;
-			render("Questions/entry.html", entry);
-		}
-	}
-
-	/*** AJAX ***/
+	/**
+	 * * AJAX **.
+	 * 
+	 * @param id
+	 *            the id
+	 */
 
 	public static void graphData(long id) {
 		User puser = User.findById(id);
@@ -197,6 +220,12 @@ public class Users extends Controller {
 			renderText("[]");
 	}
 
+	/**
+	 * Check user exists.
+	 * 
+	 * @param username
+	 *            the username
+	 */
 	public static void checkUserExists(String username) {
 
 		List<User> user = User.find("byName", username).fetch();

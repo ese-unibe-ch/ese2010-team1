@@ -37,15 +37,6 @@ public class Admin extends Controller {
 	}
 
 	/**
-	 * Admin panel.
-	 */
-	public static void adminPanel() {
-
-		showUserlist(1);
-
-	}
-
-	/**
 	 * Show userlist.
 	 * 
 	 * @param page
