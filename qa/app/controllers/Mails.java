@@ -25,4 +25,13 @@ public class Mails extends Mailer {
 
 	}
 
+	public static void reactivationMail(User user, String deactivationReason) {
+		setSubject("Hello %s your account has been reactivated by an admin",
+				user.name);
+		addRecipient(user.email);
+		setFrom("Knowledge Base <ese-team1@iam.unibe.ch>");
+		send(user, deactivationReason);
+
+	}
+
 }

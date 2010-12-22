@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import models.fraudpointscale.FraudPoint;
+import models.fraudpointscale.FraudPointController;
 import models.helper.Utils;
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
@@ -613,4 +614,19 @@ public class User extends Model {
 
 	}
 
+	public String fraudPointViolations() {
+
+		FraudPointController controller = FraudPointController.getInstance();
+		StringBuffer buffer = new StringBuffer();
+		List<FraudPoint> fpList = FraudPoint.find("byUser", this).fetch();
+		Set<String> violations = new HashSet<String>();
+		for (FraudPoint p : fpList) {
+			violations.add(controller.getDescription(p.rule));
+		}
+		for (String violation : violations) {
+			buffer.append(violation + "\n");
+		}
+
+		return buffer.toString();
+	}
 }
