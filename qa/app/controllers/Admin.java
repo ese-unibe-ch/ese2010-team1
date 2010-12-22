@@ -60,7 +60,6 @@ public class Admin extends Controller {
 		int fetchFrom = (page - 1) * NUMBER_OF_USERS_PER_PAGE;
 		List<User> users = User.all().from(fetchFrom).fetch(
 				NUMBER_OF_USERS_PER_PAGE);
-		// TS Ugly but no idea how to do that in play templates w/o a for loop
 		List<Integer> pageList = new ArrayList<Integer>();
 		for (int i = 1; i <= pages; i++) {
 			pageList.add(i);
@@ -88,13 +87,13 @@ public class Admin extends Controller {
 	 * @param id
 	 *            the id
 	 */
-	public static void toggleAdminState(long id) {
+	public static void toggleAdminState(long id, int page) {
 		User user = User.findById(id);
 
 		user.isAdmin = !user.isAdmin;
 		user.save();
 
-		Admin.showUserlist(1);
+		Admin.showUserlist(page);
 
 	}
 
@@ -107,7 +106,7 @@ public class Admin extends Controller {
 	}
 
 	/**
-	 * Load xml.
+	 * Load an xml file in the database.
 	 * 
 	 * @param xmlfile
 	 *            the xmlfile
@@ -171,14 +170,31 @@ public class Admin extends Controller {
 	 * @param id
 	 *            the id
 	 */
-	public static void toggleActivateUser(long id, String deactivationReason) {
+	public static void toggleActivateUser(long id, String deactivationReason,
+			int page) {
 		User user = User.findById(id);
 		user.isActivated = !user.isActivated;
 		user.save();
 		if (!user.isActivated) {
 			Mails.deactivationMail(user, deactivationReason);
+		} else {
+			Mails.reactivationMail(user, deactivationReason);
 		}
-		Admin.showUserlist(1);
+		Admin.showUserlist(page);
 	}
 
+	/**
+	 * Lists the fraud point violations of a given user.
+	 * 
+	 * @param id
+	 *            the userid
+	 * @return the fraud point violations
+	 */
+	public static void getFraudPointViolations(long id) {
+
+		User user = User.findById(id);
+
+		renderText(user.fraudPointViolations());
+
+	}
 }

@@ -7,11 +7,10 @@ import java.util.List;
 import models.MajorEntry;
 import models.User;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class NoSimilarContentRule.
  */
-public class NoSimilarContentRule extends FraudPointRule {
+public class NoEqualContentRule extends FraudPointRule {
 
 	/** The check date. */
 	private Date checkDate;
@@ -43,7 +42,7 @@ public class NoSimilarContentRule extends FraudPointRule {
 		List<User> potentialCheater = new ArrayList<User>();
 		List<MajorEntry> entryWithSimilarContent = MajorEntry
 				.find(
-						"select a from MajorEntry a, MajorEntry b where a.content = b.content and a.timestamp >= ?",
+						"select a from MajorEntry a, MajorEntry b where a.content = b.content and a.id != b.id and a.timestamp >= ?",
 						checkDate).fetch();
 
 		for (MajorEntry entry : entryWithSimilarContent) {

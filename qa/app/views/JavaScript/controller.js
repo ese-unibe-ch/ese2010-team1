@@ -35,3 +35,7 @@ var login = #{jsAction @Secure.login() /}
 var NUMBER_OF_LOADED_QUESTIONS = ${n};
 
 var token = "${session.current().getAuthenticityToken()}";
+
+var getFraudPointViolations = #{jsAction @Admin.getFraudPointViolations(':id') /}
+
+

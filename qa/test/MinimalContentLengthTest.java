@@ -11,7 +11,7 @@ import org.junit.Test;
 import play.test.Fixtures;
 import play.test.UnitTest;
 
-public class JustAnotherRuleTest extends UnitTest {
+public class MinimalContentLengthTest extends UnitTest {
 
 	@Before
 	public void setup() {

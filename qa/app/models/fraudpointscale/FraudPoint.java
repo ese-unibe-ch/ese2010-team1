@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 import models.User;
 import play.db.jpa.Model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FraudPoint saves informations about user fraud tries and the rule
  * he broke.
