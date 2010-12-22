@@ -30,7 +30,7 @@ public class ImplausibleFrequenceyRule extends FraudPointRule {
 			}
 		}
 		for (UserEntryFrequency userFreq : users.values()) {
-			if (userFreq.suspicious())
+			for (int i = 0; i < userFreq.suspicious(); i++)
 				addPoint(userFreq.user());
 		}
 	}
@@ -43,7 +43,7 @@ public class ImplausibleFrequenceyRule extends FraudPointRule {
 	@Override
 	public String description() {
 
-		return "Posting entries with to implausible frequencey";
+		return "Posting entries with implausible frequency";
 	}
 
 }

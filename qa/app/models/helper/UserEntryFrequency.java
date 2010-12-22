@@ -11,15 +11,15 @@ import models.User;
  */
 public class UserEntryFrequency {
 
-	private static final int minEntries = 10;
+	private static final int minEntries = 2;
 
-	private static final int normalDelay = 30;
+	private static final int normalDelay = 20;
 	private static final int allowedNormal = 5;
 
 	private static final int shortDelay = 1;
 	private static final int allowedShort = 3;
 
-	private static final int maxEntries = 60;
+	private static final int maxEntries = 20;
 
 	private User user;
 	private List<MajorEntry> entries;
@@ -55,11 +55,11 @@ public class UserEntryFrequency {
 	 * 
 	 * @return true, if suspicious
 	 */
-	public boolean suspicious() {
+	public int suspicious() {
 		if (entries.size() < minEntries)
-			return false;
+			return 0;
 		if (entries.size() > maxEntries)
-			return true;
+			return 10;
 
 		int shortCount = 0;
 		int normalCount = 0;
@@ -70,15 +70,15 @@ public class UserEntryFrequency {
 			if (delay < normalDelay * 1000) {
 				normalCount++;
 				if (normalCount > allowedNormal)
-					return true;
+					return 1;
 				if (delay < shortDelay * 1000) {
 					shortCount++;
 					if (shortCount > allowedShort)
-						return true;
+						return 2;
 				}
 			}
 		}
 
-		return false;
+		return 0;
 	}
 }
