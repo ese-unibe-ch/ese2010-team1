@@ -330,9 +330,10 @@ public class Questions extends Controller {
 		if (entry != null && user != null) {
 			entry.removeVote((Vote) Vote.find("byOwnerAndEntry", user, entry)
 					.first());
+			entry.owner.calcReputation();
+			entry.owner.save();
 		}
-		user.calcReputation();
-		user.save();
+
 		render("Questions/entry.html", entry);
 	}
 

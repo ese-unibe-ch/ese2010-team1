@@ -108,6 +108,7 @@ $(function() {
 	$('.entry .showform').livequery('click', function() {
 		$(this).parents('article').find('div.comment.form').show();
 		reinitialise();
+		return false;
 	});
 	
 	// submit comments
