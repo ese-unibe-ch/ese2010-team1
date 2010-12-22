@@ -168,8 +168,15 @@ input, textarea {
 		
 			#sitecontrols > a .rep {
 				background: #999;
+				
+				box-shadow: inset 0px 0px 2px 0px #000;
    				-webkit-box-shadow: inset 0px 0px 2px 0px #000;
+   				-moz-box-shadow: inset 0px 0px 2px 0px #000;
+   				
 				border-radius: 5px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				
 				padding: 0 4px;
 			}
 
