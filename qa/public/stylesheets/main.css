@@ -473,7 +473,7 @@ nav .info.arrow {
 	.entry > div, .entry h3, .entry > form > div {
 		padding: 10px;
 		margin-right: 30px;
-		background: rgba(255,254,255,0.5);
+		background: rgba(255,255,255,0.8);
 		position: relative;
 	}
 		 .entry > form > div {
@@ -519,10 +519,6 @@ nav .info.arrow {
 			font-size: 13px;
 			text-align: center;
 		}
-		
-	 .answer > div, .answer > h3, .answer > form > div, .answer > form > h3 {
-	   background: rgba(255,255,255,0.8);
-	 }
 		
 	
 	/*** Controlls ***/
@@ -588,7 +584,7 @@ nav .info.arrow {
 	/*** Comments ***/
 	
 	.comment {
-	  background: #FFF !important;
+	  background: rgba(255,254,255,0.5) !important;
 		margin-left: 20px;
 		font-size: 14px;
 	}
@@ -906,4 +902,9 @@ div#backgroundOverlay {
   background-color: black;
   opacity: 0.5;
   
+}
+
+textarea[name=deactivationReason] {
+  width: 380px;
+  height: 200px;  
 }

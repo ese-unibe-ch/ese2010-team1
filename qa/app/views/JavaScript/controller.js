@@ -32,4 +32,6 @@ var editProfile = #{jsAction @Users.saveProfile(':id', ':entrys[]') /}
 
 var login = #{jsAction @Secure.login() /}
 
+var getFraudPointViolations = #{jsAction @Admin.getFraudPointViolations(':id') /}
+
 var NUMBER_OF_LOADED_QUESTIONS = ${n};

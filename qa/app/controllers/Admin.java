@@ -181,4 +181,11 @@ public class Admin extends Controller {
 		Admin.showUserlist(1);
 	}
 
+	public static void getFraudPointViolations(long id) {
+
+		User user = User.findById(id);
+
+		renderText(user.fraudPointViolations());
+
+	}
 }
