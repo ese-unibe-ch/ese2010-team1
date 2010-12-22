@@ -58,8 +58,8 @@ public class Admin extends Controller {
 		int pages = (int) Math.ceil((double) User.count()
 				/ (double) NUMBER_OF_USERS_PER_PAGE);
 		int fetchFrom = (page - 1) * NUMBER_OF_USERS_PER_PAGE;
-		List<User> users = User.all().from(fetchFrom).fetch(
-				NUMBER_OF_USERS_PER_PAGE);
+		List<User> users = User.find("order by fraudPoints DESC").from(
+				fetchFrom).fetch(NUMBER_OF_USERS_PER_PAGE);
 		List<Integer> pageList = new ArrayList<Integer>();
 		for (int i = 1; i <= pages; i++) {
 			pageList.add(i);

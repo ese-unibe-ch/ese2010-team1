@@ -76,7 +76,13 @@ public class FraudPointController {
 	 */
 	public void cleanOldPoints() {
 		Date expired = new Date(new Date().getTime() - expiration);
-		FraudPoint.delete("timestamp < ?", expired);
+		List<FraudPoint> points = FraudPoint.find("timestamp < ?", expired)
+				.fetch();
+		for (FraudPoint point : points) {
+			point.user.fraudPoints--;
+			point.user.save();
+			point.delete();
+		}
 	}
 
 	/**

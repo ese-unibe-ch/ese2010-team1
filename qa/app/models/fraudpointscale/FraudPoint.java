@@ -27,6 +27,8 @@ public class FraudPoint extends Model {
 		this.user = user;
 		this.rule = rule;
 		this.timestamp = new Date();
+		user.fraudPoints++;
+		user.save();
 	}
 
 	/** The user. */
