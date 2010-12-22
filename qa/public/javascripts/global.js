@@ -53,7 +53,7 @@ $(function() {
 	
 	$('a.notification').livequery('click', function(event) {
 		var url = $(this).attr('href');
-		$.get(setNotificationAsRed({id: this.hash.substr(1), authenticityToken: token}), function() {
+		$.get(setNotificationAsRed({id: this.hash.substr(1)}), noData(), function() {
 			self.location = url;
 		});
 		return false;
