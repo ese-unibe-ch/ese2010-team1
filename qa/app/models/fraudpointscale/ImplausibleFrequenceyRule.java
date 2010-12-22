@@ -36,6 +36,11 @@ public class ImplausibleFrequenceyRule extends FraudPointRule {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see models.fraudpointscale.FraudPointRule#description()
+	 */
 	@Override
 	public String description() {
 
