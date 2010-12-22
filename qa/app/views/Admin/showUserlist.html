@@ -1,29 +1,79 @@
 #{extends 'main.html' /}
+#{set 'scripts'}
+    #{script 'admin.js' /}
+#{/set}
 
 #{set title: ' Userlist' /}
+
+
+	<form method="post" action="" accept-charset="utf-8" enctype="multipart/form-data" id="deactivationComment" class="hidden centeredBox">
+		<h1>User message</h1>
+		Write a message for the user.
+		<textarea name="deactivationReason"></textarea><br />
+		<input type="hidden" name="page" value="${page}" />
+		<input type="submit" value="Confirm &amp; Send" />
+		<a class="cancel" href="#">cancel</a>
+	</form>
+
+
 
 <table id="userlist">
 	<tr>
 		<th>Username</th>
 		<th>E-Mail</th>
+		<th style="text-align: center;">Active</th>
 		<th></th>
 		<th></th>
+		<th></th>
+		<th style="text-align: center;">FraudScore</th>
 	</tr>
 
 	#{list items: users, as: 'luser'}
 		<tr>
-			<td>${luser.name}</td> 
+			<td><a href="@{Users.profile(luser.id)}">${luser.name}</a></td> 
 			<td>${luser.email}</td>
-			<td>
-				#{if luser!=user && !luser.name.equals("Anonymous")}
-					<a href="@{Admin.deleteUser(luser.id)}">Delete</a>
+			<td style="text-align: center;">
+				#{if luser.isActivated}
+				*
 				#{/if}
 			</td>
+			<td>
+				#{if luser!=user && !luser.name.equals("Anonymous")}
+					<a class="confirm" href="@{Admin.deleteUser(luser.id)}"><img src="@{'/public/images/deleteuser.png'}" alt="Delete" title="Delete" /></a>
+				#{/if}
+			</td>
+			
 			<td>	
 				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
-					<a href="@{Admin.toggleAdminState(luser.id)}">Set Admin</a>
+					<a class="confirm" href="@{Admin.toggleAdminState(luser.id, page)}"><img src="@{'/public/images/admin.png'}" alt="Set Admin" title="Set Admin" /></a>
 				#{/if}
+			</td>
+			<td>
+				#{if !luser.isAdmin && !luser.name.equals("Anonymous")}
+				<a class="activateUser" id="${luser.id}" href="@{Admin.ToggleActivateUser(luser.id)}">
+				#{if luser.isActivated}
+				    <img src="@{'/public/images/activated.png'}" alt="deactivate" title="deactivate"  />
+				#{/if}
+				#{else}
+				    <img src="@{'/public/images/deactivated.png'}" alt="activate" title="activate" />
+				#{/else}
+				</a>
+				#{/if}
+		
+			</td>
+			<td style="text-align: center;">
+			${luser.fraudPointScore()}
 			</td>
 		</tr>
 	#{/list}
 </table>
+<div style="text-align: center;">
+#{list items: pageList, as: 'i'}
+	#{if i == page}
+		<span class="page active"><b>${i}</b></span>
+	#{/if}
+	#{else}
+		<a href="@{Admin.showUserList(i)}"><span class="page">${i}</span></a>
+	#{/else}
+#{/list}
+</div>

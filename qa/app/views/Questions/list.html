@@ -1,3 +1,7 @@
-#{list items:questions, as:'entry'}
-	#{entry entry:entry, user:user, display:'nav', active:question==entry /}
-#{/list}
+#{if questions.size() == 0}
+	<span class="info">There are no questions yet.</span>
+#{/if}#{else}
+	#{list items:questions, as:'entry'}
+		#{entry entry:entry, user:user, display:'nav', active:question==entry /}
+	#{/list}
+#{/else}

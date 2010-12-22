@@ -1,12 +1,12 @@
 #{extends 'main.html' /}
 
-#{set title:'Create User' /}
+#{set title:'XML Importer' /}
 <div style="text-align: center;">
 
 <div class="centeredBox">
 <h1>Import Database as XML</h1>
-
-
+<div class="scroll">
+File Imported in ${parseTime} second(s)<br />
 Number of new users: ${userCount}<br />
 Number of new questions: ${questionCount}<br />
 Number of new answers: ${answerCount}<br />
@@ -17,4 +17,5 @@ Number of answers: ${answers.size()}<br />
 
 Report: <br />
 ${report.nl2br()}
+</div>
 </div>

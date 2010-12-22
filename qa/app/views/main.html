@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Knowledge Base - #{get 'title' /}</title>
+        <title>Tagfire - #{get 'title' /}</title>
         <meta charset="utf-8">  
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
         
         #{stylesheet 'reset.css' /}
         #{stylesheet 'jquery.jscrollpane.css' /}
         #{stylesheet 'main.css' /}
+        #{stylesheet 'jquery-ui-1.8.6.custom.css' /}
         
         <!--[if lt IE 9]>
 			#{script 'html5.js' /}
 		<![endif]-->
 		
         #{script 'jquery-1.4.2.min.js' /}
+        #{script 'jquery-ui-1.8.6.custom.min.js' /}
         #{script 'plugins/flot/jquery.flot.js' /}   
         #{script 'plugins/scrollbar/jquery.mousewheel.js' /}   
         #{script 'plugins/scrollbar/jquery.jscrollpane.min.js' /}  
@@ -39,7 +41,7 @@
     				
     				#{if user}
     					<a href="@{Users.profile(user.id)}">
-    			  			${user.name} (${user.reputation()})
+    			  			${user.name} <span class="rep">${user.reputation}</span>
     					</a>
     					
     					%{
@@ -53,6 +55,10 @@
     					
     					}%
     					
+    					#{pulldown label:'Account'}
+                            <li><a href="@{Users.profile(user.id)}">My Profile</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        #{/pulldown}    					
 	    				#{pulldown label:activity}
 							#{list items:user.getNewNotifications(), as:'notification'}
 								%{
@@ -74,13 +80,9 @@
 							#{/else}
 						
 	    				#{/pulldown}
-	    				#{pulldown label:'Account'}
-	    					<li><a href="@{Users.profile(user.id)}">My Profile</a></li>
-	    					<li><a href="/logout">Logout</a></li>
-	    				#{/pulldown}
 	    				#{if user.isAdmin}
 	    					#{pulldown label:'Admin'}
-	    						<li><a href="@{Admin.showUserList}">Userlist</a></li>
+	    						<li><a href="@{Admin.showUserList(1)}">Userlist</a></li>
 	    						<li><a href="@{Admin.xmlImporter}">XML Importer</a></li>
 	    					#{/pulldown}
 	    				#{/if}
@@ -92,11 +94,11 @@
     					</div>
     					#{pulldown label:'Register'}
     						#{form @Users.addUser()}
-	    						<li>Username: <input type="text" name="username" /></li>
-	    						<li>Email: <input type="text" name="email" /></li>
-	    						<li>Password: <input type="password" name="password" /></li>
-	    						<li>Confirm Password: <input type="password" name="password2" /></li>
-	    						<li><input type="submit" value="Register" /> </li>
+	    						<li>Username: <input id="registrationUser" type="text" name="username" /></li>
+	    						<li>Email: <input id="registrationEmail" type="text" name="email" /></li>
+	    						<li>Password: <input id="registrationPw" type="password" name="password" /></li>
+	    						<li>Confirm Password: <input id="registrationPw2" type="password" name="password2" /></li>
+	    						<li><input id="registrationSubmit" type="submit" value="Register" /> </li>
 	    					#{/form}
     					#{/pulldown}
     					
@@ -105,12 +107,11 @@
     		</header>
     		#{get 'nav' /}
     		<section>
-
     			<div id="section">
     				#{doLayout /}
     			</div>
         	</section>
-        	#{get 'absolute' /}
+        	#{get 'topaction' /}
         </div>
     </body>
 </html>

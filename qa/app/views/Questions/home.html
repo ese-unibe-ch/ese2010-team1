@@ -7,12 +7,14 @@
 
 
 %{
-	question = display ? display : questions.get(0)
+    if(questions.size()>0) {
+	   question = display ? display : questions.get(0)
+	}
 }%
 
 #{set 'controls'}
 	<form id="search">
-		<input type="search" placeholder="Search" results="5" autocomplete="on" autosave="search" name="search" />
+		<input type="search" placeholder="Search" name="search" />
 	</form>
 	#{tabbar 'filter'}
 		#{tab 'Hot', selected:true /}
@@ -28,10 +30,15 @@
 	#{include 'Questions/list.html' /}
 #{/nav}
 
-#{if user}
-	#{set 'absolute'}
-		<a class="bottomleft" href="#NewQuestion">New Question</a>
-	#{/set}
-#{/if}
+	
+#{set 'topaction'} 	 
+	<div id="topaction">
+		#{if user}	
+			<a class="topaction" href="#newQuestion">New Question</a> 	
+		#{/if}
+	</div>
+#{/set} 	
 
-#{include 'Questions/question.html' /}
+#{if questions.size()>0}
+    #{include 'Questions/question.html' /}
+#{/if}

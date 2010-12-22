@@ -1,9 +1,9 @@
 #{extends 'main.html' /}
 
-#{set title:'Create User' /}
+#{set title:'XML Importer' /}
 <div style="text-align: center;">
 
-<form method="post" action="@{Admin.loadXML()}" accept-charset="utf-8" enctype="multipart/form-data" class="register">
+<form method="post" action="@{Admin.loadXML()}" accept-charset="utf-8" enctype="multipart/form-data" class="register centeredBox">
 <h1>Import Database as XML</h1>
 #{ifErrors}
 <ul>

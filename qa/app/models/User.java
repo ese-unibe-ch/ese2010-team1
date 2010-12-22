@@ -1,25 +1,29 @@
 package models;
 
 import java.io.File;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import models.fraudpointscale.FraudPoint;
+import models.fraudpointscale.FraudPointController;
+import models.helper.Utils;
 import play.data.validation.Required;
 import play.db.jpa.JPASupport;
 import play.db.jpa.Model;
 
 /**
- * The Class User.
+ * The Class User contains every data about a given user.
  */
 @Entity
 public class User extends Model {
@@ -28,29 +32,27 @@ public class User extends Model {
 
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Entry> entrys;
-
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<Comment> comments;
+	public List<MajorEntry> entrys;
 
 	/** The votes. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
-			CascadeType.REMOVE, CascadeType.REFRESH })
-	public List<FileEntry> files;
 
+	/** The notifications. */
 	@OneToMany(mappedBy = "owner", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
+
+	/** The liked comments. */
+	@ManyToMany(mappedBy = "fans")
+	public Set<Comment> likedComments = new HashSet<Comment>();
 
 	/** The name. */
 	@Required
 	public String name;
 
-	/** The password. */
+	/** The (encrypted) password. */
 	@Required
 	public String password;
 
@@ -58,16 +60,26 @@ public class User extends Model {
 	@Required
 	public String email;
 
-	/** The timestamp. */
+	/** The timestamp of the registration. */
 	public Date timestamp;
 
 	/** The Constant bestAnswerReputation. */
 	public static final int bestAnswerReputation = 50;
 
-	/** The is admin. */
+	/** The is admin flag. */
 	public boolean isAdmin = false;
 
+	/** The is activated flag. */
+	public boolean isActivated;
+
+	/** The cached reputation score. */
+	public int reputation;
+
+	/** The fake id used for the XML importer. */
 	public long fakeId;
+
+	/** The cached number of fraudPoints. **/
+	public int fraudPoints;
 
 	/**
 	 * Creates a <code>User</code> with a given name.
@@ -82,64 +94,134 @@ public class User extends Model {
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
-		this.password = encrypt(password);
-		this.entrys = new ArrayList<Entry>();
+		this.password = Utils.encryptStringToSHA1(password);
+		this.entrys = new ArrayList<MajorEntry>();
 		this.votes = new ArrayList<Vote>();
-		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
 		this.timestamp = new Date();
+		this.reputation = 0;
+		this.isActivated = false;
+		this.fraudPoints = 0;
 	}
 
-	// SM cache reputation for faster access
 	/**
-	 * Reputation.
+	 * Generate activation token.
+	 * 
+	 * @return the activation token
+	 */
+	public ActivationToken generateActivationToken() {
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token != null) {
+			token.delete();
+		}
+		token = new ActivationToken(this).save();
+		return token;
+	}
+
+	/**
+	 * Grants user login rights.
+	 */
+	public void activate() {
+		this.isActivated = true;
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token != null)
+			token.delete();
+		this.save();
+	}
+
+	/**
+	 * Gets the activation token.
+	 * 
+	 * @return the activation token
+	 */
+	public String getActivationToken() {
+		ActivationToken token = ActivationToken.find("byUser", this).first();
+		if (token == null)
+			return null;
+		else
+			return token.activationToken;
+	}
+
+	/**
+	 * Find the Reputation value.
 	 * 
 	 * @return the reputation
 	 */
 	public int reputation() {
-		int reputation = 0;
 
-		Iterator<Entry> it = this.entrys.iterator();
+		return profileReputation() + entryReputation();
+	}
+
+	/**
+	 * Calculates the reputation earned with entries.
+	 * 
+	 * @return the int
+	 */
+	public int entryReputation() {
+
+		int reputation = 0;
+		Iterator<MajorEntry> it = this.entrys.iterator();
 		while (it.hasNext()) {
-			Entry entry = it.next();
+			MajorEntry entry = it.next();
 			reputation += entry.rating();
 			if (entry instanceof models.Answer
 					&& ((Answer) entry).isBestAnswer())
 				reputation += bestAnswerReputation;
+		}
+		return reputation;
+	}
+
+	/**
+	 * Calculates the reputation earned with profile informations.
+	 * 
+	 * @return the int
+	 */
+	public int profileReputation() {
+
+		int reputation = 0;
+		List<ProfileItem> profileItems = ProfileItem.findAll();
+		for (ProfileItem item : profileItems) {
+			ProfileEntry ent = item.findUserEntry(this);
+			if (ent != null) {
+				reputation++;
+			}
 		}
 
 		return reputation;
 	}
 
 	/**
-	 * Graph data.
+	 * Calculate the actual reputation value and save it to the database.
+	 */
+	public void calcReputation() {
+
+		this.reputation = reputation();
+		this.save();
+
+	}
+
+	/**
+	 * Checks if is profile filled up.
+	 * 
+	 * @return true, if is profile filled up
+	 */
+	public boolean isProfileFilledUp() {
+		List<ProfileItem> items = ProfileItem.findAll();
+		for (ProfileItem item : items) {
+			if (item.findUserEntry(this) == null)
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Creates Graph data in JSON format.
 	 * 
 	 * @return graph data as JSON string
 	 */
 	public String graphData() {
 
-		ArrayList points = new ArrayList();
-
-		points.add(new Point(this.timestamp, 0));
-		points.add(new Point(new Date(), 0));
-
-		Iterator<Entry> en = this.entrys.iterator();
-		while (en.hasNext()) {
-			Entry entry = en.next();
-			if (entry instanceof Answer && ((Answer) entry).isBestAnswer()) {
-				points.add(new Point(
-						((Answer) entry).question.bestAnswerFreezer.timestamp,
-						bestAnswerReputation));
-			}
-
-			Iterator<Vote> vt = entry.votes.iterator();
-			while (vt.hasNext()) {
-				Vote vote = vt.next();
-				points.add(new Point(vote.freezer.timestamp, vote.up ? 1 : -1));
-			}
-		}
-
-		Collections.sort(points, new PointComparator());
+		List<Point> points = fetchGraphData();
 
 		int reputation = 0;
 		StringBuffer data = new StringBuffer("[");
@@ -155,6 +237,42 @@ public class User extends Model {
 		data.append(']');
 
 		return data.toString();
+	}
+
+	/**
+	 * Fetch graph data.
+	 * 
+	 * @return the sorted (by timestamp) list of graph points
+	 */
+	private List<Point> fetchGraphData() {
+
+		ArrayList points = new ArrayList();
+
+		points.add(new Point(this.timestamp, profileReputation()));
+		points.add(new Point(new Date(), 0));
+
+		Iterator<MajorEntry> en = this.entrys.iterator();
+		while (en.hasNext()) {
+			MajorEntry entry = en.next();
+			if (entry instanceof Answer && ((Answer) entry).isBestAnswer()) {
+				points.add(new Point(
+						((Answer) entry).question.bestAnswerFreezer.timestamp,
+						bestAnswerReputation));
+			}
+			if (entry instanceof Entry) {
+				Iterator<Vote> vt = ((Entry) entry).votes.iterator();
+				while (vt.hasNext()) {
+					Vote vote = vt.next();
+					points.add(new Point(vote.freezer.timestamp, vote.up ? 1
+							: -1));
+				}
+			}
+		}
+
+		Collections.sort(points, new PointComparator());
+
+		return points;
+
 	}
 
 	/**
@@ -196,7 +314,7 @@ public class User extends Model {
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Point arg0, Point arg1) {
-			return (((Point) arg1).time < ((Point) arg0).time) ? 1 : -1;
+			return (arg1.time < arg0.time) ? 1 : -1;
 		}
 	}
 
@@ -213,7 +331,9 @@ public class User extends Model {
 
 		User loginUser = User.find("byName", username).first();
 
-		if (loginUser != null && loginUser.password.equals(encrypt(password)))
+		if (loginUser != null
+				&& loginUser.password.equals(Utils
+						.encryptStringToSHA1(password)))
 			return loginUser;
 		else
 			return null;
@@ -230,24 +350,6 @@ public class User extends Model {
 	public static boolean exists(String username) {
 
 		return User.find("byName", username).first() != null;
-	}
-
-	/**
-	 * Encrypt.
-	 * 
-	 * @param password
-	 *            the password
-	 * @return the encrypted password
-	 */
-	private static String encrypt(String password) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			md.update(password.getBytes());
-			return new BigInteger(1, md.digest(password.getBytes()))
-					.toString(16);
-		} catch (Exception e) {
-			return password;
-		}
 	}
 
 	/**
@@ -293,23 +395,48 @@ public class User extends Model {
 		return this;
 	}
 
+	/**
+	 * Adds the comment.
+	 * 
+	 * @param entry
+	 *            the entry
+	 * @param content
+	 *            the content
+	 * @return the user
+	 */
 	public User addComment(Entry entry, String content) {
 		Comment comment = entry.addComment(this, content);
-		this.comments.add(comment);
+		this.entrys.add(comment);
 		this.save();
 		return this;
 
 	}
 
+	/**
+	 * Adds the file to entry.
+	 * 
+	 * @param file
+	 *            the file
+	 * @param entry
+	 *            the entry
+	 * @return the user
+	 */
 	public User addFileToEntry(File file, Entry entry) {
 
 		FileEntry fileEntry = entry.addFile(file, this);
-		this.files.add(fileEntry);
+		this.entrys.add(fileEntry);
 
 		this.save();
 		return this;
 	}
 
+	/**
+	 * Adds the notification.
+	 * 
+	 * @param notification
+	 *            the notification
+	 * @return the user
+	 */
 	public User addNotification(Notification notification) {
 
 		this.notifications.add(notification);
@@ -317,6 +444,11 @@ public class User extends Model {
 		return this;
 	}
 
+	/**
+	 * Gets the new notifications.
+	 * 
+	 * @return the new notifications
+	 */
 	public List<Notification> getNewNotifications() {
 
 		return Notification.find(
@@ -324,16 +456,33 @@ public class User extends Model {
 				.fetch();
 	}
 
+	/**
+	 * Checks for new notifications.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean hasNewNotifications() {
 
 		return this.numberOfNewNotifications() > 0;
 	}
 
+	/**
+	 * Number of new notifications.
+	 * 
+	 * @return the long
+	 */
 	public long numberOfNewNotifications() {
 
 		return Notification.count("owner = ? and isNew = ?", this, true);
 	}
 
+	/**
+	 * Gets the notifications.
+	 * 
+	 * @param numberOfNotifications
+	 *            the number of notifications
+	 * @return the notifications
+	 */
 	public List<Notification> getNotifications(int numberOfNotifications) {
 
 		return Notification.find("byOwner", this).fetch(numberOfNotifications);
@@ -366,6 +515,11 @@ public class User extends Model {
 		return Answer.count("owner = ?", this);
 	}
 
+	/**
+	 * Gets the number of comments.
+	 * 
+	 * @return the number of comments
+	 */
 	public long getNumberOfComments() {
 
 		return Comment.count("owner = ?", this);
@@ -384,20 +538,33 @@ public class User extends Model {
 				numberOfActivitys);
 	}
 
+	/**
+	 * Gets the questions.
+	 * 
+	 * @return the questions
+	 */
 	public List<Entry> getQuestions() {
 
 		return Question.find("owner like ? order by timestamp desc", this)
 				.fetch();
 	}
 
+	/**
+	 * Gets the answers.
+	 * 
+	 * @return the answers
+	 */
 	public List<Entry> getAnswers() {
 		return Answer.find("owner like ? order by timestamp desc", this)
 				.fetch();
 	}
 
+	/**
+	 * Anonymify entries. Used before a user gets deleted.
+	 */
 	public void anonymify() {
 		User anonym = User.find("byName", "Anonym").first();
-		for (Entry entry : entrys) {
+		for (MajorEntry entry : entrys) {
 			entry.owner = anonym;
 			entry.save();
 		}
@@ -405,6 +572,11 @@ public class User extends Model {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see play.db.jpa.JPASupport#delete()
+	 */
 	@Override
 	public <T extends JPASupport> T delete() {
 		anonymify();
@@ -414,12 +586,56 @@ public class User extends Model {
 		return super.delete();
 	}
 
-	public void setNewPassword(String pw) {
-		this.password = encrypt(pw);
+	/**
+	 * Sets the new password.
+	 * 
+	 * @param password
+	 *            the new new password
+	 */
+	public void setNewPassword(String password) {
+		this.password = Utils.encryptStringToSHA1(password);
 	}
 
-	public List<Question> questions() {
-		return Question.find("byOwner", this).fetch();
+	/**
+	 * Questions.
+	 * 
+	 * @param page
+	 * @param count
+	 * 
+	 * @return the list
+	 */
+	public List<Question> questions(int count, int page) {
+		return Question.find("byOwner", this).fetch(page, count);
 	}
 
+	/**
+	 * Fraud point score.
+	 * 
+	 * @return the long
+	 */
+	public long fraudPointScore() {
+		return FraudPoint.count("user = ?", this);
+
+	}
+
+	/**
+	 * Finds all fraud point rules which were violated.
+	 * 
+	 * @return the string
+	 */
+	public String fraudPointViolations() {
+
+		FraudPointController controller = FraudPointController.getInstance();
+		StringBuffer buffer = new StringBuffer();
+		List<FraudPoint> fpList = FraudPoint.find("byUser", this).fetch();
+		Set<String> violations = new HashSet<String>();
+		for (FraudPoint p : fpList) {
+			violations.add(controller.getDescription(p.rule));
+		}
+		for (String violation : violations) {
+			buffer.append(violation + "\n");
+		}
+
+		return buffer.toString();
+	}
 }

@@ -9,9 +9,10 @@ GET		/q/{id}									Questions.question
 GET		/question/{id}							Questions.get
 GET		/answer/{id}							Questions.entry
 
-GET		/hot									Questions.hot
-GET		/mine									Questions.mine
-GET		/search/{string}						Question.search
+GET		/hot/{page}								Questions.hot
+GET 	/active/{page}							Questions.active
+GET		/mine/{page}							Questions.mine
+GET		/search/{page}/{string}					Question.search
 
 GET		/form/{type}							Questions.form
 POST	/add									Question.add
@@ -23,18 +24,21 @@ GET		/vote/up/{id}							Questions.voteUp
 GET		/vote/down/{id}							Questions.voteDown
 GET 	/vote/remove/{id}						Question.removeVote
 
-GET		/best/set/{id}							Questions.setBestAnswer
-GET		/best/reset/{id}						Questions.resetBestAnswer
+POST	/best/set/{id}							Questions.setBestAnswer
+POST	/best/reset/{id}						Questions.resetBestAnswer
 
 # User
 
 GET 	/profile/{id}							Users.profile
 GET		/activities/{id}						Users.activities
+GET		/activate/{id}/{securityToken}			Users.activateUser
 
 
 # Admin
 GET		/importXML								Admin.xmlImporter
-GET		/userlist								Admin.showUserList
+GET		/userlist/{page}						Admin.showUserList
+GET     /deleteUser/{id}                        Admin.deleteUser
+GET     /setAdmin/u{id}/p{page}                 Admin.toggleAdminState
 
 
 # Map static resources from the /app/public folder to the /public path

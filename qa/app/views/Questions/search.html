@@ -1,0 +1,9 @@
+#{if questions}
+	#{include "Questions/list.html" /}
+#{/if}
+
+#{else}
+	#{list items:users, as:'user'}
+		<a href="@{Users.profile(user.id)}">${user.name}</a>
+	#{/list}
+#{/else}

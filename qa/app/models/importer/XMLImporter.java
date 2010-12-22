@@ -11,10 +11,30 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+/**
+ * The Class XMLImporter is responsible for the input streams of xml
+ * informations.
+ */
 public class XMLImporter {
 
+	/** The handler. */
 	private XMLHandler handler;
 
+	/** The parse time. */
+	private long parseTime = 0;
+
+	/**
+	 * Instantiates a new xML importer.
+	 * 
+	 * @param file
+	 *            the file
+	 * @throws SAXException
+	 *             the sAX exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws ParserConfigurationException
+	 *             the parser configuration exception
+	 */
 	public XMLImporter(File file) throws SAXException, IOException,
 			ParserConfigurationException {
 
@@ -29,13 +49,30 @@ public class XMLImporter {
 
 		handler = new XMLHandler();
 
+		// take start time to get duration
+		long startTime = System.currentTimeMillis();
 		// Finally, tell the parser to parse the input and notify the handler
 		saxParser.parse(input, handler);
+		this.parseTime = (System.currentTimeMillis() - startTime) / 1000;
 	}
 
+	/**
+	 * Gets the handler.
+	 * 
+	 * @return the handler
+	 */
 	public XMLHandler getHandler() {
 
 		return handler;
+	}
+
+	/**
+	 * Gets the parses the time.
+	 * 
+	 * @return the parses the time
+	 */
+	public long getParseTime() {
+		return this.parseTime;
 	}
 
 }

@@ -1,6 +1,9 @@
 import java.util.List;
+import java.util.Set;
 
+import models.Answer;
 import models.Question;
+import models.Tag;
 import models.User;
 
 import org.junit.Before;
@@ -36,8 +39,8 @@ public class QuestionTest extends UnitTest {
 		// check search by owner
 		List<Question> questions = Question.find("byOwner", user).fetch();
 		assertEquals(2, questions.size());
-		assertNotNull(Question.questions());
-		assertEquals(2, Question.questions().size());
+		assertNotNull(Question.questions(0, 1));
+		assertEquals(2, Question.questions(0, 1).size());
 
 		// check answers
 		assertNotNull(question.answers());
@@ -78,4 +81,53 @@ public class QuestionTest extends UnitTest {
 
 	}
 
+	@Test
+	public void tagQuestions() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		question.tagItWith("Hello").tagItWith("World");
+		assertEquals(2, Tag.count());
+		assertEquals("Hello, World", question.tagsToString());
+
+		assertEquals(2, question.tags.size());
+		question.removeAllTags();
+		assertEquals(0, question.tags.size());
+
+	}
+
+	@Test
+	public void shouldReturnListOfRecentQuestions() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("Bob", "test2@mail.com", "password2").save();
+		User user3 = new User("Fritz", "test3@mail.com", "password3").save();
+		User user4 = new User("Helmut", "test4@mail.com", "password4").save();
+		Question question1 = user.addQuestion("title", "dummy content");
+		Question question2 = user.addQuestion("title2", "dummy content2");
+		Question question3 = user.addQuestion("title3", "dummy content3");
+		Question question4 = user.addQuestion("title4", "dummy content4");
+		Question question5 = user.addQuestion("title5", "dummy content5");
+		question1.answer(user2, "hackhack");
+		Set<Question> recentQuestions = Question.recentQuestions(0, 1);
+		assertTrue(recentQuestions.contains(question1));
+		assertTrue(recentQuestions.contains(question2));
+		assertTrue(recentQuestions.contains(question3));
+		assertTrue(recentQuestions.contains(question4));
+		assertTrue(recentQuestions.contains(question5));
+	}
+
+	@Test
+	public void setsAndRemoveBestAnswerIfPossible() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("Bob", "test2@mail.com", "password2").save();
+		Question question = user.addQuestion("title", "dummy content");
+		Answer answer = question.answer(user2, "thisShouldWork");
+		question.setBestAnswer(answer);
+		assertEquals(question.bestAnswer, answer);
+		question.resetBestAnswer();
+		assertEquals(question.bestAnswer, null);
+
+	}
 }

@@ -1,5 +1,6 @@
 import java.util.List;
 
+import models.Answer;
 import models.Question;
 import models.User;
 
@@ -86,5 +87,34 @@ public class UserTest extends UnitTest {
 		Question question = user.addQuestion("A title", "My first question");
 		question.answer(user, "an answer");
 		assertEquals(1, user.getNumberOfAnswers());
+	}
+
+	@Test
+	public void calculateReputationScore() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		User user2 = new User("john", "john@mail.com", "password").save();
+		Question question = user.addQuestion("A title", "My first question");
+		Answer answer = question.answer(user2, "an answer");
+		assertEquals(0, user.reputation);
+		question.voteUp(user2);
+		assertEquals(1, user.reputation);
+		question.setBestAnswer(answer);
+		assertEquals(50, user2.reputation);
+		question.resetBestAnswer();
+		assertEquals(0, user2.reputation);
+
+	}
+
+	@Test
+	public void generateActivationToken() {
+
+		User user = new User("Jack", "test@mail.com", "password").save();
+		assertNull(user.getActivationToken());
+		user.generateActivationToken();
+		assertNotNull(user.getActivationToken());
+		String token = user.getActivationToken();
+		user.generateActivationToken();
+		assertFalse(token.equals(user.getActivationToken()));
 	}
 }

@@ -1,30 +1,24 @@
 package models;
 
 import java.io.File;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import play.Play;
 import play.db.jpa.JPASupport;
-import play.db.jpa.Model;
 
+/**
+ * The Class FileEntry saves the information of uploaded files. The uploaded
+ * file will be renamed after the upload.
+ */
 @Entity
-public class FileEntry extends Model {
-
-	/** The filename. */
-	public String uploadFilename;
-	/** The extension. */
+public class FileEntry extends MajorEntry {
+	/** The file extension. */
 	public String extension;
-	/** The entry. */
+	/** The related entry. */
 	@ManyToOne
 	public Entry entry;
-	/** The owner. */
-	@ManyToOne
-	public User owner;
-	/** The timestamp. */
-	public Date timestamp;
 	/** The picID. */
 	public int picID;
 	/** A picturecounter. */
@@ -43,10 +37,8 @@ public class FileEntry extends Model {
 	 *            the owner
 	 */
 	private FileEntry(String filename, Entry entry, User owner) {
-		this.uploadFilename = filename;
+		super(owner, filename);
 		this.entry = entry;
-		this.owner = owner;
-		this.timestamp = new Date();
 		this.extension = getFileExtension(filename);
 		this.picID = pictureCounter++;
 
@@ -89,7 +81,6 @@ public class FileEntry extends Model {
 				+ "." + this.extension);
 		if (file.exists()) {
 			return file.delete();
-
 		}
 
 		return false;
@@ -103,11 +94,6 @@ public class FileEntry extends Model {
 	public String absoluteFilename() {
 
 		return this.picID + "." + this.extension;
-	}
-
-	public static boolean deleteFile(FileEntry file) {
-
-		return false;
 	}
 
 	/**
@@ -140,6 +126,20 @@ public class FileEntry extends Model {
 
 	}
 
+	/**
+	 * Returns the original filename of the uploaded file.
+	 * 
+	 * @return the filename
+	 */
+	public String getFilename() {
+		return content;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see play.db.jpa.JPASupport#delete()
+	 */
 	@Override
 	public <T extends JPASupport> T delete() {
 

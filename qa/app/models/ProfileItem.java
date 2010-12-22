@@ -44,8 +44,9 @@ public class ProfileItem extends Model {
 	 * @return the profile entry
 	 */
 	public ProfileEntry findUserEntry(User user) {
-
-		return ProfileEntry.find("byItemAndUser", this, user).first();
+		ProfileEntry entry = ProfileEntry.find("byItemAndUser", this, user)
+				.first();
+		return entry;
 
 	}
 
@@ -71,13 +72,19 @@ public class ProfileItem extends Model {
 	 */
 	public ProfileItem editUserEntry(User user, String entry) {
 
-		if (!this.hasUserEntry(user)) {
-			ProfileEntry pentry = new ProfileEntry(this, entry, user).save();
-			this.entrys.add(pentry);
-		} else {
-			ProfileEntry userEntry = findUserEntry(user);
-			userEntry.entry = entry;
-			userEntry.save();
+		if (!entry.equals("")) {
+			if (!this.hasUserEntry(user)) {
+				ProfileEntry pentry = new ProfileEntry(this, entry, user)
+						.save();
+				this.entrys.add(pentry);
+			} else {
+				ProfileEntry userEntry = findUserEntry(user);
+				userEntry.entry = entry;
+				userEntry.save();
+			}
+		} else if (hasUserEntry(user)) {
+			findUserEntry(user).delete();
+			entrys.remove(findUserEntry(user));
 		}
 
 		this.save();

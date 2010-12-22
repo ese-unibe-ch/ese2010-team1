@@ -6,14 +6,14 @@
 *{ navigation representation }*
 #{if _display == "nav"}
 		
-		<a href="#!${_entry.id}"#{if _active} class="active"#{/if} title="${_entry.title}">${_entry.title.trim(35)}</a>
+		<a href="#!${_entry.id}"#{if _active} class="active"#{/if} title="${_entry.title.escape()}">${_entry.title.trim(35).escape()}</a>
 	
 #{/if}
 
 *{ form representation }*
 #{elseif _display == "form"}
 
-	<article class="entry ${question?"question":"answer"}">
+	<article class="#{if _type}new #{/if}entry ${question?"question":"answer"}">
 	<form method="post" action="#{if _type}@{Questions.answer(_entry?.id)}#{/if}#{else}@{Questions.edit(_entry?.id)}#{/else}" enctype="multipart/form-data">
 	
 		<menu>
@@ -41,13 +41,17 @@
 		#{/field}
 		
 		#{if question}
-			<input type="text" name="tags" placeholder="Tags" value="${_entry?.tagsToString()}" />
+			<input type="text" id="tags" name="tags" placeholder="Tags" value="${_entry?.tagsToString()}" />
 		#{/if}#{else}
 			<input type="file" name ="file" />
 		#{/else}
 		
 		<input type="submit" value="Post" />
+		#{if _entry && !_type}
+			<a class="cancel" href="#${_entry.id}">cancel</a>
+		#{/if}
 		</div>
+		#{token /}
 	</form>
 	</article>
 
@@ -79,7 +83,7 @@
 	*{ title }*
 	<h3>
 		<a href="@{Users.profile(_entry.owner.id)}" class="owner">
-			${_entry.owner.name} (${_entry.owner.reputation()})
+			${_entry.owner.name} (${_entry.owner.reputation})
 		</a>
 	
 		${question ? _entry.title.slice(55) : "Answer"}
@@ -91,7 +95,7 @@
 		*{ content }*
 	
 		<div class="content">
-		${_entry.content.nl2br()}
+		${_entry.content.simpleHTML()}
 		</div>
 		
 		*{ tags }*
@@ -99,7 +103,7 @@
 		#{if question}
 			<div class="tags">
 			#{list items:_entry.tags , as:'tag'}
-				<span>${tag.name}</span>
+				<span>${tag.name.escape()}</span>
 			#{/list}
 			</div>
 		#{/if}
@@ -110,9 +114,9 @@
 		#{elseif _entry.getFiles().size()>0}
 			#{list items:_entry.getFiles(), as:'file'}
 				<span class="file">
-					<a href="@{Questions.getFile(file.id)}">${file.uploadFilename}</a>
+					<a href="@{Questions.getFile(file.id)}">${file.getFilename().escape()}</a>
 					#{if _user==file.owner}
-						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}">x</a>
+						<a class="deleteFile" href="@{Questions.deleteFileEntry(file.id, file.entry.question.id)}&authenticityToken=${session.current().getAuthenticityToken()}">x</a>
 					#{/if}
 				</span>
 			#{/list}
@@ -126,8 +130,12 @@
 				<a href="#${_entry.id}" class="edit">edit</a>
 			#{/if}
 			
+			#{if _entry.isReported() && _user}
+				<span class="attention" title="This entry is reported as suspicious from ${_entry.reports.size()} users!"></span>
+			#{/if}
+			
 			#{secure.check 'isAdmin'}
-		  		<a href="@{Questions.delete(_entry.id)}" title="delete entry">delete</a>
+		  		<a href="@{Questions.delete(_entry.id)}&authenticityToken=${session.current().getAuthenticityToken()}" title="delete entry">delete</a>
 			#{/secure.check}
 			
 			#{if _entry.states.size() > 1}
@@ -139,10 +147,20 @@
 				</div>
 				
 			#{/if}
+
 			
 			#{if _user}
 				<a href="#" class="showform">comment</a>
 			#{/if}
+			
+			
+			#{if _user != _entry.owner && !_entry.isReportedFrom(_user) && _user}
+                <a href="#" class="reportButton">report</a>
+                
+                <div class="report">
+                    #{report entry:_entry, isComment:'false'/}
+                </div>
+            #{/if}
 		</div>
 		
 		<span class="date">
@@ -157,9 +175,9 @@
 		#{list items:_entry.listComments(), as:'comment'}
 			<div class="comment">
 				<a href="@{Users.profile(comment.owner.id)}" class="owner">
-					${comment.owner.name} (${comment.owner.reputation()})
+					${comment.owner.name.escape()} (${comment.owner.reputation})
 				</a>
-				<p>${comment.content.nl2br()}</p>
+				<p>${comment.content.simpleHTML()}</p>
 				<div class="controls">
 					#{if _user== comment.owner || _user?.isAdmin}
 						<a href="#${comment.id}" class="deleteComment">delete</a>
@@ -167,6 +185,24 @@
 					#{if _user}
 						<a href="#" class="showform">reply</a>
 					#{/if}
+					#{if _user != comment.owner && !comment.isReportedFrom(_user) && _user}
+						<a href="#" class="reportButton">report</a>
+				
+						<div class="report">
+							#{report entry:comment, isComment:'true'/}
+						</div>
+					#{/if}
+					#{if comment.isReported() && _user}
+						<span class="attention" title="This entry is reported as suspicious from ${_entry.reports.size()} users!"></span>
+					#{/if}
+					#{if _user!=comment.owner}
+						#{if comment.likedBy(_user)}
+						<a href="#${comment.id}" id="unlike" class="likeComment">unlike</a>
+						#{/if}#{else}
+						<a href="#${comment.id}" id="like" class="likeComment">like</a>
+						#{/else}
+					#{/if}
+					<span class="like">liked by ${comment.fans.size()} people</span>
 				</div>
 				
 			 </div>
@@ -179,7 +215,9 @@
 		#{field 'content'}
 			<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
+		<input type="hidden" name="id" value="${_entry.id}" />
 		<input type="submit" value="Post" />
+		#{token /}
 	#{/form}
 	</div>
 	#{/if}

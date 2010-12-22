@@ -2,6 +2,9 @@ package controllers;
 
 import models.User;
 
+/**
+ * The Class Security.
+ */
 public class Security extends Secure.Security {
 
 	/**
@@ -14,7 +17,8 @@ public class Security extends Secure.Security {
 	 * @return true, if successful
 	 */
 	static boolean authenticate(String username, String password) {
-		if (User.connect(username, password) != null)
+		User user = User.connect(username, password);
+		if (user != null && user.isActivated)
 			return true;
 		else
 			return false;
@@ -27,6 +31,13 @@ public class Security extends Secure.Security {
 		Questions.home();
 	}
 
+	/**
+	 * Check the user rights.
+	 * 
+	 * @param profile
+	 *            the profile
+	 * @return true, if successful
+	 */
 	static boolean check(String profile) {
 		if ("isAdmin".equals(profile)) {
 			return User.find("byName", connected()).<User> first().isAdmin;

@@ -19,46 +19,34 @@ import play.db.jpa.Model;
  */
 
 @Entity
-public abstract class Entry extends Model {
+public abstract class Entry extends MajorEntry {
 
-	/** The content. */
+	/** The different content states / versions. */
 	@OneToMany(cascade = { CascadeType.MERGE, CascadeType.REMOVE,
 			CascadeType.REFRESH })
 	public List<ContentState> states;
 
-	/** The owner. */
-	@ManyToOne
-	public User owner;
-
-	/** The votes. */
+	/** The related user votes. */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Vote> votes;
 
-	/** The Comments */
+	/** The related Comments */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
-	private List<Comment> comments;
+	public List<Comment> comments;
 
-	/** The File entries */
+	/** The related files */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<FileEntry> files;
 
-	/** The notifications */
+	/** The generated notifications */
 	@OneToMany(mappedBy = "entry", cascade = { CascadeType.MERGE,
 			CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Notification> notifications;
 
-	/** The timestamp. */
-	public Date timestamp;
-
-	/** The faked id for XML importer */
-	public long fakeId;
-
-	/** The content */
-	@Lob
-	public String content;
+	public long rating;
 
 	/**
 	 * Create an <code>Entry</code>.
@@ -69,13 +57,13 @@ public abstract class Entry extends Model {
 	 *            the content of the <code>Entry</code>
 	 */
 	public Entry(User owner, String content) {
-		this.owner = owner;
-		this.content = content;
-		this.timestamp = new Date();
+		super(owner, content);
 		this.votes = new ArrayList<Vote>();
 		this.comments = new ArrayList<Comment>();
 		this.files = new ArrayList<FileEntry>();
 		this.notifications = new ArrayList<Notification>();
+		this.states = new ArrayList<ContentState>();
+		this.rating = 0;
 
 	}
 
@@ -113,8 +101,15 @@ public abstract class Entry extends Model {
 	 * 
 	 * @return rating as an <code>Integer</code>
 	 */
+	@Override
 	public long rating() {
-		return this.upVotes() - this.downVotes();
+		return this.rating;
+	}
+
+	public void calcRating() {
+
+		this.rating = this.upVotes() - this.downVotes();
+		this.save();
 	}
 
 	/**
@@ -145,7 +140,9 @@ public abstract class Entry extends Model {
 	 * @return the {@link Vote}
 	 */
 	public Vote voteUp(User user) {
-		return this.vote(user, true);
+		Vote vote = this.vote(user, true);
+		this.owner.calcReputation();
+		return vote;
 	}
 
 	/**
@@ -156,7 +153,9 @@ public abstract class Entry extends Model {
 	 * @return the {@link Vote}
 	 */
 	public Vote voteDown(User user) {
-		return this.vote(user, false);
+		Vote vote = this.vote(user, false);
+		this.owner.calcReputation();
+		return vote;
 	}
 
 	/**
@@ -168,6 +167,8 @@ public abstract class Entry extends Model {
 	public void removeVote(Vote vote) {
 		if (vote != null && !vote.frozen()) {
 			vote.delete();
+			this.owner.calcReputation();
+			this.calcRating();
 		}
 	}
 
@@ -194,7 +195,7 @@ public abstract class Entry extends Model {
 	 */
 	public boolean canVote(User user) {
 		Vote alreadyVoted = Vote.find("byOwnerAndEntry", user, this).first();
-		return user != this.owner
+		return user != this.owner && user.reputation >= ProfileItem.count()
 				&& (alreadyVoted == null || !alreadyVoted.frozen());
 	}
 
@@ -222,6 +223,7 @@ public abstract class Entry extends Model {
 
 		Vote vote = new Vote(user, this, up).save();
 		this.votes.add(vote);
+		this.calcRating();
 		return vote;
 	}
 
@@ -305,7 +307,7 @@ public abstract class Entry extends Model {
 	}
 
 	/**
-	 * Compares two entries by its ratiting.
+	 * Compares two entries by its rating.
 	 */
 	@Entity
 	public class ContentState extends Model {
